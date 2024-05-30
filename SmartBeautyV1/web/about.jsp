@@ -1,6 +1,5 @@
 <%-- dat --%>
 <%-- dat2 --%>
-<!-- cmn -->
 <!DOCTYPE html>
 <!-- Header -->
 <html lang="en">
