@@ -1,10 +1,14 @@
 <!-- Header -->
 <!-- Header -->
+<<<<<<< HEAD
 <%-- dat --%>
 <%-- dat2 --%>
 <%-- dat2 --%>
 <!-- cmn -->
 <!-- cmn -->
+=======
+<!-- Header -->
+>>>>>>> sontt
 <!DOCTYPE html>
 <!-- Header -->
 <html lang="en">
