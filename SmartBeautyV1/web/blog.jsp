@@ -12,7 +12,7 @@
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
     </head>
     <body>
-
+        <!-- 30-5 _ i don't understand-->
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="include/header.jsp"></jsp:include>
