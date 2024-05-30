@@ -50,7 +50,7 @@
                                             </li>
                                             <li class="d-flex flex-row align-items-start justify-content-start">
                                                 <div><div>M:</div></div>
-                                                <div>yourmail@gmail.com</div>
+                                                <div>yourmail@gmail.commmmSS</div>
                                             </li>
                                         </ul>
                                     </div>
