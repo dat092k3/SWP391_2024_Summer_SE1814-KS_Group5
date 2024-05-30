@@ -61,7 +61,7 @@
 
                             <!-- Contact Form -->
                             <div class="col-lg-8 contact_col">
-                                <div class="contact_title">Get in touch</div>
+                                <div class="contact_title">Gettsss in touch</div>
                                 <div class="contact_form_container">
                                     <form action="#" id="contact_form" class="contact_form">
                                         <div class="row">
