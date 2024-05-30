@@ -1,6 +1,4 @@
 <%-- dat --%>
-<%-- dat --%>
-<%-- dat2 --%>
 <!-- cmn -->
 <!DOCTYPE html>
 <!-- Header -->
