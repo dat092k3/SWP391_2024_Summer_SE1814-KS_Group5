@@ -44,6 +44,7 @@
                                                 <div><div>A:</div></div>
                                                 <div>1481 Creekside Lane Avila Beach, CA 931</div>
 
+
                                             </li>
                                             <li class="d-flex flex-row align-items-start justify-content-start">
                                                 <div><div>P:</div></div>
@@ -60,7 +61,7 @@
 
                             <!-- Contact Form -->
                             <div class="col-lg-8 contact_col">
-                                <div class="contact_title">Get in touch</div>
+                                <div class="contact_title">Gettsss in touch</div>
                                 <div class="contact_form_container">
                                     <form action="#" id="contact_form" class="contact_form">
                                         <div class="row">
