@@ -1,5 +1,12 @@
 <%-- dat --%>
+<<<<<<< HEAD
 <%-- daat22 --%>
+=======
+<%-- dat2 --%>
+<%-- dat2 --%>
+<!-- cmn -->
+<!-- cmn -->
+>>>>>>> datnt
 <!DOCTYPE html>
 <!-- Header -->
 <html lang="en">
