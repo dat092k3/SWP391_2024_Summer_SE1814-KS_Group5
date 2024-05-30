@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-=======
 <%-- dat --%>
 <%-- daat2 --%>
->>>>>>> datpd
 <!DOCTYPE html>
 <!-- Header -->
 <html lang="en">
