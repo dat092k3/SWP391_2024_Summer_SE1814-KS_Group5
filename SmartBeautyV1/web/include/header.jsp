@@ -40,6 +40,8 @@
                                         <li><a href="services.jsp">Classes & Services</a></li>
                                         <li><a href="blog.jsp">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
+                                        <li><a href="signup-signin.jsp">SigniSignup</a></li>
+
                                     </ul>
                                 </nav>
                                 <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
