@@ -46,7 +46,6 @@
                                 </nav>
                                 <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
                                     <i class="fa fa-phone" aria-hidden="true"></i>
-                                    <div>652-345 3222 11</div>
                                 </div>
                             </div>
                         </div>

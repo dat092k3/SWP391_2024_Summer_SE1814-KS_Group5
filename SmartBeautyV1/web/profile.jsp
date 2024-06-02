@@ -14,6 +14,9 @@
         <link rel="stylesheet" type="text/css" href="styles/profile1.css">
     </head>
     <body>
+        <div class="back-home-button">
+            <a href="index.jsp" class="btn btn-primary">Back Home</a>
+        </div>
         <form action="action" method="">
             <div class="container rounded bg-white mt-5 mb-5">
                 <div class="row">
@@ -51,7 +54,6 @@
                 </div>
             </div>    
         </form>
-
     </div>
 </div>
 <script src="js/profile.js"></script>
