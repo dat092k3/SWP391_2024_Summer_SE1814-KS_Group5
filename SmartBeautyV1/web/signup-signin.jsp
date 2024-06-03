@@ -16,7 +16,7 @@
 
         <div class="container" id="container">
             <div class="form-container sign-up-container">
-                <form action="#">
+                <form action="register" method="post">
                     <h1>Create Account</h1>
                     <div class="social-container">
                         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -24,14 +24,16 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input name="username" type="text" placeholder="username" />
+                    <input name="email" type="email" placeholder="Email" />
+                    <input name="password" type="password" placeholder="Password" />
+                    <input name="repassword" type="password" placeholder="Confirm Password" />
+                    <input name="phone" type="text" placeholder="phone number">
                     <button>Sign Up</button>
                 </form>
             </div>
             <div class="form-container sign-in-container">
-                <form action="#">
+                <form action="login" method="post">
                     <h1>Sign in</h1>
                     <div class="social-container">
                         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -39,8 +41,8 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your account</span>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input name="email" type="email" placeholder="Email" />
+                    <input name="password" type="password" placeholder="Password" />
                     <a href="#">Forgot your password?</a>
                     <button>Sign In</button>
                 </form>
