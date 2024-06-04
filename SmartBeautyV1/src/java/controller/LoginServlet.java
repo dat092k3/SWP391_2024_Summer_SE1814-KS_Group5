@@ -5,12 +5,15 @@
 
 package controller;
 
+import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import model.Account;
 
 /**
  *
@@ -66,9 +69,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String email_raw=request.getParameter("email");
-        String password_raw=request.getParameter("password");
-        String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session=request.getSession();
+        AccountDAO d= new AccountDAO();
+        String email=request.getParameter("email");
+        String password=request.getParameter("password");
+        Account account=d.findAccount(email, password);
+        if(account==null){
+            session.setAttribute("error_login", "Your infomation is incorrect");
+            response.sendRedirect("login");
+        }else{
+            session.removeAttribute("error_login");
+            session.setAttribute("role", account.getAccount_id());
+            session.setMaxInactiveInterval(60*60*24);
+            response.sendRedirect("home");
+        }
         
     }
 

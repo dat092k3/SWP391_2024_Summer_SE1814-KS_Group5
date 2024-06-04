@@ -24,11 +24,11 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input name="username" type="text" placeholder="username" />
-                    <input name="email" type="email" placeholder="Email" />
-                    <input name="password" type="password" placeholder="Password" />
-                    <input name="repassword" type="password" placeholder="Confirm Password" />
-                    <input name="phone" type="text" placeholder="phone number">
+                    <input name="username" type="text" placeholder="Username" required=""/>
+                    <input name="email" type="email" placeholder="Email" required="" />
+                    <input name="password" type="password" placeholder="Password"  required=""/>
+                    <input name="repassword" type="password" placeholder="Confirm Password"  required=""/>
+                    <input name="phone" type="text" placeholder="Phone" required="">
                     <button>Sign Up</button>
                 </form>
             </div>
@@ -41,8 +41,8 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your account</span>
-                    <input name="email" type="email" placeholder="Email" />
-                    <input name="password" type="password" placeholder="Password" />
+                    <input name="email" type="email" placeholder="Email"  required=""/>
+                    <input name="password" type="password" placeholder="Password"  required=""/>
                     <a href="#">Forgot your password?</a>
                     <button>Sign In</button>
                 </form>

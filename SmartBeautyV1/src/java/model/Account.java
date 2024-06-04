@@ -4,6 +4,9 @@
  */
 package model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  * a class have information of the account
  *
@@ -26,6 +29,14 @@ public class Account {
 
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
+    }
+    
+    public Account(ResultSet rs) throws SQLException {
+        this.account_id = rs.getInt("account_id");
+        this.username = rs.getString("username");
+        this.email = rs.getString("email");
+        this.phoneNumber = rs.getString("phonenumber");
+        this.password = rs.getString("password");
     }
 
     /**

@@ -5,12 +5,14 @@
 
 package controller;
 
+import dal.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Account;
 
 /**
  *
@@ -67,6 +69,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        AccountDAO accountDAO= new AccountDAO();
         String err_email = "", err_phone = "", err_repassword = "";
         String err_username="";
         String username=request.getParameter("username");
@@ -114,8 +117,19 @@ public class RegisterServlet extends HttpServlet {
             err_phone = "";
             request.getSession().removeAttribute("err_repassword");
         }
-        if(err){
-            
+        if (err) {
+            response.sendRedirect("register");
+        } else {
+            if (accountDAO.findAccount(phone) != null) {
+                request.getSession().setAttribute("exits_account", "User has existed, please choose another phone");
+                response.sendRedirect("register");
+            } else {
+                accountDAO.insertAccount(username, email, phone, password);
+                Account account = accountDAO.findAccount(email);
+                request.getSession().setAttribute("account", account);
+                request.removeAttribute("exits_account");
+                response.sendRedirect("home");
+            }
         }
         
     }
