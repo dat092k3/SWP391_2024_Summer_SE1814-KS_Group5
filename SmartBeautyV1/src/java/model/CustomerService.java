@@ -8,23 +8,26 @@ import java.util.Date;
 
 /**
  * history of customer register service
+ *
  * @author LENOVO
  */
 public class CustomerService {
+
     private Service service_id;
-    private Customer customer_id;
+    private int customer_id;
     private Date date;
 
     public CustomerService() {
     }
+
     /**
      * constructor of CustomerService
-     * 
+     *
      * @param service_id of service
      * @param customer_id of customer register service
      * @param date of register service
      */
-    public CustomerService(Service service_id, Customer customer_id, Date date) {
+    public CustomerService(Service service_id, int customer_id, Date date) {
         this.service_id = service_id;
         this.customer_id = customer_id;
         this.date = date;
@@ -38,11 +41,11 @@ public class CustomerService {
         this.service_id = service_id;
     }
 
-    public Customer getCustomer_id() {
+    public int getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(Customer customer_id) {
+    public void setCustomer_id(int customer_id) {
         this.customer_id = customer_id;
     }
 
@@ -53,6 +56,4 @@ public class CustomerService {
     public void setDate(Date date) {
         this.date = date;
     }
-    
-    
 }

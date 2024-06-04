@@ -11,9 +11,9 @@ package model;
 public class Equipment {
     private int equipment_id;
     private String equipment_name;
-    private TypeofEquipment type_id;
+    private int type_id;
     private float price;
-    private Supplier supplier_id;
+    private int supplier_id;
     private int quantity;
     private String description;
 
@@ -30,7 +30,8 @@ public class Equipment {
      * @param description of equipment
      * @param equipment_id  of equipment
      */
-    public Equipment(int equipment_id, String equipment_name, TypeofEquipment type_id, float price, Supplier supplier_id, int quantity, String description) {
+   
+    public Equipment(int equipment_id, String equipment_name, int type_id, float price, int supplier_id, int quantity, String description) {
         this.equipment_id = equipment_id;
         this.equipment_name = equipment_name;
         this.type_id = type_id;
@@ -47,8 +48,7 @@ public class Equipment {
     public void setEquipment_id(int equipment_id) {
         this.equipment_id = equipment_id;
     }
-    
-    
+
     public String getEquipment_name() {
         return equipment_name;
     }
@@ -57,11 +57,11 @@ public class Equipment {
         this.equipment_name = equipment_name;
     }
 
-    public TypeofEquipment getType_id() {
+    public int getType_id() {
         return type_id;
     }
 
-    public void setType_id(TypeofEquipment type_id) {
+    public void setType_id(int type_id) {
         this.type_id = type_id;
     }
 
@@ -73,11 +73,11 @@ public class Equipment {
         this.price = price;
     }
 
-    public Supplier getSupplier_id() {
+    public int getSupplier_id() {
         return supplier_id;
     }
 
-    public void setSupplier_id(Supplier supplier_id) {
+    public void setSupplier_id(int supplier_id) {
         this.supplier_id = supplier_id;
     }
 
@@ -96,6 +96,7 @@ public class Equipment {
     public void setDescription(String description) {
         this.description = description;
     }
+
     
     
     

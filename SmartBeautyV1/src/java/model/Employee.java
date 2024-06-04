@@ -23,7 +23,7 @@ public class Employee {
     private float salary;
     private String image;
     private String experience;
-    private Department department_id;
+    private int department_id;
 
     public Employee() {
     }
@@ -49,7 +49,9 @@ public class Employee {
 
     
 
-    public Employee(int employee_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, String experience, Department department_id) {
+    
+
+    public Employee(int employee_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, String experience, int department_id) {
         this.employee_id = employee_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -73,15 +75,6 @@ public class Employee {
         this.employee_id = employee_id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    
     public int getAccount_id() {
         return account_id;
     }
@@ -154,12 +147,12 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Department getDepartment_id() {
-        return department_id;
+    public String getImage() {
+        return image;
     }
 
-    public void setDepartment_id(Department department_id) {
-        this.department_id = department_id;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getExperience() {
@@ -169,6 +162,15 @@ public class Employee {
     public void setExperience(String experience) {
         this.experience = experience;
     }
-     
+
+    public int getDepartment_id() {
+        return department_id;
+    }
+
+    public void setDepartment_id(int department_id) {
+        this.department_id = department_id;
+    }
+
+  
     
 }

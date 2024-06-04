@@ -10,6 +10,14 @@
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
+        <style>
+            /* Additional CSS for aligning the form to the right */
+            .search-form-container {
+                display: flex;
+                justify-content: flex-end;
+            }
+            
+        </style>
     </head>
     <body>
 
@@ -23,9 +31,22 @@
                 <!-- Home -->
             <jsp:include page="include/home.jsp"></jsp:include>
 
-            <!-- Blog -->
+                <!-- Blog -->
 
-            <div class="blog">
+                <div class="blog">
+                    <div class="search-form-container">
+                        <form action="search" method="get" class="form-inline my-2 my-lg-0">
+                            <div class="input-group input-group-sm">
+                                <input value="${txtS}" name="txt" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-secondary btn-number">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
                 <div class="container">
                     <div class="row">
                         <div class="col">

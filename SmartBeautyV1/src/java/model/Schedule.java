@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class Schedule {
     private Slot slot_id;
-    private Employee employee_id;
-    private Customer customer_id;
+    private int employee_id;
+    private int customer_id;
     private Date date;
 
     public Schedule() {
@@ -27,7 +27,9 @@ public class Schedule {
      * @param date of schedule have that slot
      */
 
-    public Schedule(Slot slot_id, Employee employee_id, Customer customer_id, Date date) {
+   
+
+    public Schedule(Slot slot_id, int employee_id, int customer_id, Date date) {
         this.slot_id = slot_id;
         this.employee_id = employee_id;
         this.customer_id = customer_id;
@@ -42,19 +44,19 @@ public class Schedule {
         this.slot_id = slot_id;
     }
 
-    public Employee getEmployee_id() {
+    public int getEmployee_id() {
         return employee_id;
     }
 
-    public void setEmployee_id(Employee employee_id) {
+    public void setEmployee_id(int employee_id) {
         this.employee_id = employee_id;
     }
 
-    public Customer getCustomer_id() {
+    public int getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(Customer customer_id) {
+    public void setCustomer_id(int customer_id) {
         this.customer_id = customer_id;
     }
 
@@ -65,6 +67,8 @@ public class Schedule {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    
     
     
 }

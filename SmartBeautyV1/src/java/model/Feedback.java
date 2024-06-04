@@ -9,28 +9,22 @@ package model;
  * @author LENOVO
  */
 public class Feedback {
-    private Customer customer_id;
+    private int customer_id;
     private String description;
 
     public Feedback() {
     }
-    
-    /**
-     * constructor of feedback
-     * 
-     * @param customer_id of feedback of customer 
-     * @param description of feedback
-     */
-    public Feedback(Customer customer_id, String description) {
+
+    public Feedback(int customer_id, String description) {
         this.customer_id = customer_id;
         this.description = description;
     }
 
-    public Customer getCustomer_id() {
+    public int getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(Customer customer_id) {
+    public void setCustomer_id(int customer_id) {
         this.customer_id = customer_id;
     }
 
@@ -42,5 +36,12 @@ public class Feedback {
         this.description = description;
     }
     
+    /**
+     * constructor of feedback
+     * 
+     * @param customer_id of feedback of customer 
+     * @param description of feedback
+     */
+ 
     
 }
