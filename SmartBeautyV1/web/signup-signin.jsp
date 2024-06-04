@@ -39,10 +39,19 @@
                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your account</span>
+<<<<<<< Updated upstream
                     <input type="email" placeholder="Email" />
                     <input type="password" placeholder="Password" />
+=======
+                    <input name="username" type="text" placeholder="Username" value="${cookie.cusername != null ? cookie.cusername.value : ''} required=""/>
+                    <input name="password" type="password" placeholder="Password" value="${cookie.cpassword != null ? cookie.cpassword.value : ''} required=""/>
+                    <div class="form-group form-check">
+                        <input name="remember" value="1" type="checkbox"class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                    </div>
+>>>>>>> Stashed changes
                     <a href="#">Forgot your password?</a>
-                    <button>Sign In</button>
+                    <button type="submit">Sign In</button>
                 </form>
             </div>
             <div class="overlay-container">
