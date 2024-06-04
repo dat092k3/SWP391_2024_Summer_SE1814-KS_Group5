@@ -4,7 +4,7 @@
  */
 package com.group5.smartBeauty.test.core;
 
-import com.group5.smartBeauty.core.EmailValidator;
+import ultils.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -40,6 +40,8 @@ public class EmailValidatorTest {
         assertFalse(emailvalidatorTest.isValidEmail("user@example"));
         // Empty input
         assertFalse(emailvalidatorTest.isValidEmail(""));
+        // null
+        assertFalse(emailvalidatorTest.isValidEmail(null));
     }
     
 }
