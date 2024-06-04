@@ -7,7 +7,6 @@ package DAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import ultils.MD5;
 import context.DBContext;
 import model.Account;
 
