@@ -5,10 +5,11 @@
 
 package controller;
 
-import dal.AccountDAO;
+import DAO.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -69,22 +70,34 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session=request.getSession();
+        HttpSession session = request.getSession();
         AccountDAO d= new AccountDAO();
-        String email=request.getParameter("email");
-        String password=request.getParameter("password");
-        Account account=d.findAccount(email, password);
-        if(account==null){
-            session.setAttribute("error_login", "Your infomation is incorrect");
-            response.sendRedirect("login");
-        }else{
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        String rememmber = request.getParameter("remember");
+        Account account = d.findAccount(username, password);
+        Cookie emailphone_raw = new Cookie("username_raw", username);
+        Cookie password_raw = new Cookie("password_raw", password);
+        if (account == null) {
+            session.setAttribute("error_login", "your information is incorrect!");
+            response.sendRedirect("signup-signin.jsp");
+        } else {
             session.removeAttribute("error_login");
-            session.setAttribute("role", account.getAccount_id());
-            session.setMaxInactiveInterval(60*60*24);
-            response.sendRedirect("home");
+            session.setAttribute("account", account);
+            session.setAttribute("role", account.getRole());
+            session.setMaxInactiveInterval(60 * 60 * 3);
+            if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
+                emailphone_raw.setMaxAge(60 * 60);
+                password_raw.setMaxAge(60 * 60);
+                response.addCookie(password_raw);
+            } else {
+                emailphone_raw.setMaxAge(0);
+                password_raw.setMaxAge(0);
+                response.addCookie(password_raw);
+            }
+            response.addCookie(emailphone_raw);
+            response.sendRedirect("index.jsp");
         }
-        
     }
 
     /** 

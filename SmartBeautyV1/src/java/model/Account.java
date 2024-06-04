@@ -14,13 +14,22 @@ import java.sql.SQLException;
  */
 public class Account {
 
+    private int account_id;
     private String username;
     private String password;
     private String email;
     private String phoneNumber;
-    private int account_id;
+    private String role;
 
     public Account() {
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public int getAccount_id() {
@@ -30,13 +39,14 @@ public class Account {
     public void setAccount_id(int account_id) {
         this.account_id = account_id;
     }
-    
+
     public Account(ResultSet rs) throws SQLException {
         this.account_id = rs.getInt("account_id");
         this.username = rs.getString("username");
+        this.password = rs.getString("password");
         this.email = rs.getString("email");
         this.phoneNumber = rs.getString("phonenumber");
-        this.password = rs.getString("password");
+        this.role = rs.getString("role");
     }
 
     /**
@@ -47,14 +57,15 @@ public class Account {
      * @param email of customer input
      * @param phoneNumber of customer input
      * @param account_id of account
+     * @param role of account
      */
-
-    public Account(String username, String password, String email, String phoneNumber, int account_id) {
+    public Account(int account_id, String username, String password, String email, String phoneNumber, String role) {
+        this.account_id = account_id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.account_id = account_id;
+        this.role = role;
     }
 
     public String getUsername() {
