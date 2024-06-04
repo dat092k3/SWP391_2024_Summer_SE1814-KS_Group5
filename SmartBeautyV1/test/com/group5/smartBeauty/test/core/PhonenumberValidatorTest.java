@@ -4,7 +4,7 @@
  */
 package com.group5.smartBeauty.test.core;
 
-import com.group5.smartBeauty.core.PhoneNumberValidator;
+import ultils.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

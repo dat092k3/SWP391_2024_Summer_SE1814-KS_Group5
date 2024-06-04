@@ -76,8 +76,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String rememmber = request.getParameter("remember");
         Account account = d.findAccount(username, password);
-        Cookie emailphone_raw = new Cookie("username_raw", username);
-        Cookie password_raw = new Cookie("password_raw", password);
+        Cookie cusername = new Cookie("cusername", username);
+        Cookie cpassword = new Cookie("cpassword", password);
         if (account == null) {
             session.setAttribute("error_login", "your information is incorrect!");
             response.sendRedirect("signup-signin.jsp");
@@ -87,15 +87,15 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("role", account.getRole());
             session.setMaxInactiveInterval(60 * 60 * 3);
             if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
-                emailphone_raw.setMaxAge(60 * 60);
-                password_raw.setMaxAge(60 * 60);
-                response.addCookie(password_raw);
+                cusername.setMaxAge(60 * 60* 24);
+                cpassword.setMaxAge(60 * 60* 24);
+                response.addCookie(cpassword);
             } else {
-                emailphone_raw.setMaxAge(0);
-                password_raw.setMaxAge(0);
-                response.addCookie(password_raw);
+                cusername.setMaxAge(0);
+                cpassword.setMaxAge(0);
+                response.addCookie(cpassword);
             }
-            response.addCookie(emailphone_raw);
+            response.addCookie(cusername);
             response.sendRedirect("index.jsp");
         }
     }

@@ -4,7 +4,7 @@
  */
 package com.group5.smartBeauty.test.core;
 
-import com.group5.smartBeauty.core.UsernameValidator;
+import ultils.*;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -44,5 +44,7 @@ public class UsernameValidatorTest {
         assertFalse(usernameTest.isValidUsername("1username"));
         // empty input
         assertFalse(usernameTest.isValidUsername(""));
+        // null
+        assertFalse(usernameTest.isValidUsername(null));
     }
 }
