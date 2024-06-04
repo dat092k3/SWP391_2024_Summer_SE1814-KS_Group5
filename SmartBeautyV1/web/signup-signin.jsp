@@ -43,7 +43,7 @@
                     <span>or use your account</span>
                     <input name="username" type="text" placeholder="Username" required="" value="${cookie.cusername != null ? cookie.cusername.value : ''}" />
                     <input name="password" type="password" placeholder="Password" required="" value="${cookie.cpassword != null ? cookie.cpassword.value : ''}" />
-                           <div class="form-group form-check">
+                    <div class="form-group form-check">
                     <input name="remember" value="1" type="checkbox"class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Remember me</label>
             </div>
@@ -56,19 +56,15 @@
             <div class="overlay-panel overlay-left">
                 <h1>Welcome Back!</h1>
                 <p>To keep connected with us please login with your personal info</p> 
-                <button class="ghost" id="signIn">Sign In</button>  
-                <div class="back-home-button" style="border: 2px solid #ffffff; padding: 10px; display: inline-block; border-radius: 5px; margin-top: 5px">
-                    <a href="index.jsp" class="btn btn-primary" style="color: #ffffff">Home</a>
-                </div>
+                <button class="ghost" id="signIn">Sign In</button><br>
+                <button class="ghost" onclick="location.href='index.jsp'">Home</button>
 
             </div>
             <div class="overlay-panel overlay-right">
                 <h1>Hello, Friend!</h1>
                 <p>Enter your personal details and start journey with us</p>
-                <button class="ghost" id="signUp">Sign Up</button>
-                <div class="back-home-button" style="border: 2px solid #ffffff; padding: 10px; display: inline-block; border-radius: 5px; margin-top: 5px;">
-                    <a href="index.jsp" class="btn btn-primary" style="color: #ffffff">Home</a>
-                </div>
+                <button class="ghost" id="signUp">Sign Up</button><br>
+                <button class="ghost" onclick="location.href='index.jsp'">Home</button>
 
             </div>
         </div>
