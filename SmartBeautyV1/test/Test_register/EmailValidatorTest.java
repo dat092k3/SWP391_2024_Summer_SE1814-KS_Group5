@@ -2,13 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
  */
-package com.group5.smartBeauty.test.core;
+package Test_register;
 
-import ultils.*;
+import ultils.EmailValidator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import com.group5.smartBeauty.core.*;
 
 /**
  *

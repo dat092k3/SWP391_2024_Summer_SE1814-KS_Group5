@@ -87,8 +87,8 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("role", account.getRole());
             session.setMaxInactiveInterval(60 * 60 * 3);
             if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
-                cusername.setMaxAge(60 * 60* 24);
-                cpassword.setMaxAge(60 * 60* 24);
+                cusername.setMaxAge(60);
+                cpassword.setMaxAge(60);
                 response.addCookie(cpassword);
             } else {
                 cusername.setMaxAge(0);
