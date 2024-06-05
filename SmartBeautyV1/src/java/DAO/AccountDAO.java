@@ -66,8 +66,14 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    //Function give user signup
-    // Function to signup a new user securely
+    /**
+     * sign up
+     * 
+     * @param username is value of account want to register
+     * @param password is value of account want to register
+     * @param email is value of account want to register
+     * @param phonenumber is value of account want to register
+     */
     public void signup(String username, String password, String email, String phonenumber) {
         String sql = "INSERT INTO Account (username, password, email, phonenumber, role, status) VALUES (?, ?, ?, ?, 'Customer', 1)";
         try {
