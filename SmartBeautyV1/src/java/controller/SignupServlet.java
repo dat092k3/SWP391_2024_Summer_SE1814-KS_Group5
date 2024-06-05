@@ -73,17 +73,21 @@ public class SignupServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String re_password = request.getParameter("repassword");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
+        String re_password = request.getParameter("repassword").trim();
         String err_email = "", err_phone = "", err_username = "";
-        String email = request.getParameter("email");
-        String phonenumber = request.getParameter("phonenumber");
+        String email = request.getParameter("email").trim();
+        String phonenumber = request.getParameter("phonenumber").trim();
         String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+){1,2}$";
         String Phone_Regex = "^\\d{10}$";
         String Username_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]{4,15}$";
         boolean err = false;
-
+        if (username.isEmpty() || password.isEmpty() || re_password.isEmpty() || email.isEmpty() || phonenumber.isEmpty()) {
+            request.setAttribute("messen", "input not empty!");
+            request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
+            return;
+        }
         if (!email.matches(Email_Regex)) {
             err_email = "Email is invalid";
             request.getSession().setAttribute("err_email", err_email);
