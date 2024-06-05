@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpSession;
 import model.Account;
 
 /**
- *
+ * login to system
  * @author LENOVO
  */
 public class LoginServlet extends HttpServlet {

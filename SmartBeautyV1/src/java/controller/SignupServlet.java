@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Account;
 
 /**
- *
+ * register to access system
  * @author admin
  */
 public class SignupServlet extends HttpServlet {

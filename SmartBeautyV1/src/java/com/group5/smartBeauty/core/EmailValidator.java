@@ -5,11 +5,17 @@
 package com.group5.smartBeauty.core;
 
 /**
- *
+ * a class have information of email need follow
  * @author LENOVO
  */
 public class EmailValidator {
-
+    
+    /**
+     * check value email input 
+     * 
+     * @param email of account want to register
+     * @return true false
+     */
     public boolean isValidEmail(String email) {
         if (email == null || !email.contains("@") || email.startsWith("@") || email.endsWith("@")) {
             return false;

@@ -11,11 +11,18 @@ import context.DBContext;
 import model.Account;
 
 /**
- *
+ * access data in database
  * @author LENOVO
  */
 public class AccountDAO extends DBContext {
-
+    
+    /**
+     * find account in database to login
+     * 
+     * @param username of account want to login
+     * @param password of account want to login
+     * @return Account
+     */
     public Account findAccount(String username, String password) {
         String sql;
         if (username.contains("@")) {
@@ -35,7 +42,12 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    //check  account exits 
+    /**
+     * check account exist
+     * 
+     * @param username of account in database
+     * @return Account
+     */
     public Account checkAccountExists(String username) {
         String sql = "SELECT * FROM Account WHERE username = ? OR email = ?";
         try {

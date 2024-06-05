@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 /**
- *
+ * logout system
  * @author admin
  */
 public class LogoutServlet extends HttpServlet {
