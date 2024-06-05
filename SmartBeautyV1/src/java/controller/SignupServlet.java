@@ -120,13 +120,13 @@ public class SignupServlet extends HttpServlet {
                 response.sendRedirect("signup-signin.jsp");
             } else {
                 AccountDAO accountDAO = new AccountDAO();
-                Account account = accountDAO.checkAccountExists(username);
+                Account account = accountDAO.checkAccountExists(username, phonenumber);
                 if (account == null) {
                     accountDAO.signup(username, password, email, phonenumber);
                     request.setAttribute("messen1", "Sign Up Success, please log in.");
                     request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("messen", "Username already exists.");
+                    request.setAttribute("messen", "Username, email or phonenumber already exists.");
                     request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
                 }
             }

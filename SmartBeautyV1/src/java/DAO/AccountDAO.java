@@ -46,14 +46,16 @@ public class AccountDAO extends DBContext {
      * check account exist
      * 
      * @param username of account in database
+     * @param phonenumber of account in database
      * @return Account
      */
-    public Account checkAccountExists(String username) {
-        String sql = "SELECT * FROM Account WHERE username = ? OR email = ?";
+    public Account checkAccountExists(String username, String phonenumber) {
+        String sql = "SELECT * FROM Account WHERE username = ? OR email = ? OR phonenumber=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, username); // Can check both username and email
+            st.setString(3, phonenumber);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
                 return new Account(rs);
