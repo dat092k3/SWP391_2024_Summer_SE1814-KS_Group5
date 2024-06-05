@@ -23,10 +23,13 @@
                     </div>-->
                     <span>or use your email for registration</span>
                     <input name="username" type="text" placeholder="Username" required=""/>
+                    <span style="color: red">${err_username}</span>
                     <input name="password" type="password" placeholder="Password"  required=""/>
                     <input name="repassword" type="password" placeholder="Confirm Password"  required=""/>
-                    <input name="email" type="email" placeholder="Email" required="" />
+                    <input name="email" type="text" placeholder="Email" required="" />
+                    <span style="color: red">${err_email}</span>
                     <input name="phonenumber" type="text" placeholder="Phone" required="">
+                    <span style="color: red">${err_phone}</span>
                     <button>Sign Up</button>
                     <p style="color:red; font-weight: bold"> ${messen}</p>
                 </form>
@@ -47,6 +50,7 @@
                         <label class="form-check-label" for="exampleCheck1">Remember me</label>
                     </div>
                     <a href="#">Forgot your password?</a>
+                    
                     <button type="submit">Sign In</button>
                      <p style="color:red; font-weight: bold">${error_login}</p>
                       <p style="color:greenyellow; font-weight: bold"> ${messen1}</p>
