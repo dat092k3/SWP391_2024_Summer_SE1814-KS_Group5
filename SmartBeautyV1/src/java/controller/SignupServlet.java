@@ -79,7 +79,7 @@ public class SignupServlet extends HttpServlet {
         String err_email = "", err_phone = "", err_username = "";
         String email = request.getParameter("email");
         String phonenumber = request.getParameter("phonenumber");
-        String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)$";
+        String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+){1,2}$";
         String Phone_Regex = "^\\d{10}$";
         String Username_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]{4,15}$";
         boolean err = false;
@@ -89,7 +89,6 @@ public class SignupServlet extends HttpServlet {
             request.getSession().setAttribute("err_email", err_email);
             err = true;
         } else {
-            err_email = "";
             request.getSession().removeAttribute("err_email");
         }
 
@@ -98,7 +97,6 @@ public class SignupServlet extends HttpServlet {
             request.getSession().setAttribute("err_phone", err_phone);
             err = true;
         } else {
-            err_phone = "";
             request.getSession().removeAttribute("err_phone");
         }
 
@@ -107,7 +105,6 @@ public class SignupServlet extends HttpServlet {
             request.getSession().setAttribute("err_username", err_username);
             err = true;
         } else {
-            err_username = "";
             request.getSession().removeAttribute("err_username");
         }
 
