@@ -29,7 +29,7 @@
                                 <h4 class="text-right">Profile Settings</h4>
                             </div>
                             <div class="row mt-2">
-                                <div class="col-md-12"><label class="labels">Fullname</label><input type="text" class="form-control" placeholder="full name" value=""></div>                         
+                                <div class="col-md-12"><label class="labels">Fullname</label><input type="text" class="form-control" placeholder="Full name" value=""></div>                         
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-12"><label class="labels">Gender</label><input type="text" class="form-control" placeholder="Choose Gender" value="" required=""></div>
