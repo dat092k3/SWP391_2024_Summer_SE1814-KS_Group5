@@ -3,7 +3,7 @@
     Created on : May 10, 2024, 8:39:34 AM
     Author     : admin
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -40,11 +40,23 @@
                                         <li><a href="services.jsp">Classes & Services</a></li>
                                         <li><a href="blog.jsp">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
+                                            <c:if test="${sessionScope.account != null}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="logout">Logout</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="profile.jsp">Hello ${sessionScope.account.username}</a>
+                                            </li>
+                                        </c:if>
+                                        <c:if test="${sessionScope.account == null}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="signup-signin.jsp">Login</a>
+                                            </li>  
+                                        </c:if>
                                     </ul>
                                 </nav>
                                 <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
                                     <i class="fa fa-phone" aria-hidden="true"></i>
-                                    <div>652-345 3222 11</div>
                                 </div>
                             </div>
                         </div>
