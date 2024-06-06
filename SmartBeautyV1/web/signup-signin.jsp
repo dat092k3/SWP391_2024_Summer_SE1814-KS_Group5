@@ -49,7 +49,7 @@
                         <input name="remember" value="1" type="checkbox"class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Remember me</label>
                     </div>
-                    <a href="#">Forgot your password?</a>
+                    <a href="forgotpassword.jsp">Forgot your password?</a>
                     
                     <button type="submit">Sign In</button>
                      <p style="color:red; font-weight: bold">${error_login}</p>

@@ -84,8 +84,8 @@ public class LoginServlet extends HttpServlet {
         Cookie cpassword = new Cookie("cpassword", password);
         if (account == null) {
             session.setAttribute("error_login", "your information is incorrect!");
-            cusername.setMaxAge(60); // Keep username for a short time
-            cpassword.setMaxAge(60); // Keep password for a short time
+            cusername.setMaxAge(10); // Keep username for a short time
+            cpassword.setMaxAge(10); // Keep password for a short time
             response.addCookie(cusername);
             response.addCookie(cpassword);
             response.sendRedirect("signup-signin.jsp");
