@@ -4,6 +4,7 @@
     Author     : admin
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
     <head>
@@ -18,14 +19,48 @@
     <body>
         <div class="container-fluid">
             <div class="form-panel">
-                <form action="#" method="post">
+                <form action="forgotpassword" method="post">
                     <h2>Forgot Password</h2>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send to Mail</button>
+                    <c:if test="${requestScope.check == null}"></c:if>
+                    <c:if test="${requestScope.check != null}">
+                        <c:if test="${requestScope.check == 'true' && !(requestScope.message == 'Xin lỗi, mã đặt lại không chính xác')}">
+                            <p style="color: green">${requestScope.message}</p>
+                        </c:if>
+                        <c:if test="${requestScope.check == 'false'}">
+                            <p style="color: red">${requestScope.message}</p>
+                        </c:if>
+                        <c:if test="${requestScope.check == 'true' && requestScope.message == 'Xin lỗi, mã đặt lại không chính xác'}">
+                            <p style="color: red">${requestScope.message}</p>
+                        </c:if>
+                    </c:if>
+                    <c:if test="${requestScope.check == null || requestScope.check == 'false'}">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </c:if>
+                    <c:if test="${requestScope.check == null || requestScope.check == 'false'}">
+                        <button type="submit" class="btn btn-primary">Send to Mail</button>
+                    </c:if>
                 </form>
+                <c:if test="${requestScope.check != null && requestScope.check == 'true'}">
+                    <form action="confirmresetcode" method="post">
+                        <input name="email" value="${requestScope.email}" type="hidden">
+                        <div class="form-group">
+                            <div class="fxt-transformY-50 fxt-transition-delay-1">
+                                <input type="text" class="form-control" name="resetcode" placeholder="xxxxxx" required="required" value="${requestScope.code}">
+                                <i class="flaticon-envelope"></i>
+                            </div>
+                        </div>
+                        <c:if test="${requestScope.check != null && requestScope.check == 'true'}">
+                            <div class="form-group">
+                                <div class="fxt-transformY-50 fxt-transition-delay-2">
+                                    <button type="submit" class="fxt-btn-fill">Xác nhận mã đặt lại</button>
+                                </div>
+                            </div>
+                        </c:if>
+                    </form>
+                </c:if>
             </div>
             <div class="info-panel">
                 <h2>Hello, Friend!</h2>
