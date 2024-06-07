@@ -12,13 +12,14 @@ import model.Account;
 
 /**
  * access data in database
+ *
  * @author LENOVO
  */
 public class AccountDAO extends DBContext {
-    
+
     /**
      * find account in database to login
-     * 
+     *
      * @param username of account want to login
      * @param password of account want to login
      * @return Account
@@ -44,7 +45,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * check account exist
-     * 
+     *
      * @param username of account in database
      * @param phonenumber of account in database
      * @return Account
@@ -68,7 +69,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * sign up
-     * 
+     *
      * @param username is value of account want to register
      * @param password is value of account want to register
      * @param email is value of account want to register
@@ -85,6 +86,95 @@ public class AccountDAO extends DBContext {
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Signup error: " + e.getMessage());
+        }
+    }
+
+    /**
+     * function check email exist
+     *
+     * @param email of account
+     * @return email
+     */
+    public String checkEmailExist(String email) {
+        try {
+            String sql = "select * from Account where email = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return email;
+            }
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
+    /**
+     * function to do get username by email
+     *
+     * @param email of account
+     * @return username
+     */
+    public String getUserNameByEmail(String email) {
+        String sql = "SELECT Top 1 username FROM Account WHERE email =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            //set ?
+            st.setString(1, email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String name = rs.getString(1);
+                return name;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * function to do get account by username
+     *
+     * @param username of account
+     * @return Account
+     */
+    public Account getAccountByUserName(String username) {
+        String sql = "SELECT * FROM Account where username = ? and [status] = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            //set ?
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            //1
+            if (rs.next()) {
+                Account account = new Account(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6));
+                return account;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     * function to do update password
+     *
+     * @param password of account
+     * @param username of account
+     */
+    public void updatePassByUserName(String password, String username) {
+        String sql = "update Account set password = ? where username = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, password);
+            st.setString(2, username);
+            st.executeUpdate();
+        } catch (Exception e) {
         }
     }
 }

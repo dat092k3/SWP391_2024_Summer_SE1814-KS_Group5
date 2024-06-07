@@ -23,6 +23,16 @@
     <servlet>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <servlet-class>controller.ManageSupplierServlet</servlet-class>
+        <servlet-name>ForgotpasswordServlet</servlet-name>
+        <servlet-class>controller.ForgotpasswordServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmresetcodeServlet</servlet-name>
+        <servlet-class>controller.ConfirmresetcodeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmpassServlet</servlet-name>
+        <servlet-class>controller.ConfirmpassServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -43,5 +53,16 @@
     <servlet-mapping>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <url-pattern>/managesupplier</url-pattern>
+        <servlet-name>ForgotpasswordServlet</servlet-name>
+        <url-pattern>/forgotpassword</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmresetcodeServlet</servlet-name>
+        <url-pattern>/confirmresetcode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmpassServlet</servlet-name>
+        <url-pattern>/confirmpass</url-pattern>
+
     </servlet-mapping>
 </web-app>

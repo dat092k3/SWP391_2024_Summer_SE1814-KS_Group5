@@ -17,10 +17,10 @@
             <div class="form-container sign-up-container">
                 <form action="signup" method="post">
                     <h1>Create Account</h1>
-<!--                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                    </div>-->
+                    <!--                    <div class="social-container">
+                                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                        </div>-->
                     <span>or use your email for registration</span>
                     <input name="username" type="text" placeholder="Username" required=""/>
                     <span style="color: red">${err_username}</span>
@@ -37,11 +37,11 @@
             <div class="form-container sign-in-container">
                 <form action="login" method="post">
                     <h1>Sign in</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                    <!--                    <div class="social-container">
+                                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                        </div>-->
                     <span>or use your account</span>
                     <input name="username" type="text" placeholder="Username" required="" value="${cookie.cusername != null ? cookie.cusername.value : ''}" />
                     <input name="password" type="password" placeholder="Password" required="" value="${cookie.cpassword != null ? cookie.cpassword.value : ''}" />
@@ -50,10 +50,12 @@
                         <label class="form-check-label" for="exampleCheck1">Remember me</label>
                     </div>
                     <a href="forgotpassword.jsp">Forgot your password?</a>
-                    
                     <button type="submit">Sign In</button>
-                     <p style="color:red; font-weight: bold">${error_login}</p>
-                      <p style="color:greenyellow; font-weight: bold"> ${messen1}</p>
+                    <c:if test="${not empty successfully}">
+                        <div class="alert" style="color: green">${successfully}</div>
+                    </c:if>
+                    <p style="color:red; font-weight: bold">${error_login}</p>
+                    <p style="color:greenyellow; font-weight: bold"> ${messen1}</p>
                 </form>
             </div>
             <div class="overlay-container">
