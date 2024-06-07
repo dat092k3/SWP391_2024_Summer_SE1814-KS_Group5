@@ -22,7 +22,9 @@
     </servlet>
     <servlet>
         <servlet-name>ManageSupplierServlet</servlet-name>
-        <servlet-class>controller.ManageSupplierServlet</servlet-class>
+        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <servlet-class>controller.ForgotpasswordServlet</servlet-class>
     </servlet>
@@ -53,6 +55,8 @@
     <servlet-mapping>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <url-pattern>/managesupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
