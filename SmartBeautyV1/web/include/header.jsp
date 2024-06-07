@@ -21,6 +21,42 @@
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/about.css">
         <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
+        <style>
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #0069d9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+            .dropdown-content a {
+                color: green;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                border-radius: 10%;
+            }
+
+            .dropdown-content a:hover {
+                background-color: white;
+            }
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+            .dropdown:hover .dropbtn {
+                background-color: #34ce57;
+                color: white; /* Optional: change color when hovering over the dropdown */
+            }
+        </style>
     </head>
     <body>
         <div class="super_container">
@@ -40,7 +76,19 @@
                                         <li><a href="services.jsp">Classes & Services</a></li>
                                         <li><a href="blog.jsp">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
-                                            <c:if test="${sessionScope.account != null}">
+
+                                        <c:if test="${account.getRole() eq 'director'}">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropbtn">Manage</a>
+                                                <div class="dropdown-content">
+                                                    <a href="admin.jsp">Manage Manager</a>
+                                                    <a href="managesupplier">Manage Supplier</a>
+                                                    <a href="admin.jsp">Manage Equipment</a>
+                                                </div>
+                                            </li>
+                                        </c:if>     
+
+                                        <c:if test="${sessionScope.account != null}">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="logout">Logout</a>
                                             </li>
@@ -55,9 +103,11 @@
                                         </c:if>
                                     </ul>
                                 </nav>
-                                <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
-                                    <i class="fa fa-phone" aria-hidden="true"></i>
-                                </div>
+                                <c:if test="${account.getRole() ne 'director'}">
+                                    <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
+                                        <i class="fa fa-phone" aria-hidden="true"></i>
+                                    </div>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -80,3 +130,5 @@
         <script src="js/about.js"></script>
     </body>
 </html>
+
+
