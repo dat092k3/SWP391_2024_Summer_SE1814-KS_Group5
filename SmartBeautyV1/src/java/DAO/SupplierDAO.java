@@ -110,9 +110,9 @@ public class SupplierDAO extends DBContext {
                 + "where suplier_name =? and address=? and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            ResultSet rs = st.executeQuery();
             st.setString(1, name);
             st.setString(2, address);
+            ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
@@ -130,29 +130,29 @@ public class SupplierDAO extends DBContext {
                 + "           ,[status])\n"
                 + "     VALUES(?, ?, ?, ?, ?, 1)";
         try {
-            PreparedStatement st= connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, supplier.getSupplier_name());
             st.setString(2, supplier.getImage());
             st.setString(3, supplier.getAddress());
             st.setString(4, supplier.getPhoneNumber());
             st.setString(5, supplier.getEmail());
             st.executeQuery();
-        } catch (SQLException e){
-                System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
-    
-    public int getSupplierId(){
-        String sql="select MAX(suplier_id) from Suplier";
-         try {
-            PreparedStatement st= connection.prepareStatement(sql);
+
+    public int getSupplierId() {
+        String sql = "select MAX(suplier_id) from Suplier";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            if(rs.next()){
-                return rs.getInt(1)+1;
+            if (rs.next()) {
+                return rs.getInt(1) + 1;
             }
-        } catch (SQLException e){
-                System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-    return -1;
+        return -1;
     }
 }

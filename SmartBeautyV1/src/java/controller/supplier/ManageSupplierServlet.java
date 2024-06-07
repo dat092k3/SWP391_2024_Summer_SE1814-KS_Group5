@@ -20,18 +20,18 @@ import model.Supplier;
 
 @MultipartConfig
 public class ManageSupplierServlet extends HttpServlet {
-    
+
     // Standard value of email and phonenumber need to follow
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String PHONE_PATTERN = "^\\d{10,15}$";
-    
+
     /**
      * Up data from database to web
-     * 
+     *
      * @param request of director with data
      * @param response of system after director required
      * @throws ServletException
-     * @throws IOException 
+     * @throws IOException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,7 +66,7 @@ public class ManageSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -80,7 +80,7 @@ public class ManageSupplierServlet extends HttpServlet {
         String address = request.getParameter("address");
         String phoneNumber = request.getParameter("phonenumber");
         String email = request.getParameter("email");
-        
+
         // check value input by director
         if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)) {
             request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
@@ -94,6 +94,8 @@ public class ManageSupplierServlet extends HttpServlet {
                 Supplier newSupplier = new Supplier(name, "", address, phoneNumber, email, true);
                 if (supplierDAO.isSupplierExist(name, address)) {
                     request.setAttribute("message", "This supplier already exists");
+                    processRequest(request, response);
+                    return;
                 } else {
                     //  check and up image from device
                     Part part = request.getPart("img");
@@ -121,8 +123,8 @@ public class ManageSupplierServlet extends HttpServlet {
                     request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
                     processRequest(request, response);
                     return;
-                // check supplier is existed
-                }else if (supplierDAO.isSupplierExist(name, address)) {
+                    // check supplier is existed
+                } else if (supplierDAO.isSupplierExist(name, address)) {
                     request.setAttribute("message", "This supplier already exists");
                     processRequest(request, response);
                     return;
@@ -135,11 +137,11 @@ public class ManageSupplierServlet extends HttpServlet {
             }
         }
     }
-    
+
     /**
-     * check name supplier of  director input
-     * 
-     * @param name of director input 
+     * check name supplier of director input
+     *
+     * @param name of director input
      * @return true false
      */
     private boolean isValidName(String name) {
@@ -163,19 +165,20 @@ public class ManageSupplierServlet extends HttpServlet {
 
         return true;
     }
-    
+
     /**
      * check email need to follow standard Email_pattern
-     * 
+     *
      * @param email of supplier director input
      * @return true false
      */
     private boolean isValidEmail(String email) {
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
+
     /**
-     * check phonNumber need to follow standard Phone pattern 
-     * 
+     * check phonNumber need to follow standard Phone pattern
+     *
      * @param phoneNumber of supplier director input
      * @return true false
      */

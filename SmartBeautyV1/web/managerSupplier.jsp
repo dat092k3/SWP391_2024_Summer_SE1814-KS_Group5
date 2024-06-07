@@ -130,6 +130,11 @@
                         <form action="managesupplier" method="post">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Edit Supplier</h4>
+                                <c:if test="${message != null}">
+                                    <p style="color: #5cb85c;">
+                                        ${message}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="supplierId" type="hidden" class="form-control" required value="${supplier.supplier_id}">
