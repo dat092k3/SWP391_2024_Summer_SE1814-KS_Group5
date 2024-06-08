@@ -11,12 +11,21 @@ package model;
  */
 public class Blog {
 
-    private String blog_name;
+      private String blog_name;
+    private String image;
     private String description;
     private String content;
     private int employee_id;
 
     public Blog() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     /**
@@ -26,9 +35,11 @@ public class Blog {
      * @param description of blog
      * @param content of blog
      * @param employee_id of blog
+     * @param image of blog
      */
-    public Blog(String blog_name, String description, String content, int employee_id) {
+    public Blog(String blog_name, String image, String description, String content, int employee_id) {
         this.blog_name = blog_name;
+        this.image = image;
         this.description = description;
         this.content = content;
         this.employee_id = employee_id;
