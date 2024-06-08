@@ -3,7 +3,7 @@
     Created on : Jun 1, 2024, 8:21:46 PM
     Author     : admin
 --%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -50,6 +50,7 @@
                                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" >Save Profile</button></div>
                             </div>
                         </div>
+                        <c:if test="${account.getRole() == 'PT' }">
                         <div class="col-md-4">
                             <div class="p-3 py-5">
                                 <div class="d-flex justify-content-between align-items-center experience"><span>Edit Experience</span><span class="border px-3 p-1 add-experience"><i class="fa fa-plus"></i>&nbsp;Experience</span></div><br>
@@ -57,13 +58,14 @@
                                 <div class="col-md-12"><label class="labels">Additional Details</label><input type="text" class="form-control" placeholder="additional details" value=""></div>
                             </div>
                         </div>
-                    </div>
-                </div>    
-            </form>
-        </div>
+                    </c:if>
+                </div>
+            </div>    
+        </form>
     </div>
-    <script src="js/profile.js"></script>
-    <script src="js/profile1.js"></script>
+</div>
+<script src="js/profile.js"></script>
+<script src="js/profile1.js"></script>
 <jsp:include page="include/footer.jsp"></jsp:include>
 </body>
 </html>
