@@ -61,7 +61,7 @@ public class SearchServlet extends HttpServlet {
         String txtSearch = request.getParameter("txt");
         BlogDAO blogDAO = new BlogDAO();
         List<Blog> list;
-        if (txtSearch != null && !txtSearch.isEmpty()) {
+        if (txtSearch != null && !txtSearch.trim().isEmpty()) {
             list = blogDAO.searchBlogByName(txtSearch);
         } else {
             list = blogDAO.getAllBlog();
