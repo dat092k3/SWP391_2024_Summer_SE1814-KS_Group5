@@ -2,12 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.profilemanagement;
 
-import DAO.CustomerDAO;
-import DAO.DirectorDAO;
-import DAO.EmployeeDAO;
 import DAO.ManagerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -20,35 +16,38 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author admin
  */
-public class UpdateprofilecustomerServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class UpdateprofilemanagerServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateprofilecustomerServlet</title>");  
+            out.println("<title>Servlet UpdateprofilemanagerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateprofilecustomerServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateprofilemanagerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -56,7 +55,7 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
@@ -64,22 +63,15 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
         String phonenumber = request.getParameter("phonenumber");
         String address = request.getParameter("address");
         String image = request.getParameter("image");
-        float height = Float.parseFloat(request.getParameter("height"));
-        float weight = Float.parseFloat(request.getParameter("weight"));
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        CustomerDAO customerDAO = new CustomerDAO();
-        EmployeeDAO employeeDAO = new EmployeeDAO();
         ManagerDAO managerDAO = new ManagerDAO();
-        DirectorDAO directorDAO = new DirectorDAO();
-        customerDAO.updateProfileCustomer(fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight, account_id);
-        employeeDAO.updateProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
         managerDAO.updateProfileManager(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        directorDAO.updateProfileDirector(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        response.sendRedirect("profile?account_id="+account_id);
-    } 
+        response.sendRedirect("profile?account_id=" + account_id);
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -87,12 +79,13 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

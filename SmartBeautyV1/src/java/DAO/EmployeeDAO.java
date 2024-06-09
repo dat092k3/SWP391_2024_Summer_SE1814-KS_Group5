@@ -42,4 +42,43 @@ public class EmployeeDAO extends DBContext {
         }
         return null;
     }
+
+    /**
+     * function to do update ìfnomation employee
+     *
+     * @param fullname of employee
+     * @param gender of employee
+     * @param email of employee
+     * @param dateofbirth of employee
+     * @param phonenumber of employee
+     * @param address of employee
+     * @param image of employee
+     * @param account_id of employee
+     */
+    public void updateProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "                                 SET fullname = ?, \n"
+                + "                                gender = ?, \n"
+                + "                                email = ?, \n"
+                + "                                dateofbirth = ?, \n"
+                + "                                phonenumber = ?, \n"
+                + "                                address = ?, \n"
+                + "                                image = ? \n"
+                + "                                WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, image);
+            st.setInt(8, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
 }

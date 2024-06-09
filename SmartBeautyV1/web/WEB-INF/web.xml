@@ -48,6 +48,18 @@
         <servlet-name>UpdateprofilecustomerServlet</servlet-name>
         <servlet-class>controller.profilemanagement.UpdateprofilecustomerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateprofileemployeeServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofileemployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofilemanagerServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofilemanagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofiledirectorServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofiledirectorServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -91,5 +103,17 @@
     <servlet-mapping>
         <servlet-name>UpdateprofilecustomerServlet</servlet-name>
         <url-pattern>/updateprofilecustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofileemployeeServlet</servlet-name>
+        <url-pattern>/updateprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofilemanagerServlet</servlet-name>
+        <url-pattern>/updateprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofiledirectorServlet</servlet-name>
+        <url-pattern>/updateprofiledirector</url-pattern>
     </servlet-mapping>
 </web-app>

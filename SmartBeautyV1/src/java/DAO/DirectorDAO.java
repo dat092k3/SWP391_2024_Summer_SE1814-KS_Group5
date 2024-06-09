@@ -45,4 +45,42 @@ public class DirectorDAO extends DBContext {
         }
         return null;
     }
+
+    /**
+     * function to do update information Director
+     *
+     * @param fullname of Director
+     * @param gender of Director
+     * @param email of Director
+     * @param dateofbirth of Director
+     * @param phonenumber of Director
+     * @param address of Director
+     * @param image of Director
+     * @param account_id of Director
+     */
+    public void updateProfileDirector(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id) {
+        String sql = "UPDATE [dbo].[Director]\n"
+                + "                 SET fullname = ?, \n"
+                + "                gender = ?, \n"
+                + "                email = ?, \n"
+                + "                dateofbirth = ?, \n"
+                + "                phonenumber = ?, \n"
+                + "                address = ?, \n"
+                + "                image = ? \n"
+                + "                WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, image);
+            st.setInt(8, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }
