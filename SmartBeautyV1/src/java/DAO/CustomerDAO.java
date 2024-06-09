@@ -18,12 +18,12 @@ import model.Customer;
 public class CustomerDAO extends DBContext {
 
     /**
-     * function to do get customer by customer_id
+     * function to do get customer by account_id
      *
-     * @param customer_id is id of customer
+     * @param account_id is id of customer
      * @return account customer
      */
-      public Customer getCustomerById(int account_id) {
+    public Customer getCustomerById(int account_id) {
         String sql = "select * from Customer where account_id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -48,5 +48,49 @@ public class CustomerDAO extends DBContext {
             System.out.println(e);
         }
         return null;
+    }
+
+    /**
+     * function to do update infomation customer
+     *
+     * @param fullname of customer
+     * @param gender of customer
+     * @param email of customer
+     * @param dateofbirth of customer
+     * @param phonenumber of customer
+     * @param address of customer
+     * @param image of customer
+     * @param height of customer
+     * @param weight of customer
+     * @param account_id of customer
+     */
+    public void updateProfileCustomer(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, float height, float weight, int account_id) {
+        String sql = "UPDATE [dbo].[Customer] \n"
+                + "                 SET fullname = ?, \n"
+                + "                gender = ?, \n"
+                + "                email = ?, \n"
+                + "                dateofbirth = ?, \n"
+                + "                phonenumber = ?, \n"
+                + "                address = ?, \n"
+                + "                image = ?, \n"
+                + "                height = ?, \n"
+                + "                weight = ? \n"
+                + "                WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, image);
+            st.setFloat(8, height);
+            st.setFloat(9, weight);
+            st.setInt(10, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }
