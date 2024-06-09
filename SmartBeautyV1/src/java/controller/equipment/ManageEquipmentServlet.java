@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.supplier;
 
+package controller.equipment;
+
+import DAO.EquipmentDAO;
 import DAO.SupplierDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,15 +17,13 @@ import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.regex.Pattern;
+import model.Equipment;
 import model.Supplier;
+import model.TypeofEquipment;
 
 @MultipartConfig
-public class ManageSupplierServlet extends HttpServlet {
+public class ManageEquipmentServlet extends HttpServlet {
 
-    // Standard value of email and phonenumber need to follow
-    private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    private static final String PHONE_PATTERN = "^\\d{10}$";
 
     /**
      * Up data from database to web
@@ -38,27 +38,31 @@ public class ManageSupplierServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         SupplierDAO supplierDAO = new SupplierDAO();
-
-        String supplier_id = request.getParameter("supplierId");
+        EquipmentDAO equipmentDAO= new EquipmentDAO();
+        String equipmentId = request.getParameter("equipmentId");
         String message = (String) request.getAttribute("message");
 
         String action = request.getParameter("action");
         if (action != null && action.equals("delete")) {
-            supplierDAO.deleteSupplier(Integer.parseInt(supplier_id));
+            equipmentDAO.deleteEquipment(Integer.parseInt(equipmentId));
             message = "Status change successful!";
         } else {
             Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog");
-            if (supplier_id != null && showEditDialog == null) {
+            if (equipmentId != null && showEditDialog == null) {
                 request.setAttribute("showEditDialog", true);
-                Supplier supplier = supplierDAO.getSupplierById(Integer.parseInt(supplier_id));
-                request.setAttribute("supplier", supplier);
+                Equipment equipment=equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId));
+                request.setAttribute("equipment", equipment);
             }
         }
         request.setAttribute("message", message);
+        List<Equipment> allEquipment=equipmentDAO.getAllEquipment();
+        request.setAttribute("listEquipment", allEquipment);
         List<Supplier> allSupplier = supplierDAO.getAllSupplier();
         request.setAttribute("listSupplier", allSupplier);
+        List<TypeofEquipment> allTypeofEquipment= equipmentDAO.getAllTypeofEquipment();
+        request.setAttribute("allTypeofEquipment", allTypeofEquipment);
 
-        request.getRequestDispatcher("managersupplier.jsp").include(request, response);
+        request.getRequestDispatcher("managerequipment.jsp").include(request, response);
     }
 
     @Override
@@ -72,18 +76,20 @@ public class ManageSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierDAO supplierDAO = new SupplierDAO();
+        EquipmentDAO equipmentDAO= new EquipmentDAO();
         String action = request.getParameter("action");
-        String supplierId = request.getParameter("supplierId");
-        String name = request.getParameter("name");
+        String equipmentId = request.getParameter("equipmentId");
+        String nameEquipment = request.getParameter("nameequipment");
         String image = request.getParameter("image");
-        String address = request.getParameter("address");
-        String phoneNumber = request.getParameter("phonenumber");
-        String email = request.getParameter("email");
+        String quantity = request.getParameter("quantity");
+        String price= request.getParameter("price");
+        String description = request.getParameter("description");
+        String typeofequipment = request.getParameter("typeofequipment");
+        String supplier=request.getParameter("supplier");
 
         // check value input by director
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)) {
-            request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
+        if (!isValidName(nameEquipment)) {
+            request.setAttribute("message", "Invalid input. Please check the name format.");
             processRequest(request, response);
             return;
         }
@@ -91,45 +97,45 @@ public class ManageSupplierServlet extends HttpServlet {
         switch (action) {
             // process data if director input new supplier
             case "Add" -> {
-                Supplier newSupplier = new Supplier(name, "", address, phoneNumber, email, true);
-                if (supplierDAO.isSupplierExist(name, address)) {
-                    request.setAttribute("message", "This supplier already exists");
+                Equipment newEquipment= new Equipment(nameEquipment, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description, true);
+                if (equipmentDAO.isEquipmentExist(nameEquipment)) {
+                    request.setAttribute("message", "This Equipment already exists");
                     processRequest(request, response);
                     return;
                 } else {
                     //  check and up image from device
                     Part part = request.getPart("img");
-                    String realPath = request.getServletContext().getRealPath("/images/Accounts");
+                    String realPath = request.getServletContext().getRealPath("/images/Equipment");
                     String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
 
                     if (!source.isEmpty()) {
-                        String filename = supplierDAO.getSupplierId() + ".png";
+                        String filename = equipmentDAO.getEquipmentId() + ".png";
                         if (!Files.exists(Path.of(realPath))) {
                             Files.createDirectory(Path.of(realPath));
                         }
                         part.write(realPath + "/" + filename);
-                        newSupplier.setImage("/images/Accounts/" + filename);
+                        newEquipment.setImage("/images/Equipment/" + filename);
                     }
 
-                    supplierDAO.addNewSupplier(newSupplier);
+                    equipmentDAO.addNewEquipment(newEquipment);
                     request.setAttribute("message", "Create successful!");
                 }
                 processRequest(request, response);
             }
             // process data if director edit information supplier
             case "Save" -> {
-                Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
-                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)) {
-                    request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
+                Equipment editEquipment= new Equipment(Integer.parseInt(equipmentId), nameEquipment, Integer.parseInt(typeofequipment), image, Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description, true);
+                if (!isValidName(nameEquipment)) {
+                    request.setAttribute("message", "Invalid input. Please check the name format.");
                     processRequest(request, response);
                     return;
                     // check supplier is existed
-                } else if (supplierDAO.isSupplierExistWhenSave(name, address, phoneNumber, email)) {
-                    request.setAttribute("message", "This supplier already exists");
+                } else if (equipmentDAO.isEquipmentExist(nameEquipment)) {
+                    request.setAttribute("message", "This equipment already exists");
                     processRequest(request, response);
                     return;
                 } else {
-                    supplierDAO.updateSupplier(editSupplier);
+                    equipmentDAO.updateEquipment(editEquipment);
                     request.setAttribute("message", "Update successful!");
                     request.setAttribute("showEditDialog", false);
                     processRequest(request, response);
@@ -149,11 +155,6 @@ public class ManageSupplierServlet extends HttpServlet {
             return false;
         }
 
-        for (char c : name.toCharArray()) { // check name have no digits 
-            if (!Character.isLetter(c) && c != ' ') {
-                return false; // Contains non-letter characters and not a space
-            }
-        }
 
         // Check capitalization after spaces
         String[] nameParts = name.split("\\s+");
@@ -166,29 +167,9 @@ public class ManageSupplierServlet extends HttpServlet {
         return true;
     }
 
-    /**
-     * check email need to follow standard Email_pattern
-     *
-     * @param email of supplier director input
-     * @return true false
-     */
-    private boolean isValidEmail(String email) {
-        return email != null && Pattern.matches(EMAIL_PATTERN, email);
-    }
-
-    /**
-     * check phonNumber need to follow standard Phone pattern
-     *
-     * @param phoneNumber of supplier director input
-     * @return true false
-     */
-    private boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
-    }
 
     @Override
     public String getServletInfo() {
         return "Short description";
     }
 }
-

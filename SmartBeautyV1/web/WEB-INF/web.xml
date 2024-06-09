@@ -13,18 +13,6 @@
         <servlet-class>controller.SignupServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>createEmployeeServlet</servlet-name>
-        <servlet-class>controller.createEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SupplierServlet</servlet-name>
-        <servlet-class>controller.SupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ManageSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <servlet-class>controller.ForgotpasswordServlet</servlet-class>
     </servlet>
@@ -35,6 +23,14 @@
     <servlet>
         <servlet-name>ConfirmpassServlet</servlet-name>
         <servlet-class>controller.ConfirmpassServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.ManageEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -49,14 +45,6 @@
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>createEmployeeServlet</servlet-name>
-        <url-pattern>/createemployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManageSupplierServlet</servlet-name>
-        <url-pattern>/managesupplier</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
@@ -67,6 +55,13 @@
     <servlet-mapping>
         <servlet-name>ConfirmpassServlet</servlet-name>
         <url-pattern>/confirmpass</url-pattern>
-
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEquipmentServlet</servlet-name>
+        <url-pattern>/manageequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSupplierServlet</servlet-name>
+        <url-pattern>/managesupplier</url-pattern>
     </servlet-mapping>
 </web-app>

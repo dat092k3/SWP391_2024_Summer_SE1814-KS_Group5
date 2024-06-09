@@ -79,14 +79,14 @@
 
                                         <c:if test="${account.getRole() eq 'director'}">
                                             <li class="dropdown">
-                                                <a href="#" class="dropbtn">Manage</a>
+                                                <a href="javascript:void(0)" class="dropbtn">Manage</a>
                                                 <div class="dropdown-content">
-                                                    <a href="admin.jsp">Manage Manager</a>
                                                     <a href="managesupplier">Manage Supplier</a>
-                                                    <a href="admin.jsp">Manage Equipment</a>
+                                                    <a href="managemanager">Manage Manager</a>
+                                                    <a href="manageequipment">Manage Equipment</a>
                                                 </div>
                                             </li>
-                                        </c:if>     
+                                        </c:if>
 
                                         <c:if test="${sessionScope.account != null}">
                                             <li class="nav-item">
@@ -99,7 +99,7 @@
                                         <c:if test="${sessionScope.account == null}">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="signup-signin.jsp">Login</a>
-                                            </li>  
+                                            </li>
                                         </c:if>
                                     </ul>
                                 </nav>
@@ -130,5 +130,3 @@
         <script src="js/about.js"></script>
     </body>
 </html>
-
-
