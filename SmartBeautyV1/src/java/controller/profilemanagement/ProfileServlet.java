@@ -2,25 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.profilemanagement;
 
-import DAO.AccountDAO;
+import DAO.CustomerDAO;
+import DAO.DirectorDAO;
+import DAO.EmployeeDAO;
+import DAO.ManagerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
+import model.Customer;
+import model.Director;
+import model.Employee;
+import model.Manager;
 
 /**
- * login to system
  *
- * @author LENOVO
+ * @author admin
  */
-public class LoginServlet extends HttpServlet {
+public class ProfileServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +42,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet ProfileServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +63,21 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        CustomerDAO dao = new CustomerDAO();
+        EmployeeDAO employeeDAO = new EmployeeDAO();
+        ManagerDAO managerDAO = new ManagerDAO();
+        DirectorDAO directorDAO = new DirectorDAO();
+        Customer customer = dao.getCustomerById(account_id);
+        Employee employee = employeeDAO.getEmployeeById(account_id);
+        Manager manager = managerDAO.getManagerById(account_id);
+        Director director = directorDAO.getDirectorById(account_id);
+        request.setAttribute("p", customer);
+        request.setAttribute("e", employee);
+        request.setAttribute("m", manager);
+        request.setAttribute("d", director);
+
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**
@@ -74,40 +91,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        AccountDAO d = new AccountDAO();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String rememmber = request.getParameter("remember");
-        Account account = d.findAccount(username, password);
-        Cookie cusername = new Cookie("cusername", username);
-        Cookie cpassword = new Cookie("cpassword", password);
-        if (account == null) {
-            session.setAttribute("error_login", "your information is incorrect!");
-            cusername.setMaxAge(10); // Keep username for a short time
-            cpassword.setMaxAge(10); // Keep password for a short time
-            response.addCookie(cusername);
-            response.addCookie(cpassword);
-            response.sendRedirect("signup-signin.jsp");
-        } else {
-            session.removeAttribute("error_login");
-            session.setAttribute("account", account);
-            session.setAttribute("role", account.getRole());
-            session.setAttribute("account_id", account.getAccount_id());
-            session.setMaxInactiveInterval(60 * 60 * 3);
-            if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
-                cusername.setMaxAge(60 * 60);
-                cpassword.setMaxAge(60 * 60);
-                response.addCookie(cpassword);
-            } else {
-                cusername.setMaxAge(0);
-                cpassword.setMaxAge(0);
-                response.addCookie(cpassword);
-            }
-            response.addCookie(cpassword);
-            response.addCookie(cusername);
-            response.sendRedirect("index.jsp");
-        }
+        processRequest(request, response);
     }
 
     /**

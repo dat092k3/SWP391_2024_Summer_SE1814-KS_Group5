@@ -16,7 +16,7 @@ public class Director {
     private String fullName;
     private String gender;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String phoneNumber;
     private String address;
     private Date hireDate;
@@ -24,10 +24,10 @@ public class Director {
 
     public Director() {
     }
-    
+
     /**
      * constructor of director
-     * 
+     *
      * @param director_id of director
      * @param account_id of director
      * @param fullName of director
@@ -39,9 +39,7 @@ public class Director {
      * @param hireDate of director
      * @param image of director
      */
-    
-
-    public Director(int director_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, Date hireDate, String image) {
+    public Director(int director_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, String image) {
         this.director_id = director_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -62,15 +60,6 @@ public class Director {
         this.director_id = director_id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    
     public int getAccount_id() {
         return account_id;
     }
@@ -103,11 +92,11 @@ public class Director {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -133,6 +122,14 @@ public class Director {
 
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
     
     

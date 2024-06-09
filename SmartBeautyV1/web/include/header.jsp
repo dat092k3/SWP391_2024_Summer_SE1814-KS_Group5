@@ -93,7 +93,7 @@
                                                 <a class="nav-link" href="logout">Logout</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="profile.jsp">Hello ${sessionScope.account.username}</a>
+                                                <a class="nav-link" href="profile?account_id=${sessionScope.account.account_id}">Hello ${sessionScope.account.username}</a>
                                             </li>
                                         </c:if>
                                         <c:if test="${sessionScope.account == null}">

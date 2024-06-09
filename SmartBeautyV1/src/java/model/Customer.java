@@ -8,15 +8,17 @@ import java.util.Date;
 
 /**
  * a class have information of customer
+ *
  * @author LENOVO
  */
 public class Customer {
+
     private int customer_id;
     private int account_id;
     private String fullName;
     private String gender;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String phoneNumber;
     private String address;
     private String image;
@@ -25,10 +27,10 @@ public class Customer {
 
     public Customer() {
     }
-    
+
     /**
      * constructor of customer
-     * 
+     *
      * @param customer_id of customer
      * @param account_id of customer
      * @param fullName of customer
@@ -41,8 +43,7 @@ public class Customer {
      * @param height of customer
      * @param weight of customer
      */
-    
-    public Customer(int customer_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, String image, float height, float weight) {
+    public Customer(int customer_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, String image, float height, float weight) {
         this.customer_id = customer_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -64,15 +65,6 @@ public class Customer {
         this.customer_id = customer_id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    
     public int getAccount_id() {
         return account_id;
     }
@@ -105,11 +97,11 @@ public class Customer {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -129,6 +121,14 @@ public class Customer {
         this.address = address;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public float getHeight() {
         return height;
     }
@@ -144,6 +144,5 @@ public class Customer {
     public void setWeight(float weight) {
         this.weight = weight;
     }
-    
-    
+
 }

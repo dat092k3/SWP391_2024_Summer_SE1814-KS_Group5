@@ -11,12 +11,12 @@ import java.util.Date;
  * @author LENOVO
  */
 public class Employee {
-    private int employee_id;
+     private int employee_id;
     private int account_id;
     private String fullName;
     private String gender;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String phoneNumber;
     private String address;
     private Date hireDate;
@@ -27,10 +27,10 @@ public class Employee {
 
     public Employee() {
     }
-    
+
     /**
      * constructor of employee
-     * 
+     *
      * @param employee_id of employee
      * @param account_id of employee
      * @param fullName of employee
@@ -45,13 +45,7 @@ public class Employee {
      * @param department_id of employee
      * @param experience of employee
      */
-    
-
-    
-
-    
-
-    public Employee(int employee_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, String experience, int department_id) {
+    public Employee(int employee_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, String experience, int department_id) {
         this.employee_id = employee_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -107,11 +101,11 @@ public class Employee {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -171,6 +165,7 @@ public class Employee {
         this.department_id = department_id;
     }
 
+  
   
     
 }

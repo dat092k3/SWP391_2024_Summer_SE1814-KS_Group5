@@ -11,24 +11,24 @@ import java.util.Date;
  * @author LENOVO
  */
 public class Manager {
-    private int manager_id;
+   private int manager_id;
     private int account_id;
     private String fullName;
     private String gender;
     private String email;
-    private Date dateOfBirth;
+    private String dateOfBirth;
     private String phoneNumber;
     private String address;
     private Date hireDate;
-    private String image;
     private float salary;
+    private String image;
 
     public Manager() {
     }
-    
+
     /**
      * constructor of manager
-     * 
+     *
      * @param manager_id of manager
      * @param account_id of manager
      * @param fullName of manager
@@ -41,9 +41,7 @@ public class Manager {
      * @param image of manager
      * @param salary of manager
      */
-    
-
-    public Manager(int manager_id, int account_id, String fullName, String gender, String email, Date dateOfBirth, String phoneNumber, String address, Date hireDate, String image, float salary) {
+    public Manager(int manager_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image) {
         this.manager_id = manager_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -53,8 +51,8 @@ public class Manager {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.hireDate = hireDate;
-        this.image = image;
         this.salary = salary;
+        this.image = image;
     }
 
     public int getManager_id() {
@@ -65,15 +63,6 @@ public class Manager {
         this.manager_id = manager_id;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    
     public int getAccount_id() {
         return account_id;
     }
@@ -106,11 +95,11 @@ public class Manager {
         this.email = email;
     }
 
-    public Date getDateOfBirth() {
+    public String getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -145,6 +134,15 @@ public class Manager {
     public void setSalary(float salary) {
         this.salary = salary;
     }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     
     
 }
