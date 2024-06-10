@@ -48,6 +48,12 @@
                             </div>
                             <div class="col-sm-6">
                                 <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Equipment</span></a>
+                                <div class="search-box">
+                                    <form action="manageequipment" method="get">
+                                        <input type="text" name="search" placeholder="Search equipment...">
+                                        <button type="submit">Search</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -199,8 +205,6 @@
                     </div>
                 </div>
             </div>
-
-        </a>
         <c:if test="${showEditDialog}">
             <script>
                 $("#editEmployeeModal").modal('show');
