@@ -3,7 +3,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html lang="en">
     <head>
-        <title>Blog</title>
+        <title>Blog Details</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="SportFIT template project">
@@ -13,12 +13,22 @@
         <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
         <style>
-            /* Additional CSS for aligning the form to the right */
-            .search-form-container {
+            .blog_detail_container {
                 display: flex;
-                justify-content: flex-end;
+                flex-wrap: wrap;
             }
-
+            .blog_image {
+                flex: 1 0 25%; /* chiếm 25% diện tích, tức 1 ô */
+                max-width: 25%;
+                box-sizing: border-box;
+                padding: 10px;
+            }
+            .blog_content {
+                flex: 3 0 75%; /* chiếm 75% diện tích, tức 3 ô */
+                max-width: 75%;
+                box-sizing: border-box;
+                padding: 10px;
+            }
         </style>
     </head>
     <body>
@@ -36,52 +46,35 @@
                 <!-- Blog -->
 
                 <div class="blog">
-                    <div class="search-form-container">
-                        <form action="search" method="get" class="form-inline my-2 my-lg-0">
-                            <div class="input-group input-group-sm">
-                                <input value="${txtS}" name="txt" type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-secondary btn-number">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="section_title_container">
-                                <div class="section_subtitle">welcome to sportfit</div>
-                                <div class="section_title">The Blog</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row blog_row">
-
-                        <!-- Blog Post -->
-                        <c:forEach items="${requestScope.list}" var="blog">
-                            <div class="col-xl-4 col-md-6 blog_col">
-                                <div class="blog_post">
-                                    <div class="blog_post_image"><img src="${blog.image}" alt="" width="100%"></div>
-                                    <div class="blog_post_title"><a href="blogdetails?id=${blog.blog_id}">${blog.blog_name}</a></div>
-                                    <div class="blog_post_date"></a>${blog.description}</div>
-                                    <div class="blog_post_text">
-                                        <p>${blog.content}</p>
-                                    </div>
-                                    <div class="blog_post_link"><a href="blogdetails?id=${blog.blog_id}">Read More</a></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="section_title_container">
+                                    <div class="section_subtitle">welcome to sportfit</div>
+                                    <div class="section_title">The Blog Details</div>
                                 </div>
                             </div>
-                        </c:forEach>
+                        </div>
+                        <div class="row blog_row blog_detail_container">
+
+                            <!-- Blog Post -->
+                            <div class="col-xl-6 col-md-6 blog_col blog_image">
+                                <img src="${blog.image}" alt="Blog Image" class="img-fluid">
+                        </div>
+                        <div class="col-xl-6 col-md-6 blog_col blog_content">
+                            <h1>${blog.blog_name}</h1>
+                            <p>${blog.description}</p>
+                            <p>${blog.content}</p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="button blog_button ml-auto mr-auto"><a href="#">Load More</a></div>
+                            <div class="button blog_button ml-auto mr-auto"><a href="search">Blogs/Search</a></div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
         </div>

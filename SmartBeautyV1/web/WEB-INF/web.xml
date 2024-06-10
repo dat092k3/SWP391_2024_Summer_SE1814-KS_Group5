@@ -60,6 +60,10 @@
         <servlet-name>UpdateprofiledirectorServlet</servlet-name>
         <servlet-class>controller.profilemanagement.UpdateprofiledirectorServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailsServlet</servlet-name>
+        <servlet-class>controller.blogmanagement.DetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -115,5 +119,9 @@
     <servlet-mapping>
         <servlet-name>UpdateprofiledirectorServlet</servlet-name>
         <url-pattern>/updateprofiledirector</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailsServlet</servlet-name>
+        <url-pattern>/blogdetails</url-pattern>
     </servlet-mapping>
 </web-app>

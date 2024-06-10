@@ -32,6 +32,7 @@ public class BlogDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Blog blog = new Blog(
+                        rs.getInt("blog_id"),
                         rs.getString("blog_name"),
                         rs.getString("image"),
                         rs.getString("description"),
@@ -57,6 +58,7 @@ public class BlogDAO extends DBContext {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Blog blog = new Blog(
+                        rs.getInt("blog_id"),
                         rs.getString("blog_name"),
                         rs.getString("image"),
                         rs.getString("description"),
@@ -69,6 +71,34 @@ public class BlogDAO extends DBContext {
             System.out.println("Error fetching all blogs: " + e.getMessage());
         }
         return list;
+    }
+    
+    /**
+     * function to do take blog information by id
+     *
+     * @param blogId is text of search
+     * @return blog
+     */
+    public Blog takeBlogById(int blogId) {
+        Blog blog = new Blog();
+        String sql = "SELECT * FROM Blog WHERE blog_id LIKE ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, "%" + blogId + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                blog = new Blog(
+                        rs.getInt("blog_id"),
+                        rs.getString("blog_name"),
+                        rs.getString("image"),
+                        rs.getString("description"),
+                        rs.getString("content"),
+                        rs.getInt("employee_id")
+                );
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return blog;
     }
 
 }
