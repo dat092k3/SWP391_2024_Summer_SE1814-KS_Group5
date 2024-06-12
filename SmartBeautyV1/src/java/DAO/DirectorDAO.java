@@ -19,7 +19,7 @@ public class DirectorDAO extends DBContext {
     /**
      * function to do get director by director_id
      *
-     * @param director_id is id of director
+     * @param account_id is id of director
      * @return account director
      */
     public Director getDirectorById(int account_id) {

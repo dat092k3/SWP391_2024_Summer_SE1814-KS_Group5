@@ -5,7 +5,7 @@
 package controller.supplier;
 
 import DAO.SupplierDAO;
-import DAO.SupplierInterface;
+import Interface.SupplierInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
