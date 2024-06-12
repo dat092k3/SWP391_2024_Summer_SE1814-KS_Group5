@@ -119,6 +119,24 @@ public class SupplierDAO extends DBContext {
             return false;
         }
     }
+    
+    public boolean isSupplierExistWhenSave(String name, String address,String image, String phonenumber, String email) {
+        String sql = "select * from Suplier\n"
+                + "where suplier_name =? and address=? and image=? and phonenumber=? and email=? and status=1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, address);
+            st.setString(3, image);
+            st.setString(4, phonenumber);
+            st.setString(5, email);
+            ResultSet rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+            return false;
+        }
+    }
 
     public void addNewSupplier(Supplier supplier) {
         String sql = "INSERT INTO [dbo].[Suplier]\n"

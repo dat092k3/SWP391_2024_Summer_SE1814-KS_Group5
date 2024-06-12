@@ -23,7 +23,7 @@ public class ManageSupplierServlet extends HttpServlet {
 
     // Standard value of email and phonenumber need to follow
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-    private static final String PHONE_PATTERN = "^\\d{10,15}$";
+    private static final String PHONE_PATTERN = "^\\d{10}$";
 
     /**
      * Up data from database to web
@@ -124,7 +124,7 @@ public class ManageSupplierServlet extends HttpServlet {
                     processRequest(request, response);
                     return;
                     // check supplier is existed
-                } else if (supplierDAO.isSupplierExist(name, address)) {
+                } else if (supplierDAO.isSupplierExistWhenSave(name, address,image, phoneNumber, email)) {
                     request.setAttribute("message", "This supplier already exists");
                     processRequest(request, response);
                     return;
