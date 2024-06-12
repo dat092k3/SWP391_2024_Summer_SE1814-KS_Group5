@@ -10,7 +10,7 @@ var wards = document.getElementById("ward");
 var Parameter = {
     url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
     method: "GET",
-    responseType: "application/json",
+    responseType: "application/json"
 };
 var promise = axios(Parameter);
 promise.then(function (result) {
