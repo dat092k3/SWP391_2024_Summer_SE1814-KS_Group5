@@ -57,7 +57,7 @@ public class ManageSupplierServlet extends HttpServlet {
         request.setAttribute("message", message);
         List<Supplier> allSupplier = supplierDAO.getAllSupplier();
         request.setAttribute("listSupplier", allSupplier);
-        request.getRequestDispatcher("./managersupplier.jsp").include(request, response);
+        request.getRequestDispatcher("./managerSupplier.jsp").include(request, response);
         
     }
 

@@ -70,7 +70,7 @@ public class SearchSupplierServlet extends HttpServlet {
         }
         request.setAttribute("listSupplier", list);
         request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managersupplier.jsp").forward(request, response);
+        request.getRequestDispatcher("managerSupplier.jsp").forward(request, response);
         
     } 
 
