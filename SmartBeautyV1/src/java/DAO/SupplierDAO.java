@@ -16,8 +16,9 @@ import model.Supplier;
  *
  * @author LENOVO
  */
-public class SupplierDAO extends DBContext {
+public class SupplierDAO extends DBContext implements SupplierInterface{
 
+    @Override
     public List<Supplier> getAllSupplier() {
         List<Supplier> listSupplier = new ArrayList<>();
         String sql = "SELECT [suplier_id]\n"
@@ -48,6 +49,7 @@ public class SupplierDAO extends DBContext {
         return listSupplier;
     }
 
+    @Override
     public void deleteSupplier(int suplier_id) {
         String sql = "UPDATE [dbo].[Suplier]\n"
                 + "   SET [status] = 0\n"
@@ -61,6 +63,7 @@ public class SupplierDAO extends DBContext {
         }
     }
 
+    @Override
     public void updateSupplier(Supplier supplier) {
         String sql = "UPDATE [dbo].[Suplier]\n"
                 + "   SET [suplier_name] = ?\n"
@@ -84,6 +87,7 @@ public class SupplierDAO extends DBContext {
         }
     }
 
+    @Override
     public Supplier getSupplierById(int id) {
         String sql = "select * from Suplier where status=1 and suplier_id=" + id;
         try {
@@ -105,6 +109,7 @@ public class SupplierDAO extends DBContext {
         return null;
     }
 
+    @Override
     public boolean isSupplierExist(String name, String address) {
         String sql = "select * from Suplier\n"
                 + "where suplier_name =? and address=? and status=1";
@@ -120,6 +125,7 @@ public class SupplierDAO extends DBContext {
         }
     }
     
+    @Override
     public boolean isSupplierExistWhenSave(String name, String address,String image, String phonenumber, String email) {
         String sql = "select * from Suplier\n"
                 + "where suplier_name =? and address=? and image=? and phonenumber=? and email=? and status=1";
@@ -138,6 +144,7 @@ public class SupplierDAO extends DBContext {
         }
     }
 
+    @Override
     public void addNewSupplier(Supplier supplier) {
         String sql = "INSERT INTO [dbo].[Suplier]\n"
                 + "           ([suplier_name]\n"
@@ -160,6 +167,7 @@ public class SupplierDAO extends DBContext {
         }
     }
 
+    @Override
     public int getSupplierId() {
         String sql = "select MAX(suplier_id) from Suplier";
         try {
@@ -174,6 +182,7 @@ public class SupplierDAO extends DBContext {
         return -1;
     }
     
+    @Override
     public List<Supplier> findSupplierByName(String nameSearch){
         List<Supplier> list= new ArrayList<>();
         String sql = "select * from Suplier where status=1";

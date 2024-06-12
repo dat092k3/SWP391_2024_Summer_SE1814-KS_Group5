@@ -133,7 +133,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
-                                    <input name="img" type="file" accept="image/*" class="form-control" required>
+                                    <div class="input-group">
+                                        <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                        <label for="inputGroupFile04"><img src=".${equipment.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${equipment.image}"></label>
+                                    </div>
                                 </div> 
                                 <div class="form-group">
                                     <label>Quantity</label>
@@ -174,7 +177,7 @@
                     <div class="modal-content">
                         <form action="manageequipment" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
-                                <h4 class="modal-title">Edit Supplier</h4>
+                                <h4 class="modal-title">Edit Equipment</h4>
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
                                         ${message}
@@ -182,15 +185,15 @@
                                 </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
-                            <input name="equipmentId" type="hidden" class="form-control" required value="${equipment.equipment_id}">
+                            <input name="equipmentId" type="hidden" class="form-control" required value="${equipment.equipment_id}"/>
                             <div class="modal-body">	
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input name="nameequipment" type="text" class="form-control" required="" value="${equipment.equipment_name}">
+                                    <input name="nameequipment" type="text" class="form-control" required="" value="${equipment.equipment_name}"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input name="price" type="number" class="form-control" required value="${equipment.price}">
+                                    <input name="price" type="number" class="form-control" required value="${equipment.price}"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
@@ -201,7 +204,7 @@
                                 </div> 
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input name="quantity" type="number" class="form-control" value="${equipment.quantity}" required>
+                                    <input name="quantity" type="number" class="form-control" value="${equipment.quantity}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>

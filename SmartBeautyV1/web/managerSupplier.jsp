@@ -31,17 +31,17 @@
                     window.location = "managesupplier?action=delete&supplierId=" + supplier_id;
                 }
             }
-            
-            function chooseFile(fileInput) {
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#image').attr('src', e.target.result);
+            function chooseFile(fileInput) {
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
                 }
-                reader.readAsDataURL(fileInput.files[0]);
             }
-        }
         </script>
     <body>
         <div class="page-wrapper">
@@ -122,11 +122,16 @@
                                     <input name="name" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Image</label>
-                                    <input name="img" type="file" accept="image/*" class="form-control" required>
+                                    <div class="form-group">
+                                        <label>Image</label>
+                                        <div class="input-group">
+                                            <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                            <label for="inputGroupFile04"><img src=".${supplier.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${supplier.image}"></label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Address</label>
+                                    <label class="labels">Address</label>
                                     <input name="address" type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
@@ -150,7 +155,7 @@
             <div id="editEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="managesupplier" method="post">
+                        <form action="managesupplier" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Edit Supplier</h4>
                                 <c:if test="${message != null}">

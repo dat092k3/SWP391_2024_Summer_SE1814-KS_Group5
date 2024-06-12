@@ -58,7 +58,7 @@ public class ManageSupplierServlet extends HttpServlet {
         List<Supplier> allSupplier = supplierDAO.getAllSupplier();
         request.setAttribute("listSupplier", allSupplier);
         request.getRequestDispatcher("./managersupplier.jsp").include(request, response);
-        
+
     }
 
     @Override
@@ -124,7 +124,7 @@ public class ManageSupplierServlet extends HttpServlet {
                     processRequest(request, response);
                     return;
                     // check supplier is existed
-                } else if (supplierDAO.isSupplierExistWhenSave(name, address,image, phoneNumber, email)) {
+                } else if (supplierDAO.isSupplierExistWhenSave(name, address, image, phoneNumber, email)) {
                     request.setAttribute("message", "This supplier already exists");
                     processRequest(request, response);
                     return;
