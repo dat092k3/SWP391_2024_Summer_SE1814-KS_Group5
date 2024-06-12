@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="styles/manager.css" rel="stylesheet" type="text/css"/>
         <style>
@@ -30,6 +31,17 @@
                     window.location = "managesupplier?action=delete&supplierId=" + supplier_id;
                 }
             }
+            
+            function chooseFile(fileInput) {
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
         </script>
     <body>
         <div class="page-wrapper">
@@ -47,7 +59,18 @@
                                 </c:if>
                             </div>
                             <div class="col-sm-6">
-                                <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Supplier</span></a>
+                                <a href="#addEmployeeModal"  class="btn btn-success" data-toggle="modal">
+                                    <i class="material-icons">&#xE147;</i> 
+                                    <span>Add New Supplier</span>
+                                </a>
+                                <div class="search-box" style="display: inline-block; float: right;">
+                                    <form action="searchsupplier" method="get">
+                                        <input id="searchId" type="text" value="${requestScope.searchValue != null ? requestScope.searchValue : ""}" name="search" placeholder="Search supplier" class="form-control" style="width: 200px; display: inline-block;">
+                                        <button type="submit" class="btn btn-primary" style="display: inline-block;">
+                                            Search
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -63,7 +86,7 @@
                                 <th>Options</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="content">
                             <c:forEach items="${listSupplier}" var="supplier">
                                 <tr>
                                     <td>${supplier.supplier_id}</td>
@@ -145,7 +168,10 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
-                                    <input name="image" type="text" class="form-control" required value="${supplier.image}">
+                                    <div class="input-group">
+                                        <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                        <label for="inputGroupFile04"><img src=".${supplier.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${supplier.image}"></label>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>

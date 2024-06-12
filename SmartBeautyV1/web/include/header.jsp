@@ -83,7 +83,7 @@
                                                 <div class="dropdown-content">
                                                     <a href="admin.jsp">Manage Manager</a>
                                                     <a href="managesupplier">Manage Supplier</a>
-                                                    <a href="admin.jsp">Manage Equipment</a>
+                                                    <a href="manageequipment">Manage Equipment</a>
                                                 </div>
                                             </li>
                                         </c:if>     

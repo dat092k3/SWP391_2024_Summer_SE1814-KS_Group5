@@ -155,4 +155,30 @@ public class SupplierDAO extends DBContext {
         }
         return -1;
     }
+    
+    public List<Supplier> findSupplierByName(String nameSearch){
+        List<Supplier> list= new ArrayList<>();
+        String sql = "select * from Suplier where status=1";
+        if (nameSearch != null && !nameSearch.trim().equals("")) {
+            sql += "and suplier_name like ?";
+        }
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setString(1, "%"+nameSearch+"%");
+            ResultSet rs=st.executeQuery();
+            while(rs.next()){
+                int supplier_id=rs.getInt("suplier_id");
+                String supplier_name=rs.getString("suplier_name");
+                String image=rs.getString("image");
+                String address=rs.getString("address");
+                String phonenumber=rs.getString("phonenumber");
+                String email=rs.getString("email");
+                boolean status= rs.getBoolean("status");
+                list.add(new Supplier(supplier_id, supplier_name, image, address, phonenumber, email, status));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }

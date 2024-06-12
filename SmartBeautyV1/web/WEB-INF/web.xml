@@ -21,10 +21,6 @@
         <servlet-class>controller.SupplierServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ManageSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <servlet-class>controller.ForgotpasswordServlet</servlet-class>
     </servlet>
@@ -64,6 +60,22 @@
         <servlet-name>DetailsServlet</servlet-name>
         <servlet-class>controller.blogmanagement.DetailsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.SearchEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.SearchSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.ManageEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -79,10 +91,6 @@
     <servlet-mapping>
         <servlet-name>createEmployeeServlet</servlet-name>
         <url-pattern>/createemployee</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ManageSupplierServlet</servlet-name>
-        <url-pattern>/managesupplier</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotpasswordServlet</servlet-name>
@@ -123,5 +131,21 @@
     <servlet-mapping>
         <servlet-name>DetailsServlet</servlet-name>
         <url-pattern>/blogdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchEquipmentServlet</servlet-name>
+        <url-pattern>/searchequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchSupplierServlet</servlet-name>
+        <url-pattern>/searchsupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageEquipmentServlet</servlet-name>
+        <url-pattern>/manageequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageSupplierServlet</servlet-name>
+        <url-pattern>/managesupplier</url-pattern>
     </servlet-mapping>
 </web-app>
