@@ -129,6 +129,19 @@ public class ManageSupplierServlet extends HttpServlet {
                     processRequest(request, response);
                     return;
                 } else {
+                    //  check and up image from device
+                    Part part = request.getPart("img");
+                    String realPath = request.getServletContext().getRealPath("/images/Accounts");
+                    String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
+
+                    if (!source.isEmpty()) {
+                        String filename = supplierDAO.getSupplierId() + ".png";
+                        if (!Files.exists(Path.of(realPath))) {
+                            Files.createDirectory(Path.of(realPath));
+                        }
+                        part.write(realPath + "/" + filename);
+                        editSupplier.setImage("/images/Accounts/" + filename);
+                    }
                     supplierDAO.updateSupplier(editSupplier);
                     request.setAttribute("message", "Update successful!");
                     request.setAttribute("showEditDialog", false);
