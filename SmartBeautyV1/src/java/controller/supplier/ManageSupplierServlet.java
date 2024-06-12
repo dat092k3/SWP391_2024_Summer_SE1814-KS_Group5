@@ -5,6 +5,7 @@
 package controller.supplier;
 
 import DAO.SupplierDAO;
+import DAO.SupplierInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -72,7 +73,7 @@ public class ManageSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierDAO supplierDAO = new SupplierDAO();
+        SupplierInterface supplierDAO= new SupplierDAO();
         String action = request.getParameter("action");
         String supplierId = request.getParameter("supplierId");
         String name = request.getParameter("name");
