@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller.profilemanagement;
 
+import DAO.AccountDAO;
 import DAO.CustomerDAO;
 import DAO.DirectorDAO;
 import DAO.EmployeeDAO;
@@ -15,40 +15,45 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
  * @author admin
  */
 public class UpdateprofilecustomerServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateprofilecustomerServlet</title>");  
+            out.println("<title>Servlet UpdateprofilecustomerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateprofilecustomerServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateprofilecustomerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -56,30 +61,40 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         String fullname = request.getParameter("fullname");
         String gender = request.getParameter("gender");
         String email = request.getParameter("email");
         String dateofbirth = request.getParameter("dateofbirth");
         String phonenumber = request.getParameter("phonenumber");
-        String address = request.getParameter("address");
+        //
+        String city = request.getParameter("city");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        //
+        String address = city + " " + district + " " + ward;
         String image = request.getParameter("image");
         float height = Float.parseFloat(request.getParameter("height"));
         float weight = Float.parseFloat(request.getParameter("weight"));
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        CustomerDAO customerDAO = new CustomerDAO();
-        EmployeeDAO employeeDAO = new EmployeeDAO();
-        ManagerDAO managerDAO = new ManagerDAO();
-        DirectorDAO directorDAO = new DirectorDAO();
-        customerDAO.updateProfileCustomer(fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight, account_id);
-        employeeDAO.updateProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        managerDAO.updateProfileManager(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        directorDAO.updateProfileDirector(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        response.sendRedirect("profile?account_id="+account_id);
-    } 
+        // Validate age
+        LocalDate dob = LocalDate.parse(dateofbirth);
+        LocalDate now = LocalDate.now();
+        int age = Period.between(dob, now).getYears();
 
-    /** 
+        if (age < 15) {
+            request.setAttribute("error", "You must be at least 15 years old.");
+            request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
+            return;
+        }
+        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO.updateProfileCustomer(fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight, account_id);
+        response.sendRedirect("profile?account_id=" + account_id);
+    }
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -87,12 +102,50 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+            throws ServletException, IOException {
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        String fullname = request.getParameter("fullname");
+        String gender = request.getParameter("gender");
+        String email = request.getParameter("email");
+        String dateofbirth = request.getParameter("dateofbirth");
+        String phonenumber = request.getParameter("phonenumber");
+        String city = request.getParameter("city");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        String address = city + " " + district + " " + ward;
+        String image = request.getParameter("image");
+        float height = Float.parseFloat(request.getParameter("height"));
+        float weight = Float.parseFloat(request.getParameter("weight"));
+
+        // Validate age
+        LocalDate dob = LocalDate.parse(dateofbirth);
+        LocalDate now = LocalDate.now();
+        int age = Period.between(dob, now).getYears();
+
+        if (age < 15) {
+            request.setAttribute("error", "You must be at least 15 years old.");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+            return;
+        }
+        //
+        AccountDAO accountDAO = new AccountDAO();
+        String phonenumberofaccount = accountDAO.getPhoneOfAccount(String.valueOf(phonenumber));
+        String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
+        if (emailofaccount != null && email.equals(emailofaccount) || phonenumber.equals(phonenumberofaccount)) {
+            CustomerDAO customerDAO = new CustomerDAO();
+            customerDAO.InsertProfile(account_id, fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight);
+            response.sendRedirect("profile?account_id=" + account_id);
+        } else {
+            request.setAttribute("error1", "Emails/Phonenumber do not match with account Signup.");
+            request.getRequestDispatcher("profile.jsp").forward(request, response);
+        }
+        //
+
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

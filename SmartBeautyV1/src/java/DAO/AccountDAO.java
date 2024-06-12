@@ -177,4 +177,43 @@ public class AccountDAO extends DBContext {
         } catch (Exception e) {
         }
     }
+
+    /**
+     * function to do get email of account
+     * @param account_id of user
+     * @return email of account
+     */
+    public String getEmailOfAccount(String account_id) {
+        String sql = "select email  from Account where account_id =?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, account_id);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("email");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving email: " + e.getMessage());
+        }
+        return null;
+    }
+     /**
+     * function to do get phonenumber of account
+     * @param phonenumber of user
+     * @return phonenumber of account
+     */
+    public String getPhoneOfAccount(String phonenumber) {
+        String sql = "select phonenumber  from Account where account_id =?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, phonenumber);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("phonenumber");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving phonenumber: " + e.getMessage());
+        }
+        return null;
+    }
 }

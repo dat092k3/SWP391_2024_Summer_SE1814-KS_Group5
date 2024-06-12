@@ -93,4 +93,51 @@ public class CustomerDAO extends DBContext {
             System.out.println(e);
         }
     }
+
+    /**
+     * function to do insert profile of customer
+     *
+     * @param account_id of customer
+     * @param fullname of customer
+     * @param gender of customer
+     * @param email of customer
+     * @param dateofbirth of customer
+     * @param phonenumber of customer
+     * @param address of customer
+     * @param image of customer
+     * @param height of customer
+     * @param weight of customer
+     */
+    public void InsertProfile(int account_id, String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, float height, float weight) {
+        String sql = "INSERT INTO [dbo].[Customer]\n"
+                + "           ([account_id]\n"
+                + "           ,[fullname]\n"
+                + "           ,[gender]\n"
+                + "           ,[email]\n"
+                + "           ,[dateofbirth]\n"
+                + "           ,[phonenumber]\n"
+                + "           ,[address]\n"
+                + "           ,[image]\n"
+                + "           ,[height]\n"
+                + "           ,[weight])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?,?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            st.setString(2, fullname);
+            st.setString(3, gender);
+            st.setString(4, email);
+            st.setString(5, dateofbirth);
+            st.setString(6, phonenumber);
+            st.setString(7, address);
+            st.setString(8, image);
+            st.setFloat(9, height);
+            st.setFloat(10, weight);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
 }

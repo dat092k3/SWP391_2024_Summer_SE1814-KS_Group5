@@ -74,6 +74,9 @@
                                         <li><a href="index.jsp">Home</a></li>
                                         <li class="active"><a href="about.jsp">About us</a></li>
                                         <li><a href="services.jsp">Classes & Services</a></li>
+                                            <c:if test="${account.getRole() eq 'Customer' or account.getRole() eq 'Takecare'}">
+                                            <li><a href="schedule.jsp">Schedule</a></li>
+                                            </c:if>
                                         <li><a href="search">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
 
@@ -103,11 +106,11 @@
                                         </c:if>
                                     </ul>
                                 </nav>
-                                <c:if test="${account.getRole() ne 'director'}">
-                                    <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
-                                        <i class="fa fa-phone" aria-hidden="true"></i>
-                                    </div>
-                                </c:if>
+                                <!--<c:if test="${account.getRole() ne 'Director'}">
+                                   <div class="phone d-flex flex-row align-items-center justify-content-start ml-auto">
+                                       <i class="fa fa-phone" aria-hidden="true"></i>
+                                   </div>
+                                </c:if>-->
                             </div>
                         </div>
                     </div>
