@@ -6,6 +6,7 @@
 package controller;
 
 import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -69,7 +70,7 @@ public class ConfirmresetcodeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
-        AccountDAO accountDAO = new AccountDAO();
+        AccountInterface accountDAO = new AccountDAO();
         String resetCode = request.getParameter("resetcode");
         String code = (String) session.getAttribute("code");
         String email = request.getParameter("email");

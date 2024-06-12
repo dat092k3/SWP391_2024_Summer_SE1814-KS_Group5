@@ -5,11 +5,18 @@
 package Interface;
 
 import DAO.*;
+import java.util.List;
+import model.Blog;
 
 /**
  *
  * @author LENOVO
  */
 public interface BlogInterface {
-    
+
+    public List<Blog> searchBlogByName(String txtSearch);
+
+    public List<Blog> getAllBlog();
+
+    public Blog takeBlogById(int blogId);
 }

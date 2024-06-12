@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.EmployeeInterface;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +15,15 @@ import model.Employee;
  *
  * @author admin
  */
-public class EmployeeDAO extends DBContext {
+public class EmployeeDAO extends DBContext implements EmployeeInterface {
 
+    /**
+     * function to do get employee by account id
+     *
+     * @param account_id of employee
+     * @return account_id of employee
+     */
+    @Override
     public Employee getEmployeeById(int account_id) {
         String sql = "select * from Employee where account_id = ?";
         try {
@@ -55,6 +63,7 @@ public class EmployeeDAO extends DBContext {
      * @param image of employee
      * @param account_id of employee
      */
+    @Override
     public void updateProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id) {
         String sql = "UPDATE [dbo].[Employee]\n"
                 + "                                 SET fullname = ?, \n"

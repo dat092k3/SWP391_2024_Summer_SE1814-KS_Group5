@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.BlogInterface;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,7 +17,7 @@ import model.Blog;
  *
  * @author admin
  */
-public class BlogDAO extends DBContext {
+public class BlogDAO extends DBContext implements BlogInterface{
 
     /**
      * function to do search blog by name
@@ -24,6 +25,7 @@ public class BlogDAO extends DBContext {
      * @param txtSearch is text of search
      * @return blog
      */
+    @Override
     public List<Blog> searchBlogByName(String txtSearch) {
         List<Blog> list = new ArrayList<>();
         String sql = "SELECT * FROM Blog WHERE blog_name LIKE ?";

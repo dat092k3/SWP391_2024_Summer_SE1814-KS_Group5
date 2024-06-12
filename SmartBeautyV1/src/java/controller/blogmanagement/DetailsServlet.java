@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import DAO.BlogDAO;
+import Interface.BlogInterface;
 import model.Blog;
 
 /**
@@ -56,7 +57,7 @@ public class DetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int blogId = Integer.parseInt(request.getParameter("id"));
-        BlogDAO blogDAO = new BlogDAO();
+        BlogInterface blogDAO = new BlogDAO();
         Blog blog = blogDAO.takeBlogById(blogId);  
         request.setAttribute("blog", blog);
         request.getRequestDispatcher("blog_details.jsp").forward(request, response);

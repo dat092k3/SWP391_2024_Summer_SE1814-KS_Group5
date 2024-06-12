@@ -4,10 +4,16 @@
  */
 package Interface;
 
+import model.Employee;
+
 /**
  *
  * @author LENOVO
  */
 public interface EmployeeInterface {
-    
+
+    public Employee getEmployeeById(int account_id);
+
+    public void updateProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id);
+
 }

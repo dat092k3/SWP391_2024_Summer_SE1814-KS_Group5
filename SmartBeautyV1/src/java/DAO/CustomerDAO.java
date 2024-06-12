@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.CustomerInterface;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +16,7 @@ import model.Customer;
  *
  * @author admin
  */
-public class CustomerDAO extends DBContext {
+public class CustomerDAO extends DBContext implements CustomerInterface {
 
     /**
      * function to do get customer by account_id
@@ -23,6 +24,7 @@ public class CustomerDAO extends DBContext {
      * @param account_id is id of customer
      * @return account customer
      */
+    @Override
     public Customer getCustomerById(int account_id) {
         String sql = "select * from Customer where account_id = ?";
         try {
@@ -64,6 +66,7 @@ public class CustomerDAO extends DBContext {
      * @param weight of customer
      * @param account_id of customer
      */
+    @Override
     public void updateProfileCustomer(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, float height, float weight, int account_id) {
         String sql = "UPDATE [dbo].[Customer] \n"
                 + "                 SET fullname = ?, \n"
@@ -108,6 +111,7 @@ public class CustomerDAO extends DBContext {
      * @param height of customer
      * @param weight of customer
      */
+    @Override
     public void InsertProfile(int account_id, String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, float height, float weight) {
         String sql = "INSERT INTO [dbo].[Customer]\n"
                 + "           ([account_id]\n"

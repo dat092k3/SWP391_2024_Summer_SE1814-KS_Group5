@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.ManagerInterface;
 import context.DBContext;
 import model.Manager;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class ManagerDAO extends DBContext {
+public class ManagerDAO extends DBContext implements ManagerInterface{
 
     /**
      * function to do get manager by manager_id
@@ -22,6 +23,7 @@ public class ManagerDAO extends DBContext {
      * @param manager_id is id of manager
      * @return account manager
      */
+    @Override
     public Manager getManagerById(int account_id) {
         String sql = "select * from Manager where account_id = ?";
         try {
@@ -59,6 +61,7 @@ public class ManagerDAO extends DBContext {
      * @param image of Manager
      * @param account_id of Manager
      */
+    @Override
     public void updateProfileManager(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id) {
         String sql = "UPDATE [dbo].[Manager]\n"
                 + "                 SET fullname = ?, \n"

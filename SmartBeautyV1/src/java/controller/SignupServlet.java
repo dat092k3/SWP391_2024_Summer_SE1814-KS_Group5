@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -119,7 +120,7 @@ public class SignupServlet extends HttpServlet {
             if (err) {
                 response.sendRedirect("signup-signin.jsp");
             } else {
-                AccountDAO accountDAO = new AccountDAO();
+                 AccountInterface accountDAO = new AccountDAO();
                 Account account = accountDAO.checkAccountExists(username, phonenumber);
                 if (account == null) {
                     accountDAO.signup(username, password, email, phonenumber);

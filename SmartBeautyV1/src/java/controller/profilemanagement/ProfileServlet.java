@@ -8,6 +8,9 @@ import DAO.CustomerDAO;
 import DAO.DirectorDAO;
 import DAO.EmployeeDAO;
 import DAO.ManagerDAO;
+import Interface.CustomerInterface;
+import Interface.EmployeeInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -64,9 +67,9 @@ public class ProfileServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        CustomerDAO dao = new CustomerDAO();
-        EmployeeDAO employeeDAO = new EmployeeDAO();
-        ManagerDAO managerDAO = new ManagerDAO();
+        CustomerInterface dao = new CustomerDAO();
+        EmployeeInterface employeeDAO = new EmployeeDAO();
+        ManagerInterface managerDAO = new ManagerDAO();
         DirectorDAO directorDAO = new DirectorDAO();
         Customer customer = dao.getCustomerById(account_id);
         Employee employee = employeeDAO.getEmployeeById(account_id);

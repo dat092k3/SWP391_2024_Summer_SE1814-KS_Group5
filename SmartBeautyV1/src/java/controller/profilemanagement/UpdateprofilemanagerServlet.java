@@ -5,6 +5,7 @@
 package controller.profilemanagement;
 
 import DAO.ManagerDAO;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -64,7 +65,7 @@ public class UpdateprofilemanagerServlet extends HttpServlet {
         String address = request.getParameter("address");
         String image = request.getParameter("image");
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        ManagerDAO managerDAO = new ManagerDAO();
+        ManagerInterface managerDAO = new ManagerDAO();
         managerDAO.updateProfileManager(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
         response.sendRedirect("profile?account_id=" + account_id);
     }
