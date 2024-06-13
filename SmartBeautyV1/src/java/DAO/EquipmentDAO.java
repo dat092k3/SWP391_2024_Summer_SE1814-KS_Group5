@@ -15,11 +15,16 @@ import model.Equipment;
 import model.TypeofEquipment;
 
 /**
- *
+ * access database  of equipment 
  * @author LENOVO
  */
 public class EquipmentDAO extends DBContext implements EquipmentInterface{
-
+    
+    /**
+     * get all equipment
+     * @return list contain all equipment
+     */
+    
     @Override
     public List<Equipment> getAllEquipment() {
         List<Equipment> list = new ArrayList<>();
@@ -54,6 +59,11 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return list;
     }
+    
+    /**
+     * delete equipment
+     * @param equipment_id of equipment need to delete 
+     */
 
     @Override
     public void deleteEquipment(int equipment_id) {
@@ -68,6 +78,11 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             System.out.println(ex);
         }
     }
+    
+    /**
+     * update equipment
+     * @param equipment is object need to update
+     */
 
     @Override
     public void updateEquipment(Equipment equipment) {
@@ -96,6 +111,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             System.out.println(ex);
         }
     }
+    /**
+     * get equipment by id of equipment
+     * 
+     * @param id of equipment need to get
+     * @return equipment is geted
+     */
 
     @Override
     public Equipment getEquipmentById(int id) {
@@ -120,6 +141,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return null;
     }
+    
+    /**
+     * check equipment is exited
+     * @param name of equipment need to check
+     * @return true false
+     */
 
     @Override
     public boolean isEquipmentExist(String name) {
@@ -136,6 +163,14 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
     }
     
+    /**
+     * check equipment is existed when save
+     * 
+     * @param name of equipment need to check
+     * @param image of equipment need to check
+     * @param description of equipment need to check
+     * @return true false
+     */
     @Override
     public boolean isEquipmentExistWhenSave(String name, String image, String description) {
         String sql = "SELECT * from Equipment\n"
@@ -152,7 +187,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             return false;
         }
     }
-
+    
+    /**
+     * add new equipment
+     * 
+     * @param equipment is object equipment is added
+     */
     @Override
     public void addNewEquipment(Equipment equipment) {
         String sql = "INSERT INTO [dbo].[Equipment]\n"
@@ -188,6 +228,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
 
     }
+    
+    /**
+     * get id of equipment
+     * 
+     * @return int
+     */
 
     @Override
     public int getEquipmentId() {
@@ -203,6 +249,11 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return -1;
     }
+    
+    /**
+     * get all type of equipment
+     * @return list contain type of equipment
+     */
 
     @Override
     public List<TypeofEquipment> getAllTypeofEquipment() {
@@ -221,7 +272,14 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return list;
     }
-
+    
+    /**
+     * find equipment by name 
+     * 
+     * @param nameSearch equipment need to search
+     * @return list equipment are found
+     */
+    
     @Override
     public List<Equipment> findEquipmentByName(String nameSearch) {
         List<Equipment> list = new ArrayList<>();

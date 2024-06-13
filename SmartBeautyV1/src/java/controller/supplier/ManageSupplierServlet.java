@@ -29,7 +29,7 @@ public class ManageSupplierServlet extends HttpServlet {
 
 
     /**
-     * Up data from database to web
+     * Up data from database to web handle deletion actions
      *
      * @param request of director with data
      * @param response of system after director required
@@ -102,16 +102,16 @@ public class ManageSupplierServlet extends HttpServlet {
                 } else {
                     //  check and up image from device
                     Part part = request.getPart("img");
-                    String realPath = request.getServletContext().getRealPath("/images/Accounts");
-                    String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
-
+                    String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
+                    String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
+                                                                                                        //convert it to a string, get just the filename without including the full path.
                     if (!source.isEmpty()) {
                         String filename = supplierDAO.getSupplierId() + ".png";
-                        if (!Files.exists(Path.of(realPath))) {
+                        if (!Files.exists(Path.of(realPath))) {// check folder /images/Supplier is existed
                             Files.createDirectory(Path.of(realPath));
                         }
-                        part.write(realPath + "/" + filename);
-                        newSupplier.setImage("/images/Accounts/" + filename);
+                        part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
+                        newSupplier.setImage("/images/Supplier/" + filename); //Set the path to the image file
                     }
 
                     supplierDAO.addNewSupplier(newSupplier);

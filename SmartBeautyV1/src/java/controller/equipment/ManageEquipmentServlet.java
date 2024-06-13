@@ -26,7 +26,7 @@ import model.TypeofEquipment;
 public class ManageEquipmentServlet extends HttpServlet {
 
     /**
-     * Up data from database to web
+     * Up data from database to web or handle deletion actions
      *
      * @param request of director with data
      * @param response of system after director required
@@ -104,16 +104,16 @@ public class ManageEquipmentServlet extends HttpServlet {
                 } else {
                     //  check and up image from device
                     Part part = request.getPart("img");
-                    String realPath = request.getServletContext().getRealPath("/images/Equipment");
-                    String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
-
+                    String realPath = request.getServletContext().getRealPath("/images/Equipment"); //where the photo is saved
+                    String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
+                                                                                                        // convert it to a string, get just the filename without including the full path.
                     if (!source.isEmpty()) {
                         String filename = equipmentDAO.getEquipmentId() + ".png";
-                        if (!Files.exists(Path.of(realPath))) {
+                        if (!Files.exists(Path.of(realPath))) { // check folder /images/Equipment is existed
                             Files.createDirectory(Path.of(realPath));
                         }
-                        part.write(realPath + "/" + filename);
-                        newEquipment.setImage("/images/Equipment/" + filename);
+                        part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
+                        newEquipment.setImage("/images/Equipment/" + filename); //Set the path to the image file
                     }
 
                     equipmentDAO.addNewEquipment(newEquipment);

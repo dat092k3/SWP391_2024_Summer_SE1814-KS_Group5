@@ -21,15 +21,15 @@ public class Supplier {
     }
     
     /**
-     * constructor of supplier
+     * constructor of supplier to initializes the supplier object
      * 
-     * @param supplier_id of supplier
-     * @param supplier_name of supplier
-     * @param image of supplier
-     * @param address of supplier
-     * @param phoneNumber of supplier
-     * @param email of supplier
-     * @param status of supplier
+     * @param supplier_id of supplier is initialized
+     * @param supplier_name of supplier is initialized 
+     * @param image of supplier is initialized
+     * @param address of supplier is initialized
+     * @param phoneNumber of supplier is initialized
+     * @param email of supplier is initialized
+     * @param status of supplier is initialized
      */
     public Supplier(int supplier_id, String supplier_name, String image, String address, String phoneNumber, String email, boolean status) {
         this.supplier_id = supplier_id;

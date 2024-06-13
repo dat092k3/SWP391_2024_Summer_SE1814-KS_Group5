@@ -5,7 +5,7 @@
 package model;
 
 /**
- *
+ * a class have information of equipment
  * @author LENOVO
  */
 public class Equipment {
@@ -21,7 +21,19 @@ public class Equipment {
 
     public Equipment() {
     }
-
+    
+    /**
+     * constructor of equipment to initializes the equipment object
+     * @param equipment_id of equipment is initialized
+     * @param equipment_name of equipment is initialized
+     * @param type_id of equipment is initialized
+     * @param image of equipment is initialized
+     * @param price of equipment is initialized
+     * @param supplier_id of equipment is initialized
+     * @param quantity of equipment is initialized
+     * @param status of equipment is initialized
+     * @param description of equipment is initialized 
+     */
     public Equipment(int equipment_id, String equipment_name, int type_id, String image, float price, int supplier_id, int quantity, boolean status, String description) {
         this.equipment_id = equipment_id;
         this.equipment_name = equipment_name;

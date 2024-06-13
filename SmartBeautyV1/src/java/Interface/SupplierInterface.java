@@ -4,7 +4,6 @@
  */
 package Interface;
 
-import DAO.*;
 import java.util.List;
 import model.Supplier;
 
