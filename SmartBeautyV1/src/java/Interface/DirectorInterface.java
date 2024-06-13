@@ -5,11 +5,16 @@
 package Interface;
 
 import DAO.*;
+import model.Director;
 
 /**
  *
  * @author LENOVO
  */
 public interface DirectorInterface {
-    
+
+    public Director getDirectorById(int account_id);
+
+    public void updateProfileDirector(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id);
+
 }

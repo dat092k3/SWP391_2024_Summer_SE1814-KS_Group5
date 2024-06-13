@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -75,7 +76,7 @@ public class ConfirmpassServlet extends HttpServlet {
         String cfnewpass = request.getParameter("cfpassword");
         String username = request.getParameter("userName");
 
-        AccountDAO accountDAO = new AccountDAO();
+        AccountInterface accountDAO = new AccountDAO();
         Account account = accountDAO.getAccountByUserName(username);
 
         if (!cfnewpass.equals(newpass)) {

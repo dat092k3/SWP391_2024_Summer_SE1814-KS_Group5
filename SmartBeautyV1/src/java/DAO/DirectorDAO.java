@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.DirectorInterface;
 import context.DBContext;
 import model.Director;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author admin
  */
-public class DirectorDAO extends DBContext {
+public class DirectorDAO extends DBContext implements DirectorInterface{
 
     /**
      * function to do get director by director_id
@@ -22,6 +23,7 @@ public class DirectorDAO extends DBContext {
      * @param account_id is id of director
      * @return account director
      */
+    @Override
     public Director getDirectorById(int account_id) {
         String sql = "select * from Director where account_id = ?";
         try {
@@ -58,6 +60,7 @@ public class DirectorDAO extends DBContext {
      * @param image of Director
      * @param account_id of Director
      */
+    @Override
     public void updateProfileDirector(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id) {
         String sql = "UPDATE [dbo].[Director]\n"
                 + "                 SET fullname = ?, \n"

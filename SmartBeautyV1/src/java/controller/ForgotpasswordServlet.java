@@ -6,6 +6,7 @@
 package controller;
 
 import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -72,7 +73,7 @@ public class ForgotpasswordServlet extends HttpServlet {
     throws ServletException, IOException {
         HttpSession session = request.getSession();
         String emailInput = request.getParameter("email");
-        AccountDAO accountDAO = new AccountDAO();
+        AccountInterface accountDAO = new AccountDAO();
         Email handleEmail = new Email();
         String email = accountDAO.checkEmailExist(emailInput);
         String message = "";

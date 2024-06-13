@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.AccountInterface;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,7 @@ import model.Account;
  *
  * @author LENOVO
  */
-public class AccountDAO extends DBContext {
+public class AccountDAO  extends DBContext implements AccountInterface {
 
     /**
      * find account in database to login
@@ -24,6 +25,7 @@ public class AccountDAO extends DBContext {
      * @param password of account want to login
      * @return Account
      */
+    @Override
     public Account findAccount(String username, String password) {
         String sql;
         if (username.contains("@")) {
@@ -50,6 +52,7 @@ public class AccountDAO extends DBContext {
      * @param phonenumber of account in database
      * @return Account
      */
+    @Override
     public Account checkAccountExists(String username, String phonenumber) {
         String sql = "SELECT * FROM Account WHERE username = ? OR email = ? OR phonenumber=?";
         try {
@@ -75,6 +78,7 @@ public class AccountDAO extends DBContext {
      * @param email is value of account want to register
      * @param phonenumber is value of account want to register
      */
+    @Override
     public void signup(String username, String password, String email, String phonenumber) {
         String sql = "INSERT INTO Account (username, password, email, phonenumber, role, status) VALUES (?, ?, ?, ?, 'Customer', 1)";
         try {
@@ -95,6 +99,7 @@ public class AccountDAO extends DBContext {
      * @param email of account
      * @return email
      */
+    @Override
     public String checkEmailExist(String email) {
         try {
             String sql = "select * from Account where email = ?";
@@ -115,6 +120,7 @@ public class AccountDAO extends DBContext {
      * @param email of account
      * @return username
      */
+    @Override
     public String getUserNameByEmail(String email) {
         String sql = "SELECT Top 1 username FROM Account WHERE email =?";
         try {
@@ -138,6 +144,7 @@ public class AccountDAO extends DBContext {
      * @param username of account
      * @return Account
      */
+    @Override
     public Account getAccountByUserName(String username) {
         String sql = "SELECT * FROM Account where username = ? and [status] = 1";
         try {
@@ -167,6 +174,7 @@ public class AccountDAO extends DBContext {
      * @param password of account
      * @param username of account
      */
+    @Override
     public void updatePassByUserName(String password, String username) {
         String sql = "update Account set password = ? where username = ?";
         try {
@@ -183,6 +191,7 @@ public class AccountDAO extends DBContext {
      * @param account_id of user
      * @return email of account
      */
+    @Override
     public String getEmailOfAccount(String account_id) {
         String sql = "select email  from Account where account_id =?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
@@ -202,6 +211,7 @@ public class AccountDAO extends DBContext {
      * @param phonenumber of user
      * @return phonenumber of account
      */
+    @Override
     public String getPhoneOfAccount(String phonenumber) {
         String sql = "select phonenumber  from Account where account_id =?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {

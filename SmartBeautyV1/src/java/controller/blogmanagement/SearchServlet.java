@@ -5,6 +5,7 @@
 package controller.blogmanagement;
 
 import DAO.BlogDAO;
+import Interface.BlogInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,7 +60,7 @@ public class SearchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txtSearch = request.getParameter("txt");
-        BlogDAO blogDAO = new BlogDAO();
+        BlogInterface blogDAO = new BlogDAO();
         List<Blog> list;
         if (txtSearch != null && !txtSearch.trim().isEmpty()) {
             list = blogDAO.searchBlogByName(txtSearch);

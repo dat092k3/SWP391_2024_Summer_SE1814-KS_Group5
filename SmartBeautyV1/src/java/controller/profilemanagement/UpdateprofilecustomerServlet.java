@@ -9,6 +9,8 @@ import DAO.CustomerDAO;
 import DAO.DirectorDAO;
 import DAO.EmployeeDAO;
 import DAO.ManagerDAO;
+import Interface.AccountInterface;
+import Interface.CustomerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -87,7 +89,7 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
             request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
             return;
         }
-        CustomerDAO customerDAO = new CustomerDAO();
+        CustomerInterface customerDAO = new CustomerDAO();
         customerDAO.updateProfileCustomer(fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight, account_id);
         response.sendRedirect("profile?account_id=" + account_id);
     }
@@ -128,11 +130,11 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
             return;
         }
         //
-        AccountDAO accountDAO = new AccountDAO();
+        AccountInterface accountDAO = new AccountDAO();
         String phonenumberofaccount = accountDAO.getPhoneOfAccount(String.valueOf(phonenumber));
         String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
         if (emailofaccount != null && email.equals(emailofaccount) || phonenumber.equals(phonenumberofaccount)) {
-            CustomerDAO customerDAO = new CustomerDAO();
+            CustomerInterface customerDAO = new CustomerDAO();
             customerDAO.InsertProfile(account_id, fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight);
             response.sendRedirect("profile?account_id=" + account_id);
         } else {

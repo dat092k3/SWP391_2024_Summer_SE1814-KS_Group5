@@ -5,6 +5,7 @@
 package controller;
 
 import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -75,11 +76,11 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        AccountDAO d = new AccountDAO();
+         AccountInterface accountDAO = new AccountDAO();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String rememmber = request.getParameter("remember");
-        Account account = d.findAccount(username, password);
+        Account account = accountDAO.findAccount(username, password);
         Cookie cusername = new Cookie("cusername", username);
         Cookie cpassword = new Cookie("cpassword", password);
         if (account == null) {

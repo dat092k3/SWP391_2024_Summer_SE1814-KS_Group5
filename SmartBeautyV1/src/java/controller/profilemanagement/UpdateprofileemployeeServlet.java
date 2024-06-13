@@ -5,6 +5,7 @@
 package controller.profilemanagement;
 
 import DAO.EmployeeDAO;
+import Interface.EmployeeInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -64,7 +65,7 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
         String address = request.getParameter("address");
         String image = request.getParameter("image");
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        EmployeeDAO employeeDAO = new EmployeeDAO();
+        EmployeeInterface employeeDAO = new EmployeeDAO();
         employeeDAO.updateProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
         response.sendRedirect("profile?account_id=" + account_id);
     }
