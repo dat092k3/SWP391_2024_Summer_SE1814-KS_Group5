@@ -25,6 +25,8 @@ public class ManageSupplierServlet extends HttpServlet {
     // Standard value of email and phonenumber need to follow
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String PHONE_PATTERN = "^\\d{10}$";
+    private static final String ADDRESS_PATTERN = "^[A-Z][a-zA-Z0-9]*(\\s[A-Z][a-zA-Z0-9]*)*$";
+
 
     /**
      * Up data from database to web
@@ -83,7 +85,7 @@ public class ManageSupplierServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         // check value input by director
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)) {
+        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)|| !isValidAddress(address)) {
             request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
             processRequest(request, response);
             return;
@@ -120,7 +122,7 @@ public class ManageSupplierServlet extends HttpServlet {
             // process data if director edit information supplier
             case "Save" -> {
                 Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
-                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)) {
+                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidAddress(address)) {
                     request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
                     processRequest(request, response);
                     return;
@@ -199,7 +201,17 @@ public class ManageSupplierServlet extends HttpServlet {
     private boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
-
+    
+    /**
+     * check address need to follow standard Address pattern
+     *
+     * @param address of supplier director input
+     * @return true false
+     */
+    private boolean isValidAddress(String address) {
+        return address != null && Pattern.matches(ADDRESS_PATTERN, address);
+    }
+    
     @Override
     public String getServletInfo() {
         return "Short description";

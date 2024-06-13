@@ -4,7 +4,6 @@
  */
 package Interface;
 
-import DAO.AccountDAO;
 import model.Account;
 
 /**
