@@ -38,7 +38,7 @@ public class ManageSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierDAO supplierDAO = new SupplierDAO();
+        SupplierInterface supplierDAO = new SupplierDAO();
 
         String supplier_id = request.getParameter("supplierId");
         String message = (String) request.getAttribute("message");

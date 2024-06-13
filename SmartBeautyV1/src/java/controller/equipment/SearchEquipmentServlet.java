@@ -5,6 +5,7 @@
 package controller.equipment;
 
 import DAO.EquipmentDAO;
+import Interface.EquipmentInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,7 +62,7 @@ public class SearchEquipmentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         String txtSearch = request.getParameter("search");
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        EquipmentInterface equipmentDAO = new EquipmentDAO();
 
         List<Equipment> list;
         if (txtSearch == null || txtSearch.trim().isEmpty()) {

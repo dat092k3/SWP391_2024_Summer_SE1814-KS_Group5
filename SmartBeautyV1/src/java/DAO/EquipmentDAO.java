@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Interface.EquipmentInterface;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,8 +18,9 @@ import model.TypeofEquipment;
  *
  * @author LENOVO
  */
-public class EquipmentDAO extends DBContext {
+public class EquipmentDAO extends DBContext implements EquipmentInterface{
 
+    @Override
     public List<Equipment> getAllEquipment() {
         List<Equipment> list = new ArrayList<>();
         String sql = "SELECT [equipment_id]\n"
@@ -53,6 +55,7 @@ public class EquipmentDAO extends DBContext {
         return list;
     }
 
+    @Override
     public void deleteEquipment(int equipment_id) {
         String sql = "UPDATE [dbo].[Equipment]\n"
                 + "   SET [status] = 0\n"
@@ -66,6 +69,7 @@ public class EquipmentDAO extends DBContext {
         }
     }
 
+    @Override
     public void updateEquipment(Equipment equipment) {
         String sql = "UPDATE [dbo].[Equipment]\n"
                 + "   SET [equipment_name] = ?\n"
@@ -93,6 +97,7 @@ public class EquipmentDAO extends DBContext {
         }
     }
 
+    @Override
     public Equipment getEquipmentById(int id) {
         String sql = "select * from Equipment where status=1 and equipment_id=" + id;
         try {
@@ -116,6 +121,7 @@ public class EquipmentDAO extends DBContext {
         return null;
     }
 
+    @Override
     public boolean isEquipmentExist(String name) {
         String sql = "SELECT * from Equipment\n"
                 + "where equipment_name=? and status=1";
@@ -130,6 +136,7 @@ public class EquipmentDAO extends DBContext {
         }
     }
     
+    @Override
     public boolean isEquipmentExistWhenSave(String name, String image, String description) {
         String sql = "SELECT * from Equipment\n"
                 + "where equipment_name=? and image=? and description=? and status=1";
@@ -146,6 +153,7 @@ public class EquipmentDAO extends DBContext {
         }
     }
 
+    @Override
     public void addNewEquipment(Equipment equipment) {
         String sql = "INSERT INTO [dbo].[Equipment]\n"
                 + "           ([equipment_name]\n"
@@ -181,6 +189,7 @@ public class EquipmentDAO extends DBContext {
 
     }
 
+    @Override
     public int getEquipmentId() {
         String sql = "select MAX(equipment_id) from Equipment";
         try {
@@ -195,6 +204,7 @@ public class EquipmentDAO extends DBContext {
         return -1;
     }
 
+    @Override
     public List<TypeofEquipment> getAllTypeofEquipment() {
         List<TypeofEquipment> list = new ArrayList<>();
         String sql = "SELECT * from TypeOfEquipment";
@@ -212,6 +222,7 @@ public class EquipmentDAO extends DBContext {
         return list;
     }
 
+    @Override
     public List<Equipment> findEquipmentByName(String nameSearch) {
         List<Equipment> list = new ArrayList<>();
         String sql = "select * from Equipment where status=1";

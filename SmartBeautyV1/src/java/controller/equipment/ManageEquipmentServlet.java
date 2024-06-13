@@ -6,6 +6,8 @@ package controller.equipment;
 
 import DAO.EquipmentDAO;
 import DAO.SupplierDAO;
+import Interface.EquipmentInterface;
+import Interface.SupplierInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -35,8 +37,8 @@ public class ManageEquipmentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierDAO supplierDAO = new SupplierDAO();
-        EquipmentDAO equipmentDAO = new EquipmentDAO();
+        SupplierInterface supplierDAO = new SupplierDAO();
+        EquipmentInterface equipmentDAO = new EquipmentDAO();
         String equipmentId = request.getParameter("equipmentId");
         String message = (String) request.getAttribute("message");
         String action = request.getParameter("action");

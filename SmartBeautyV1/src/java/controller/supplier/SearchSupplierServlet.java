@@ -6,6 +6,7 @@
 package controller.supplier;
 
 import DAO.SupplierDAO;
+import Interface.SupplierInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,7 +60,7 @@ public class SearchSupplierServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         String txtSearch= request.getParameter("search");
-        SupplierDAO supplierDAO= new SupplierDAO();
+        SupplierInterface supplierDAO= new SupplierDAO();
         
         
         List<Supplier> list;
