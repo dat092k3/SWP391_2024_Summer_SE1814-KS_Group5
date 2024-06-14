@@ -49,7 +49,9 @@ public class SearchSupplierServlet extends HttpServlet {
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
+     * 
      * search by name of supplier
+     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -72,7 +74,7 @@ public class SearchSupplierServlet extends HttpServlet {
         }
         request.setAttribute("listSupplier", list);
         request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managerSupplier.jsp").forward(request, response);
+        request.getRequestDispatcher("managersupplier.jsp").forward(request, response);
         
     } 
 

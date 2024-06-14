@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input name="price" type="number" class="form-control" required>
+                                    <input name="price" type="number" min="1" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
@@ -140,7 +140,7 @@
                                 </div> 
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input name="quantity" type="number" class="form-control" required>
+                                    <input name="quantity" type="number" min="1" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Price</label>
-                                    <input name="price" type="number" class="form-control" required value="${equipment.price}"/>
+                                    <input name="price" type="number" min="1" class="form-control" required value="${equipment.price}"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
@@ -204,7 +204,7 @@
                                 </div> 
                                 <div class="form-group">
                                     <label>Quantity</label>
-                                    <input name="quantity" type="number" class="form-control" value="${equipment.quantity}" required/>
+                                    <input name="quantity" type="number" min="1" class="form-control" value="${equipment.quantity}" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>

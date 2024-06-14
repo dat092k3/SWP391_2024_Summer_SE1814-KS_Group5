@@ -69,7 +69,15 @@ public class ManageEquipmentServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
+    /**
+     * add and edit equipment
+     * 
+     * @param request of director 
+     * @param response of system for director
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

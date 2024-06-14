@@ -25,11 +25,9 @@ public class ManageSupplierServlet extends HttpServlet {
     // Standard value of email and phonenumber need to follow
     private static final String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
     private static final String PHONE_PATTERN = "^\\d{10}$";
-    private static final String ADDRESS_PATTERN = "^[A-Z][a-zA-Z0-9]*(\\s[A-Z][a-zA-Z0-9]*)*$";
-
 
     /**
-     * Up data from database to web handle deletion actions
+     * Up data from database to or handle delete action
      *
      * @param request of director with data
      * @param response of system after director required
@@ -69,7 +67,15 @@ public class ManageSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
+    
+    /**
+     * add and edit supplier
+     * 
+     * @param request of director 
+     * @param response of system for director
+     * @throws ServletException
+     * @throws IOException 
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -85,8 +91,8 @@ public class ManageSupplierServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         // check value input by director
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber)|| !isValidAddress(address)) {
-            request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
+        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidName(address)) {
+            request.setAttribute("message", "Invalid input. Please check the name, email,address and phone number format.");
             processRequest(request, response);
             return;
         }
@@ -104,10 +110,10 @@ public class ManageSupplierServlet extends HttpServlet {
                     Part part = request.getPart("img");
                     String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
                     String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-                                                                                                        //convert it to a string, get just the filename without including the full path.
+                                                                                                        // convert it to a string, get just the filename without including the full path.
                     if (!source.isEmpty()) {
-                        String filename = supplierDAO.getSupplierId() + ".png";
-                        if (!Files.exists(Path.of(realPath))) {// check folder /images/Supplier is existed
+                        String filename = supplierDAO.getSupplierId() + ".png"; 
+                        if (!Files.exists(Path.of(realPath))) { // check folder /images/Accounts is existed
                             Files.createDirectory(Path.of(realPath));
                         }
                         part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
@@ -122,8 +128,8 @@ public class ManageSupplierServlet extends HttpServlet {
             // process data if director edit information supplier
             case "Save" -> {
                 Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
-                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidAddress(address)) {
-                    request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
+                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidName(address)) {
+                    request.setAttribute("message", "Invalid input. Please check the name, email,address and phone number format.");
                     processRequest(request, response);
                     return;
                     // check supplier is existed
@@ -134,16 +140,16 @@ public class ManageSupplierServlet extends HttpServlet {
                 } else {
                     //  check and up image from device
                     Part part = request.getPart("img");
-                    String realPath = request.getServletContext().getRealPath("/images/Accounts");
+                    String realPath = request.getServletContext().getRealPath("/images/Supplier");
                     String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
 
                     if (!source.isEmpty()) {
-                        String filename = supplierDAO.getSupplierId() + ".png";
+                        String filename = supplierId + ".png";
                         if (!Files.exists(Path.of(realPath))) {
                             Files.createDirectory(Path.of(realPath));
                         }
                         part.write(realPath + "/" + filename);
-                        editSupplier.setImage("/images/Accounts/" + filename);
+                        editSupplier.setImage("/images/Supplier/" + filename);
                     }
                     supplierDAO.updateSupplier(editSupplier);
                     request.setAttribute("message", "Update successful!");
@@ -200,16 +206,6 @@ public class ManageSupplierServlet extends HttpServlet {
      */
     private boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
-    }
-    
-    /**
-     * check address need to follow standard Address pattern
-     *
-     * @param address of supplier director input
-     * @return true false
-     */
-    private boolean isValidAddress(String address) {
-        return address != null && Pattern.matches(ADDRESS_PATTERN, address);
     }
     
     @Override
