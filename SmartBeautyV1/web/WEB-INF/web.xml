@@ -13,6 +13,14 @@
         <servlet-class>controller.SignupServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>createEmployeeServlet</servlet-name>
+        <servlet-class>controller.createEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SupplierServlet</servlet-name>
+        <servlet-class>controller.SupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <servlet-class>controller.ForgotpasswordServlet</servlet-class>
     </servlet>
@@ -25,12 +33,60 @@
         <servlet-class>controller.ConfirmpassServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>SearchServlet</servlet-name>
+        <servlet-class>controller.blogmanagement.SearchServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofilecustomerServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofilecustomerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofileemployeeServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofileemployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofilemanagerServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofilemanagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateprofiledirectorServlet</servlet-name>
+        <servlet-class>controller.profilemanagement.UpdateprofiledirectorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DetailsServlet</servlet-name>
+        <servlet-class>controller.blogmanagement.DetailsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.SearchEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.SearchSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>ManageEquipmentServlet</servlet-name>
         <servlet-class>controller.equipment.ManageEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.EditBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.AddBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.DeleteBlog</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -45,6 +101,10 @@
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>createEmployeeServlet</servlet-name>
+        <url-pattern>/createemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ForgotpasswordServlet</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
@@ -57,11 +117,59 @@
         <url-pattern>/confirmpass</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>SearchServlet</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofilecustomerServlet</servlet-name>
+        <url-pattern>/updateprofilecustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofileemployeeServlet</servlet-name>
+        <url-pattern>/updateprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofilemanagerServlet</servlet-name>
+        <url-pattern>/updateprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateprofiledirectorServlet</servlet-name>
+        <url-pattern>/updateprofiledirector</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailsServlet</servlet-name>
+        <url-pattern>/blogdetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchEquipmentServlet</servlet-name>
+        <url-pattern>/searchequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchSupplierServlet</servlet-name>
+        <url-pattern>/searchsupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ManageEquipmentServlet</servlet-name>
         <url-pattern>/manageequipment</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <url-pattern>/managesupplier</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>EditBlog</servlet-name>
+        <url-pattern>/editblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddBlog</servlet-name>
+        <url-pattern>/addblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBlog</servlet-name>
+        <url-pattern>/deleteblog</url-pattern>
     </servlet-mapping>
 </web-app>
