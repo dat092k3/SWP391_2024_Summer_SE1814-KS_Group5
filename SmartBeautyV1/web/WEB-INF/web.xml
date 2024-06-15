@@ -76,6 +76,18 @@
         <servlet-name>ManageSupplierServlet</servlet-name>
         <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.EditBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.AddBlog</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBlog</servlet-name>
+        <servlet-class>controller.blogmanagement.DeleteBlog</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -147,5 +159,17 @@
     <servlet-mapping>
         <servlet-name>ManageSupplierServlet</servlet-name>
         <url-pattern>/managesupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditBlog</servlet-name>
+        <url-pattern>/editblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddBlog</servlet-name>
+        <url-pattern>/addblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBlog</servlet-name>
+        <url-pattern>/deleteblog</url-pattern>
     </servlet-mapping>
 </web-app>

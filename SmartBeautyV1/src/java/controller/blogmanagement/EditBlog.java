@@ -11,16 +11,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import DAO.BlogDAO;
-import Interface.BlogInterface;
-import java.util.List;
-import model.Blog;
 
 /**
  *
  * @author td532
  */
-public class DetailsServlet extends HttpServlet {
+public class EditBlog extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +33,10 @@ public class DetailsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DetailsServlet</title>");  
+            out.println("<title>Servlet EditBlog</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DetailsServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditBlog at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,14 +53,7 @@ public class DetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int blogId = Integer.parseInt(request.getParameter("id"));
-        BlogInterface blogDAO = new BlogDAO();
-        Blog blog = blogDAO.takeBlogById(blogId);
-        List<Blog> list = blogDAO.blogSameAuthor(blog.getEmployee_id());
-        request.setAttribute("blog", blog);
-        request.setAttribute("listb", list);
-        request.getRequestDispatcher("blog_details.jsp").forward(request, response);
-
+        processRequest(request, response);
     } 
 
     /** 
