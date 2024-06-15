@@ -139,9 +139,9 @@ public class BlogDAO extends DBContext implements BlogInterface {
             st.setString(3, blog.getDescription());
             st.setString(4, blog.getContent());
             st.setInt(5, blog.getEmployee_id());
-            st.execute(sql);
+            st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error add blogs: " + e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -156,9 +156,9 @@ public class BlogDAO extends DBContext implements BlogInterface {
             st.setString(4, blog.getContent());
             st.setInt(5, blog.getEmployee_id());
             st.setInt(6, blog.getBlog_id());
-            st.execute(sql);
+            st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error add blogs: " + e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -168,9 +168,9 @@ public class BlogDAO extends DBContext implements BlogInterface {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, blogId);
-            st.execute(sql);
+            st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Error delete blogs: " + e.getMessage());
+            System.out.println(e);
         }
     }
 
@@ -178,11 +178,11 @@ public class BlogDAO extends DBContext implements BlogInterface {
 
     public int posterId(int accountId) {
         int empId = 0;
-        String sql = "SELECT * FROM Employee where account_id = ?";
+        String sql = "SELECT employee_id FROM Employee where account_id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, accountId);
             ResultSet rs = st.executeQuery();
-            rs.getInt("employee_id");
+            empId = rs.getInt("employee_id");
         } catch (SQLException e) {
             System.out.println(e);
         }
