@@ -19,4 +19,14 @@ public interface BlogInterface {
     public List<Blog> getAllBlog();
 
     public Blog takeBlogById(int blogId);
+    
+    public List<Blog> blogSameAuthor(int empId);
+    
+    public void addBlog(Blog blog);
+    
+    public void editBlog(Blog blog);
+    
+    public void deleteBlog(Blog blog);
+    
+    public int posterId (int accountId);
 }

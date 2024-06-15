@@ -18,21 +18,82 @@
                 flex-wrap: wrap;
             }
             .blog_image {
-                flex: 1 0 25%; /* chiếm 25% diện tích, tức 1 ô */
+                flex: 1 0 25%;
                 max-width: 25%;
                 box-sizing: border-box;
                 padding: 10px;
             }
             .blog_content {
-                flex: 3 0 75%; /* chiếm 75% diện tích, tức 3 ô */
+                flex: 3 0 75%;
                 max-width: 75%;
                 box-sizing: border-box;
                 padding: 10px;
             }
+            .floating-btn {
+                position: fixed;
+                right: 20px;
+                background-color: #f98c00;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 45px;
+                height: 45px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0;
+                font-size: 20px;
+                cursor: pointer;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                transition: transform 0.2s ease;
+            }
+
+            .floating-btn-edit{
+                bottom: 70px;
+            }
+
+            .floating-btn-delete{
+                bottom: 20px;
+            }
+
+            .floating-btn:hover {
+                transform: scale(1.1);
+            }
+            .button-post {
+                background-color: #f98c00;
+                border-color: #ff4757;
+                font-weight: bold;
+                padding: 10px 20px;
+                border-radius: 20px;
+                color: white;
+                font-size: 16px;
+                text-decoration: none;
+            }
+            .button-close {
+                color: #fff;
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
         </style>
+        <script>
+            function deleteBlog(blogId) {
+                if (confirm('Are you sure you want to delete this blog?')) {
+                    $.ajax({
+                        url: '/deleteblog?id=' + blogId,
+                        type: 'POST',
+                        success: function (response) {
+                            alert('Blog deleted successfully!');
+                            window.location.href = 'search';
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert('Failed to delete blog. Please try again.');
+                        }
+                    });
+                }
+            }
+        </script>
     </head>
     <body>
-
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="include/header.jsp"></jsp:include>
@@ -44,7 +105,6 @@
             <jsp:include page="include/home.jsp"></jsp:include>
 
                 <!-- Blog -->
-
                 <div class="blog">
                     <div class="container">
                         <div class="row">
@@ -56,13 +116,16 @@
                             </div>
                         </div>
                         <div class="row blog_row blog_detail_container">
-
                             <!-- Blog Post -->
                             <div class="col-xl-6 col-md-6 blog_col blog_image">
                                 <img src="${blog.image}" alt="Blog Image" class="img-fluid">
                         </div>
                         <div class="col-xl-6 col-md-6 blog_col blog_content">
                             <h1>${blog.blog_name}</h1>
+                            <button class="btn button-post" data-toggle="modal" data-target="#Infor">
+                                <p>Blogs same author</p>
+                            </button>
+                            <br>
                             <p>${blog.description}</p>
                             <p>${blog.content}</p>
                         </div>
@@ -74,6 +137,151 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Floating Button -->
+            <c:if test="${sessionScope.role == 'EMP'}">
+            <button class="floating-btn floating-btn-edit" data-toggle="modal" data-target="#Edit">
+                <i class="fa fa-pencil"></i>
+            </button>
+            <br>
+            <button class="floating-btn floating-btn-delete" onclick="deleteBlog(${blog.blog_id})">
+                <i class="fa fa-trash"></i>
+            </button>
+            </c:if>
+            
+            <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <form id="blogForm" action="editblog" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Edit Blog</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="blog_name">Blog Name</label>
+                                    <input type="text" class="form-control" id="blog_name" name="blog_name" value="${blog.blog_name}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="image">Image URL</label>
+                                    <input type="text" class="form-control" id="image" name="image" value="${blog.image}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input type="text" class="form-control" id="description" name="description" value="${blog.description}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Content</label>
+                                    <textarea class="form-control" id="content" name="content">${blog.content}</textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
+                                <button type="button submit" class="btn button-post" >Save blog</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- HTML -->
+            <div class="modal fade" id="Infor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Blog Same Author</h5>
+                        </div>
+                        <div class="modal-body">
+                            <table id="Blog" class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.listb}" var="b">
+                                        <tr>
+                                            <td>
+                                                <div class="blog_post_image">
+                                                    <img src="${b.image}" alt="" class="blog-image">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="blog_post_title">
+                                                    <a href="blogdetails?id=${b.blog_id}">${b.blog_name}</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="blog_post_date">${b.description}</div>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CSS -->
+            <style>
+                .modal-dialog {
+                    max-width: 800px;
+                    margin: 1.75rem auto;
+                }
+
+                .table-responsive {
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    overflow-x: auto;
+                    -webkit-overflow-scrolling: touch;
+                    -ms-overflow-style: -ms-autohiding-scrollbar;
+                }
+
+                .table {
+                    width: 100%;
+                    margin-bottom: 1rem;
+                    background-color: transparent;
+                }
+
+                .table th, .table td {
+                    padding: 1.5rem;
+                    vertical-align: top;
+                    border-top: 1px solid #dee2e6;
+                }
+
+                .table thead th {
+                    vertical-align: bottom;
+                    border-bottom: 2px solid #dee2e6;
+                }
+
+                .table tbody + tbody {
+                    border-top: 2px solid #dee2e6;
+                }
+
+                .blog-image {
+                    width: 100px;
+                    height: auto;
+                }
+
+                .blog_post_title a {
+                    color: #007bff;
+                    text-decoration: none;
+                }
+
+                .blog_post_title a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+
 
             <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
