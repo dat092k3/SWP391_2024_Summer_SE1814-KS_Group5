@@ -85,9 +85,9 @@ public class BlogDAO extends DBContext implements BlogInterface {
     @Override
     public Blog takeBlogById(int blogId) {
         Blog blog = new Blog();
-        String sql = "SELECT * FROM Blog WHERE blog_id LIKE ?";
+        String sql = "SELECT * FROM Blog WHERE blog_id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, "%" + blogId + "%");
+            st.setInt(1, blogId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 blog = new Blog(
@@ -131,7 +131,7 @@ public class BlogDAO extends DBContext implements BlogInterface {
 
     @Override
     public void addBlog(Blog blog) {
-        String sql = "INSERT INTO [dbo].[Blog] ([blog_name], [image], [description], [content], [employee_id]) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO [Blog] ([blog_name], [image], [description], [content], [employee_id]) VALUES (?, ?, ?, ?, ?);";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getBlog_name());
@@ -139,7 +139,7 @@ public class BlogDAO extends DBContext implements BlogInterface {
             st.setString(3, blog.getDescription());
             st.setString(4, blog.getContent());
             st.setInt(5, blog.getEmployee_id());
-            st.executeUpdate();
+            st.execute(sql);
         } catch (SQLException e) {
             System.out.println("Error add blogs: " + e.getMessage());
         }
@@ -156,7 +156,7 @@ public class BlogDAO extends DBContext implements BlogInterface {
             st.setString(4, blog.getContent());
             st.setInt(5, blog.getEmployee_id());
             st.setInt(6, blog.getBlog_id());
-            st.executeUpdate();
+            st.execute(sql);
         } catch (SQLException e) {
             System.out.println("Error add blogs: " + e.getMessage());
         }
@@ -168,7 +168,7 @@ public class BlogDAO extends DBContext implements BlogInterface {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, blogId);
-            st.executeUpdate();
+            st.execute(sql);
         } catch (SQLException e) {
             System.out.println("Error delete blogs: " + e.getMessage());
         }
