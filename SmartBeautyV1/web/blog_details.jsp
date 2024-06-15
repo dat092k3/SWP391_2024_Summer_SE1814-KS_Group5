@@ -160,7 +160,10 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
+                                <div class="form-group">
+                                    <label for="description">Blog Id</label>
+                                    <input type="number" class="form-control" id="blog_id" name="blog_id" value="${blog.blog_id}">
+                                </div>
                                 <div class="form-group">
                                     <label for="blog_name">Blog Name</label>
                                     <input type="text" class="form-control" id="blog_name" name="blog_name" value="${blog.blog_name}">
