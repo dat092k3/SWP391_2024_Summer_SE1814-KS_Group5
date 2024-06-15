@@ -5,12 +5,17 @@
 
 package controller.blogmanagement;
 
+import DAO.BlogDAO;
+import Interface.BlogInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Blog;
 
 /**
  *
@@ -66,7 +71,20 @@ public class EditBlog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        int blogid = request.getIntHeader("blog_id");
+        String blogname = request.getParameter("blog_name");
+        String blogimage = request.getParameter("image");
+        String blogdescription = request.getParameter("description");
+        String blogcontent = request.getParameter("content");
+        BlogInterface blogDAO = new BlogDAO();
+        int poster = blogDAO.posterId((int) session.getAttribute("account_id"));
+            Blog blog = new Blog(blogid, blogname, blogimage, blogdescription, blogcontent, poster);
+            blogDAO.editBlog(blog);
+            List<Blog> list;
+            list = blogDAO.getAllBlog();
+            request.setAttribute("list", list);
+            request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
     /** 
