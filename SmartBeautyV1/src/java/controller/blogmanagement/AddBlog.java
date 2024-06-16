@@ -60,7 +60,20 @@ public class AddBlog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String blogname = request.getParameter("blog_name");
+        String blogimage = request.getParameter("image");
+        String blogdescription = request.getParameter("description");
+        String blogcontent = request.getParameter("content");
+        BlogInterface blogDAO = new BlogDAO();
+        int poster = blogDAO.posterId((int) session.getAttribute("account_id"));
+        Blog blog = new Blog(0, blogname, blogimage, blogdescription, blogcontent, poster);
+        blogDAO.addBlog(blog);
+        List<Blog> list;
+        list = blogDAO.getAllBlog();
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("blog.jsp").forward(request, response);
+
     }
 
     /**
@@ -74,19 +87,7 @@ public class AddBlog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String blogname = request.getParameter("blog_name");
-        String blogimage = request.getParameter("image");
-        String blogdescription = request.getParameter("description");
-        String blogcontent = request.getParameter("content");
-        BlogInterface blogDAO = new BlogDAO();
-        int poster = blogDAO.posterId((int) session.getAttribute("account_id"));
-            Blog blog = new Blog(0, blogname, blogimage, blogdescription, blogcontent, poster);
-            blogDAO.addBlog(blog);
-            List<Blog> list;
-            list = blogDAO.getAllBlog();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("blog.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

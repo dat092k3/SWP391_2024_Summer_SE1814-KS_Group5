@@ -80,7 +80,7 @@
                 if (confirm('Are you sure you want to delete this blog?')) {
                     $.ajax({
                         url: '/deleteblog?id=' + blogId,
-                        type: 'POST',
+                        type: 'GET',
                         success: function (response) {
                             alert('Blog deleted successfully!');
                             window.location.href = 'search';
@@ -152,7 +152,7 @@
             <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <form id="blogForm" action="editblog" method="post">
+                        <form id="blogForm" action="editblog" method="get">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Edit Blog</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

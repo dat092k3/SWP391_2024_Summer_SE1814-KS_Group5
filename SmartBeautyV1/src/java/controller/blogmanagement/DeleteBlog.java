@@ -60,7 +60,13 @@ public class DeleteBlog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int blogId = Integer.parseInt(request.getParameter("id"));
+        BlogInterface blogDAO = new BlogDAO();
+        blogDAO.deleteBlog(blogId);
+        List<Blog> list;
+        list = blogDAO.getAllBlog();
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
     /**
@@ -74,13 +80,7 @@ public class DeleteBlog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int blogId = Integer.parseInt(request.getParameter("id"));
-        BlogInterface blogDAO = new BlogDAO();
-            blogDAO.deleteBlog(blogId);
-            List<Blog> list;
-            list = blogDAO.getAllBlog();
-            request.setAttribute("list", list);
-            request.getRequestDispatcher("blog.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
