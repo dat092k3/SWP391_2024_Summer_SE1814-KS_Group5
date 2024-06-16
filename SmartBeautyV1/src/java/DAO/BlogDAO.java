@@ -131,7 +131,12 @@ public class BlogDAO extends DBContext implements BlogInterface {
 
     @Override
     public void addBlog(Blog blog) {
-        String sql = "INSERT INTO [Blog] ([blog_name], [image], [description], [content], [employee_id]) VALUES (?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO [Blog] ([blog_name],"
+                                        + " [image],"
+                                        + " [description],"
+                                        + " [content],"
+                                        + " [employee_id]) "
+                + "VALUES (?, ?, ?, ?, ?);";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, blog.getBlog_name());
