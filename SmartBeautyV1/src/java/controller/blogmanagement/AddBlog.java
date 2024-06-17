@@ -22,6 +22,8 @@ import model.Blog;
  */
 public class AddBlog extends HttpServlet {
 
+    BlogInterface blogDAO = new BlogDAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -64,10 +66,11 @@ public class AddBlog extends HttpServlet {
         String blogname = request.getParameter("blog_name");
         String blogimage = request.getParameter("image");
         String blogdescription = request.getParameter("description");
-        String blogcontent = request.getParameter("content");
-        BlogInterface blogDAO = new BlogDAO();
-        int poster = blogDAO.posterId((int) session.getAttribute("account_id"));
-        Blog blog = new Blog(0, blogname, blogimage, blogdescription, blogcontent, poster);
+        String blogcontent = request.getParameter("content");     
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        int employee_id = blogDAO.posterId(account_id);
+        System.out.println(blogname+" "+blogimage+" "+blogdescription+" "+blogcontent+" "+employee_id);
+        Blog blog = new Blog(0, blogname, blogimage, blogdescription, blogcontent, employee_id);
         blogDAO.addBlog(blog);
         List<Blog> list;
         list = blogDAO.getAllBlog();

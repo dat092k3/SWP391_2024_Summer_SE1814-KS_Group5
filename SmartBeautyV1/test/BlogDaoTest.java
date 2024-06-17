@@ -59,8 +59,22 @@ public class BlogDaoTest extends DBContext {
     }
 
     @Test
+    public void testSearchBlogByName_EmptySearchTerm() {
+        List<Blog> result = blogDao.searchBlogByName("");
+        List<Blog> allBlogs = blogDao.getAllBlog();
+        assertNotNull(result);
+        assertEquals(allBlogs.size(), result.size());
+    }
+
+    @Test
+    public void testSearchBlogByName_NonExistentSearchTerm() {
+        List<Blog> result = blogDao.searchBlogByName("NonExistentBlogName");
+        assertNotNull(result);
+        assertEquals(0, result.size());
+    }
+
+    @Test
     public void testGetAllBlog() {
-        int blogId = blogDao.getAllBlog().get(0).getBlog_id();
         List<Blog> result = blogDao.getAllBlog();
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -85,6 +99,14 @@ public class BlogDaoTest extends DBContext {
     }
 
     @Test
+    public void testTakeBlogById_InvalidBlogId() {
+        int invalidBlogId = 999; // Assuming a non-existent blog ID
+        Blog blog = blogDao.takeBlogById(invalidBlogId);
+        assertNotNull(blog);
+        assertEquals(0, blog.getBlog_id()); // Assuming default initialized blog ID is 0
+    }
+
+    @Test
     public void testBlogSameAuthor() {
         List<Blog> result = blogDao.blogSameAuthor(5);
         assertNotNull(result);
@@ -95,6 +117,14 @@ public class BlogDaoTest extends DBContext {
         assertEquals("Sample description", blog.getDescription());
         assertEquals("Sample content", blog.getContent());
         assertEquals(5, blog.getEmployee_id());
+    }
+
+    @Test
+    public void testBlogSameAuthor_NonExistentAuthor() {
+        int nonExistentEmpId = 999; // Assuming a non-existent employee ID
+        List<Blog> result = blogDao.blogSameAuthor(nonExistentEmpId);
+        assertNotNull(result);
+        assertEquals(0, result.size());
     }
 
     @Test
@@ -146,6 +176,13 @@ public class BlogDaoTest extends DBContext {
     public void testPosterId() {
         int empId = blogDao.posterId(3);
         assertEquals(5, empId);
+    }
+
+    @Test
+    public void testPosterId_InvalidAccountId() {
+        int invalidAccountId = 999; // Assuming a non-existent account ID
+        int empId = blogDao.posterId(invalidAccountId);
+        assertEquals(0, empId); // Assuming 0 is the default value indicating no associated employee
     }
 
     // TODO add test methods here.

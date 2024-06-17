@@ -26,7 +26,7 @@ public interface BlogInterface {
     
     public void editBlog(Blog blog);
     
-    public void deleteBlog(int blogId);
+    public boolean deleteBlog(int blogId);
     
     public int posterId (int accountId);
 }

@@ -162,6 +162,9 @@
                                     <label for="content">Content</label>
                                     <textarea class="form-control" id="content" name="content" required=""></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <input class="form-control" name="account_id" type="hidden" required="" value="${sessionScope.account.account_id}"></textarea>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <div>

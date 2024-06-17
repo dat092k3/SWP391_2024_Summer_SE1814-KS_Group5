@@ -12,7 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
 import java.util.List;
 import model.Blog;
 
@@ -21,6 +21,8 @@ import model.Blog;
  * @author td532
  */
 public class DeleteBlog extends HttpServlet {
+
+    BlogInterface blogDAO = new BlogDAO();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -60,13 +62,33 @@ public class DeleteBlog extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int blogId = Integer.parseInt(request.getParameter("id"));
-        BlogInterface blogDAO = new BlogDAO();
-        blogDAO.deleteBlog(blogId);
-        List<Blog> list;
-        list = blogDAO.getAllBlog();
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("blog.jsp").forward(request, response);
+        // Lấy giá trị của tham số blog_id từ request
+        String blogIdStr = request.getParameter("blog_id");
+
+        // Kiểm tra xem blog_id có tồn tại và có định dạng hợp lệ không
+        if (blogIdStr == null || blogIdStr.isEmpty()) {
+            // Nếu không tồn tại hoặc không hợp lệ, có thể xử lý lỗi 400 Bad Request
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing blog_id parameter");
+            return;
+        }
+
+        // Chuyển đổi blog_id từ String sang kiểu int
+        int blogId;
+        try {
+            blogId = Integer.parseInt(blogIdStr);
+        } catch (NumberFormatException e) {
+            // Nếu không thể chuyển đổi, xử lý lỗi 400 Bad Request
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid blog_id parameter");
+            return;
+        }
+
+        // Thực hiện xóa blog từ BlogDAO
+        boolean deleted = blogDAO.deleteBlog(blogId);
+
+        // Gửi kết quả về client
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(String.valueOf(deleted));
     }
 
     /**

@@ -76,22 +76,29 @@
             }
         </style>
         <script>
-            function deleteBlog(blogId) {
-                if (confirm('Are you sure you want to delete this blog?')) {
-                    $.ajax({
-                        url: '/deleteblog?id=' + blogId,
-                        type: 'GET',
-                        success: function (response) {
-                            alert('Blog deleted successfully!');
-                            window.location.href = 'search';
-                        },
-                        error: function (jqXHR, textStatus, errorThrown) {
-                            alert('Failed to delete blog. Please try again.');
-                        }
-                    });
+            function deleteBlog(blogId){
+                    if (confirm("Bạn có chắc muốn xóa blog này không?")) {
+                        // Gửi yêu cầu xóa đến servlet thông qua XMLHttpRequest
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                // Xử lý kết quả từ servlet
+                                var response = this.responseText;
+                                if (response === "true") {
+                                    alert("Blog đã được xóa thành công.");
+                                    // Chuyển hướng về trang search (ví dụ)
+                                    window.location.href = "search?txt=";
+                                } else {
+                                    alert("Không thể xóa blog này. Vui lòng thử lại sau.");
+                                }
+                            }
+                        };
+                        xhttp.open("GET", "deleteblog?blog_id=" + blogId, true);
+                        xhttp.send();
+                    }
                 }
-            }
         </script>
+
     </head>
     <body>
         <div class="super_container">
@@ -140,15 +147,15 @@
 
             <!-- Floating Button -->
             <c:if test="${sessionScope.role == 'EMP'}">
-            <button class="floating-btn floating-btn-edit" data-toggle="modal" data-target="#Edit">
-                <i class="fa fa-pencil"></i>
-            </button>
-            <br>
-            <button class="floating-btn floating-btn-delete" onclick="deleteBlog(${blog.blog_id})">
-                <i class="fa fa-trash"></i>
-            </button>
+                <button class="floating-btn floating-btn-edit" data-toggle="modal" data-target="#Edit">
+                    <i class="fa fa-pencil"></i>
+                </button>
+                <br>
+                <button class="floating-btn floating-btn-delete" onclick="deleteBlog(${blog.blog_id})">
+                    <i class="fa fa-trash"></i>
+                </button>
             </c:if>
-            
+
             <div class="modal fade" id="Edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -161,8 +168,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="description">Blog Id</label>
-                                    <input type="number" class="form-control" id="blog_id" name="blog_id" value="${blog.blog_id}">
+                                    <input type="number" class="form-control" id="blog_id" name="blog_id" type="hidden" value="${blog.blog_id}">
                                 </div>
                                 <div class="form-group">
                                     <label for="blog_name">Blog Name</label>
@@ -179,6 +185,9 @@
                                 <div class="form-group">
                                     <label for="content">Content</label>
                                     <textarea class="form-control" id="content" name="content">${blog.content}</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" name="account_id" type="hidden" required="" value="${sessionScope.account.account_id}"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer">

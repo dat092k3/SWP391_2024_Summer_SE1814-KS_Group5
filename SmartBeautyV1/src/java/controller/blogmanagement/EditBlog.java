@@ -22,6 +22,8 @@ import model.Blog;
  */
 public class EditBlog extends HttpServlet {
 
+    BlogInterface blogDAO = new BlogDAO();
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,14 +63,15 @@ public class EditBlog extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int blogid = request.getIntHeader("blog_id");
+        int blogid = Integer.parseInt(request.getParameter("blog_id"));
         String blogname = request.getParameter("blog_name");
         String blogimage = request.getParameter("image");
         String blogdescription = request.getParameter("description");
         String blogcontent = request.getParameter("content");
-        BlogInterface blogDAO = new BlogDAO();
-        int poster = blogDAO.posterId((int) session.getAttribute("account_id"));
-        Blog blog = new Blog(blogid, blogname, blogimage, blogdescription, blogcontent, poster);
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        int employee_id = blogDAO.posterId(account_id);
+        System.out.println(blogname + " " + blogimage + " " + blogdescription + " " + blogcontent + " " + employee_id);
+        Blog blog = new Blog(blogid, blogname, blogimage, blogdescription, blogcontent, employee_id);
         blogDAO.editBlog(blog);
         List<Blog> list = blogDAO.blogSameAuthor(blog.getEmployee_id());
         request.setAttribute("blog", blog);

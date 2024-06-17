@@ -132,10 +132,10 @@ public class BlogDAO extends DBContext implements BlogInterface {
     @Override
     public void addBlog(Blog blog) {
         String sql = "INSERT INTO [Blog] ([blog_name],"
-                                        + " [image],"
-                                        + " [description],"
-                                        + " [content],"
-                                        + " [employee_id]) "
+                + " [image],"
+                + " [description],"
+                + " [content],"
+                + " [employee_id]) "
                 + "VALUES (?, ?, ?, ?, ?);";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -152,9 +152,8 @@ public class BlogDAO extends DBContext implements BlogInterface {
 
     @Override
     public void editBlog(Blog blog) {
-        String sql = "UPDATE Blog SET [blog_name] = ?, [image] = ?, [description] = ?, [content] = ?, [employee_id] = ?  WHERE blog_id = ?";
-        try{
-            PreparedStatement st = connection.prepareStatement(sql);
+        String sql = "UPDATE Blog SET blog_name = ?, image = ?, description = ?, content = ?, employee_id = ? WHERE blog_id = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, blog.getBlog_name());
             st.setString(2, blog.getImage());
             st.setString(3, blog.getDescription());
@@ -163,35 +162,46 @@ public class BlogDAO extends DBContext implements BlogInterface {
             st.setInt(6, blog.getBlog_id());
             st.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error updating blog: " + e.getMessage());
         }
     }
 
     @Override
-    public void deleteBlog(int blogId) {
+    public boolean deleteBlog(int blogId) {
+        boolean status = false;
         String sql = "DELETE FROM Blog WHERE blog_id = ?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, blogId);
-            st.executeUpdate();
+            int rowsDeleted = st.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Blog with ID " + blogId + " has been successfully deleted.");
+                status = true;
+            } else {
+                System.out.println("No blog found with ID " + blogId);
+            }
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error deleting blog: " + e.getMessage());
+            status = false;
         }
+        
+        return status;
     }
 
     @Override
 
     public int posterId(int accountId) {
-        int empId = 0;
-        String sql = "SELECT employee_id FROM Employee where account_id = ?";
+        String sql = "SELECT employee_id FROM Employee WHERE account_id = ?";
+        int employeeId = -1;
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, accountId);
             ResultSet rs = st.executeQuery();
-            empId = rs.getInt("employee_id");
+            if (rs.next()) {
+                employeeId = rs.getInt("employee_id");
+            }
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("Error fetching employee ID: " + e.getMessage());
         }
-        return empId;
+        return employeeId;
     }
 
 }
