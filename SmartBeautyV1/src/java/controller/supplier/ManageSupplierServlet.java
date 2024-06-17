@@ -34,7 +34,7 @@ public class ManageSupplierServlet extends HttpServlet {
      * @throws ServletException
      * @throws IOException
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -63,7 +63,7 @@ public class ManageSupplierServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -77,7 +77,7 @@ public class ManageSupplierServlet extends HttpServlet {
      * @throws IOException 
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
@@ -91,7 +91,7 @@ public class ManageSupplierServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         // check value input by director
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidName(address)) {
+        if (!isValidName(name.trim()) || !isValidEmail(email.trim()) || !isValidPhoneNumber(phoneNumber.trim()) || !isValidName(address.trim())) {
             request.setAttribute("message", "Invalid input. Please check the name, email,address and phone number format.");
             processRequest(request, response);
             return;
@@ -113,7 +113,7 @@ public class ManageSupplierServlet extends HttpServlet {
                                                                                                         // convert it to a string, get just the filename without including the full path.
                     if (!source.isEmpty()) {
                         String filename = supplierDAO.getSupplierId() + ".png"; 
-                        if (!Files.exists(Path.of(realPath))) { // check folder /images/Accounts is existed
+                        if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
                             Files.createDirectory(Path.of(realPath));
                         }
                         part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
@@ -128,7 +128,7 @@ public class ManageSupplierServlet extends HttpServlet {
             // process data if director edit information supplier
             case "Save" -> {
                 Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
-                if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidName(address)) {
+                if (!isValidName(name.trim()) || !isValidEmail(email.trim()) || !isValidPhoneNumber(phoneNumber.trim()) || !isValidName(address.trim())) {
                     request.setAttribute("message", "Invalid input. Please check the name, email,address and phone number format.");
                     processRequest(request, response);
                     return;
@@ -166,7 +166,7 @@ public class ManageSupplierServlet extends HttpServlet {
      * @param name of director input
      * @return true false
      */
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) { // name isn't null
             return false;
         }
@@ -194,7 +194,7 @@ public class ManageSupplierServlet extends HttpServlet {
      * @param email of supplier director input
      * @return true false
      */
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
 
@@ -204,7 +204,7 @@ public class ManageSupplierServlet extends HttpServlet {
      * @param phoneNumber of supplier director input
      * @return true false
      */
-    private boolean isValidPhoneNumber(String phoneNumber) {
+    public boolean isValidPhoneNumber(String phoneNumber) {
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
     
