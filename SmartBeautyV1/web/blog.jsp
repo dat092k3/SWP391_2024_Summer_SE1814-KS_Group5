@@ -128,7 +128,7 @@
             </div>
 
             <!-- Floating Button -->
-            <c:if test="${sessionScope.role == 'EMP'}">
+            <c:if test="${sessionScope.role == 'Takecare'}">
                 <button class="floating-btn" data-toggle="modal" data-target="#myModal">
                     <i class="fa fa-plus"></i>
                 </button>
