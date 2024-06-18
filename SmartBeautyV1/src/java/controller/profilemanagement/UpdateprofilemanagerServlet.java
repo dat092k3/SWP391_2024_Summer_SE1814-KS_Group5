@@ -12,6 +12,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
@@ -65,6 +67,16 @@ public class UpdateprofilemanagerServlet extends HttpServlet {
         String address = request.getParameter("address");
         String image = request.getParameter("image");
         int account_id = Integer.parseInt(request.getParameter("account_id"));
+        // Validate age
+        LocalDate dob = LocalDate.parse(dateofbirth);
+        LocalDate now = LocalDate.now();
+        int age = Period.between(dob, now).getYears();
+
+        if (age < 15) {
+            request.setAttribute("error", "You must be at least 15 years old.");
+            request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
+            return;
+        }
         ManagerInterface managerDAO = new ManagerDAO();
         managerDAO.updateProfileManager(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
         response.sendRedirect("profile?account_id=" + account_id);
