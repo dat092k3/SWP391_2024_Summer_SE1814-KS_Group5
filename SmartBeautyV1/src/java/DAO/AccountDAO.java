@@ -29,9 +29,9 @@ public class AccountDAO  extends DBContext implements AccountInterface {
     public Account findAccount(String username, String password) {
         String sql;
         if (username.contains("@")) {
-            sql = "select * from account where email='" + username + "' and password='" + password + "'";
+            sql = "select * from account where status=1 and  email='" + username + "' and password='" + password + "'";
         } else {
-            sql = "select * from account where username='" + username + "' and password='" + password + "'";
+            sql = "select * from account where status=1 and username='" + username + "' and password='" + password + "'";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
