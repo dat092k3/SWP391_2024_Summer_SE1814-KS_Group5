@@ -21,54 +21,7 @@
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/about.css">
         <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-        <style>
-            .dropdown {
-                position: relative;
-                display: inline-block;
-            }
-
-            .dropdown-content {
-                display: none;
-                position: absolute;
-                background-color: black; /* Màu nền trắng */
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-                border-radius: 5px;
-                overflow: hidden;
-            }
-
-            .dropdown-content a {
-                color: #F0E9FE; /* Màu chữ xám đậm */
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                transition: background-color 0.3s, color 0.3s; /* Hiệu ứng mượt mà */
-            }
-
-            .dropdown-content a:hover {
-                background-color: gray; /* Màu nền xám nhạt khi hover */
-                color: #00FFFFFF ; /* Đổi màu chữ khi hover */
-            }
-
-            .dropdown:hover .dropdown-content {
-                display: block;
-            }
-
-            .dropdown .dropbtn {
-                color: #333; /* Màu chữ xám đậm */
-                padding: 12px 16px;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-
-            /* Màu chữ mặc định cho "Manage" khi không hover */
-            .dropdown .dropbtn:not(:hover) {
-                color: floralwhite; 
-            }
-
-
-        </style>
+        <<link rel="stylesheet" href="../styles/dropdown.css"/>
     </head>
     <body>
         <div class="super_container">

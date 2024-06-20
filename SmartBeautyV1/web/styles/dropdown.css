@@ -1,0 +1,55 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 20, 2024, 11:10:15 PM
+    Author     : LENOVO
+*/
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: black; /* Màu nền trắng */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.dropdown-content a {
+    color: #F0E9FE; /* Màu chữ xám đậm */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng mượt mà */
+}
+
+.dropdown-content a:hover {
+    background-color: gray; /* Màu nền xám nhạt khi hover */
+    color: #00FFFFFF ; /* Đổi màu chữ khi hover */
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown .dropbtn {
+    color: #333; /* Màu chữ xám đậm */
+    padding: 12px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Màu chữ mặc định cho "Manage" khi không hover */
+.dropdown .dropbtn:not(:hover) {
+    color: floralwhite;
+}
+
+
