@@ -176,19 +176,15 @@ public class BlogDAO extends DBContext implements BlogInterface {
             if (rowsDeleted > 0) {
                 System.out.println("Blog with ID " + blogId + " has been successfully deleted.");
                 status = true;
-            } else {
-                System.out.println("No blog found with ID " + blogId);
             }
         } catch (SQLException e) {
             System.out.println("Error deleting blog: " + e.getMessage());
             status = false;
         }
-        
         return status;
     }
 
     @Override
-
     public int posterId(int accountId) {
         String sql = "SELECT employee_id FROM Employee WHERE account_id = ?";
         int employeeId = -1;

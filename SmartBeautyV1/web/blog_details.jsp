@@ -12,69 +12,6 @@
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-        <style>
-            .blog_detail_container {
-                display: flex;
-                flex-wrap: wrap;
-            }
-            .blog_image {
-                flex: 1 0 25%;
-                max-width: 25%;
-                box-sizing: border-box;
-                padding: 10px;
-            }
-            .blog_content {
-                flex: 3 0 75%;
-                max-width: 75%;
-                box-sizing: border-box;
-                padding: 10px;
-            }
-            .floating-btn {
-                position: fixed;
-                right: 20px;
-                background-color: #f98c00;
-                color: white;
-                border: none;
-                border-radius: 50%;
-                width: 45px;
-                height: 45px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 0;
-                font-size: 20px;
-                cursor: pointer;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-                transition: transform 0.2s ease;
-            }
-
-            .floating-btn-edit{
-                bottom: 70px;
-            }
-
-            .floating-btn-delete{
-                bottom: 20px;
-            }
-
-            .floating-btn:hover {
-                transform: scale(1.1);
-            }
-            .button-post {
-                background-color: #f98c00;
-                border-color: #ff4757;
-                font-weight: bold;
-                padding: 10px 20px;
-                border-radius: 20px;
-                color: white;
-                font-size: 16px;
-                text-decoration: none;
-            }
-            .button-close {
-                color: #fff;
-                background-color: #6c757d;
-                border-color: #6c757d;
-            }
-        </style>
         <script>
             function deleteBlog(blogId){
                     if (confirm("Bạn có chắc muốn xóa blog này không?")) {

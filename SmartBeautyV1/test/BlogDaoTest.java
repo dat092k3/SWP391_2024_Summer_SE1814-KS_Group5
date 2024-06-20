@@ -34,7 +34,8 @@ public class BlogDaoTest extends DBContext {
 
             // Thiết lập dữ liệu mẫu nếu cần
             String insertSQL = "INSERT INTO Blog (blog_name, image, description, content, employee_id) VALUES "
-                    + "('Sample Blog', 'sample.jpg', 'Sample description', 'Sample content', 5)";
+                    + "('Sample Blog', 'sample.jpg', 'Sample description', 'Sample content', 5)"
+                    + "('Sample Blog2', 'sample2.jpg', 'Sample description2', 'Sample content2', 5)";
             stmt.execute(insertSQL);
         }
     }
@@ -164,11 +165,12 @@ public class BlogDaoTest extends DBContext {
     @Test
     public void testDeleteBlog() throws SQLException {
         int blogId = blogDao.getAllBlog().get(0).getBlog_id();
-        blogDao.deleteBlog(blogId);
+        boolean status = blogDao.deleteBlog(blogId);
+        assertTrue(status);
         // Kiểm tra xem blog đã được xóa hay chưa
         try (Statement stmt = connection.createStatement()) {
-            ResultSet rs = stmt.executeQuery("SELECT * FROM Blog WHERE blog_id = 1");
-            assertFalse(rs.next());
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Blog WHERE blog_id = " + blogId);
+            assertFalse(rs.next());           
         }
     }
 
@@ -182,7 +184,7 @@ public class BlogDaoTest extends DBContext {
     public void testPosterId_InvalidAccountId() {
         int invalidAccountId = 999; // Assuming a non-existent account ID
         int empId = blogDao.posterId(invalidAccountId);
-        assertEquals(0, empId); // Assuming 0 is the default value indicating no associated employee
+        assertEquals(-1, empId); // Assuming 0 is the default value indicating no associated employee
     }
 
     // TODO add test methods here.
