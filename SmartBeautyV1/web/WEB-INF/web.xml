@@ -112,6 +112,14 @@
         <servlet-name>DeleteEquipmentServlet</servlet-name>
         <servlet-class>controller.equipment.DeleteEquipmentServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SearchServiceServlet</servlet-name>
+        <servlet-class>controller.servicemanagement.SearchServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servicedetails</servlet-name>
+        <servlet-class>controller.servicemanagement.ServiceDetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -219,5 +227,13 @@
     <servlet-mapping>
         <servlet-name>DeleteEquipmentServlet</servlet-name>
         <url-pattern>/deleteequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchServiceServlet</servlet-name>
+        <url-pattern>/searchservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servicedetails</servlet-name>
+        <url-pattern>/servicedetails</url-pattern>
     </servlet-mapping>
 </web-app>

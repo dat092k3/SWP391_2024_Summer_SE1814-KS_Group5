@@ -85,7 +85,7 @@
                                     <ul class="d-flex flex-row align-items-center justify-content-start">
                                         <li><a href="index.jsp">Home</a></li>
                                         <li class="active"><a href="about.jsp">About us</a></li>
-                                        <li><a href="services.jsp">Services</a></li>
+                                        <li><a href="searchservice">Services</a></li>
                                             <c:if test="${account.getRole() eq 'Customer' or account.getRole() eq 'Takecare'}">
                                             <li><a href="schedule.jsp">Schedule</a></li>
                                             </c:if>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <html lang="en">
     <head>
         <title>Services</title>
@@ -16,67 +16,80 @@
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/services.css">
         <link rel="stylesheet" type="text/css" href="styles/services_responsive.css">
+        <style>
+            .search-form-container {
+                display: flex;
+                justify-content: flex-end;
+            }
+        </style>
     </head>
     <body>
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="include/header.jsp"></jsp:include>
-                <div class="services" style="margin-top: 50px">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <div class="section_title_container">
-                                    <div class="section_subtitle">welcome to sportfit</div>
-                                    <div class="section_title">Our Courses</div>
-                                </div>
+            <jsp:include page="include/home.jsp"></jsp:include>
+
+                <div class="search-form-container">
+                    <form action="searchservice" method="get" class="form-inline my-2 my-lg-0">
+                        <div class="input-group input-group-sm">
+                            <input value="${txtS}" name="txtservice" type="text" class="form-control" aria-label="Small"
+                               aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-secondary btn-number">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="services" style="margin-top: 50px">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="section_title_container">
+                                <div class="section_subtitle">welcome to sportfit</div>
+                                <div class="section_title">Our Courses</div>
                             </div>
                         </div>
-                        <div class="row services_row">
-                            <!-- Service -->
+                    </div>
+
+                    <div class="row services_row">
+                        <!-- Service -->
+                        <c:forEach items="${requestScope.listservice}" var="service">
                             <div class="col-xl-4 col-md-6 service_col">
                                 <div class="service">
                                     <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
                                         <div><div class="service_icon"><img src="images/icon_4.png" alt=""></div></div>
-                                        <div class="service_title">Weight Loss Class</div>
+                                        <div class="service_title"><a href="servicedetails?service_id=${service.service_id}">${service.service_name}</a></div>
                                     </div>
                                     <div class="service_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
+                                        <p>${service.description}</p>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Service -->
-                            <div class="col-xl-4 col-md-6 service_col">
-                                <div class="service">
-                                    <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
-                                        <div><div class="service_icon"><img src="images/icon_5.png" alt=""></div></div>
-                                        <div class="service_title">Yoga Classes</div>
-                                    </div>
-                                    <div class="service_text">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec malesuada lorem maximus mauris scelerisque, at rutrum.</p>
-                                    </div>
+                        </c:forEach> 
+                    </div>
+                </div>
+            </div>
+            <!-- Extra -->
+            <div class="extra d-flex flex-column align-items-center justify-content-center text-center">
+                <div class="background_image" style="background-image:url(images/extra_wide.jpg)"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="extra_content d-flex flex-column align-items-center justify-content-center text-center">
+                                <div class="extra_title">15% Discount</div>
+                                <div class="extra_text">
+                                    <p>Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit velit, eu fringilla neque. Etiam id finibus sapien. Donec sollicitudin luctus ex non pharetra.llus.</p>
                                 </div>
+                                <div class="button extra_button"><a href="#">Join Now</a></div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- Extra -->
-                <div class="extra d-flex flex-column align-items-center justify-content-center text-center">
-                    <div class="background_image" style="background-image:url(images/extra_wide.jpg)"></div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 offset-md-3">
-                                <div class="extra_content d-flex flex-column align-items-center justify-content-center text-center">
-                                    <div class="extra_title">15% Discount</div>
-                                    <div class="extra_text">
-                                        <p>Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit velit, eu fringilla neque. Etiam id finibus sapien. Donec sollicitudin luctus ex non pharetra.llus.</p>
-                                    </div>
-                                    <div class="button extra_button"><a href="#">Join Now</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>			
-                </div>
-                <!-- Footer -->
+                </div>			
+            </div>
+            <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
         </div>
         <script src="js/jquery-3.2.1.min.js"></script>
