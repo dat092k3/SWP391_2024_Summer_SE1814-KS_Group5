@@ -30,32 +30,44 @@
             .dropdown-content {
                 display: none;
                 position: absolute;
-                background-color: #0069d9;
+                background-color: black; /* Màu nền trắng */
                 min-width: 160px;
                 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
                 z-index: 1;
+                border-radius: 5px;
+                overflow: hidden;
             }
 
             .dropdown-content a {
-                color: green;
+                color: #F0E9FE; /* Màu chữ xám đậm */
                 padding: 12px 16px;
                 text-decoration: none;
                 display: block;
-                border-radius: 10%;
+                transition: background-color 0.3s, color 0.3s; /* Hiệu ứng mượt mà */
             }
 
             .dropdown-content a:hover {
-                background-color: white;
+                background-color: gray; /* Màu nền xám nhạt khi hover */
+                color: #00FFFFFF ; /* Đổi màu chữ khi hover */
             }
 
             .dropdown:hover .dropdown-content {
                 display: block;
             }
 
-            .dropdown:hover .dropbtn {
-                background-color: #34ce57;
-                color: white; /* Optional: change color when hovering over the dropdown */
+            .dropdown .dropbtn {
+                color: #333; /* Màu chữ xám đậm */
+                padding: 12px 16px;
+                border-radius: 5px;
+                cursor: pointer;
             }
+
+            /* Màu chữ mặc định cho "Manage" khi không hover */
+            .dropdown .dropbtn:not(:hover) {
+                color: floralwhite; 
+            }
+
+
         </style>
     </head>
     <body>

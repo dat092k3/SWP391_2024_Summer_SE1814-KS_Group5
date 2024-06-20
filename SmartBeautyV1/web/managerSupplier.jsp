@@ -21,14 +21,14 @@
         <link href="styles/manager.css" rel="stylesheet" type="text/css"/>
         <style>
             img{
-                width: 150px;
+                width: 130px;
                 height: 120px;
             }
         </style>
         <script type="text/javascript">
             function doDelete(supplier_id) {
                 if (confirm("Are you sure to delete supplier")) {
-                    window.location = "managesupplier?action=delete&supplierId=" + supplier_id;
+                    window.location = "deletesupplier?supplierId=" + supplier_id;
                 }
             }
 
@@ -50,7 +50,9 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <a style="color: red" href="index.jsp">Home</a>
+                                <a style="margin-right: 35%" href="index.jsp" class="btn btn-primary">
+                                    <i class="fa fa-home"></i> Home
+                                </a>
                                 <h2>Manage <b>Supplier</b></h2>
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
@@ -111,7 +113,7 @@
             <div id="addEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="managesupplier" method="post" enctype="multipart/form-data">
+                        <form action="addsupplier" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Add Supplier</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -155,7 +157,7 @@
             <div id="editEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="managesupplier" method="post" enctype="multipart/form-data">
+                        <form action="editsupplier" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Edit Supplier</h4>
                                 <c:if test="${message != null}">
@@ -199,8 +201,6 @@
                     </div>
                 </div>
             </div>
-
-        </a>
         <c:if test="${showEditDialog}">
             <script>
                 $("#editEmployeeModal").modal('show');

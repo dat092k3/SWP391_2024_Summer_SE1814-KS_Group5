@@ -1,6 +1,7 @@
+/* Global styles */
 body {
     color: #566787;
-    background: green no-repeat center center fixed; /* New background image */
+    background: gray no-repeat center center fixed;
     background-size: cover;
     font-family: 'Varela Round', sans-serif;
     font-size: 13px;
@@ -9,7 +10,7 @@ body {
 }
 
 .page-wrapper {
-    background: transparent; /* Make sure it's transparent to show the body background */
+    background: transparent;
     padding: 20px 25px;
     margin: 30px 0;
     border-radius: 3px;
@@ -17,14 +18,14 @@ body {
 }
 
 .table-wrapper {
-    background: white; /* Ensure the table wrapper has a white background for readability */
+    background: white;
     padding: 20px 25px;
     margin: 30px 0;
     border-radius: 3px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 
-.table-title {        
+.table-title {
     padding-bottom: 15px;
     background: #435d7d;
     color: #fff;
@@ -149,7 +150,7 @@ table.table .avatar {
 
 .pagination li a:hover {
     color: #666;
-}	
+}   
 
 .pagination li.active a, .pagination li.active a.page-link {
     background: #03A9F4;
@@ -165,7 +166,7 @@ table.table .avatar {
 
 .pagination li i {
     font-size: 16px;
-    padding-top: 6px
+    padding-top: 6px;
 }
 
 .hint-text {
@@ -268,7 +269,7 @@ table.table .avatar {
 .modal .btn {
     border-radius: 2px;
     min-width: 100px;
-}	
+}   
 
 .modal form label {
     font-weight: normal;
