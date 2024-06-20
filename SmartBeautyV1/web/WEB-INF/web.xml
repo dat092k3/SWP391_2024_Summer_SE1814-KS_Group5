@@ -88,6 +88,38 @@
         <servlet-name>DeleteBlog</servlet-name>
         <servlet-class>controller.blogmanagement.DeleteBlog</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.AddSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.EditSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteSupplierServlet</servlet-name>
+        <servlet-class>controller.supplier.DeleteSupplierServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.AddEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.EditEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteEquipmentServlet</servlet-name>
+        <servlet-class>controller.equipment.DeleteEquipmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchServiceServlet</servlet-name>
+        <servlet-class>controller.servicemanagement.SearchServiceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>servicedetails</servlet-name>
+        <servlet-class>controller.servicemanagement.ServiceDetailsServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -160,7 +192,7 @@
         <servlet-name>ManageSupplierServlet</servlet-name>
         <url-pattern>/managesupplier</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>EditBlog</servlet-name>
         <url-pattern>/editblog</url-pattern>
     </servlet-mapping>
@@ -171,5 +203,37 @@
     <servlet-mapping>
         <servlet-name>DeleteBlog</servlet-name>
         <url-pattern>/deleteblog</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddSupplierServlet</servlet-name>
+        <url-pattern>/addsupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditSupplierServlet</servlet-name>
+        <url-pattern>/editsupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteSupplierServlet</servlet-name>
+        <url-pattern>/deletesupplier</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddEquipmentServlet</servlet-name>
+        <url-pattern>/addequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditEquipmentServlet</servlet-name>
+        <url-pattern>/editequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteEquipmentServlet</servlet-name>
+        <url-pattern>/deleteequipment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchServiceServlet</servlet-name>
+        <url-pattern>/searchservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>servicedetails</servlet-name>
+        <url-pattern>/servicedetails</url-pattern>
     </servlet-mapping>
 </web-app>

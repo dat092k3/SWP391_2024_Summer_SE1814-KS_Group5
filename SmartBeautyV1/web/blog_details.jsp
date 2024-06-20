@@ -67,7 +67,7 @@
                         <div class="col-xl-6 col-md-6 blog_col blog_content">
                             <h1>${blog.blog_name}</h1>
                             <button class="btn button-post" data-toggle="modal" data-target="#Infor">
-                                <p>Blogs same author</p>
+                                <p> Blogs same author</p>
                             </button>
                             <br>
                             <p>${blog.description}</p>

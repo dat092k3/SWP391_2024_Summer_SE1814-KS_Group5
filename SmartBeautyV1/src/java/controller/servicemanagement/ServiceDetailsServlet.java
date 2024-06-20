@@ -2,24 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.profilemanagement;
+package controller.servicemanagement;
 
-import DAO.EmployeeDAO;
-import Interface.EmployeeInterface;
+import DAO.ServiceDAO;
+import Interface.ServiceInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.Period;
+import model.Service;
 
 /**
  *
  * @author admin
  */
-public class UpdateprofileemployeeServlet extends HttpServlet {
+public class ServiceDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +37,10 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateprofileemployeeServlet</title>");
+            out.println("<title>Servlet ServiceDetailsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateprofileemployeeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ServiceDetailsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,27 +58,11 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String fullname = request.getParameter("fullname");
-        String gender = request.getParameter("gender");
-        String email = request.getParameter("email");
-        String dateofbirth = request.getParameter("dateofbirth");
-        String phonenumber = request.getParameter("phonenumber");
-        String address = request.getParameter("address");
-        String image = request.getParameter("image");
-        int account_id = Integer.parseInt(request.getParameter("account_id"));
-         // Validate age
-        LocalDate dob = LocalDate.parse(dateofbirth);
-        LocalDate now = LocalDate.now();
-        int age = Period.between(dob, now).getYears();
-
-        if (age < 15) {
-            request.setAttribute("error", "You must be at least 15 years old.");
-            request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
-            return;
-        }
-        EmployeeInterface employeeDAO = new EmployeeDAO();
-        employeeDAO.updateProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        response.sendRedirect("profile?account_id=" + account_id);
+        int service_id = Integer.parseInt(request.getParameter("service_id"));
+        ServiceInterface serviceDAO = new ServiceDAO();
+        Service service = serviceDAO.getServiceById(service_id);
+        request.setAttribute("service", service);
+        request.getRequestDispatcher("servicedetails.jsp").forward(request, response);
     }
 
     /**

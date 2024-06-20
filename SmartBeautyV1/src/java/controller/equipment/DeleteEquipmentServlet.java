@@ -2,55 +2,51 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.profilemanagement;
 
-import DAO.EmployeeDAO;
-import Interface.EmployeeInterface;
+package controller.equipment;
+
+import DAO.EquipmentDAO;
+import Interface.EquipmentInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
-import java.time.Period;
 
 /**
- *
- * @author admin
+ * delete equipment
+ * @author LENOVO
  */
-public class UpdateprofileemployeeServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class DeleteEquipmentServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateprofileemployeeServlet</title>");
+            out.println("<title>Servlet DeleteEquipmentServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateprofileemployeeServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteEquipmentServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,33 +54,22 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String fullname = request.getParameter("fullname");
-        String gender = request.getParameter("gender");
-        String email = request.getParameter("email");
-        String dateofbirth = request.getParameter("dateofbirth");
-        String phonenumber = request.getParameter("phonenumber");
-        String address = request.getParameter("address");
-        String image = request.getParameter("image");
-        int account_id = Integer.parseInt(request.getParameter("account_id"));
-         // Validate age
-        LocalDate dob = LocalDate.parse(dateofbirth);
-        LocalDate now = LocalDate.now();
-        int age = Period.between(dob, now).getYears();
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
+        EquipmentInterface equipmentDAO = new EquipmentDAO();
+        
+        String equipmentId = request.getParameter("equipmentId");
+        equipmentDAO.deleteEquipment(Integer.parseInt(equipmentId));
+        request.setAttribute("message", "Delete successful!");
+        request.setAttribute("showEditDialog", false);
 
-        if (age < 15) {
-            request.setAttribute("error", "You must be at least 15 years old.");
-            request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
-            return;
-        }
-        EmployeeInterface employeeDAO = new EmployeeDAO();
-        employeeDAO.updateProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, image, account_id);
-        response.sendRedirect("profile?account_id=" + account_id);
-    }
+        request.getRequestDispatcher("manageequipment").forward(request, response);
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -92,18 +77,17 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
+    /** 
+     * Returns a Delete Equipment Servlet of the servlet.
      * @return a String containing servlet description
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Delete Equipment Servlet";
     }// </editor-fold>
 
 }

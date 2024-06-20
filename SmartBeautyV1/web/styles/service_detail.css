@@ -1,0 +1,58 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 18, 2024, 10:42:57 PM
+    Author     : admin
+*/
+
+.service-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+}
+.service-image {
+    max-width: 40%;
+}
+.service-image img {
+    width: 50%;
+    border-radius: 8px;
+}
+.service-details {
+    max-width: 55%;
+}
+.service-details p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+.service-details .service-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e67e22;
+}
+.service-details .service-description {
+    font-size: 14px;
+    color: #555;
+}
+.service-details .buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.service-details .register-btn, .service-details .contact-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+.service-details .register-btn {
+    background-color: #28a745;
+    color: white;
+}
+.service-details .contact-btn {
+    background-color: #dc3545;
+    color: white;
+}

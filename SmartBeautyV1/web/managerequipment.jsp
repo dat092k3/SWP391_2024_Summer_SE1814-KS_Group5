@@ -24,25 +24,28 @@
                 width: 150px;
                 height: 120px;
             }
-
+            .error-message {
+                color: red;
+                display: none;
+            }
         </style>
         <script type="text/javascript">
             function doDelete(equipment_id) {
                 if (confirm("Are you sure to delete equipment")) {
-                    window.location = "manageequipment?action=delete&equipmentId=" + equipment_id;
+                    window.location = "deleteequipment?equipmentId=" + equipment_id;
                 }
             }
-            
-            function chooseFile(fileInput) {
-            if (fileInput.files && fileInput.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#image').attr('src', e.target.result);
+            function chooseFile(fileInput) {
+                if (fileInput.files && fileInput.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(fileInput.files[0]);
                 }
-                reader.readAsDataURL(fileInput.files[0]);
             }
-        }
         </script>
     </head>
     <body>
@@ -52,7 +55,9 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <a style="color: red" href="index.jsp">Home</a>
+                                <a style="margin-right: 35%" href="index.jsp" class="btn btn-primary">
+                                    <i class="fa fa-home"></i> Home
+                                </a>
                                 <h2>Manage <b>Equipment</b></h2>
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
@@ -117,7 +122,7 @@
             <div id="addEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="manageequipment" method="post" enctype="multipart/form-data">
+                        <form action="addequipment" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Add Equipment</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -130,6 +135,7 @@
                                 <div class="form-group">
                                     <label>Price</label>
                                     <input name="price" type="number" min="1" class="form-control" required>
+                                    <div class="error-message" id="price-error">Price must be at least 1</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
@@ -141,6 +147,7 @@
                                 <div class="form-group">
                                     <label>Quantity</label>
                                     <input name="quantity" type="number" min="1" class="form-control" required>
+                                    <div class="error-message" id="quantity-error">Quantity must be at least 1</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
@@ -175,7 +182,7 @@
             <div id="editEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="manageequipment" method="post" enctype="multipart/form-data">
+                        <form action="editequipment" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Edit Equipment</h4>
                                 <c:if test="${message != null}">
@@ -194,6 +201,7 @@
                                 <div class="form-group">
                                     <label>Price</label>
                                     <input name="price" type="number" min="1" class="form-control" required value="${equipment.price}"/>
+                                    <div class="error-message" id="price-error">Price must be at least 1</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label>
@@ -205,6 +213,7 @@
                                 <div class="form-group">
                                     <label>Quantity</label>
                                     <input name="quantity" type="number" min="1" class="form-control" value="${equipment.quantity}" required/>
+                                    <div class="error-message" id="quantity-error">Quantity must be at least 1</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
@@ -240,6 +249,31 @@
                     $("#editEmployeeModal").modal('show');
                 </script>
             </c:if>
+            <script>
+                document.addEventListener('DOMContentLoaded', (event) => {
+                    const priceInput = document.querySelector('input[name="price"]');
+                    const quantityInput = document.querySelector('input[name="quantity"]');
+                    const priceError = document.getElementById('price-error');
+                    const quantityError = document.getElementById('quantity-error');
+
+                    priceInput.addEventListener('input', () => {
+                        if (priceInput.value < 1) {
+                            priceError.style.display = 'block';
+                        } else {
+                            priceError.style.display = 'none';
+                        }
+                    });
+
+                    quantityInput.addEventListener('input', () => {
+                        if (quantityInput.value < 1) {
+                            quantityError.style.display = 'block';
+                        } else {
+                            quantityError.style.display = 'none';
+                        }
+                    });
+                });
+            </script>    
+
         </div>
         <script src="js/manager.js" type="text/javascript"></script>        
     </body>

@@ -74,7 +74,7 @@ public class SearchEquipmentServlet extends HttpServlet {
         }
         request.setAttribute("listEquipment", list);
         request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managerequipment.jsp").forward(request, response);
+        request.getRequestDispatcher("managerequipment.jsp").include(request, response);
     }
 
     /**
