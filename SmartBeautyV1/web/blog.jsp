@@ -12,60 +12,7 @@
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-        <style>
-            /* Additional CSS for aligning the form to the right */
-            .search-form-container {
-                display: flex;
-                justify-content: flex-end;
-            }
-
-            /* Floating Button Styles */
-            .floating-btn {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background-color: #f98c00; /* Background color of the button */
-                color: white;
-                border: none;
-                border-radius: 50%; /* Make the button circular */
-                width: 45px; /* Adjust width as needed */
-                height: 45px; /* Adjust height as needed */
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 15px 15px;
-                font-size: 20px; /* Font size of the plus icon */
-                cursor: pointer;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow effect */
-                padding: 0; /* Remove default padding */
-                transition: transform 0.2s ease; /* Add transition for smooth effect */
-            }
-
-            .floating-btn .fa-plus {
-                margin: 0; /* Ensure there is no extra margin around the icon */
-            }
-
-            .floating-btn:hover {
-                transform: scale(1.1); /* Enlarge the button on hover */
-            }
-
-            /* button */
-            .button-post {
-                background-color: #f98c00;
-                border-color: #ff4757;
-                font-weight: bold;
-                padding: 10px 20px;
-                border-radius: 20px;
-                color: white;
-                font-size: 16px;
-                text-decoration: none;
-            }
-            .button-close {
-                color:#fff;
-                background-color:#6c757d;
-                border-color:#6c757d
-            }
-        </style>
+        
     </head>
     <body>
 
