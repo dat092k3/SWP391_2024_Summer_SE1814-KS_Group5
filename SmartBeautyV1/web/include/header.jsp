@@ -21,7 +21,7 @@
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/about.css">
         <link rel="stylesheet" type="text/css" href="styles/about_responsive.css">
-        <<link rel="stylesheet" href="../styles/dropdown.css"/>
+        <link rel="stylesheet" type="text/css" href="styles/dropdown.css"/>
     </head>
     <body>
         <div class="super_container">
