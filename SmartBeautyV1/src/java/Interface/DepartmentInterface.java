@@ -4,8 +4,6 @@
  */
 package Interface;
 
-import DAO.*;
-
 /**
  *
  * @author LENOVO
