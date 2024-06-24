@@ -98,7 +98,7 @@
                                 <tr>
                                     <td>${equipment.equipment_id}</td>
                                     <td>${equipment.equipment_name}</td>
-                                    <td>${equipment.price}</td>
+                                    <td>${equipment.price} $</td>
                                     <td>
                                         <img src=".${equipment.image}">
                                     </td>
