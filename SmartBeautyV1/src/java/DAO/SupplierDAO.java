@@ -14,15 +14,17 @@ import java.util.List;
 import model.Supplier;
 
 /**
- *  access database of supplier
+ * access database of supplier
+ *
  * @author LENOVO
  */
-public class SupplierDAO extends DBContext implements SupplierInterface{
-    
+public class SupplierDAO extends DBContext implements SupplierInterface {
+
     /**
      * get all supplier
+     *
      * @return list supplier
-    */    
+     */
     @Override
     public List<Supplier> getAllSupplier() {
         List<Supplier> listSupplier = new ArrayList<>();
@@ -53,12 +55,12 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
         }
         return listSupplier;
     }
-    
+
     /**
-     * delete supplier 
+     * delete supplier
+     *
      * @param suplier_id of supplier need to delete
      */
-    
     @Override
     public void deleteSupplier(int suplier_id) {
         String sql = "UPDATE [dbo].[Suplier]\n"
@@ -72,13 +74,13 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
             System.out.println(ex);
         }
     }
-    
+
     /**
-     * 
+     *
      * update information of supplier
+     *
      * @param supplier is object supplier need to update
      */
-
     @Override
     public void updateSupplier(Supplier supplier) {
         String sql = "UPDATE [dbo].[Suplier]\n"
@@ -97,19 +99,18 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
             st.setString(4, supplier.getPhoneNumber());
             st.setString(5, supplier.getEmail());
             st.setInt(6, supplier.getSupplier_id());
-            st.execute();
+            st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
-    
-    
+
     /**
      * get supplier want choose
+     *
      * @param id of supplier is choose
      * @return supplier is choose
      */
-    
     @Override
     public Supplier getSupplierById(int id) {
         String sql = "select * from Suplier where status=1 and suplier_id=" + id;
@@ -131,16 +132,14 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
         }
         return null;
     }
-    
+
     /**
-     * check supplier is existed 
-     * 
+     * check supplier is existed
+     *
      * @param name of supplier need to check
      * @param address of supplier need to check
      * @return true false
      */
-    
-
     @Override
     public boolean isSupplierExist(String name, String address) {
         String sql = "select * from Suplier\n"
@@ -153,23 +152,22 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
-            return false;
         }
+        return false;
     }
-    
+
     /**
      * check supplier is existed when save
-     * 
-     * @param name of supplier need to check 
+     *
+     * @param name of supplier need to check
      * @param address of supplier need to check
      * @param image of supplier need to check
      * @param phonenumber of supplier need to check
      * @param email of supplier need to check
      * @return true false
      */
-    
     @Override
-    public boolean isSupplierExistWhenSave(String name, String address,String image, String phonenumber, String email) {
+    public boolean isSupplierExistWhenSave(String name, String address, String image, String phonenumber, String email) {
         String sql = "select * from Suplier\n"
                 + "where suplier_name =? and address=? and image=? and phonenumber=? and email=? and status=1";
         try {
@@ -183,15 +181,10 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
-            return false;
         }
+        return false;
     }
-    
-    /**
-     * add new supplier 
-     * 
-     * @param supplier is supplier need to add 
-     */
+
     @Override
     public void addNewSupplier(Supplier supplier) {
         String sql = "INSERT INTO [dbo].[Suplier]\n"
@@ -201,25 +194,31 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
                 + "           ,[phonenumber]\n"
                 + "           ,[email]\n"
                 + "           ,[status])\n"
-                + "     VALUES(?, ?, ?, ?, ?, 1)";
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,?\n"
+                + "           ,1)";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st= connection.prepareStatement(sql);
             st.setString(1, supplier.getSupplier_name());
             st.setString(2, supplier.getImage());
             st.setString(3, supplier.getAddress());
             st.setString(4, supplier.getPhoneNumber());
             st.setString(5, supplier.getEmail());
-            st.executeQuery();
+            st.execute();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
-    
+
     /**
      * get id of supplier
+     *
      * @return int
      */
-    
     @Override
     public int getSupplierId() {
         String sql = "select MAX(suplier_id) from Suplier";
@@ -234,33 +233,32 @@ public class SupplierDAO extends DBContext implements SupplierInterface{
         }
         return -1;
     }
-    
+
     /**
      * find supplier by name
-     * 
+     *
      * @param nameSearch of supplier need to find
      * @return list supplier found
      */
-    
     @Override
-    public List<Supplier> findSupplierByName(String nameSearch){
-        List<Supplier> list= new ArrayList<>();
+    public List<Supplier> findSupplierByName(String nameSearch) {
+        List<Supplier> list = new ArrayList<>();
         String sql = "select * from Suplier where status=1";
         if (nameSearch != null && !nameSearch.trim().equals("")) {
             sql += "and suplier_name like ?";
         }
         try {
-            PreparedStatement st= connection.prepareStatement(sql);
-            st.setString(1, "%"+nameSearch+"%");
-            ResultSet rs=st.executeQuery();
-            while(rs.next()){
-                int supplier_id=rs.getInt("suplier_id");
-                String supplier_name=rs.getString("suplier_name");
-                String image=rs.getString("image");
-                String address=rs.getString("address");
-                String phonenumber=rs.getString("phonenumber");
-                String email=rs.getString("email");
-                boolean status= rs.getBoolean("status");
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%" + nameSearch + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int supplier_id = rs.getInt("suplier_id");
+                String supplier_name = rs.getString("suplier_name");
+                String image = rs.getString("image");
+                String address = rs.getString("address");
+                String phonenumber = rs.getString("phonenumber");
+                String email = rs.getString("email");
+                boolean status = rs.getBoolean("status");
                 list.add(new Supplier(supplier_id, supplier_name, image, address, phonenumber, email, status));
             }
         } catch (SQLException e) {

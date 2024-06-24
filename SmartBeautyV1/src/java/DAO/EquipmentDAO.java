@@ -15,16 +15,17 @@ import model.Equipment;
 import model.TypeofEquipment;
 
 /**
- * access database  of equipment 
+ * access database of equipment
+ *
  * @author LENOVO
  */
-public class EquipmentDAO extends DBContext implements EquipmentInterface{
-    
+public class EquipmentDAO extends DBContext implements EquipmentInterface {
+
     /**
      * get all equipment
+     *
      * @return list contain all equipment
      */
-    
     @Override
     public List<Equipment> getAllEquipment() {
         List<Equipment> list = new ArrayList<>();
@@ -59,12 +60,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return list;
     }
-    
+
     /**
      * delete equipment
-     * @param equipment_id of equipment need to delete 
+     *
+     * @param equipment_id of equipment need to delete
      */
-
     @Override
     public void deleteEquipment(int equipment_id) {
         String sql = "UPDATE [dbo].[Equipment]\n"
@@ -78,12 +79,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             System.out.println(ex);
         }
     }
-    
+
     /**
      * update equipment
+     *
      * @param equipment is object need to update
      */
-
     @Override
     public void updateEquipment(Equipment equipment) {
         String sql = "UPDATE [dbo].[Equipment]\n"
@@ -106,18 +107,18 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             st.setInt(6, equipment.getQuantity());
             st.setString(7, equipment.getDescription());
             st.setInt(8, equipment.getEquipment_id());
-            st.execute();
+            st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println(ex);
         }
     }
+
     /**
      * get equipment by id of equipment
-     * 
+     *
      * @param id of equipment need to get
      * @return equipment is geted
      */
-
     @Override
     public Equipment getEquipmentById(int id) {
         String sql = "select * from Equipment where status=1 and equipment_id=" + id;
@@ -141,13 +142,13 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return null;
     }
-    
+
     /**
      * check equipment is exited
+     *
      * @param name of equipment need to check
      * @return true false
      */
-
     @Override
     public boolean isEquipmentExist(String name) {
         String sql = "SELECT * from Equipment\n"
@@ -162,10 +163,10 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             return false;
         }
     }
-    
+
     /**
      * check equipment is existed when save
-     * 
+     *
      * @param name of equipment need to check
      * @param image of equipment need to check
      * @param description of equipment need to check
@@ -187,10 +188,10 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             return false;
         }
     }
-    
+
     /**
      * add new equipment
-     * 
+     *
      * @param equipment is object equipment is added
      */
     @Override
@@ -205,16 +206,9 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
                 + "           ,[status]\n"
                 + "           ,[description])\n"
                 + "     VALUES\n"
-                + "           (?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,?\n"
-                + "           ,1\n"
-                + "           ,?)";
+                + "           (?,?,?,?,?,?,1,?)";
         try {
-            PreparedStatement st= connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, equipment.getEquipment_name());
             st.setInt(2, equipment.getType_id());
             st.setFloat(3, equipment.getPrice());
@@ -222,19 +216,18 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
             st.setInt(5, equipment.getSupplier_id());
             st.setInt(6, equipment.getQuantity());
             st.setString(7, equipment.getDescription());
-            st.executeQuery();
+            st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
 
     }
-    
+
     /**
      * get id of equipment
-     * 
+     *
      * @return int
      */
-
     @Override
     public int getEquipmentId() {
         String sql = "select MAX(equipment_id) from Equipment";
@@ -249,12 +242,12 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return -1;
     }
-    
+
     /**
      * get all type of equipment
+     *
      * @return list contain type of equipment
      */
-
     @Override
     public List<TypeofEquipment> getAllTypeofEquipment() {
         List<TypeofEquipment> list = new ArrayList<>();
@@ -272,14 +265,13 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         }
         return list;
     }
-    
+
     /**
-     * find equipment by name 
-     * 
+     * find equipment by name
+     *
      * @param nameSearch equipment need to search
      * @return list equipment are found
      */
-    
     @Override
     public List<Equipment> findEquipmentByName(String nameSearch) {
         List<Equipment> list = new ArrayList<>();
@@ -290,7 +282,7 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface{
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             if (nameSearch != null && !nameSearch.trim().equals("")) {
-                st.setString(1, "%"+nameSearch+"%");
+                st.setString(1, "%" + nameSearch + "%");
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     int equipment_id = rs.getInt("equipment_id");

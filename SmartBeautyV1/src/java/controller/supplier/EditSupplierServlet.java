@@ -16,9 +16,10 @@ import model.Supplier;
 
 @MultipartConfig
 public class EditSupplierServlet extends HttpServlet {
-    
-    /** 
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -36,6 +37,7 @@ public class EditSupplierServlet extends HttpServlet {
         String address = request.getParameter("address");
         String phoneNumber = request.getParameter("phonenumber");
         String email = request.getParameter("email");
+        String image = request.getParameter("img");
 
         if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidAddress(address)) {
             request.setAttribute("message", "Invalid input. Please check the name, email, address and phone number format.");
@@ -45,7 +47,7 @@ public class EditSupplierServlet extends HttpServlet {
 
         Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, "", address, phoneNumber, email, true);
 
-        if (supplierDAO.isSupplierExistWhenSave(name, address, "", phoneNumber, email)) {
+        if (supplierDAO.isSupplierExistWhenSave(name, address, image, phoneNumber, email)) {
             request.setAttribute("message", "This supplier already exists");
         } else {
             Part part = request.getPart("img");
@@ -58,19 +60,18 @@ public class EditSupplierServlet extends HttpServlet {
                     Files.createDirectory(Path.of(realPath));
                 }
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                editSupplier.setImage("/images/Supplier/" + filename); //Set the path to the image file
+                editSupplier.setImage("/images/Supplier/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
             } else {
                 Supplier existingSupplier = supplierDAO.getSupplierById(Integer.parseInt(supplierId));
                 editSupplier.setImage(existingSupplier.getImage());
             }
-
             supplierDAO.updateSupplier(editSupplier);
             request.setAttribute("message", "Update successful!");
             request.setAttribute("showEditDialog", false);
         }
         request.getRequestDispatcher("managesupplier").include(request, response);
     }
-    
+
     /**
      * check value of name need to follow standard
      *
@@ -94,10 +95,10 @@ public class EditSupplierServlet extends HttpServlet {
         }
         return true;
     }
-    
+
     /**
      * check email need to follow standard
-     * 
+     *
      * @param email of value need to check
      * @return true if email is valid, false otherwise
      */
@@ -105,10 +106,10 @@ public class EditSupplierServlet extends HttpServlet {
         String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
-    
+
     /**
      * check phoneNumber need to follow standard
-     * 
+     *
      * @param phoneNumber of value need to check
      * @return true if phoneNumber is valid, false otherwise
      */
@@ -116,7 +117,7 @@ public class EditSupplierServlet extends HttpServlet {
         String PHONE_PATTERN = "^\\d{10}$";
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
-    
+
     /**
      * check address need to follow standard
      *
@@ -128,7 +129,7 @@ public class EditSupplierServlet extends HttpServlet {
             return false;
         }
 
-        String regex = "^[a-zA-Z0-9.,\\s]*$";
+        String regex = "^[a-zA-Z\\p{L}0-9.,\\s]*$";
         if (!address.matches(regex)) {
             return false;
         }
@@ -143,9 +144,10 @@ public class EditSupplierServlet extends HttpServlet {
 
         return true;
     }
-    
-    /** 
+
+    /**
      * Returns a Edit Supplier Servlet of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

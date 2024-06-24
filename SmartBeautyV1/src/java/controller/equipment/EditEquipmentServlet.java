@@ -62,7 +62,7 @@ public class EditEquipmentServlet extends HttpServlet {
                     Files.createDirectory(Path.of(realPath));
                 }
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                editEquipment.setImage("/images/Equipment/" + filename); //Set the path to the image file
+                editEquipment.setImage("/images/Equipment/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
             } else {
                 Equipment existingEquipment = equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId)); // check if image don't update
                 editEquipment.setImage(existingEquipment.getImage());                                       // then use old image

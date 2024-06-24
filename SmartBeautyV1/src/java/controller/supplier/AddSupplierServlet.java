@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.regex.Pattern;
@@ -16,6 +17,39 @@ import model.Supplier;
 
 @MultipartConfig // can receive and process HTTP requests sent as multipart/form-data
 public class AddSupplierServlet extends HttpServlet {
+    
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SearchEquipmentServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SearchEquipmentServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        processRequest(request, response);
+    }
+    
+    
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -123,7 +157,7 @@ public class AddSupplierServlet extends HttpServlet {
             return false;
         }
 
-        String regex = "^[a-zA-Z0-9.,\\s]*$";
+        String regex = "^[a-zA-Z\\p{L}0-9.,\\s]*$";
         if (!address.matches(regex)) {
             return false;
         }
