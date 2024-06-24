@@ -72,8 +72,8 @@ public class UpdateprofileemployeeServlet extends HttpServlet {
         LocalDate now = LocalDate.now();
         int age = Period.between(dob, now).getYears();
 
-        if (age < 15) {
-            request.setAttribute("error", "You must be at least 15 years old.");
+        if (age < 18) {
+            request.setAttribute("error", "You must be at least 18 years old.");
             request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
             return;
         }
