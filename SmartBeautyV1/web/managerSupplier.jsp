@@ -1,5 +1,5 @@
 <%-- 
-    Document   : managerProduct
+    Document   : managersupplier
     Created on : June 6, 2024, 9:42:21 PM
     Author     : LENOVO
 --%>
@@ -36,10 +36,10 @@
                 if (fileInput.files && fileInput.files[0]) {
                     var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('#image').attr('src', e.target.result);
+                    reader.onload = function (e) {                //hàm callback
+                        $('#image').attr('src', e.target.result); //đặt thuộc tính src của phần tử có ID image thành URL dữ liệu vừa đọc
                     }
-                    reader.readAsDataURL(fileInput.files[0]);
+                    reader.readAsDataURL(fileInput.files[0]); // đọc nội dung tệp dưới dạng url
                 }
             }
         </script>
@@ -109,7 +109,7 @@
                     </table>
                 </div>
             </div>
-            <!-- Edit Modal HTML -->
+            <!-- Add Modal HTML -->
             <div id="addEmployeeModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
