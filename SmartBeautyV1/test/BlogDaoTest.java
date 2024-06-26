@@ -34,7 +34,7 @@ public class BlogDaoTest extends DBContext {
 
             // Thiết lập dữ liệu mẫu nếu cần
             String insertSQL = "INSERT INTO Blog (blog_name, image, description, content, employee_id) VALUES "
-                    + "('Sample Blog', 'sample.jpg', 'Sample description', 'Sample content', 5)"
+                    + "('Sample Blog', 'sample.jpg', 'Sample description', 'Sample content', 5),"
                     + "('Sample Blog2', 'sample2.jpg', 'Sample description2', 'Sample content2', 5)";
             stmt.execute(insertSQL);
         }
@@ -50,7 +50,7 @@ public class BlogDaoTest extends DBContext {
     public void testSearchBlogByName() {
         List<Blog> result = blogDao.searchBlogByName("Sample");
         assertNotNull(result);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         Blog blog = result.get(0);
         assertEquals("Sample Blog", blog.getBlog_name());
         assertEquals("sample.jpg", blog.getImage());
@@ -78,7 +78,7 @@ public class BlogDaoTest extends DBContext {
     public void testGetAllBlog() {
         List<Blog> result = blogDao.getAllBlog();
         assertNotNull(result);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         Blog blog = result.get(0);
         assertEquals("Sample Blog", blog.getBlog_name());
         assertEquals("sample.jpg", blog.getImage());
@@ -111,7 +111,7 @@ public class BlogDaoTest extends DBContext {
     public void testBlogSameAuthor() {
         List<Blog> result = blogDao.blogSameAuthor(5);
         assertNotNull(result);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
         Blog blog = result.get(0);
         assertEquals("Sample Blog", blog.getBlog_name());
         assertEquals("sample.jpg", blog.getImage());
@@ -167,6 +167,18 @@ public class BlogDaoTest extends DBContext {
         int blogId = blogDao.getAllBlog().get(0).getBlog_id();
         boolean status = blogDao.deleteBlog(blogId);
         assertTrue(status);
+        // Kiểm tra xem blog đã được xóa hay chưa
+        try (Statement stmt = connection.createStatement()) {
+            ResultSet rs = stmt.executeQuery("SELECT * FROM Blog WHERE blog_id = " + blogId);
+            assertFalse(rs.next());           
+        }
+    }
+    
+    @Test
+    public void testDeleteBlogNoneExist() throws SQLException {
+        int blogId = 999;
+        boolean status = blogDao.deleteBlog(blogId);
+        assertFalse(status);
         // Kiểm tra xem blog đã được xóa hay chưa
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery("SELECT * FROM Blog WHERE blog_id = " + blogId);
