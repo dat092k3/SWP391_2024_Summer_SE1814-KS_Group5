@@ -212,10 +212,10 @@ public class AccountDAO  extends DBContext implements AccountInterface {
      * @return phonenumber of account
      */
     @Override
-    public String getPhoneOfAccount(String phonenumber) {
+    public String getPhoneOfAccount(String account_id) {
         String sql = "select phonenumber  from Account where account_id =?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setString(1, phonenumber);
+            st.setString(1, account_id);
             try (ResultSet rs = st.executeQuery()) {
                 if (rs.next()) {
                     return rs.getString("phonenumber");

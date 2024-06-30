@@ -33,7 +33,12 @@
                         <div class="container rounded bg-white mt-5 mb-5">
                             <div class="row">
                                 <div class="col-md-3 border-right">
-                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="${p.image}"><span class="font-weight-bold">${p.fullName}</span><span class="text-black-50">${p.email}</span><span> </span></div>
+                                    <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                        <img class="rounded-circle mt-5" width="150px" src="${p.image}">
+                                        <span class="font-weight-bold">${p.fullName}</span>
+                                        <span class="text-black-50">${p.email}</span>
+                                        <span> </span>
+                                    </div>
                                 </div>
                                 <div class="col-md-5 border-right">
                                     <div class="p-3 py-5">
@@ -41,8 +46,16 @@
                                             <h4 class="text-right">Profile Settings</h4>
                                         </div>
                                         <div class="row mt-2">
-                                            <div class=""><label class="labels"></label><input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}" placeholder="accountid"></div>
-                                            <div class="col-md-12"><label class="labels">Fullname</label><input type="text" pattern="^\S.*$"  title="cannot contain any spaces." class="form-control" name="fullname" placeholder="Full name" required=""> </div>                         
+                                            <div class=""><label class="labels"></label>
+                                                <input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}" placeholder="accountid">
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Fullname</label>
+                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="fullname" placeholder="Full name" required="">
+                                                <c:if test="${not empty error1}">
+                                                    <div class="text-danger">${error1}</div>
+                                                </c:if>
+                                            </div>
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-md-12">
@@ -52,27 +65,37 @@
                                                     <option value="Nữ" ${p.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-12"><label class="labels">Email</label><input type="email" pattern="^\S.*$"  title="cannot contain any spaces." class="form-control" name="email" placeholder="Enter Email" required=""></div>
-                                                <c:if test="${not empty error1}">
-                                                <div style="color: red;">
-                                                    <c:out value="${error1}"/>
-                                                </div>
-                                            </c:if>
-                                            <div class="col-md-12"><label class="labels">Phone Number</label><input type="text" class="form-control" name="phonenumber" placeholder="Phone Number" required pattern="^0\d{9}$" title="Phone number must start with 0 and be 10 digits long."></div>
-                                                <c:if test="${not empty error1}">
-                                                <div style="color: red;">
-                                                    <c:out value="${error1}"/>
-                                                </div>
-                                            </c:if>
-                                            <div class="col-md-12"><label class="labels">Date of Birth</label><input type="date" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="dateofbirth" placeholder="Enter Date Of Birth" required="" ></div>
-                                                <c:if test="${not empty error}">
-                                                <div style="color: red;">
-                                                    <c:out value="${error}"/>
-                                                </div>
-                                            </c:if>
-                                            <div class="col-md-12"><label class="labels">Address</label>
+                                            <div class="col-md-12">
+                                                <label class="labels">Email</label>
+                                                <input type="email" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="email" placeholder="Enter Email" required="">
+                                                <c:if test="${not empty error2}">
+                                                    <div class="text-danger">${error2}</div>
+                                                </c:if>
+                                                <c:if test="${not empty error8}">
+                                                    <div class="text-danger">${error8}</div>
+                                                </c:if>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Phone Number</label>
+                                                <input type="text" class="form-control" name="phonenumber" placeholder="Phone Number" required pattern="^0\d{9}$" title="Phone number must start with 0 and be 10 digits long.">
+                                                <c:if test="${not empty error3}">
+                                                    <div class="text-danger">${error3}</div>
+                                                </c:if>
+                                                <c:if test="${not empty error9}">
+                                                    <div class="text-danger">${error9}</div>
+                                                </c:if>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Date of Birth</label>
+                                                <input type="date" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="dateofbirth" placeholder="Enter Date Of Birth" required="">
+                                                <c:if test="${not empty error4}">
+                                                    <div class="text-danger">${error4}</div>
+                                                </c:if>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Address</label>
                                                 <div>
-                                                    <select name="city" id="city">
+                                                    <select name="city" id="city" required="">
                                                         <option value="" selected>City</option>           
                                                     </select>
                                                     <select name="district" id="district">
@@ -81,16 +104,36 @@
                                                     <select name="ward" id="ward">
                                                         <option value="" selected>Ward</option>
                                                     </select>
-                                                    <input type="text" pattern="^\S.*$" class="form-control" value="${p.address}" readonly="" placeholder="detail address" required="" >
+                                                    <input type="text" pattern="^\S.*$" class="form-control" value="${p.address}" readonly="" placeholder="detail address" required="">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12"><label class="labels">Image</label><input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="image" placeholder="Image"  required=""></div>
+                                            <div class="col-md-12">
+                                                <label class="labels">Image</label>
+                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="image" placeholder="Image" required="">
+                                                <c:if test="${not empty error5}">
+                                                    <div class="text-danger">${error5}</div>
+                                                </c:if>
+                                            </div>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="col-md-6"><label class="labels">Height</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="height" placeholder="height"></div>
-                                            <div class="col-md-6"><label class="labels">Weight</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="weight"  placeholder="weight"></div>
+                                            <div class="col-md-6">
+                                                <label class="labels">Height(Cm)</label>
+                                                <input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="height" placeholder="height">
+                                                <c:if test="${not empty error6}">
+                                                    <div class="text-danger">${error6}</div>
+                                                </c:if>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="labels">Weight(Kg)</label>
+                                                <input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="weight" placeholder="weight">
+                                                <c:if test="${not empty error7}">
+                                                    <div class="text-danger">${error7}</div>
+                                                </c:if>
+                                            </div>
                                         </div>
-                                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit" >Save Profile</button></div>
+                                        <div class="mt-5 text-center">
+                                            <button class="btn btn-primary profile-button" type="submit">Save Profile</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -98,6 +141,7 @@
                     </form>
                 </div>
             </c:when>
+
             <c:otherwise>
                 <form action="updateprofilecustomer" method="get">
                     <c:if test="${not empty p}">
@@ -146,8 +190,8 @@
                                             </div>
                                         </div>
                                         <div class="row mt-3">
-                                            <div class="col-md-6"><label class="labels">Height</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="height" placeholder="height" value="${p.height}"></div>
-                                            <div class="col-md-6"><label class="labels">Weight</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="weight" value="${p.weight}" placeholder="weight"></div>
+                                            <div class="col-md-6"><label class="labels">Height(Cm)</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="height" placeholder="height" value="${p.height}"></div>
+                                            <div class="col-md-6"><label class="labels">Weight(Kg)</label><input type="text" pattern="^\d+(\.\d+)?$" title="cannot contain any spaces/String." class="form-control" name="weight" value="${p.weight}" placeholder="weight"></div>
                                             <div class="col-md-6"><label class="labels"></label><input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}" placeholder="accountid"></div>
                                         </div>
                                         <div class=""><label class="labels"></label><input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}" placeholder="accountid"></div>
