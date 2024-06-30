@@ -174,13 +174,14 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
             request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
-         if (!phonenumber.equals(phonenumberofaccount)) {
+        if (!phonenumber.equals(phonenumberofaccount)) {
             request.setAttribute("error9", "Phonenumber do not match with account Signup.");
             request.getRequestDispatcher("profile.jsp").forward(request, response);
             return;
         }
         CustomerInterface customerDAO = new CustomerDAO();
         customerDAO.InsertProfile(account_id, fullname, gender, email, dateofbirth, phonenumber, address, image, height, weight);
+        request.setAttribute("success", "Insert Profile Susscess");
         response.sendRedirect("profile?account_id=" + account_id);
 
     }

@@ -145,6 +145,11 @@
             <c:otherwise>
                 <form action="updateprofilecustomer" method="get">
                     <c:if test="${not empty p}">
+                        <c:if test="${not empty error}">
+                            <div style="color: red;">
+                                <c:out value="${error}"/>
+                            </div>
+                        </c:if>
                         <div class="container rounded bg-white mt-5 mb-5">
                             <div class="row">
                                 <div class="col-md-3 border-right">
