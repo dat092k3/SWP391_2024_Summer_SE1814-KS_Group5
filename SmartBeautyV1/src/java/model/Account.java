@@ -20,6 +20,7 @@ public class Account {
     private String email;
     private String phoneNumber;
     private String role;
+    private String status;
 
     public Account() {
     }
@@ -47,6 +48,32 @@ public class Account {
         this.email = rs.getString("email");
         this.phoneNumber = rs.getString("phonenumber");
         this.role = rs.getString("role");
+    }
+
+    public Account(String username, String email, String phoneNumber, String role, String status) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Account(int account_id, String username, String password, String email, String phoneNumber, String role, String status) {
+        this.account_id = account_id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+        this.status = status;
     }
 
     /**

@@ -4,6 +4,7 @@
  */
 package Interface;
 
+import java.util.List;
 import model.Account;
 
 /**
@@ -29,4 +30,16 @@ public interface AccountInterface {
     public String getEmailOfAccount(String account_id);
 
     public String getPhoneOfAccount(String phonenumber);
+
+    public void AddAccount(String username, String password, String email, String phonenumber, String role);
+
+    public List<Account> getAccountEmployeeByRole();
+
+    public Account getAccountByAccountId(int account_id);
+
+    public void EditAccountOfEmployee(int account_id, String username, String password, String email, String phonenumber, String role, String status);
+
+    public List<Account> SearchAccountByNameOrPhonenumber(String txtSearch);
+
+    public int getNewAccountIdOfEmployee();
 }

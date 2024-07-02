@@ -120,6 +120,46 @@
         <servlet-name>servicedetails</servlet-name>
         <servlet-class>controller.servicemanagement.ServiceDetailsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAccountServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.AddAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileEmployeeEmptyServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.AddProfileEmployeeEmptyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileEmployeeServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.AddProfileEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAccountServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.EditAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileEmployeeServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.EditProfileEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchAccountServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.SearchAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAccountServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.ViewAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailAccountServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.ViewDetailAccountServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailProfilePTandTakecareServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.ViewDetailProfilePTandTakecareServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
+        <servlet-class>controller.controller.accountmanagement.ViewProfileEmployeePTAndTakecareServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -235,5 +275,45 @@
     <servlet-mapping>
         <servlet-name>servicedetails</servlet-name>
         <url-pattern>/servicedetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAccountServlet</servlet-name>
+        <url-pattern>/addaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileEmployeeEmptyServlet</servlet-name>
+        <url-pattern>/addprofileemployeeempty</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileEmployeeServlet</servlet-name>
+        <url-pattern>/addprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountServlet</servlet-name>
+        <url-pattern>/editaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileEmployeeServlet</servlet-name>
+        <url-pattern>/editprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAccountServlet</servlet-name>
+        <url-pattern>/searchaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAccountServlet</servlet-name>
+        <url-pattern>/viewaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailAccountServlet</servlet-name>
+        <url-pattern>/viewdetailaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailProfilePTandTakecareServlet</servlet-name>
+        <url-pattern>/viewdetailprofileptandtakecare</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
+        <url-pattern>/viewprofileemployeeptandtakecare</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -44,7 +44,14 @@
                                             </c:if>
                                         <li><a href="search">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
-
+                                            <c:if test="${account.getRole() eq 'Admin'}">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropbtn">Account Management</a>
+                                                <div class="dropdown-content">
+                                                    <a href="viewaccount">Manage Account</a>
+                                                </div>
+                                            </li>
+                                        </c:if>
                                         <c:if test="${account.getRole() eq 'director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
