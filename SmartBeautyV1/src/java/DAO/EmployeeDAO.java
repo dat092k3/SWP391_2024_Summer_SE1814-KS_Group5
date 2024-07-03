@@ -9,6 +9,8 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import model.Employee;
 
 /**
@@ -90,4 +92,162 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         }
     }
 
+    /**
+     * function to do insert profile of Employee
+     *
+     * @param account_id of Employee
+     * @param fullname of Employee
+     * @param gender of Employee
+     * @param email of Employee
+     * @param dateofbirth of Employee
+     * @param phonenumber of Employee
+     * @param address of Employee
+     * @param image of Employee
+     * @param hiredate of Employee
+     * @param experience of Employee
+     * @param department of Employee
+     */
+    @Override
+    public void addProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String hiredate, String image, String experience, int department_id, int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [fullname] = ? \n"
+                + "      ,[gender] = ?\n"
+                + "      ,[email] = ?\n"
+                + "      ,[dateofbirth] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + "      ,[address] = ?\n"
+                + "      ,[hiredate] = ?\n"
+                + "      ,[salary] = '0'\n"
+                + "      ,[image] = ?\n"
+                + "      ,[experience] = ?\n"
+                + "      ,[status] = '1'\n"
+                + "      ,[department_id] = ?\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, hiredate);
+            st.setString(8, image);
+            st.setString(9, experience);
+            st.setInt(10, department_id);
+            st.setInt(11, account_id);
+
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    /**
+     * function to get Profile Employee By Department Id = 1
+     *
+     * @return List of Employee
+     */
+    public List<Employee> getProfileEmployeeByDepartmentId() {
+        String sql = "select * from Employee where  department_id ='1' or department_id = '2'";
+        List<Employee> employees = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return employees;
+    }
+
+    /**
+     * Function to retrieve an account by account_id
+     *
+     * @param account_id The ID of the account to retrieve
+     * @return Account object if found, otherwise null
+     */
+    @Override
+    public Employee getProfileEmployeeByAccountId(int account_id) {
+        String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '1' or department_id = '2')";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                return employee;
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving account: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * function to do insert account_id of Employee
+     *
+     * @param account_id of Employee
+     */
+    @Override
+    public void addAccounIdEmployee(int account_id) {
+        String sql = "INSERT INTO [dbo].[Employee]\n"
+                + "           ([account_id])\n"
+                + "     VALUES(?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * function to do update department_id of Employee by account_id
+     *
+     * @param account_id of Employee
+     * @param department_id to be set for the Employee
+     */
+    @Override
+    public void addDepartmentIdByAccountId(int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [department_id] = '1'\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Database error while updating department_id: " + e.getMessage());
+        }
+    }
 }
