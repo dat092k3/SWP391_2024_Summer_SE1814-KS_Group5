@@ -21,9 +21,15 @@ public interface EmployeeInterface {
 
     public List<Employee> getProfileEmployeeByDepartmentId();
 
+    public List<Employee> getProfileEmployeeByDepartmentIdAdmin();
+
     public Employee getProfileEmployeeByAccountId(int account_id);
+
+    public Employee getProfileEmployeeByAccountIdAdmin(int account_id);
 
     public void addAccounIdEmployee(int account_id);
 
     public void addDepartmentIdByAccountId(int account_id);
+
+    public void addDepartmentIdByAccountIdAdmin(int account_id);
 }

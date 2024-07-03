@@ -200,6 +200,38 @@
         <servlet-name>EditManagerServlet</servlet-name>
         <servlet-class>controller.manager.EditManagerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.AddAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.EditAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.SearchEmployeeAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.ViewAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.AddProfileEmployeeAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.EditProfileEmployeeAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailProfileEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewDetailProfileEmployeeAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewProfileEmployeeAdminServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -395,5 +427,37 @@
     <servlet-mapping>
         <servlet-name>EditManagerServlet</servlet-name>
         <url-pattern>/editmanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAccountAdminServlet</servlet-name>
+        <url-pattern>/addaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountAdminServlet</servlet-name>
+        <url-pattern>/editaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchEmployeeAdminServlet</servlet-name>
+        <url-pattern>/searchemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAccountAdminServlet</servlet-name>
+        <url-pattern>/viewaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
+        <url-pattern>/addprofileemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileEmployeeAdminServlet</servlet-name>
+        <url-pattern>/editprofileemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailProfileEmployeeAdminServlet</servlet-name>
+        <url-pattern>/viewdetailprofileemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
+        <url-pattern>/viewprofileemployeeadmin</url-pattern>
     </servlet-mapping>
 </web-app>

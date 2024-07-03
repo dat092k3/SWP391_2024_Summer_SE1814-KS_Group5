@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewprofileemployeeptandtakecare
-    Created on : Jul 2, 2024, 1:53:14 AM
+    Document   : viewprofileemployeeadmin
+    Created on : Jul 3, 2024, 4:29:09 PM
     Author     : admin
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -24,7 +24,7 @@
                         <div class="col-lg-4 order-lg-1 order-2">
                             <div class="d-flex align-items-center justify-content-around m-4">
                                 <div class="text-center">
-                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Back</a></button>
+                                    <button class="btn btn-primary"><a href="viewaccountadmin" style="color: white">Back</a></button>
                                 </div>
                                 <div class="text-center">
                                     <button class="btn btn-primary">Add To Story</button>
@@ -48,7 +48,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <c:forEach var="profile" items="${list}"> 
+                        <c:forEach var="profile" items="${listadmin}"> 
                             <div class="col-sm-6 col-lg-4">
                                 <div class="card hover-img">
                                     <div class="card-body p-4 text-center border-bottom">
@@ -57,6 +57,7 @@
                                         <span class="text-dark fs-2">${profile.account_id}</span>
                                     </div>
                                     <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+
                                         <li class="position-relative">
                                             <c:choose>
                                                 <c:when test="${profile.fullName == null || profile.fullName.isEmpty()}">
@@ -64,7 +65,7 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                 <li class="position-relative" style="margin-right: 30px">
-                                                    <button class="btn btn-primary"><a href="viewdetailprofileptandtakecare?account_id=${profile.account_id}" style="color: white">View Detail</a></button>
+                                                    <button class="btn btn-primary"><a href="viewdetailprofileemployeeadmin?account_id=${profile.account_id}" style="color: white">View Detail</a></button>
                                                 </li>
                                             </c:otherwise>
                                         </c:choose>
@@ -176,8 +177,7 @@
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Department</label>
                                                     <select class="form-control" name="department" required="">
-                                                        <option value="1">Takecare</option>
-                                                        <option value="2">PT</option>
+                                                        <option value="3">Admin</option>
                                                     </select>
                                                 </div>
                                             </div>

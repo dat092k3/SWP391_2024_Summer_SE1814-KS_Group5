@@ -18,7 +18,7 @@ import model.Account;
  *
  * @author LENOVO
  */
-public class AccountDAO  extends DBContext implements AccountInterface {
+public class AccountDAO extends DBContext implements AccountInterface {
 
     /**
      * find account in database to login
@@ -190,6 +190,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
 
     /**
      * function to do get email of account
+     *
      * @param account_id of user
      * @return email of account
      */
@@ -208,8 +209,10 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return null;
     }
-     /**
+
+    /**
      * function to do get phonenumber of account
+     *
      * @param phonenumber of user
      * @return phonenumber of account
      */
@@ -228,10 +231,11 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return null;
     }
+
     /**
      *
      * @param username is value of account want to add
-     * @param password is value of account want to add 
+     * @param password is value of account want to add
      * @param email is value of account want to add
      * @param phonenumber is value of account want to add
      * @param role is value of account want to add
@@ -240,7 +244,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
     public void AddAccount(String username, String password, String email, String phonenumber, String role) {
         String sql = "INSERT INTO Account (username, password, email, phonenumber, role, status) VALUES (?, ?, ?, ?, ?, 1)";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);  
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
             st.setString(3, email);
@@ -260,6 +264,32 @@ public class AccountDAO  extends DBContext implements AccountInterface {
      */
     public List<Account> getAccountEmployeeByRole() {
         String sql = "SELECT * FROM Account WHERE role = 'PT' OR role = 'Takecare'";
+        List<Account> accounts = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Account account = new Account(rs.getInt("account_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phonenumber"),
+                        rs.getString("role"),
+                        rs.getString("status"));
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    @Override
+    /**
+     * function to get accounts with role 'Admin'
+     *
+     * @return List of Accounts
+     */
+    public List<Account> getAccountEmployeeByRoleAdmin() {
+        String sql = "SELECT * FROM Account WHERE role = 'Admin'";
         List<Account> accounts = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
@@ -370,7 +400,38 @@ public class AccountDAO  extends DBContext implements AccountInterface {
                 list.add(account);
             }
         } catch (SQLException e) {
-            System.out.println(e); 
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    /**
+     *
+     * @param txtSearch is search
+     * @return list
+     */
+    @Override
+    public List<Account> SearchAccountByNameOrPhonenumberAdmin(String txtSearch) {
+        List<Account> list = new ArrayList<>();
+        String sql = "Select * from Account where  (username like ? Or phonenumber like ? Or Email like ?) And (role = 'Admin')";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, "%" + txtSearch + "%");
+            st.setString(2, "%" + txtSearch + "%");
+            st.setString(3, "%" + txtSearch + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("account_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("role"),
+                        rs.getString("status"));
+                list.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return list;
     }
@@ -379,12 +440,31 @@ public class AccountDAO  extends DBContext implements AccountInterface {
      * Function to get the newest account ID of an employee with role 'PT' or
      * 'Takecare'
      *
-     * @return The highest account_id of an employee with role 'PT' or 
+     * @return The highest account_id of an employee with role 'PT' or
      * 'Takecare', or -1 if no such account exists
      */
     @Override
     public int getNewAccountIdOfEmployee() {
         String sql = "SELECT MAX(account_id) FROM Account WHERE role = 'PT' OR role = 'Takecare'";
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving the newest account ID: " + e.getMessage());
+        }
+        return -1; // Return -1 if no account is found or an error occurs
+    }
+
+    /**
+     * Function to get the newest account ID of an employee with role 'Admin'
+     *
+     * @return The highest account_id of an employee with role 'PT' or
+     * 'Takecare', or -1 if no such account exists
+     */
+    @Override
+    public int getNewAccountIdOfEmployeeAdmin() {
+        String sql = "SELECT MAX(account_id) FROM Account WHERE role = 'Admin'";
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);
@@ -409,7 +489,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return 0;
     }
-    
+
     public void updateInformationIfUpdateManager(Account account) {
         String sql = "UPDATE [dbo].[Account]\n"
                 + "   SET [email] = ?\n"
@@ -418,7 +498,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
                 + "      ,[status] =1\n"
                 + " WHERE account_id=?";
         try {
-            PreparedStatement st=connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, account.getEmail());
             st.setString(2, account.getPhoneNumber());
             st.setInt(3, account.getAccount_id());

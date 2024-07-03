@@ -24,7 +24,7 @@
                     <b>Profile of ${accountbyid.username}</b>
                 </div>
             </div>
-                <form action="editaccount" method="get">
+                <form action="editaccountadmin" method="get">
                 <div class="py-2">
                     <div class="row py-2">
                         <div class="col-md-12 pt-md-0 pt-3">
@@ -56,8 +56,7 @@
                         <div class="col-md-6">
                             <label>Role</label>
                             <select class="form-control" name="role"> 
-                                <option value="PT" ${accountbyid.role == 'PT' ? 'selected' : ''} >PT</option>
-                                <option value="Takecare" ${accountbyid.role == 'Takecare' ? 'selected' : ''}>Takecare</option>
+                                <option value="Admin" ${accountbyid.role == 'Admin' ? 'selected' : ''} >Admin</option>
                             </select>
                         </div>
                         <div class="col-md-6 pt-md-0 pt-3" id="lang">

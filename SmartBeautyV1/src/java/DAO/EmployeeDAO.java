@@ -176,6 +176,39 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         return employees;
     }
 
+    @Override
+    /**
+     * function to get Profile Employee By Department Id = 3
+     *
+     * @return List of Employee
+     */
+    public List<Employee> getProfileEmployeeByDepartmentIdAdmin() {
+        String sql = "select * from Employee where  department_id ='3'";
+        List<Employee> employees = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return employees;
+    }
+
     /**
      * Function to retrieve an account by account_id
      *
@@ -185,6 +218,42 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
     @Override
     public Employee getProfileEmployeeByAccountId(int account_id) {
         String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '1' or department_id = '2')";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                return employee;
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving account: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Function to retrieve an account by account_id
+     *
+     * @param account_id The ID of the account to retrieve
+     * @return Account object if found, otherwise null
+     */
+    @Override
+    public Employee getProfileEmployeeByAccountIdAdmin(int account_id) {
+        String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '3')";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, account_id);
@@ -241,6 +310,26 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
     public void addDepartmentIdByAccountId(int account_id) {
         String sql = "UPDATE [dbo].[Employee]\n"
                 + "   SET [department_id] = '1'\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Database error while updating department_id: " + e.getMessage());
+        }
+    }
+
+    /**
+     * function to do update department_id of Employee by account_id
+     *
+     * @param account_id of Employee
+     * @param department_id to be set for the Employee
+     */
+    @Override
+    public void addDepartmentIdByAccountIdAdmin(int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [department_id] = '3'\n"
                 + " WHERE account_id = ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);

@@ -52,6 +52,14 @@
                                                 </div>
                                             </li>
                                         </c:if>
+                                        <c:if test="${account.getRole() eq 'Manager'}">
+                                            <li class="dropdown">
+                                                <a href="#" class="dropbtn">Account Management</a>
+                                                <div class="dropdown-content">
+                                                    <a href="viewaccountadmin">Manage Account Admin</a> 
+                                                </div>
+                                            </li>
+                                        </c:if>
                                         <c:if test="${account.getRole() eq 'director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
