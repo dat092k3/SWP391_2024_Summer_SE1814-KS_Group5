@@ -220,7 +220,7 @@
 
                         </c:forEach>
 
-                        <c:if test="${sessionScope.account != null}">
+                        <c:if test="${sessionScope.role == 'Customer'}">
                             <!-- Form for Adding Comment -->
                             <form id="addCommentForm" action="AddComment" method="post" style="display: block;" onsubmit="return validateAddCommentForm()">
                                 <div class="section_subtitle">Add Comment</div>

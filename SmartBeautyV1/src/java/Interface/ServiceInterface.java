@@ -5,6 +5,7 @@
 package Interface;
 
 import java.util.List;
+import model.Comment;
 import model.Service;
 
 /**
@@ -18,4 +19,10 @@ public interface ServiceInterface {
     public List<Service> getAllService();
 
     public Service getServiceById(int service_id);
+    
+    public void addService(Service service);
+
+    public void editService(Service service);
+
+    public boolean deleteService(int service_Id);
 }
