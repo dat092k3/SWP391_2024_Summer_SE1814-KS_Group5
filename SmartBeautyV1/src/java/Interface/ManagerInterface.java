@@ -18,18 +18,17 @@ public interface ManagerInterface {
 
     public void updateProfileManager(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id);
 
-    
     public List<Manager> getAllManagers();
-    
+
     public void addNewManager(Manager manager);
-    
-    
+
     public boolean isManagerExist(String name, String address, String phonenumber);
-    
+
     public int getManagerId();
-    
+
     public boolean isManagerAccountExist(String username, String email, String phonenumber);
+
     public void addNewAccountManager(Account account);
-    
+
     public void updateManager(Manager manager);
 }
