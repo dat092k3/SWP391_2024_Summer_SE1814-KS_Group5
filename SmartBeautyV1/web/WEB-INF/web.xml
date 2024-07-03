@@ -130,7 +130,7 @@
     </servlet>
     <servlet>
         <servlet-name>AddAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.AddAccountServlet</servlet-class>
+        <servlet-class>controller.accountmanagement.AddAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddProfileEmployeeEmptyServlet</servlet-name>
@@ -142,7 +142,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.EditAccountServlet</servlet-class>
+        <servlet-class>controller.accountmanagement.EditAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditProfileEmployeeServlet</servlet-name>
@@ -150,15 +150,15 @@
     </servlet>
     <servlet>
         <servlet-name>SearchAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.SearchAccountServlet</servlet-class>
+        <servlet-class>controller.accountmanagement.SearchAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewAccountServlet</servlet-class>
+        <servlet-class>controller.accountmanagement.ViewAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewDetailAccountServlet</servlet-class>
+        <servlet-class>controller.accountmanagement.ViewDetailAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailProfilePTandTakecareServlet</servlet-name>
