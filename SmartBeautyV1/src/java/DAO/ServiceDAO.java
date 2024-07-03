@@ -96,4 +96,46 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
         }
         return service;
     }
+
+    @Override
+    public void addService(Service service) {
+        String sql = "INSERT INTO [dbo].[Service] (description, price, discount, service_name) VALUES (?, ?, ?, ?);";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, service.getDescription());
+            st.setFloat(2, service.getPrice());
+            st.setInt(3, service.getDiscount());
+            st.setString(4, service.getService_name());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error adding service: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void editService(Service service) {
+        String sql = "UPDATE [dbo].[Service] SET description = ?, price = ?, discount = ?, service_name = ? WHERE service_id = ?;";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, service.getDescription());
+            st.setFloat(2, service.getPrice());
+            st.setInt(3, service.getDiscount());
+            st.setString(4, service.getService_name());
+            st.setInt(5, service.getService_id());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error editing service: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public boolean deleteService(int service_Id) {
+        String sql = "DELETE FROM [dbo].[Service] WHERE service_id = ?;";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, service_Id);
+            int affectedRows = st.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Error deleting service: " + e.getMessage());
+        }
+        return false;
+    }
 }
