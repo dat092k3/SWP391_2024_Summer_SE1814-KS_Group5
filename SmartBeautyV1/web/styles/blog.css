@@ -958,9 +958,9 @@ section
 }
 
 .floating-btn-comments {
-            right: 80px;
-        }
-        
+    right: 70px;
+}
+
 /* button */
 .button-post {
     background-color: #f98c00;
@@ -1048,5 +1048,11 @@ section
     margin-left: 10px;
 }
 
-
-
+.section_subtitle
+{
+	font-size: 12px;
+	font-weight: 600;
+	text-transform: uppercase;
+	color: #ff9711;
+	line-height: 0.75;
+}

@@ -34,7 +34,32 @@
                     xhttp.send();
                 }
             }
+
+
         </script>
+        <script>
+            function deleteComment(commentId, blogId) {
+                if (confirm("Bạn có chắc muốn xóa comment này không?")) {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState === 4 && this.status === 200) {
+                            var response = this.responseText;
+                            if (response === "true") {
+                                alert("Comment đã được xóa thành công.");
+                                // Refresh or update comments section
+                                // For example, reload the page
+                                window.location.reload();
+                            } else {
+                                alert("Không thể xóa comment này. Vui lòng thử lại sau.");
+                            }
+                        }
+                    };
+                    xhttp.open("GET", "DeleteComment?comment_id=" + commentId + "&blog_id=" + blogId, true);
+                    xhttp.send();
+                }
+            }
+        </script>
+
 
     </head>
     <body>
@@ -142,7 +167,6 @@
                 <i class="fa fa-comments"></i>
             </button>
 
-            <!-- Comments Modal -->
             <div class="modal fade" id="CommentsModal" tabindex="-1" role="dialog" aria-labelledby="CommentsModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -161,42 +185,57 @@
                                     </div>
                                     <div class="comment-details">
                                         <div class="comment-author">
-                                            <img src="${comment.customer_image}" width="30" height="30">${comment.customer_name}</div>
-                                            <%-- <c:if test="${sessionScope.authorId == comment.customer_id}"> --%><div class="actions">
-                                                <button type="button" class="btn button-post"><i class="fa fa-pencil"></i> Edit</button>
-                                                <button type="button" class="btn button-post"><i class="fa fa-trash"></i> Delete</a></button>
+                                            <img src="${comment.customer_image}" width="30" height="30">${comment.customer_name}
+                                        </div>
+                                        <!-- Controls for Edit and Delete -->
+                                        <c:if test="${requestScope.authorId == comment.customer_id}">
+                                            <div class="actions">
+                                                <button type="button" class="btn button-post edit-comment-btn" onclick="w3_open('${comment.comment_id}', '${blog.blog_id}')">
+                                                    <i class="fa fa-pencil"></i> Edit
+                                                </button>
+                                                <button type="button" class="btn button-post delete-comment-btn" onclick="deleteComment(${comment.comment_id}, ${blog.blog_id})">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </button>
                                             </div>
-                                        <%--</c:if>--%>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
+                                        
+                            <!-- Edit Comment Form -->
+                            <form id="editCommentForm_${comment.comment_id}" action="EditComment" method="post" style="display: none;" onsubmit="return validateEditCommentForm()">
+                                <div class="section_subtitle">Update Comment</div>
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" name="edit_comment_id_$" id="edit_comment_id_${comment.comment_id}" value="${comment.comment_id}">
+                                        <input type="hidden" class="form-control" name="blog_id" id="add_comment_blog_id" value="${blog.blog_id}">
+                                        <input type="hidden" class="form-control" name="account_id" id="add_comment_account_id" value="${sessionScope.account.account_id}">
+                                        <textarea class="form-control" id="comment_content_edit_${comment.comment_id}" name="comment_content_edit" required placeholder="Write your comment here...">${comment.content}</textarea>
+                                        <div class="invalid-feedback">Please enter valid content.</div>
+                                    </div>
+                                    <button type="button" class="btn button-close" onclick="w3_close('${comment.comment_id}', '${blog.blog_id}')">Close</button>
+                                    <button type="submit" class="btn button-post" onclick="w3_close('${comment.comment_id}', '${blog.blog_id}')">Save Comment</button>
+                                </div>
+                            </form>
+
                         </c:forEach>
-                        
-                        <form id="editCommentForm" action="EditComment" onsubmit="return validAddFormComment()">
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" name="blog_id" value="${comment.blog_id}">
-                                    <input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}">
-                                    <textarea  class="form-control" id="commentcontent" name="commentcontent" required placeholder="Write your comment here..."></textarea>
-                                    <div class="invalid-feedback">Please enter valid content.</div>
+
+                        <c:if test="${sessionScope.account != null}">
+                            <!-- Form for Adding Comment -->
+                            <form id="addCommentForm" action="AddComment" method="post" style="display: block;" onsubmit="return validateAddCommentForm()">
+                                <div class="section_subtitle">Add Comment</div>
+                                <div class="modal-footer">
+                                    <div class="form-group">
+                                        <input type="hidden" class="form-control" name="blog_id" id="add_comment_blog_id" value="${blog.blog_id}">
+                                        <input type="hidden" class="form-control" name="account_id" id="add_comment_account_id" value="${sessionScope.account.account_id}">
+                                        <textarea class="form-control" id="comment_content_add" name="comment_content_add" required placeholder="Write your comment here..."></textarea>
+                                        <div class="invalid-feedback">Please enter valid content.</div>
+                                    </div>
+                                    <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn button-post">Add Comment</button>
                                 </div>
-                                <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn button-post">Save Comment</button>
-                            </div>
-                        </form>
-                                    
-                        <form id="addCommentForm" action="AddComment" onsubmit="return validAddFormComment()">
-                            <div class="modal-footer">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" name="blog_id" value="${blog.blog_id}">
-                                    <input type="hidden" class="form-control" name="account_id" value="${sessionScope.account.account_id}">
-                                    <textarea  class="form-control" id="commentcontent" name="commentcontent" required placeholder="Write your comment here..."></textarea>
-                                    <div class="invalid-feedback">Please enter valid content.</div>
-                                </div>
-                                <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn button-post">Add Comment</button>
-                            </div>
-                        </form>
+                            </form>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -217,99 +256,122 @@
             <script src="js/blog.js"></script>
         </body>
         <script>
-                            async function validateForm() {
-                                var blogName = document.getElementById('blog_name').value.trim();
-                                var image = document.getElementById('image').value.trim();
-                                var description = document.getElementById('description').value.trim();
-                                var content = document.getElementById('content').value.trim();
+                                async function validateForm() {
+                                    var blogName = document.getElementById('blog_name').value.trim();
+                                    var image = document.getElementById('image').value.trim();
+                                    var description = document.getElementById('description').value.trim();
+                                    var content = document.getElementById('content').value.trim();
+                                    if (blogName === '') {
+                                        alert('Vui lòng nhập tên blog.');
+                                        return false;
+                                    }
+                                    if (image === '') {
+                                        alert('Vui lòng nhập URL hình ảnh.');
+                                        return false;
+                                    }
+                                    if (description === '') {
+                                        alert('Vui lòng nhập mô tả.');
+                                        return false;
+                                    }
+                                    if (content === '') {
+                                        alert('Vui lòng nhập nội dung.');
+                                        return false;
+                                    }
 
-                                if (blogName === '') {
-                                    alert('Vui lòng nhập tên blog.');
-                                    return false;
-                                }
-                                if (image === '') {
-                                    alert('Vui lòng nhập URL hình ảnh.');
-                                    return false;
-                                }
-                                if (description === '') {
-                                    alert('Vui lòng nhập mô tả.');
-                                    return false;
-                                }
-                                if (content === '') {
-                                    alert('Vui lòng nhập nội dung.');
-                                    return false;
-                                }
+                                    const isValid = await isValidImageURL(image);
+                                    if (!isValid) {
+                                        alert('Vui lòng nhập URL hình ảnh hợp lệ.');
+                                        return false;
+                                    }
 
-                                const isValid = await isValidImageURL(image);
-                                if (!isValid) {
-                                    alert('Vui lòng nhập URL hình ảnh hợp lệ.');
-                                    return false;
-                                }
-
-                                var xhttp = new XMLHttpRequest();
-                                xhttp.onreadystatechange = function () {
-                                    if (this.readyState == 4 && this.status == 200) {
-                                        var response = this.responseText;
-                                        if (response === "False") {
-                                            alert("Không thể cập nhật blog này. Vui lòng thử lại sau.");
-                                        } else {
-                                            alert("Blog đã được cập nhật thành công.");
-                                            window.location.href = "blogdetails?id=" +${blog.blog_id}"&amp;aid=${sessionScope.account.account_id}";
+                                    var xhttp = new XMLHttpRequest();
+                                    xhttp.onreadystatechange = function () {
+                                        if (this.readyState === 4 && this.status === 200) {
+                                            var response = this.responseText;
+                                            if (response === "False") {
+                                                alert("Không thể cập nhật blog này. Vui lòng thử lại sau.");
+                                            } else {
+                                                alert("Blog đã được cập nhật thành công.");
+                                                window.location.href = "blogdetails?id=" + ${blog.blog_id} + "&aid=" +${sessionScope.account.account_id};
+                                            }
                                         }
-                                    }
-                                };
-                                xhttp.open("POST", "editblog", true);
-                                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                                var params = "blog_id=" + ${blog.blog_id} + "&blog_name=" + blogName + "&image=" + image + "&description=" + description + "&content=" + content + "&account_id=" + ${sessionScope.account.account_id};
-                                xhttp.send(params);
-
-                                return false;
-                            }
-
-                            function isValidImageURL(url) {
-                                return new Promise((resolve) => {
-                                    const pattern = /\.(jpeg|jpg|gif|png|webp|svg)$/;
-                                    if (!pattern.test(url)) {
-                                        resolve(false);
-                                    }
-
-                                    var img = new Image();
-                                    img.src = url;
-
-                                    img.onload = function () {
-                                        resolve(true);
                                     };
+                                    xhttp.open("POST", "editblog", true);
+                                    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                                    var params = "blog_id=" + ${blog.blog_id} + "&blog_name=" + blogName + "&image=" + image + "&description=" + description + "&content=" + content + "&account_id=" + ${sessionScope.account.account_id};
+                                    xhttp.send(params);
+                                    return false;
+                                }
 
-                                    img.onerror = function () {
-                                        resolve(false);
-                                    };
-                                });
-                            }
+                                function isValidImageURL(url) {
+                                    return new Promise((resolve) => {
+                                        const pattern = /\.(jpeg|jpg|gif|png|webp|svg)$/;
+                                        if (!pattern.test(url)) {
+                                            resolve(false);
+                                        }
 
+                                        var img = new Image();
+                                        img.src = url;
+                                        img.onload = function () {
+                                            resolve(true);
+                                        };
+                                        img.onerror = function () {
+                                            resolve(false);
+                                        };
+                                    });
+                                }
 
+                                function w3_open(commentId, blogId) {
+                                    // Hide add comment form and show edit comment form
+                                    document.getElementById("addCommentForm").style.display = "none";
+                                    var editForm = document.getElementById("editCommentForm_" + commentId);
+                                    if (editForm) {
+                                        editForm.style.display = "block";
+                                    }
+                                }
 
+                                function w3_close(commentId, blogId) {
+                                    document.getElementById("addCommentForm").style.display = "block";
+                                    var editForm = document.getElementById("editCommentForm_" + commentId);
+                                    if (editForm) {
+                                        editForm.style.display = "none";
+                                    }
+                                }
     </script>
     <script>
-        function validateFormComment() {
-            const content = document.getElementById('commentcontent');
+        function validateAddCommentForm() {
+            var commentContent = document.getElementById('comment_content_add').value.trim();
 
-            // Trim whitespace
-            content.value = content.value.trim();
-
-
-            let isValid = true;
-
-            // Check if fields are empty
-            if (!content.value) {
-                content.classList.add('is-invalid');
-                isValid = false;
+            if (commentContent === '') {
+                document.getElementById('comment_content_add').classList.add('is-invalid');
+                return false;
             } else {
-                content.classList.remove('is-invalid');
+                document.getElementById('comment_content_add').classList.remove('is-invalid');
             }
 
-            return isValid;
+            // Additional validation logic can be added here as needed
+
+            // Proceed with form submission
+            return true;
+        }
+
+        function validateEditCommentForm() {
+            var commentContent = document.getElementById('comment_content_edit').value.trim();
+
+            if (commentContent === '') {
+                document.getElementById('comment_content_edit').classList.add('is-invalid');
+                return false;
+            } else {
+                document.getElementById('comment_content_edit').classList.remove('is-invalid');
+            }
+
+            // Additional validation logic can be added here as needed
+
+            // Proceed with form submission
+            return true;
         }
     </script>
+
 
 
 </html>

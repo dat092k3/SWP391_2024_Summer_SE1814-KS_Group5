@@ -57,10 +57,10 @@
                                 <div class="blog_post">
                                     <div class="blog_post_image"><img src="${blog.image}" alt="" width="100%"></div>
                                     <div class="blog_post_date">${blog.post_at}</div>
-                                    <div class="blog_post_title"><a href="blogdetails?id=${blog.blog_id}">${blog.blog_name}</a></div>
+                                    <div class="blog_post_title"><a href="blogdetails?id=${blog.blog_id}&account_id=${sessionScope.account_id}">${blog.blog_name}</a></div>
                                     <div class="blog_post_date">${blog.description}</div>
                                     <div class="blog_post_link">
-                                        <a href="blogdetails?id=${blog.blog_id}&amp;aid=${sessionScope.account.account_id}">Read More</a>
+                                        <a href="blogdetails?id=${blog.blog_id}&account_id=${sessionScope.account_id}">Read More</a>
                                     </div>
                                 </div>
                             </div>

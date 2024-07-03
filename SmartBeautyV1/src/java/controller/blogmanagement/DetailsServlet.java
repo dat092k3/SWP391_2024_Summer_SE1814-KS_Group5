@@ -59,7 +59,7 @@ public class DetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int account_Id;
-        String aid = request.getParameter("aid");
+        String aid = request.getParameter("account_id");
         if (aid != null && !aid.isEmpty()) {
             account_Id = Integer.parseInt(aid);
         } else {
@@ -69,11 +69,9 @@ public class DetailsServlet extends HttpServlet {
         int blogId = Integer.parseInt(request.getParameter("id"));
         BlogInterface blogDAO = new BlogDAO();
         Blog blog = blogDAO.takeBlogById(blogId);
-        List<Blog> list = blogDAO.blogSameAuthor(blog.getEmployee_id());
         List<Comment> comments = blogDAO.BlogComments(blogId);
         int authorId = blogDAO.commentAuthorId(account_Id);
         request.setAttribute("blog", blog);
-        request.setAttribute("listb", list);
         request.setAttribute("comments", comments);
         request.setAttribute("authorId", authorId);
         request.getRequestDispatcher("blog_details.jsp").forward(request, response);

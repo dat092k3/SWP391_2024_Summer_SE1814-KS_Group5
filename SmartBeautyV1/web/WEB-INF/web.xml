@@ -131,6 +131,8 @@
     <servlet>
         <servlet-name>DeleteComment</servlet-name>
         <servlet-class>controller.blogcomment.DeleteComment</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AddAccountServlet</servlet-name>
         <servlet-class>controller.controller.accountmanagement.AddAccountServlet</servlet-class>
     </servlet>
@@ -297,6 +299,8 @@
     <servlet-mapping>
         <servlet-name>DeleteComment</servlet-name>
         <url-pattern>/DeleteComment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AddAccountServlet</servlet-name>
         <url-pattern>/addaccount</url-pattern>
     </servlet-mapping>

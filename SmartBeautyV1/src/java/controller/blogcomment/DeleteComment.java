@@ -5,6 +5,7 @@
 
 package controller.blogcomment;
 
+import DAO.BlogDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -53,7 +54,15 @@ public class DeleteComment extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        int commentId = Integer.parseInt(request.getParameter("comment_id"));
+        int blogId = Integer.parseInt(request.getParameter("blog_id"));
+
+        BlogDAO commentDAO = new BlogDAO(); // Assuming you have a CommentDAO class
+        boolean deleteStatus = commentDAO.deleteComment(commentId);
+
+        response.setContentType("text/plain");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(String.valueOf(deleteStatus));
     } 
 
     /** 

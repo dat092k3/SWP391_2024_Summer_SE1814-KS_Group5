@@ -306,7 +306,7 @@ public class BlogDAO extends DBContext implements BlogInterface {
 
     @Override
     public int commentAuthorId(int accountId) {
-        String sql = "SELECT customer_id FROM Customer WHERE account_id = ?";
+        String sql = "SELECT TOP(1) customer_id FROM Customer WHERE account_id = ?";
         int customerId = -1;
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, accountId);
