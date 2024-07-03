@@ -9,37 +9,41 @@ package model;
  * @author LENOVO
  */
 public class Department {
-    private int deparment_id;
+    private int department_id;
     private String department_name;
     private int manager_id;
+    private boolean status;
 
     public Department() {
     }
-    
     /**
      * constructor of department
-     * 
-     * @param deparment_id of department
+     * @param department_id of department
      * @param department_name of department
      * @param manager_id of department
+     * @param status of department
      */
-    
-
-    public Department(int deparment_id, String department_name, int manager_id) {
-        this.deparment_id = deparment_id;
+    public Department(int department_id, String department_name, int manager_id, boolean status) {
+        this.department_id = department_id;
         this.department_name = department_name;
         this.manager_id = manager_id;
+        this.status = status;
+    }
+      
+    public Department(String department_name, int manager_id, boolean status) {
+        this.department_name = department_name;
+        this.manager_id = manager_id;
+        this.status = status;
     }
 
-    public int getDeparment_id() {
-        return deparment_id;
+    public int getDepartment_id() {
+        return department_id;
     }
 
-    public void setDeparment_id(int deparment_id) {
-        this.deparment_id = deparment_id;
+    public void setDepartment_id(int department_id) {
+        this.department_id = department_id;
     }
-    
-    
+
     public String getDepartment_name() {
         return department_name;
     }
@@ -55,7 +59,14 @@ public class Department {
     public void setManager_id(int manager_id) {
         this.manager_id = manager_id;
     }
-    
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
     
     
 }

@@ -42,4 +42,6 @@ public interface AccountInterface {
     public List<Account> SearchAccountByNameOrPhonenumber(String txtSearch);
 
     public int getNewAccountIdOfEmployee();
+    
+    public int getAccountIdToAddManager();
 }

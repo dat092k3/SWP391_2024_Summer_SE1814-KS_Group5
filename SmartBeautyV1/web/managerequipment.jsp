@@ -28,22 +28,53 @@
                 color: red;
                 display: none;
             }
+            #pagination {
+                margin-top: 20px;
+            }
+            .pagination-btn {
+                margin: 0 2px;
+            }
+            .pagination-btn.active {
+                background-color: #fff;
+                color: black;
+            }
+            .text-danger {
+                color: red;
+                margin-left: 5px; /* Để tạo khoảng cách giữa label và * */
+            }
         </style>
         <script type="text/javascript">
+            var equipmentIdToDelete;
+
             function doDelete(equipment_id) {
-                if (confirm("Are you sure to delete equipment")) {
-                    window.location = "deleteequipment?equipmentId=" + equipment_id;
-                }
+                equipmentIdToDelete = equipment_id;
+                $('#deleteConfirmModal').modal('show');
             }
+
+            $(document).ready(function () {
+                $('#confirmDelete').click(function () {
+                    window.location = "deleteequippment?equipmentId=" + equipmentIdToDelete;
+                });
+            });
 
             function chooseFile(fileInput) {
                 if (fileInput.files && fileInput.files[0]) {
+                    var file = fileInput.files[0];
+                    var fileType = file.type;
+                    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+                    if (!validImageTypes.includes(fileType)) {
+                        alert("Only image files (JPG, PNG, GIF) are allowed.");
+                        fileInput.value = ""; // Clear the input
+                        return;
+                    }
+
                     var reader = new FileReader();
 
                     reader.onload = function (e) {
                         $('#image').attr('src', e.target.result);
                     }
-                    reader.readAsDataURL(fileInput.files[0]);
+                    reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
                 }
             }
         </script>
@@ -71,7 +102,7 @@
                                     <span>Add New Equipment</span>
                                 </a>
                                 <div class="search-box" style="display: inline-block; float: right;">
-                                    <form action="searchequipment" method="get">
+                                    <form action="searchequipment" method="post">
                                         <input id="searchId" type="text" value="${requestScope.searchValue != null ? requestScope.searchValue : ""}" name="search" placeholder="Search equipment" class="form-control" style="width: 200px; display: inline-block;">
                                         <button type="submit" class="btn btn-primary" style="display: inline-block;">
                                             Search
@@ -84,6 +115,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Equipment_ID</th>
                                 <th>Equipment_name</th>
                                 <th>Price</th>
@@ -96,6 +128,7 @@
                         <tbody id="content">
                             <c:forEach items="${listEquipment}" var="equipment">
                                 <tr>
+                                    <td class="serial-number"></td> 
                                     <td>${equipment.equipment_id}</td>
                                     <td>${equipment.equipment_name}</td>
                                     <td>${equipment.price} $</td>
@@ -116,6 +149,9 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <div id="pagination" class="text-center">
+                        <!-- Pagination controls will be inserted here by JavaScript -->
+                    </div>
                 </div>
             </div>
             <!-- Add Modal HTML -->
@@ -129,43 +165,53 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input name="nameequipment" type="text" class="form-control" required>
+                                    <label>Name<span class="text-danger">*</span></label>
+                                    <input value="${requestScope.nameequipment}" name="nameequipment" type="text" class="form-control" maxlength="255" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Price</label>
-                                    <input name="price" type="number" min="1" class="form-control" required>
+                                    <label>Price<span class="text-danger">*</span></label>
+                                    <input name="price" value="${requestScope.price}" type="number" min="1" class="form-control" required>
                                     <div class="error-message" id="price-error">Price must be at least 1</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Image</label>
+                                    <label>Image<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         <label for="inputGroupFile04"><img src=".${equipment.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${equipment.image}"></label>
                                     </div>
                                 </div> 
                                 <div class="form-group">
-                                    <label>Quantity</label>
-                                    <input name="quantity" type="number" min="1" class="form-control" required>
+                                    <label>Quantity<span class="text-danger">*</span></label>
+                                    <input name="quantity" type="number" min="1" class="form-control" value="${requestScope.quantity}" required>
                                     <div class="error-message" id="quantity-error">Quantity must be at least 1</div>
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea name="description" class="form-control" required></textarea>
+                                    <textarea name="description" class="form-control" required>${requestScope.description}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Type of Equipment</label>
+                                    <label>Type of Equipment<span class="text-danger">*</span></label>
                                     <select name="typeofequipment" class="form-select form-control" aria-label="Default select example">
+                                        <option value="">Choose type</option>
                                         <c:forEach items="${allTypeofEquipment}" var="typeofequipment">
-                                            <option value="${typeofequipment.type_id}">${typeofequipment.name}</option>
+                                            <option value="${typeofequipment.type_id}" 
+                                                    <c:if test="${typeofequipment.type_id eq selectedType}">
+                                                        selected
+                                                    </c:if>
+                                                    >${typeofequipment.name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Supplier</label>
+                                    <label>Supplier<span class="text-danger">*</span></label>
                                     <select name="supplier" class="form-select form-control" aria-label="Default select example">
+                                        <option value="">Choose supplier</option>
                                         <c:forEach items="${listSupplier}" var="supplier">
-                                            <option value="${supplier.supplier_id}">${supplier.supplier_name}</option>
+                                            <option value="${supplier.supplier_id}" 
+                                                    <c:if test="${supplier.supplier_id eq selectedSupplier}">
+                                                        selected
+                                                    </c:if>
+                                                    >${supplier.supplier_name}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -222,6 +268,7 @@
                                 <div class="form-group">
                                     <label>Type of Equipment</label>
                                     <select name="typeofequipment" class="form-select form-control" aria-label="Default select example">
+                                        <option value="">Choose type</option>
                                         <c:forEach items="${allTypeofEquipment}" var="typeofequipment">
                                             <option value="${typeofequipment.type_id}" <c:if test="${typeofequipment.type_id == equipment.type_id}">selected</c:if>>${typeofequipment.name}</option>
                                         </c:forEach>
@@ -230,6 +277,7 @@
                                 <div class="form-group">
                                     <label>Supplier</label>
                                     <select name="supplier" class="form-select form-control" aria-label="Default select example">
+                                        <option value="">Choose supplier</option>
                                         <c:forEach items="${listSupplier}" var="supplier">
                                             <option value="${supplier.supplier_id}" <c:if test="${supplier.supplier_id == equipment.supplier_id}">selected</c:if>>${supplier.supplier_name}</option>
                                         </c:forEach>
@@ -241,6 +289,25 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Modal HTML -->
+            <div id="deleteConfirmModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Confirm Deletion</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">					
+                            <p>Are you sure you want to erase this device?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,6 +337,62 @@
                         } else {
                             quantityError.style.display = 'none';
                         }
+                    });
+                });
+
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const rows = document.querySelectorAll('#content tr');
+                    rows.forEach((row, index) => {
+                        row.querySelector('.serial-number').textContent = index + 1;
+                    });
+                });
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const rows = document.querySelectorAll('#content tr');
+                    const rowsPerPage = 5;
+                    let currentPage = 1;
+
+                    function displayPage(page) {
+                        const start = (page - 1) * rowsPerPage;
+                        const end = start + rowsPerPage;
+
+                        rows.forEach((row, index) => {
+                            if (index >= start && index < end) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+
+                        updatePagination();
+                    }
+
+                    function updatePagination() {
+                        const totalPages = Math.ceil(rows.length / rowsPerPage);
+                        const pagination = document.getElementById('pagination');
+                        pagination.innerHTML = '';
+
+                        for (let i = 1; i <= totalPages; i++) {
+                            const button = document.createElement('button');
+                            button.innerText = i;
+                            button.classList.add('btn', 'btn-primary', 'pagination-btn');
+                            if (i === currentPage) {
+                                button.classList.add('active');
+                            }
+                            button.addEventListener('click', function () {
+                                currentPage = i;
+                                displayPage(i);
+                            });
+                            pagination.appendChild(button);
+                        }
+                    }
+
+                    displayPage(currentPage);
+
+                    // Updating serial numbers
+                    rows.forEach((row, index) => {
+                        row.querySelector('.serial-number').textContent = index + 1;
                     });
                 });
             </script>    

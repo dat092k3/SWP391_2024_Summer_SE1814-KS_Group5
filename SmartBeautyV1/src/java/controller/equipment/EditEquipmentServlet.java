@@ -53,9 +53,15 @@ public class EditEquipmentServlet extends HttpServlet {
             request.setAttribute("message", "This equipment already exists");
         } else {
             Part part = request.getPart("img");
+            String contentType = part.getContentType();
             String realPath = request.getServletContext().getRealPath("/images/Equipment"); // where the photo is saved
             String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); // get the original filename of the file then
                                                                                                 // convert it to a string, get just the filename without including the full path.
+            if (!isImageFile(contentType)) {
+                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                request.getRequestDispatcher("manageequipment").include(request, response);
+                return;
+            }  
             if (!source.isEmpty()) {
                 String filename = equipmentId + ".png";
                 if (!Files.exists(Path.of(realPath))) { // check folder /images/Equipment is existed
@@ -97,6 +103,23 @@ public class EditEquipmentServlet extends HttpServlet {
         
         return true;
     }
+    
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    private boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
      /** 
      * Returns a Edit Equipment Servlet of the servlet.

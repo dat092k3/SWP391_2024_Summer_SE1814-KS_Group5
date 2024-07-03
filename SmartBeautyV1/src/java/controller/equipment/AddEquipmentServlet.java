@@ -32,15 +32,45 @@ public class AddEquipmentServlet extends HttpServlet {
 
         EquipmentInterface equipmentDAO = new EquipmentDAO();
 
-        String name = request.getParameter("nameequipment");
-        String quantity = request.getParameter("quantity");
-        String price = request.getParameter("price");
-        String description = request.getParameter("description");
-        String typeofequipment = request.getParameter("typeofequipment");
-        String supplier = request.getParameter("supplier");
+        String name = request.getParameter("nameequipment").trim();
+        String quantity = request.getParameter("quantity").trim();
+        String price = request.getParameter("price").trim();
+        String description = request.getParameter("description").trim();
+        String typeofequipment = request.getParameter("typeofequipment").trim();
+        String supplier = request.getParameter("supplier").trim();
+
+        if (typeofequipment == null || typeofequipment.trim().isEmpty()) {
+            request.setAttribute("message", "Please select a type of equipment.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
+
+        if (supplier == null || supplier.trim().isEmpty()) {
+            request.setAttribute("message", "Please select a supplier.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
 
         if (!isValidName(name)) {
             request.setAttribute("message", "Invalid input. Please check the name format.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
             request.getRequestDispatcher("manageequipment").include(request, response);
             return;
         }
@@ -49,11 +79,29 @@ public class AddEquipmentServlet extends HttpServlet {
 
         if (equipmentDAO.isEquipmentExist(name)) {
             request.setAttribute("message", "This Equipment already exists");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
         } else {
             Part part = request.getPart("img");
+            String contentType = part.getContentType();
             String realPath = request.getServletContext().getRealPath("/images/Equipment"); //where the photo is saved
             String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-                                                                                                // convert it to a string, get just the filename without including the full path.
+            // convert it to a string, get just the filename without including the full path.
+            if (!isImageFile(contentType)) {
+                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                request.setAttribute("nameequipment", name);
+                request.setAttribute("quantity", quantity);
+                request.setAttribute("price", price);
+                request.setAttribute("description", description);
+                request.setAttribute("selectedType", typeofequipment);
+                request.setAttribute("selectedSupplier", supplier);
+                request.getRequestDispatcher("manageequipment").include(request, response);
+                return;
+            }
 
             if (!source.isEmpty()) {
                 String filename = equipmentDAO.getEquipmentId() + ".png";
@@ -92,6 +140,21 @@ public class AddEquipmentServlet extends HttpServlet {
         return true;
     }
 
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    private boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Returns a Add Equipment Servlet of the servlet.

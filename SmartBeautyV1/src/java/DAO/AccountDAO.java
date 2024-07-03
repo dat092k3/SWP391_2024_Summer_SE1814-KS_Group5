@@ -394,4 +394,36 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return -1; // Return -1 if no account is found or an error occurs
     }
+
+    @Override
+    public int getAccountIdToAddManager() {
+        String sql = "SELECT MAX(account_id) FROM Account";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
+    public void updateInformationIfUpdateManager(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [email] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + "      ,[role] = 'Manager'\n"
+                + "      ,[status] =1\n"
+                + " WHERE account_id=?";
+        try {
+            PreparedStatement st=connection.prepareStatement(sql);
+            st.setString(1, account.getEmail());
+            st.setString(2, account.getPhoneNumber());
+            st.setInt(3, account.getAccount_id());
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

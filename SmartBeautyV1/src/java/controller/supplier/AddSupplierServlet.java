@@ -17,7 +17,7 @@ import model.Supplier;
 
 @MultipartConfig // can receive and process HTTP requests sent as multipart/form-data
 public class AddSupplierServlet extends HttpServlet {
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -48,11 +48,10 @@ public class AddSupplierServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
-    
-    
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -65,13 +64,45 @@ public class AddSupplierServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         SupplierInterface supplierDAO = new SupplierDAO();
 
-        String name = request.getParameter("name");
-        String address = request.getParameter("address");
-        String phoneNumber = request.getParameter("phonenumber");
-        String email = request.getParameter("email");
+        String name = request.getParameter("namemanager").trim();
+        String address = request.getParameter("address").trim();
+        String phoneNumber = request.getParameter("phonenumber").trim();
+        String email = request.getParameter("email").trim();
 
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidAddress(address)) {
-            request.setAttribute("message", "Invalid input. Please check the name, email, and phone number format.");
+        if (!isValidName(name)) {
+            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phonenumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            request.setAttribute("message", "Please check the email is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phonenumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+        if (!isValidPhoneNumber(phoneNumber)) {
+            request.setAttribute("message", "Please check the phone number is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phonenumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+        if (!isValidAddress(address)) {
+            request.setAttribute("message", "Please check the address is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phonenumber", phoneNumber);
+            request.setAttribute("email", email);
             request.getRequestDispatcher("managesupplier").include(request, response);
             return;
         }
@@ -79,16 +110,27 @@ public class AddSupplierServlet extends HttpServlet {
         Supplier newSupplier = new Supplier(name, "", address, phoneNumber, email, true);
         if (supplierDAO.isSupplierExist(name, address)) {
             request.setAttribute("message", "This supplier already exists");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phonenumber", phoneNumber);
+            request.setAttribute("email", email);
         } else {
             Part part = request.getPart("img");
+            String contentType = part.getContentType();
             String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
             String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-                                                                                                // convert it to a string, get just the filename without including the full path.
+            // convert it to a string, get just the filename without including the full path.
+
+            if (!isImageFile(contentType)) {
+                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                request.getRequestDispatcher("managesupplier").include(request, response);
+                return;
+            }
 
             if (!source.isEmpty()) {
                 String filename = supplierDAO.getSupplierId() + ".png";
                 if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
-                    Files.createDirectory(Path.of(realPath)); 
+                    Files.createDirectory(Path.of(realPath));
                 }
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
                 newSupplier.setImage("/images/Supplier/" + filename); //Set the path to the image file
@@ -99,10 +141,10 @@ public class AddSupplierServlet extends HttpServlet {
         }
         request.getRequestDispatcher("managesupplier").include(request, response);
     }
-    
+
     /**
      * check value of name need to follow standard
-     * 
+     *
      * @param name of name need to check
      * @return true if name is valid, false otherwise
      */
@@ -123,21 +165,37 @@ public class AddSupplierServlet extends HttpServlet {
         }
         return true;
     }
-    
+
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    private boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * check email need to follow standard
-     * 
+     *
      * @param email of value need to check
      * @return true if email is valid, false otherwise
      */
     private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
-    
+
     /**
      * check phoneNumber need to follow standard
-     * 
+     *
      * @param phoneNumber of value need to check
      * @return true if phoneNumber is valid, false otherwise
      */
@@ -145,7 +203,7 @@ public class AddSupplierServlet extends HttpServlet {
         String PHONE_PATTERN = "^\\d{10}$";
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
-    
+
     /**
      * check address need to follow standard
      *
@@ -173,8 +231,9 @@ public class AddSupplierServlet extends HttpServlet {
         return true;
     }
 
-    /** 
+    /**
      * Returns a Add Supplier Servlet of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

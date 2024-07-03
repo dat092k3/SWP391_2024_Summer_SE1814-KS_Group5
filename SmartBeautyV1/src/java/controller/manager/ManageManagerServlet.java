@@ -2,57 +2,60 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.equipment;
 
-import DAO.EquipmentDAO;
-import Interface.EquipmentInterface;
+package controller.manager;
+
+import DAO.AccountDAO;
+import DAO.ManagerDAO;
+import Interface.AccountInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Equipment;
+import model.Account;
+import model.Manager;
 
 /**
  *
  * @author LENOVO
  */
-public class SearchEquipmentServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class ManageManagerServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet SearchEquipmentServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet SearchEquipmentServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        request.setCharacterEncoding("UTF-8");
+        
+        ManagerInterface managerDAO= new ManagerDAO();
+        AccountInterface accountDAO= new AccountDAO();
+        String managerId = request.getParameter("managerId");
+        String message = (String) request.getAttribute("message");
+        Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog");
+        if (managerId != null && showEditDialog == null) {
+            request.setAttribute("showEditDialog", true);
+            Manager manager = managerDAO.getManagerById(Integer.parseInt(managerId));
+            request.setAttribute("manager", manager);
         }
-    }
+        
+        request.setAttribute("message", message);
+        List<Manager> listAllManager=managerDAO.getAllManagers();
+        request.setAttribute("listManager", listAllManager);
+        request.getRequestDispatcher("./managermanager.jsp").include(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     * 
-     * search by name of equipment
-     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -60,13 +63,12 @@ public class SearchEquipmentServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -74,26 +76,12 @@ public class SearchEquipmentServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String txtSearch = request.getParameter("search");
-        EquipmentInterface equipmentDAO = new EquipmentDAO();
-
-        List<Equipment> list;
-        if (txtSearch == null || txtSearch.trim().isEmpty()) {
-            list = equipmentDAO.getAllEquipment();
-        } else {
-            list = equipmentDAO.findEquipmentByName(txtSearch);
-        }
-        request.setAttribute("listEquipment", list);
-        request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managerequipment.jsp").include(request, response);
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

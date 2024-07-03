@@ -168,6 +168,38 @@
         <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
         <servlet-class>controller.employeemanagement.ViewProfileEmployeePTAndTakecareServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddDepartmentServlet</servlet-name>
+        <servlet-class>controller.department.AddDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteDepartmentServlet</servlet-name>
+        <servlet-class>controller.department.DeleteDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageDepartmentServlet</servlet-name>
+        <servlet-class>controller.department.ManageDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditDepartmentServlet</servlet-name>
+        <servlet-class>controller.department.EditDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchDepartmentServlet</servlet-name>
+        <servlet-class>controller.department.SearchDepartmentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddManagerServlet</servlet-name>
+        <servlet-class>controller.manager.AddManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ManageManagerServlet</servlet-name>
+        <servlet-class>controller.manager.ManageManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditManagerServlet</servlet-name>
+        <servlet-class>controller.manager.EditManagerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -331,5 +363,37 @@
     <servlet-mapping>
         <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
         <url-pattern>/viewprofileemployeeptandtakecare</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddDepartmentServlet</servlet-name>
+        <url-pattern>/adddepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteDepartmentServlet</servlet-name>
+        <url-pattern>/deletedepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageDepartmentServlet</servlet-name>
+        <url-pattern>/managedepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditDepartmentServlet</servlet-name>
+        <url-pattern>/editdepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchDepartmentServlet</servlet-name>
+        <url-pattern>/searchdepartment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddManagerServlet</servlet-name>
+        <url-pattern>/addmanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManageManagerServlet</servlet-name>
+        <url-pattern>/managemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditManagerServlet</servlet-name>
+        <url-pattern>/editmanager</url-pattern>
     </servlet-mapping>
 </web-app>

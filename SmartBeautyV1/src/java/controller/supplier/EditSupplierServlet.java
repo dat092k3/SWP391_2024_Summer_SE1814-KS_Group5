@@ -51,9 +51,15 @@ public class EditSupplierServlet extends HttpServlet {
             request.setAttribute("message", "This supplier already exists");
         } else {
             Part part = request.getPart("img");
+            String contentType = part.getContentType();
             String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
             String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-                                                                                                // convert it to a string, get just the filename without including the full path.
+            // convert it to a string, get just the filename without including the full path.
+            if (!isImageFile(contentType)) {
+                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                request.getRequestDispatcher("managesupplier").include(request, response);
+                return;
+            }
             if (!source.isEmpty()) {
                 String filename = supplierId + ".png";
                 if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
@@ -94,6 +100,22 @@ public class EditSupplierServlet extends HttpServlet {
             }
         }
         return true;
+    }
+    
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    private boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
