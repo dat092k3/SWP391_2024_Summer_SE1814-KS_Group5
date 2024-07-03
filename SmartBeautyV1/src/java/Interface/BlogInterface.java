@@ -7,6 +7,7 @@ package Interface;
 import DAO.*;
 import java.util.List;
 import model.Blog;
+import model.Comment;
 
 /**
  *
@@ -19,14 +20,26 @@ public interface BlogInterface {
     public List<Blog> getAllBlog();
 
     public Blog takeBlogById(int blogId);
-    
+
     public List<Blog> blogSameAuthor(int empId);
-    
+
     public void addBlog(Blog blog);
-    
+
     public void editBlog(Blog blog);
-    
+
     public boolean deleteBlog(int blogId);
+
+    public int posterId(int accountId);
+
+    public List<Comment> BlogComments(int blogId);
+
+    public List<Comment> MyComments(int customerId);
+
+    public void addComment(Comment comment);
+
+    public void editComment(String content, int commentId);
+
+    public boolean deleteComment(int commentId);
     
-    public int posterId (int accountId);
+    public int commentAuthorId(int accountId);
 }

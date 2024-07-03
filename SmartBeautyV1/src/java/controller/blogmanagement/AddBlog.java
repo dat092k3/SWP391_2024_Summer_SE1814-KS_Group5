@@ -63,20 +63,24 @@ public class AddBlog extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String blogname = request.getParameter("blog_name");
-        String blogimage = request.getParameter("image");
-        String blogdescription = request.getParameter("description");
-        String blogcontent = request.getParameter("content");     
+        
+        // Trim input parameters
+        String blogname = request.getParameter("blog_name").trim();
+        String blogimage = request.getParameter("image").trim();
+        String blogdescription = request.getParameter("description").trim();
+        String blogcontent = request.getParameter("content").trim();
+        
         int account_id = Integer.parseInt(request.getParameter("account_id"));
         int employee_id = blogDAO.posterId(account_id);
-        System.out.println(blogname+" "+blogimage+" "+blogdescription+" "+blogcontent+" "+employee_id);
+        
+        System.out.println(blogname + " " + blogimage + " " + blogdescription + " " + blogcontent + " " + employee_id);
+        
         Blog blog = new Blog(0, blogname, blogimage, blogdescription, blogcontent, employee_id);
         blogDAO.addBlog(blog);
-        List<Blog> list;
-        list = blogDAO.getAllBlog();
+        
+        List<Blog> list = blogDAO.getAllBlog();
         request.setAttribute("list", list);
         request.getRequestDispatcher("blog.jsp").forward(request, response);
-
     }
 
     /**

@@ -957,6 +957,10 @@ section
     bottom: 20px;
 }
 
+.floating-btn-comments {
+            right: 80px;
+        }
+        
 /* button */
 .button-post {
     background-color: #f98c00;
@@ -1001,3 +1005,48 @@ section
     font-size: 16px;
     text-decoration: none;
 }
+
+.comment-border {
+    border: 2px solid red;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    /* Các thuộc tính CSS khác có thể bạn muốn áp dụng */
+}
+
+.comment-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px; /* Add margin to the top for spacing */
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+}
+
+.comment-author img {
+    margin-right: 5px; /* Adds space between the image and the name */
+    width: 30px;
+    height: 30px;
+    border-radius: 50%; /* Makes the image circular */
+}
+
+.actions {
+    display: flex;
+    gap: 10px; /* Adds space between Edit and Delete links */
+}
+
+.actions_link {
+    margin-left: 10px;
+}
+
+
+

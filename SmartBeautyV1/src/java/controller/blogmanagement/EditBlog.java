@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package controller.blogmanagement;
 
 import DAO.BlogDAO;
 import Interface.BlogInterface;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,91 +11,44 @@ import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Blog;
 
-/**
- *
- * @author td532
- */
 public class EditBlog extends HttpServlet {
 
-    BlogInterface blogDAO = new BlogDAO();
+    private final BlogInterface blogDAO = new BlogDAO();
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet EditBlog</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet EditBlog at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         int blogid = Integer.parseInt(request.getParameter("blog_id"));
-        String blogname = request.getParameter("blog_name");
-        String blogimage = request.getParameter("image");
-        String blogdescription = request.getParameter("description");
-        String blogcontent = request.getParameter("content");
+        String blogname = request.getParameter("blog_name").trim();
+        String blogimage = request.getParameter("image").trim();
+        String blogdescription = request.getParameter("description").trim();
+        String blogcontent = request.getParameter("content").trim();
         int account_id = Integer.parseInt(request.getParameter("account_id"));
         int employee_id = blogDAO.posterId(account_id);
         System.out.println(blogname + " " + blogimage + " " + blogdescription + " " + blogcontent + " " + employee_id);
-        Blog blog = new Blog(blogid, blogname, blogimage, blogdescription, blogcontent, employee_id);
-        blogDAO.editBlog(blog);
-        List<Blog> list = blogDAO.blogSameAuthor(blog.getEmployee_id());
-        request.setAttribute("blog", blog);
-        request.setAttribute("listb", list);
-        request.getRequestDispatcher("blog_details.jsp").forward(request, response);
+        
+        // Kiểm tra các thông tin cần thiết trước khi cập nhật
+        if (blogname != null && blogimage != null && blogdescription != null && blogcontent != null) {
+            Blog blog = new Blog(blogid, blogname, blogimage, blogdescription, blogcontent, employee_id);
+            blogDAO.editBlog(blog);
+            request.setAttribute("blog", blog);
+            request.getRequestDispatcher("blog_details.jsp").forward(request, response);
+        } else {
+            // Xử lý lỗi nếu các thông tin bị thiếu
+            response.getWriter().println("False");
+        }
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        doGet(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }

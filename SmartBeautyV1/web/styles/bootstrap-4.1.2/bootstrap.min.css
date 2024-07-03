@@ -4387,7 +4387,9 @@ button.close{
     background-clip:padding-box;
     border:1px solid rgba(0,0,0,.2);
     border-radius:.3rem;
-    outline:0
+    outline:0;
+    padding: 20px;
+    border-radius: 20px;
 }
 .modal-backdrop{
     position:fixed;
@@ -4396,13 +4398,13 @@ button.close{
     bottom:0;
     left:0;
     z-index:1040;
-    background-color:#000
+    background-color: #b9bbbe;
 }
 .modal-backdrop.fade{
     opacity:0
 }
 .modal-backdrop.show{
-    opacity:.5
+    opacity:.25
 }
 .modal-header{
     display:-ms-flexbox;

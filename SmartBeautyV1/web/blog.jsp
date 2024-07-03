@@ -12,10 +12,9 @@
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" type="text/css" href="styles/blog_responsive.css">
-        
+
     </head>
     <body>
-
         <div class="super_container">
             <!-- Header -->
             <jsp:include page="include/header.jsp"></jsp:include>
@@ -52,16 +51,17 @@
                         </div>
                     </div>
                     <div class="row blog_row">
-
                         <!-- Blog Post -->
                         <c:forEach items="${requestScope.list}" var="blog">
                             <div class="col-xl-4 col-md-6 blog_col">
                                 <div class="blog_post">
                                     <div class="blog_post_image"><img src="${blog.image}" alt="" width="100%"></div>
-                                    <div class="blog_post_title"><a href="blogdetails?id=${blog.blog_id}">${blog.blog_name}</a>
+                                    <div class="blog_post_date">${blog.post_at}</div>
+                                    <div class="blog_post_title"><a href="blogdetails?id=${blog.blog_id}">${blog.blog_name}</a></div>
+                                    <div class="blog_post_date">${blog.description}</div>
+                                    <div class="blog_post_link">
+                                        <a href="blogdetails?id=${blog.blog_id}&amp;aid=${sessionScope.account.account_id}">Read More</a>
                                     </div>
-                                    <div class="blog_post_date"></a>${blog.description}</div>
-                                    <div class="blog_post_link"><a href="blogdetails?id=${blog.blog_id}">Read More</a></div>
                                 </div>
                             </div>
                         </c:forEach>
@@ -81,10 +81,10 @@
                 </button>
             </c:if>
 
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="blogForm" action="addblog" method="get">
+                        <form id="blogForm" action="addblog" method="get" onsubmit="return validateForm()">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Add New Blog</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -92,37 +92,36 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-
                                 <div class="form-group">
                                     <label for="blog_name">Blog Name</label>
-                                    <input type="text" class="form-control" id="blog_name" name="blog_name" required="">
+                                    <input type="text" class="form-control" id="blog_name" name="blog_name" required maxlength="255" minlength="1">
+                                    <div class="invalid-feedback">Please enter a valid blog name.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Image URL</label>
-                                    <input type="text" class="form-control" id="image" name="image" required="">
+                                    <input type="url" class="form-control" id="image" name="image" required>
+                                    <div class="invalid-feedback">Please enter a valid image URL.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="description">Description</label>
-                                    <input type="text" class="form-control" id="description" name="description" required="">
+                                    <input type="text" class="form-control" id="description" name="description" required minlength="1" maxlength="255">
+                                    <div class="invalid-feedback">Please enter a valid description.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Content</label>
-                                    <textarea class="form-control" id="content" name="content" required=""></textarea>
+                                    <textarea class="form-control" id="content" name="content" required minlength="1"></textarea>
+                                    <div class="invalid-feedback">Please enter valid content.</div>
                                 </div>
-                                <div class="form-group">
-                                    <input class="form-control" name="account_id" type="hidden" required="" value="${sessionScope.account.account_id}"></textarea>
-                                </div>
+                                <input class="form-control" name="account_id" type="hidden" value="${sessionScope.account.account_id}" required>
                             </div>
                             <div class="modal-footer">
                                 <div>
                                     <c:if test="${err != null}">
-                                        <p style="color: #5cb85c;">
-                                            ${err}
-                                        </p>
+                                        <p style="color: #5cb85c;">${err}</p>
                                     </c:if>
                                 </div>
                                 <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
-                                <button type="button submit" class="btn button-post" >Post blog</button>
+                                <button type="submit" class="btn button-post">Post blog</button>
                             </div>
                         </form>
                     </div>
@@ -132,8 +131,6 @@
             <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
         </div>
-
-
 
         <script src="js/jquery-3.2.1.min.js"></script>
         <script src="styles/bootstrap-4.1.2/popper.js"></script>
@@ -146,5 +143,75 @@
         <script src="plugins/easing/easing.js"></script>
         <script src="plugins/parallax-js-master/parallax.min.js"></script>
         <script src="js/blog.js"></script>
+        <script>
+                            function validateForm() {
+                                const form = document.getElementById('blogForm');
+                                const blogName = document.getElementById('blog_name');
+                                const image = document.getElementById('image');
+                                const description = document.getElementById('description');
+                                const content = document.getElementById('content');
+
+                                // Trim whitespace
+                                blogName.value = blogName.value.trim();
+                                image.value = image.value.trim();
+                                description.value = description.value.trim();
+                                content.value = content.value.trim();
+
+                                let isValid = true;
+
+                                // Check if fields are empty
+                                if (!blogName.value) {
+                                    blogName.classList.add('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    blogName.classList.remove('is-invalid');
+                                }
+
+                                if (!image.value || !isValidUrl(image.value)) {
+                                    image.classList.add('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    image.classList.remove('is-invalid');
+                                }
+
+                                if (!description.value) {
+                                    description.classList.add('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    description.classList.remove('is-invalid');
+                                }
+
+                                if (!content.value) {
+                                    content.classList.add('is-invalid');
+                                    isValid = false;
+                                } else {
+                                    content.classList.remove('is-invalid');
+                                }
+
+                                return isValid;
+                            }
+
+                            function isValidUrl(string) {
+                                const urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate the protocol
+                                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
+                                        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+                                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+                                        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+                                        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+
+                                const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
+
+                                return urlPattern.test(string) && imagePattern.test(string);
+                            }
+
+                            document.querySelectorAll('#blogForm .form-control').forEach(input => {
+                                input.addEventListener('input', () => {
+                                    if (input.value.trim() !== '') {
+                                        input.classList.remove('is-invalid');
+                                    }
+                                });
+                            });
+
+        </script>
     </body>
 </html>

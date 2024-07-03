@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  * a class information of blog
  *
@@ -17,8 +19,27 @@ public class Blog {
     private String description;
     private String content;
     private int employee_id;
+    private Date post_at;
 
     public Blog() {
+    }
+
+    public Blog(int blog_id, String blog_name, String image, String description, String content, int employee_id, Date post_at) {
+        this.blog_id = blog_id;
+        this.blog_name = blog_name;
+        this.image = image;
+        this.description = description;
+        this.content = content;
+        this.employee_id = employee_id;
+        this.post_at = post_at;
+    }
+
+    public Date getPost_at() {
+        return post_at;
+    }
+
+    public void setPost_at(Date post_at) {
+        this.post_at = post_at;
     }
 
     public int getBlog_id() {
