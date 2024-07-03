@@ -78,15 +78,14 @@ public class SearchSupplierServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String txtSearch= request.getParameter("search");
         SupplierInterface supplierDAO= new SupplierDAO();
-        
-        
+               
         List<Supplier> list;
-        if(txtSearch ==null || txtSearch.trim().isEmpty()){
+        if(txtSearch ==null){
             list= supplierDAO.getAllSupplier();
         }else{
             list=supplierDAO.findSupplierByName(txtSearch);
         }
-        request.setAttribute("listSupplier", list);
+        request.setAttribute("listManager", list);
         request.setAttribute("searchValue", txtSearch);
         request.getRequestDispatcher("managersupplier.jsp").include(request, response);
     }

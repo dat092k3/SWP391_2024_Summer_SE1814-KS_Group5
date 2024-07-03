@@ -232,6 +232,14 @@
         <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
         <servlet-class>controller.employeemanagement.ViewProfileEmployeeAdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteManagerServlet</servlet-name>
+        <servlet-class>controller.manager.DeleteManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchManagerServlet</servlet-name>
+        <servlet-class>controller.manager.SearchManagerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -459,5 +467,13 @@
     <servlet-mapping>
         <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
         <url-pattern>/viewprofileemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteManagerServlet</servlet-name>
+        <url-pattern>/deletemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchManagerServlet</servlet-name>
+        <url-pattern>/searchmanager</url-pattern>
     </servlet-mapping>
 </web-app>

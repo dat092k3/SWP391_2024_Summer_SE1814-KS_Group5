@@ -197,7 +197,6 @@ public class Manager {
     public void setHireDate(Date hireDate) {
         this.hireDate = hireDate;
     }
-
     public float getSalary() {
         return salary;
     }

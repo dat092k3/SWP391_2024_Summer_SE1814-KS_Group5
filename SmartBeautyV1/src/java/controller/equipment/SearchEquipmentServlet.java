@@ -81,7 +81,7 @@ public class SearchEquipmentServlet extends HttpServlet {
         EquipmentInterface equipmentDAO = new EquipmentDAO();
 
         List<Equipment> list;
-        if (txtSearch == null || txtSearch.trim().isEmpty()) {
+        if (txtSearch == null) {
             list = equipmentDAO.getAllEquipment();
         } else {
             list = equipmentDAO.findEquipmentByName(txtSearch);

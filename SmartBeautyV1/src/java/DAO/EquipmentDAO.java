@@ -168,19 +168,26 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface {
      * check equipment is existed when save
      *
      * @param name of equipment need to check
+     * @param type_id of equipment need to check
      * @param image of equipment need to check
+     * @param price of equipment need to check
+     * @param supplier_id of equipment need to check
      * @param description of equipment need to check
-     * @return true false
+     * @param quantity of equipment need to check
+     * @return true if existed, false otherwise
      */
     @Override
-    public boolean isEquipmentExistWhenSave(String name, String image, String description) {
+    public boolean isEquipmentExistWhenSave(String name,int type_id, String image ,float price, int supplier_id, int quantity ,String description) {
         String sql = "SELECT * from Equipment\n"
-                + "where equipment_name=? and image=? and description=? and status=1";
+                + "where equipment_name=? and type_id=? and image=? and price=? and suplier_id=? and quantity=? and description=? and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
-            st.setString(2, image);
-            st.setString(3, description);
+            st.setInt(2, type_id);
+            st.setFloat(3, price);
+            st.setInt(4, supplier_id);
+            st.setInt(5, quantity);
+            st.setString(6, description);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {

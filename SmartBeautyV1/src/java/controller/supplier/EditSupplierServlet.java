@@ -51,39 +51,40 @@ public class EditSupplierServlet extends HttpServlet {
             request.setAttribute("message", "This supplier already exists");
         } else {
             Part part = request.getPart("img");
-            String contentType = part.getContentType();
-            String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
-            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-            // convert it to a string, get just the filename without including the full path.
-            if (!isImageFile(contentType)) {
-                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
-                request.getRequestDispatcher("managesupplier").include(request, response);
-                return;
-            }
-            if (!source.isEmpty()) {
-                String filename = supplierId + ".png";
-                if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
-                    Files.createDirectory(Path.of(realPath));
+            if (part != null && part.getSize() > 0) { // Check if part is not null and has content
+                String contentType = part.getContentType();
+                if (!isImageFile(contentType)) {
+                    request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                    request.getRequestDispatcher("manageequipment").include(request, response);
+                    return;
                 }
-                part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                editSupplier.setImage("/images/Supplier/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
-            } else {
-                Supplier existingSupplier = supplierDAO.getSupplierById(Integer.parseInt(supplierId));
-                editSupplier.setImage(existingSupplier.getImage());
+                String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
+                String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
+                                                                                                    // convert it to a string, get just the filename without including the full path.
+                if (!source.isEmpty()) {
+                    String filename = supplierId + ".png";
+                    if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
+                        Files.createDirectory(Path.of(realPath));
+                    }
+                    part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
+                    editSupplier.setImage("/images/Supplier/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
+                    }
+                } else {
+                    Supplier existingSupplier = supplierDAO.getSupplierById(Integer.parseInt(supplierId));
+                    editSupplier.setImage(existingSupplier.getImage());
+                }
+                supplierDAO.updateSupplier(editSupplier);
+                request.setAttribute("message", "Update successful!");
+                request.setAttribute("showEditDialog", false);
             }
-            supplierDAO.updateSupplier(editSupplier);
-            request.setAttribute("message", "Update successful!");
-            request.setAttribute("showEditDialog", false);
-        }
-        request.getRequestDispatcher("managesupplier").include(request, response);
-    }
-
-    /**
-     * check value of name need to follow standard
-     *
-     * @param name of value need to check
-     * @return true if name is valid, false otherwise
-     */
+            request.getRequestDispatcher("managesupplier").include(request, response);
+        }    
+        /**
+         * check value of name need to follow standard
+         *
+         * @param name of value need to check
+         * @return true if name is valid, false otherwise
+         */
     private boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;
@@ -101,7 +102,7 @@ public class EditSupplierServlet extends HttpServlet {
         }
         return true;
     }
-    
+
     /**
      * check file valid
      *

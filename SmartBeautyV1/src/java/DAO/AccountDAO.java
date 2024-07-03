@@ -273,7 +273,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phonenumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
                 accounts.add(account);
             }
         } catch (SQLException e) {
@@ -299,7 +299,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phonenumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
                 accounts.add(account);
             }
         } catch (SQLException e) {
@@ -329,7 +329,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phonenumber"),
                         rs.getString("role"),
-                        rs.getString("status")
+                        rs.getBoolean("status")
                 );
                 return account;
             }
@@ -396,7 +396,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phoneNumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
                 list.add(account);
             }
         } catch (SQLException e) {
@@ -427,7 +427,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phoneNumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
                 list.add(account);
             }
         } catch (SQLException e) {
@@ -490,6 +490,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
         return 0;
     }
 
+    @Override
     public void updateInformationIfUpdateManager(Account account) {
         String sql = "UPDATE [dbo].[Account]\n"
                 + "   SET [email] = ?\n"
@@ -502,6 +503,20 @@ public class AccountDAO extends DBContext implements AccountInterface {
             st.setString(1, account.getEmail());
             st.setString(2, account.getPhoneNumber());
             st.setInt(3, account.getAccount_id());
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void deleteAccountIfDeleteManager(int accountId) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [status] = 0\n"
+                + " WHERE account_id=?";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, accountId);
+            st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }

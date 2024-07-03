@@ -24,7 +24,7 @@ public interface EquipmentInterface {
 
     public boolean isEquipmentExist(String name);
 
-    public boolean isEquipmentExistWhenSave(String name, String image, String description);
+    public boolean isEquipmentExistWhenSave(String name,int type_id, String image,float price, int supplier_id, int quantity ,String description);
 
     public void addNewEquipment(Equipment equipment);
 

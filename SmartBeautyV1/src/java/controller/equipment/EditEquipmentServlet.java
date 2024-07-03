@@ -13,7 +13,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import model.Equipment;
 
-
 @MultipartConfig
 public class EditEquipmentServlet extends HttpServlet {
     
@@ -34,8 +33,8 @@ public class EditEquipmentServlet extends HttpServlet {
         
         String equipmentId = request.getParameter("equipmentId");
         String name = request.getParameter("nameequipment");
-        String image = request.getParameter("img");
         String quantity = request.getParameter("quantity");
+        String image=request.getParameter("img");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
         String typeofequipment = request.getParameter("typeofequipment");
@@ -49,29 +48,32 @@ public class EditEquipmentServlet extends HttpServlet {
 
         Equipment editEquipment = new Equipment(Integer.parseInt(equipmentId), name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
-        if (equipmentDAO.isEquipmentExistWhenSave(name, image, description)) {
+        if (equipmentDAO.isEquipmentExistWhenSave(name, Integer.parseInt(typeofequipment), image ,Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description)) {
             request.setAttribute("message", "This equipment already exists");
         } else {
             Part part = request.getPart("img");
-            String contentType = part.getContentType();
-            String realPath = request.getServletContext().getRealPath("/images/Equipment"); // where the photo is saved
-            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); // get the original filename of the file then
-                                                                                                // convert it to a string, get just the filename without including the full path.
-            if (!isImageFile(contentType)) {
-                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
-                request.getRequestDispatcher("manageequipment").include(request, response);
-                return;
-            }  
-            if (!source.isEmpty()) {
-                String filename = equipmentId + ".png";
-                if (!Files.exists(Path.of(realPath))) { // check folder /images/Equipment is existed
-                    Files.createDirectory(Path.of(realPath));
+            if (part != null && part.getSize() > 0) { // Check if part is not null and has content
+                String contentType = part.getContentType();
+                if (!isImageFile(contentType)) {
+                    request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                    request.getRequestDispatcher("manageequipment").include(request, response);
+                    return;
                 }
-                part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                editEquipment.setImage("/images/Equipment/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
+
+                String realPath = request.getServletContext().getRealPath("/images/Equipment");
+                String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
+                
+                if (!source.isEmpty()) {
+                    String filename = equipmentId + ".png";
+                    if (!Files.exists(Path.of(realPath))) {
+                        Files.createDirectory(Path.of(realPath));
+                    }
+                    part.write(realPath + "/" + filename);
+                    editEquipment.setImage("/images/Equipment/" + filename + "?" + System.currentTimeMillis());
+                }
             } else {
-                Equipment existingEquipment = equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId)); // check if image don't update
-                editEquipment.setImage(existingEquipment.getImage());                                       // then use old image
+                Equipment existingEquipment = equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId));
+                editEquipment.setImage(existingEquipment.getImage());
             }
 
             equipmentDAO.updateEquipment(editEquipment);

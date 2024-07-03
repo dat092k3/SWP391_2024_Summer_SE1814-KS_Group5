@@ -5,9 +5,7 @@
 
 package controller.manager;
 
-import DAO.AccountDAO;
 import DAO.ManagerDAO;
-import Interface.AccountInterface;
 import Interface.ManagerInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
@@ -15,7 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Account;
 import model.Manager;
 
 /**
@@ -37,7 +34,6 @@ public class ManageManagerServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         
         ManagerInterface managerDAO= new ManagerDAO();
-        AccountInterface accountDAO= new AccountDAO();
         String managerId = request.getParameter("managerId");
         String message = (String) request.getAttribute("message");
         Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog");

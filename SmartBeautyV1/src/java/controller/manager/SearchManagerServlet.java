@@ -2,54 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.supplier;
 
-import DAO.SupplierDAO;
-import Interface.SupplierInterface;
+package controller.manager;
+
+import DAO.ManagerDAO;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Manager;
 
 /**
- * delete supplier
  *
  * @author LENOVO
  */
-public class DeleteSupplierServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class SearchManagerServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteSupplierServlet</title>");
+            out.println("<title>Servlet SearchManagerServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteSupplierServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchManagerServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -57,27 +56,12 @@ public class DeleteSupplierServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        SupplierInterface supplierDAO = new SupplierDAO();
-        String supplierId = request.getParameter("supplierId");
-        try {
-            if (supplierId != null && !supplierId.isEmpty()) {
-                supplierDAO.deleteSupplier(Integer.parseInt(supplierId));
-            }
-            request.setAttribute("message", "Delete successful");
-            request.setAttribute("showEditDialog", false);
-        } catch (NumberFormatException e) {
-            request.setAttribute("message", "Delete failed" + e.getMessage());
-        }
+    throws ServletException, IOException {
+        processRequest(request, response);
+    } 
 
-        request.getRequestDispatcher("managesupplier").forward(request, response);
-    }
-
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -85,13 +69,27 @@ public class DeleteSupplierServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
+    throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
+        String txtSearch=request.getParameter("search");
+        ManagerInterface managerDAO= new ManagerDAO();
+        
+        List<Manager> list;
+        
+        if(txtSearch == null){
+            list= managerDAO.getAllManagers();
+        }else{
+            list=managerDAO.findManager(txtSearch);
+        }
+        request.setAttribute("listManager", list);
+        request.setAttribute("searchValue", txtSearch);
+        request.getRequestDispatcher("managermanager.jsp").forward(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

@@ -168,12 +168,12 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         } else {
-            Account newAccount = new Account(username, password, email, phonenumber, "Manager");
+            Account newAccount = new Account(username, email, phonenumber, "Manager", true);
             managerDAO.addNewAccountManager(newAccount);
         }
 
         Manager newManager = new Manager(accountDAO.getAccountIdToAddManager(), username, gender, email, dateofbirth, phonenumber, address, hireDate, Float.parseFloat(salary), "", true);
-        if (managerDAO.isManagerExist(namemanager, address, phonenumber)) {
+        if (managerDAO.isManagerExist(image, address, phonenumber)) {
             request.setAttribute("message", "This manager is existed");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
