@@ -3,8 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller;
+package controller.employeemanagement;
 
+import DAO.AccountDAO;
+import Interface.AccountInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,9 +16,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author LENOVO
+ * @author admin
  */
-public class createEmployeeServlet extends HttpServlet {
+public class EditAccountServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -33,10 +35,10 @@ public class createEmployeeServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet createEmployeeServlet</title>");  
+            out.println("<title>Servlet EditAccountServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet createEmployeeServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditAccountServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -53,7 +55,16 @@ public class createEmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        AccountInterface accountDAO = new AccountDAO();
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String phonenumber = request.getParameter("phonenumber");
+        String role = request.getParameter("role");
+        String status = request.getParameter("status");
+        accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+        request.getRequestDispatcher("viewaccount").forward(request, response);
     } 
 
     /** 
@@ -66,11 +77,8 @@ public class createEmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String account_id=request.getParameter("accountId").trim();
-        String name=request.getParameter("name").trim();
-        
-        }
+        processRequest(request, response);
+    }
 
     /** 
      * Returns a short description of the servlet.

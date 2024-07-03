@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.controller.accountmanagement;
+package controller.employeemanagement;
 
 import DAO.AccountDAO;
 import Interface.AccountInterface;
@@ -12,13 +12,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import model.Account;
 
 /**
  *
  * @author admin
  */
-public class ViewDetailAccountServlet extends HttpServlet {
+public class ViewAccountServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class ViewDetailAccountServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewDetailAccountServlet</title>");
+            out.println("<title>Servlet ViewAccountServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewDetailAccountServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewAccountServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,10 +60,9 @@ public class ViewDetailAccountServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountInterface accountDAO = new AccountDAO();
-        int account_id = Integer.parseInt(request.getParameter("account_id"));
-        Account accountbyid = accountDAO.getAccountByAccountId(account_id);
-        request.setAttribute("accountbyid", accountbyid);
-        request.getRequestDispatcher("editaccountemployee.jsp").forward(request, response);
+        List<Account> listaccountemployee = accountDAO.getAccountEmployeeByRole();
+        request.setAttribute("listaccountemployee", listaccountemployee);
+        request.getRequestDispatcher("manageaccount.jsp").forward(request, response);
     }
 
     /**

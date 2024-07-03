@@ -13,10 +13,6 @@
         <servlet-class>controller.SignupServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>createEmployeeServlet</servlet-name>
-        <servlet-class>controller.createEmployeeServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>SupplierServlet</servlet-name>
         <servlet-class>controller.SupplierServlet</servlet-class>
     </servlet>
@@ -134,7 +130,7 @@
     </servlet>
     <servlet>
         <servlet-name>AddAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.AddAccountServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.AddAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddProfileEmployeeEmptyServlet</servlet-name>
@@ -146,7 +142,7 @@
     </servlet>
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.EditAccountServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.EditAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditProfileEmployeeServlet</servlet-name>
@@ -154,15 +150,15 @@
     </servlet>
     <servlet>
         <servlet-name>SearchAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.SearchAccountServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.SearchAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewAccountServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.ViewAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailAccountServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewDetailAccountServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.ViewDetailAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailProfilePTandTakecareServlet</servlet-name>
@@ -183,10 +179,6 @@
     <servlet-mapping>
         <servlet-name>SignupServlet</servlet-name>
         <url-pattern>/signup</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>createEmployeeServlet</servlet-name>
-        <url-pattern>/createemployee</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotpasswordServlet</servlet-name>
