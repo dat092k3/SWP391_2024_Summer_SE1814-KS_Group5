@@ -130,43 +130,43 @@
     </servlet>
     <servlet>
         <servlet-name>AddAccountServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.AddAccountServlet</servlet-class>
+        <servlet-class>controller.controller.accountmanagement.AddAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddProfileEmployeeEmptyServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.AddProfileEmployeeEmptyServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.AddProfileEmployeeEmptyServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddProfileEmployeeServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.AddProfileEmployeeServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.AddProfileEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditAccountServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.EditAccountServlet</servlet-class>
+        <servlet-class>controller.controller.accountmanagement.EditAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditProfileEmployeeServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.EditProfileEmployeeServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.EditProfileEmployeeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchAccountServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.SearchAccountServlet</servlet-class>
+        <servlet-class>controller.controller.accountmanagement.SearchAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewAccountServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.ViewAccountServlet</servlet-class>
+        <servlet-class>controller.controller.accountmanagement.ViewAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailAccountServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.ViewDetailAccountServlet</servlet-class>
+        <servlet-class>controller.controller.accountmanagement.ViewDetailAccountServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailProfilePTandTakecareServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewDetailProfilePTandTakecareServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.ViewDetailProfilePTandTakecareServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
-        <servlet-class>controller.controller.accountmanagement.ViewProfileEmployeePTAndTakecareServlet</servlet-class>
+        <servlet-class>controller.employeemanagement.ViewProfileEmployeePTAndTakecareServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
