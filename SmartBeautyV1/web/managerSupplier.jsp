@@ -22,7 +22,7 @@
         <style>
             img{
                 width: 150px;
-                height: 120px;
+                height: 130px;
             }
             #pagination {
                 margin-top: 20px;

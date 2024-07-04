@@ -22,7 +22,7 @@
         <style>
             img{
                 width: 150px;
-                height: 120px;
+                height: 130px;
             }
             .error-message {
                 color: red;
