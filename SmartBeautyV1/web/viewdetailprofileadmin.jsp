@@ -38,7 +38,7 @@
                         </h6>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link"  href="viewprofileadmink</a>
+                                <a class="nav-link"  href="viewprofileemployeeadmin">Back</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -238,6 +238,9 @@
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Hire Date</label>
                                                     <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" value="${profilebyaccountid.hireDate}" required="">
+                                                    <c:if test="${not empty error10}">
+                                                        <div class="text-danger">${error10}</div>
+                                                    </c:if>
                                                 </div>
 
                                                 <div class="col-md-6">

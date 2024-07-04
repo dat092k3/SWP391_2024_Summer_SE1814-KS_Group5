@@ -24,14 +24,11 @@
                         <div class="col-lg-4 order-lg-1 order-2">
                             <div class="d-flex align-items-center justify-content-around m-4">
                                 <div class="text-center">
-                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Back</a></button>
+                                    <button class="btn btn-primary"><a href="index.jsp" style="color: white">Home</a></button>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-primary">Add To Story</button>
-                                </div>
-                                <div class="text-center">
-                                    <button class="btn btn-primary">Add To Story</button>
-                                </div>
+                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Account PT, Takecare</a></button>
+                                </div>    
                             </div>
                         </div>
                     </div>
@@ -42,14 +39,24 @@
                     <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
                         <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Profile Employee</h3>
                         <span style="color: green">${success}</span>
+                        <span style="color: red">${error1}</span>
+                        <span style="color: red">${error2}</span>
+                        <span style="color: red">${error3}</span>
+                        <span style="color: red">${error4}</span>
+                        <span style="color: red">${error5}</span>
+                        <span style="color: red">${error6}</span>
+                        <span style="color: red">${error7}</span>
+                        <span style="color: red">${error8}</span>
+                        <span style="color: red">${error9}</span>
+                        <span style="color: red">${error10}</span>
                         <form class="position-relative">
                             <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
                             <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
                         </form>
                     </div>
-                    <div class="row">
+                    <div class="row" id="profile-container">
                         <c:forEach var="profile" items="${list}"> 
-                            <div class="col-sm-6 col-lg-4">
+                            <div class="col-sm-6 col-lg-4 profile-item">
                                 <div class="card hover-img">
                                     <div class="card-body p-4 text-center border-bottom">
                                         <img src="${profile.image}" alt class="rounded-circle mb-3" width="80" height="80">
@@ -74,6 +81,11 @@
                             </div>
                         </c:forEach>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination mt-3 mb-0" id="pagination">
+                            <!-- Pagination will be inserted here -->
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,7 +108,7 @@
                                             <img class="img-account-profile rounded-circle mb-2" src="" alt> 
                                             <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
                                             <button class="btn btn-primary" type="button">Upload new image</button>
-                                            <input class="form-control" placeholder="Enter link image" name="image">
+                                            <input class="form-control" placeholder="Enter link image" name="image" required="">
                                             <c:if test="${not empty error5}">
                                                 <div class="text-danger">${error5}</div>
                                             </c:if> 
@@ -172,6 +184,9 @@
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Hire Date</label>
                                                     <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" required="">
+                                                    <c:if test="${not empty error10}">
+                                                        <div class="text-danger">${error10}</div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Department</label>
@@ -211,6 +226,50 @@
                 var accountId = button.data('account-id');
                 var modal = $(this);
                 modal.find('.modal-body #modal-account-id').val(accountId);
+            });
+
+            document.addEventListener("DOMContentLoaded", function () {
+                const rowsPerPage = 9;
+                const container = document.getElementById("profile-container");
+                const profiles = container.getElementsByClassName("profile-item");
+                const pagination = document.getElementById("pagination");
+                const totalPages = Math.ceil(profiles.length / rowsPerPage);
+                let currentPage = 1;
+
+                function displayProfiles(page) {
+                    const start = (page - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
+                    for (let i = 0; i < profiles.length; i++) {
+                        profiles[i].style.display = (i >= start && i < end) ? "block" : "none";
+                    }
+                }
+
+                function updatePagination() {
+                    pagination.innerHTML = "";
+                    for (let i = 1; i <= totalPages; i++) {
+                        const li = document.createElement("li");
+                        li.className = "page-item " + (i === currentPage ? "active" : "");
+                        const a = document.createElement("a");
+                        a.className = "page-link";
+                        a.href = "#";
+                        a.innerText = i;
+                        a.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            currentPage = i;
+                            displayProfiles(currentPage);
+                            updatePagination();
+                        });
+                        li.appendChild(a);
+                        pagination.appendChild(li);
+                    }
+                }
+
+                function initPagination() {
+                    displayProfiles(currentPage);
+                    updatePagination();
+                }
+
+                initPagination();
             });
         </script>
     </body>

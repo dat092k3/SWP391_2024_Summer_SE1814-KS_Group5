@@ -124,6 +124,9 @@
                                     <div class="col-md-6">
                                         <label class="small mb-1" >Hire Date</label>
                                         <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" required="">
+                                        <c:if test="${not empty error10}">
+                                            <div class="text-danger">${error10}</div>
+                                        </c:if>
                                     </div>
 
                                     <div class="col-md-6">

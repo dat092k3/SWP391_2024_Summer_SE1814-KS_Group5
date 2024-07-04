@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.Account;
 
 /**
  *
@@ -58,15 +59,37 @@ public class EditAccountAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountInterface accountDAO = new AccountDAO();
-        int account_id = Integer.parseInt(request.getParameter("account_id"));
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String phonenumber = request.getParameter("phonenumber");
-        String role = request.getParameter("role");
-        String status = request.getParameter("status");
-        accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
-        request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+        int account_id = Integer.parseInt(request.getParameter("account_id").trim());
+        String username = request.getParameter("username").trim();
+        String email = request.getParameter("email").trim();
+        String password = request.getParameter("password").trim();
+        String phonenumber = request.getParameter("phonenumber").trim();
+        String role = request.getParameter("role").trim();
+        String status = request.getParameter("status").trim();
+        if (!username.matches("^[A-Za-z0-9]+[A-Za-z0-9]{3,255}$")) {
+            request.setAttribute("error1", "Username must begin with a letter and no special characters");
+            request.getRequestDispatcher("viewdetailaccount?account_id=" + account_id).forward(request, response);
+        }
+        if (!email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
+            request.setAttribute("error2", "Email must be valid and contain @ and .com.");
+            request.getRequestDispatcher("viewdetailaccount?account_id=" + account_id).forward(request, response);
+        }
+        // Validate Phone Number
+        if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
+            request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");
+            request.getRequestDispatcher("viewdetailaccount?account_id=" + account_id).forward(request, response);
+        } else {
+            Account account = accountDAO.checkAccountExists(username, phonenumber);
+            if (account == null) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                request.setAttribute("successadmin", "Update Account Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else {
+                // Báo lỗi nếu tài khoản đã tồn tại
+                request.setAttribute("error4", "Username, email or phone number already exists.");
+                request.getRequestDispatcher("viewdetailaccount?account_id=" + account_id).forward(request, response);
+            }
+        }
     }
 
     /**

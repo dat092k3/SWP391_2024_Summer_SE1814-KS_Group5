@@ -5,7 +5,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -26,12 +26,19 @@
                 <div class="col-12 col-lg-auto mb-3" style="width: 200px;">
                     <div class="card p-3">
                         <div class="e-navlist e-navlist--active-bg">
+                            <button class="btn btn-primary" style="margin-left:15px">
+                                <a style="color: white" href="index.jsp">Home</a>
+                            </button>
+                        </div>
+                        <hr>
+                        <div class="e-navlist e-navlist--active-bg">
                             <ul class="nav">
                                 <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
                                 <li class="nav-item"><a class="nav-link px-2" href="viewprofileemployeeadmin" target="__blank"><i class="fa fa-fw fa-th mr-1"></i><span>Profile Employee</span></a></li>
                                 <li class="nav-item"><a class="nav-link px-2" href="#" target="__blank"><i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>
                             </ul>
                         </div>
+                        <hr>
                     </div>
                 </div>
                 <div class="col">
@@ -48,6 +55,7 @@
                                         <h6 class="mr-2"><span>Account Employee</span><small class="px-1">Be a wise leader</small></h6>
                                     </div>
                                     <p style="color:red; font-weight: bold"> ${messen}</p>
+                                    <span style="color: green">${successadmin}</span>
                                     <p style="color:green; font-weight: bold"> ${messen1}</p>
                                     <span style="color: red">${err_username}</span>
                                     <span style="color: red">${err_email}</span>
@@ -56,7 +64,7 @@
                                     <span style="color: green">${success}</span>
                                     <div class="e-table">
                                         <div class="table-responsive table-lg mt-3">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered" id="accountAdminTable">
                                                 <thead>
                                                     <tr>
                                                         <th>UserName</th>
@@ -69,46 +77,39 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="account" items="${listaccountemployeeadmin}">
-                                                    <tr>
-                                                        <td class="text-nowrap align-middle">${account.username}</td>
-                                                        <td class="text-nowrap align-middle">${account.password}</td>
-                                                        <td class="text-nowrap align-middle">${account.email}</td>
-                                                        <td class="text-nowrap align-middle">${account.phoneNumber}</td>
-                                                        <td class="text-center align-middle">
-                                                            <i class="fa fa-fw cursor-pointer
-                                                               <c:choose>
-                                                               <c:when test="${account.status == 1}">
-                                                                fa-toggle-on text-success
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    fa-toggle-off text-secondary
-                                                                </c:otherwise>
-                                                                </c:choose>">
-                                                                ${account.status == 1 ? 'On' : 'Off'}
-                                                            </i>
-                                                        </td>
-                                                        <td class="text-nowrap align-middle">${account.role}</td>
-                                                        <td class="text-center align-middle">
-                                                            <div class="btn-group align-top">
-                                                                <a href="viewdetailaccount?account_id=${account.account_id}">Edit</a>
-                                                            </div>                                                            
-                                                        </td>
-                                                    </tr>
-                                                </c:forEach>
+                                                    <c:forEach var="account" items="${listaccountemployeeadmin}">
+                                                        <tr>
+                                                            <td class="text-nowrap align-middle">${account.username}</td>
+                                                            <td class="text-nowrap align-middle">${account.password}</td>
+                                                            <td class="text-nowrap align-middle">${account.email}</td>
+                                                            <td class="text-nowrap align-middle">${account.phoneNumber}</td>
+                                                            <td class="text-center align-middle">
+                                                                <i class="fa fa-fw cursor-pointer
+                                                                   <c:choose>
+                                                                       <c:when test="${account.status}">
+                                                                           fa-toggle-on text-success
+                                                                       </c:when>
+                                                                       <c:otherwise>
+                                                                           fa-toggle-off text-secondary
+                                                                       </c:otherwise>
+                                                                   </c:choose>">
+                                                                    ${account.status ? 'On' : 'Off'}
+                                                                </i>
+                                                            </td>
+                                                            <td class="text-nowrap align-middle">${account.role}</td>
+                                                            <td class="text-center align-middle">
+                                                                <div class="btn-group align-top">
+                                                                    <a href="viewdetailaccount?account_id=${account.account_id}">Edit</a>
+                                                                </div>                                                            
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="d-flex justify-content-center">
-                                            <ul class="pagination mt-3 mb-0">
-                                                <li class="disabled page-item"><a href="#" class="page-link">‹</a></li>
-                                                <li class="active page-item"><a href="#" class="page-link">1</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">›</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">»</a></li>
+                                            <ul class="pagination mt-3 mb-0" id="paginationAdmin">
+                                                <!-- Pagination will be inserted here -->
                                             </ul>
                                         </div>
                                     </div>
@@ -239,5 +240,51 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
         <script src="js/address.js"></script> 
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const rowsPerPage = 10;
+                const table = document.getElementById("accountAdminTable");
+                const pagination = document.getElementById("paginationAdmin");
+                const rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+                const totalPages = Math.ceil(rows.length / rowsPerPage);
+                let currentPage = 1;
+
+                function displayRows(page) {
+                    const start = (page - 1) * rowsPerPage;
+                    const end = start + rowsPerPage;
+                    for (let i = 0; i < rows.length; i++) {
+                        rows[i].style.display = (i >= start && i < end) ? "" : "none";
+                    }
+                }
+
+                function updatePagination() {
+                    pagination.innerHTML = "";
+                    for (let i = 1; i <= totalPages; i++) {
+                        const li = document.createElement("li");
+                        li.className = "page-item " + (i === currentPage ? "active" : "");
+                        const a = document.createElement("a");
+                        a.className = "page-link";
+                        a.href = "#";
+                        a.innerText = i;
+                        a.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            currentPage = i;
+                            displayRows(currentPage);
+                            updatePagination();
+                        });
+                        li.appendChild(a);
+                        pagination.appendChild(li);
+                    }
+                }
+
+                function initPagination() {
+                    displayRows(currentPage);
+                    updatePagination();
+                }
+
+                initPagination();
+            });
+        </script>
     </body>
 </html>

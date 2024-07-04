@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <<link rel="stylesheet" href="styles/viewdetailprofileptandtakecare.css"/>
+        <<link rel="stylesheet" href="styles/viewdetailprofileptandtakecare.css"/> 
     </head>
     <body>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> 
@@ -238,6 +238,9 @@
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Hire Date</label>
                                                     <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" value="${profilebyaccountid.hireDate}" required="">
+                                                    <c:if test="${not empty error10}">
+                                                        <div class="text-danger">${error10}</div>
+                                                    </c:if>
                                                 </div>
 
                                                 <div class="col-md-6">
