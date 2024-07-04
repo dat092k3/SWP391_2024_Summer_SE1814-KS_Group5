@@ -184,7 +184,10 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
         }
         return false;
     }
-
+    /**
+     * add supplier
+     * @param supplier need to add  
+     */
     @Override
     public void addNewSupplier(Supplier supplier) {
         String sql = "INSERT INTO [dbo].[Suplier]\n"

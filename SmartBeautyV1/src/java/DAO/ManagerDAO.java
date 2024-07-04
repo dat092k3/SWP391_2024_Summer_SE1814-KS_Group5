@@ -126,7 +126,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return list;
     }
-
+    /**
+     * add manager
+     * @param manager is manager need to add 
+     */
     @Override
     public void addNewManager(Manager manager) {
         String sql = "INSERT INTO [dbo].[Manager]\n"
@@ -168,7 +171,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
-
+    /**
+     * add account for manager
+     * @param account is account of manager need to add
+     */
     @Override
     public void addNewAccountManager(Account account) {
         String sql = "INSERT INTO [dbo].[Account]\n"
@@ -190,11 +196,17 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
-
+    /**
+     * check account of manager to add
+     * @param username of account of manager to add
+     * @param email of account of manager to add
+     * @param phonenumber of account of manager to add
+     * @return true if existed, false otherwise
+     */
     @Override
     public boolean isManagerAccountExist(String username, String email, String phonenumber) {
-        String sql = "select * from Manager\n"
-                + "where username =? and address=? and email=? and phonenumber=? and status=1";
+        String sql = "select * from Account\n"
+                + "where username =?  and email=? and phonenumber=? and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
@@ -207,15 +219,21 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return false;
     }
-
+    /**
+     * check manager is existed
+     * @param name of manager need to check
+     * @param email of manager need to check
+     * @param phonenumber of manager need to check
+     * @return true if existed, false otherwise
+     */
     @Override
-    public boolean isManagerExist(String name, String address, String phonenumber) {
+    public boolean isManagerExist(String name, String email, String phonenumber) {
         String sql = "select * from Manager\n"
-                + "where fullname =? and address=? and phonenumber=? and status=1";
+                + "where fullname =? and email=? and phonenumber=? and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
-            st.setString(2, address);
+            st.setString(2, email);
             st.setString(3, phonenumber);
             ResultSet rs = st.executeQuery();
             return rs.next();
@@ -224,7 +242,16 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return false;
     }
-    
+    /**
+     * check manager when edit
+     * @param name of manager need to check
+     * @param image of manager need to check
+     * @param address of manager need to check
+     * @param phonenumber of manager need to check
+     * @param email of manager need to check
+     * @param salary of manager need to check
+     * @return true if existed, false otherwise
+     */
     @Override
     public boolean isManagerExistWhenSave(String name, String image,String address, String phonenumber, String email, float salary) {
         String sql = "select * from Manager\n"
@@ -244,7 +271,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return false;
     }
-
+    /**
+     * get id of manager
+     * @return id of manager
+     */
     @Override
     public int getManagerId() {
         String sql = "select MAX(manager_id) from Manager";
@@ -259,7 +289,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return -1;
     }
-
+    /**
+     * delete manager
+     * @param id of manager need to delete
+     */
     @Override
     public void deleteManager(int id) {
         String sql = "UPDATE [dbo].[Manager]\n"
@@ -273,7 +306,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
-
+    /**
+     * update manager
+     * @param manager is manager need to update information 
+     */
     @Override
     public void updateManager(Manager manager) {
         String sql = "UPDATE [dbo].[Manager]\n"

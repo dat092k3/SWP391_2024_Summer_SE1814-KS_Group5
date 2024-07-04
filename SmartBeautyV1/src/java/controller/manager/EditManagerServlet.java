@@ -201,7 +201,7 @@ public class EditManagerServlet extends HttpServlet {
      * @return true if email is valid, false otherwise
      */
     private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String EMAIL_PATTERN = "^[A-Za-z0-9_]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
 

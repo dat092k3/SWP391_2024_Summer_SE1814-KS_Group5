@@ -117,15 +117,18 @@ public class AddSupplierServlet extends HttpServlet {
         } else {
             Part part = request.getPart("img");
             String contentType = part.getContentType();
-            String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
-            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-            // convert it to a string, get just the filename without including the full path.
-
             if (!isImageFile(contentType)) {
                 request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                request.setAttribute("name", name);
+                request.setAttribute("address", address);
+                request.setAttribute("phonenumber", phoneNumber);
+                request.setAttribute("email", email);
                 request.getRequestDispatcher("managesupplier").include(request, response);
                 return;
             }
+            String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
+            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
+            // convert it to a string, get just the filename without including the full path.
 
             if (!source.isEmpty()) {
                 String filename = supplierDAO.getSupplierId() + ".png";
@@ -148,7 +151,7 @@ public class AddSupplierServlet extends HttpServlet {
      * @param name of name need to check
      * @return true if name is valid, false otherwise
      */
-    private boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;
         }
@@ -172,7 +175,7 @@ public class AddSupplierServlet extends HttpServlet {
      * @param contentType content of file
      * @return true if file valid, false otherwise
      */
-    private boolean isImageFile(String contentType) {
+    public boolean isImageFile(String contentType) {
         String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
         for (String validType : validImageTypes) {
             if (validType.equals(contentType)) {
@@ -188,8 +191,8 @@ public class AddSupplierServlet extends HttpServlet {
      * @param email of value need to check
      * @return true if email is valid, false otherwise
      */
-    private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+    public boolean isValidEmail(String email) {
+        String EMAIL_PATTERN = "^[A-Za-z0-9_]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
 
@@ -199,7 +202,7 @@ public class AddSupplierServlet extends HttpServlet {
      * @param phoneNumber of value need to check
      * @return true if phoneNumber is valid, false otherwise
      */
-    private boolean isValidPhoneNumber(String phoneNumber) {
+    public boolean isValidPhoneNumber(String phoneNumber) {
         String PHONE_PATTERN = "^\\d{10}$";
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
@@ -210,7 +213,7 @@ public class AddSupplierServlet extends HttpServlet {
      * @param address The address to check
      * @return true if the address is valid, false otherwise
      */
-    private boolean isValidAddress(String address) {
+    public boolean isValidAddress(String address) {
         if (address == null || address.trim().isEmpty()) {
             return false;
         }

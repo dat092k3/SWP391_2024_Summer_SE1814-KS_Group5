@@ -9,33 +9,22 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * encrypts user passwords
+ *
  * @author LENOVO
  */
 public class MD5 {
-    
-    /**
-     * separates the value the user enters
-     * @param password of user
-     * @return 
-     */
-    public static String getName(String password) {
+
+    public static String getName(String fullname) {
         String s = "";
-        for (int i = password.length() - 1; i >= 0; i--) {
-            if (password.charAt(i) == ' ') {
+        for (int i = fullname.length() - 1; i >= 0; i--) {
+            if (fullname.charAt(i) == ' ') {
                 break;
             }
-            s = password.charAt(i) + s;
+            s = fullname.charAt(i) + s;
         }
         return s;
     }
-    
-    /**
-     * encrypts passwords
-     * 
-     * @param input of value need encrypts
-     * @return encrypted string
-     */
+
     public static String getMd5(String input) {
         try {
 

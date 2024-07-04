@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import ultils.MD5;
 
 /**
  * login to system
@@ -82,11 +83,9 @@ public class LoginServlet extends HttpServlet {
         String rememmber = request.getParameter("remember");
         Account account = accountDAO.findAccount(username, password);
         Cookie cusername = new Cookie("cusername", username);
-        Cookie cpassword = new Cookie("cpassword", password);
+        Cookie cpassword = new Cookie("cpassword", MD5.getMd5(password));
         if (account == null) {
             session.setAttribute("error_login", "your information is incorrect!");
-            cusername.setMaxAge(10); // Keep username for a short time
-            cpassword.setMaxAge(10); // Keep password for a short time
             response.addCookie(cusername);
             response.addCookie(cpassword);
             response.sendRedirect("signup-signin.jsp");

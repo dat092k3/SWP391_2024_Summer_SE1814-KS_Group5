@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Account;
+import ultils.MD5;
 
 /**
  * register to access system
@@ -123,7 +124,7 @@ public class SignupServlet extends HttpServlet {
                  AccountInterface accountDAO = new AccountDAO();
                 Account account = accountDAO.checkAccountExists(username, phonenumber);
                 if (account == null) {
-                    accountDAO.signup(username, password, email, phonenumber);
+                    accountDAO.signup(username, MD5.getMd5(password), email, phonenumber);
                     request.setAttribute("messen1", "Sign Up Success, please log in.");
                     request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
                 } else {
