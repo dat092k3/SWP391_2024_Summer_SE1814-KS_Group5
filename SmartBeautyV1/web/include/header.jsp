@@ -62,13 +62,14 @@
                                                 </div>
                                             </li>
                                         </c:if>
-                                        <c:if test="${account.getRole() eq 'director'}">
+                                        <c:if test="${account.getRole() eq 'Director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
                                                 <div class="dropdown-content">
-                                                    <a href="admin.jsp">Manage Manager</a>
+                                                    <a href="managemanager">Manage Manager</a>
                                                     <a href="managesupplier">Manage Supplier</a>
                                                     <a href="manageequipment">Manage Equipment</a>
+                                                    <a href="managedepartment">Manage Department</a>
                                                 </div>
                                             </li>
                                         </c:if>     

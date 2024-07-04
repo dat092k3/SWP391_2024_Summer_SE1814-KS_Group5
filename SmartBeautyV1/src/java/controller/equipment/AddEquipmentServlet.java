@@ -88,9 +88,6 @@ public class AddEquipmentServlet extends HttpServlet {
         } else {
             Part part = request.getPart("img");
             String contentType = part.getContentType();
-            String realPath = request.getServletContext().getRealPath("/images/Equipment"); //where the photo is saved
-            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-            // convert it to a string, get just the filename without including the full path.
             if (!isImageFile(contentType)) {
                 request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
                 request.setAttribute("nameequipment", name);
@@ -102,7 +99,9 @@ public class AddEquipmentServlet extends HttpServlet {
                 request.getRequestDispatcher("manageequipment").include(request, response);
                 return;
             }
-
+            String realPath = request.getServletContext().getRealPath("/images/Equipment"); //where the photo is saved
+            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
+            // convert it to a string, get just the filename without including the full path.
             if (!source.isEmpty()) {
                 String filename = equipmentDAO.getEquipmentId() + ".png";
                 if (!Files.exists(Path.of(realPath))) { // check folder /images/Equipment is existed
@@ -111,7 +110,6 @@ public class AddEquipmentServlet extends HttpServlet {
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
                 newEquipment.setImage("/images/Equipment/" + filename); //Set the path to the image file
             }
-
             equipmentDAO.addNewEquipment(newEquipment);
             request.setAttribute("message", "Create successful!");
         }

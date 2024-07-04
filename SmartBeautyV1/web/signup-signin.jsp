@@ -11,16 +11,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Signup-Signin</title>
         <link rel="stylesheet" type="text/css" href="styles/signup-signin.css">
+        <style>
+            body {
+                background-image: url('https://zshop.vn/blogs/wp-content/uploads/2022/08/ezgif.com-gif-maker-15-1.png');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
     <body>
         <div class="container" id="container">
             <div class="form-container sign-up-container">
                 <form action="signup" method="post">
                     <h1>Create Account</h1>
-                    <!--                    <div class="social-container">
-                                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                        </div>-->
                     <span>or use your email for registration</span>
                     <input name="username" type="text" placeholder="Username" required=""/>
                     <span style="color: red">${err_username}</span>
@@ -37,11 +41,6 @@
             <div class="form-container sign-in-container">
                 <form action="login" method="post">
                     <h1>Sign in</h1>
-                    <!--                    <div class="social-container">
-                                            <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                            <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                            <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                                        </div>-->
                     <span>or use your account</span>
                     <input name="username" type="text" placeholder="Username" required="" value="${cookie.cusername != null ? cookie.cusername.value : ''}" />
                     <input name="password" type="password" placeholder="Password" required="" value="${cookie.cpassword != null ? cookie.cpassword.value : ''}" />
@@ -72,7 +71,6 @@
                         <p>Enter your personal details and start journey with us</p>
                         <button class="ghost" id="signUp">Sign Up</button><br>
                         <button class="ghost" onclick="location.href = 'index.jsp'">Home</button>
-
                     </div>
                 </div>
             </div>

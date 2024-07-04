@@ -199,9 +199,4 @@ public class BlogDaoTest extends DBContext {
         assertEquals(-1, empId); // Assuming 0 is the default value indicating no associated employee
     }
 
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

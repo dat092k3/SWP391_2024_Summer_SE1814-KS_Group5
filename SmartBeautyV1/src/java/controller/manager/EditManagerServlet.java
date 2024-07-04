@@ -111,6 +111,19 @@ public class EditManagerServlet extends HttpServlet {
             return;
         }
 
+        if (!isValidName(namemanager)) {
+            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+
         if (!isValidEmail(email)) {
             request.setAttribute("message", "Please check the email is invalid.");
             request.setAttribute("email", email);
@@ -149,7 +162,7 @@ public class EditManagerServlet extends HttpServlet {
             return;
         }
         Account editAccount = new Account(email, phonenumber, "Manager", true);
-        Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hireDate, Float.parseFloat(salary), "", true);
+        Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hireDate, Float.parseFloat(salary), image, true);
         if (managerDAO.isManagerExistWhenSave(namemanager, image, address, phonenumber, email, Float.parseFloat(salary))) {
             request.setAttribute("message", "This manager is existed");
             request.setAttribute("email", email);
@@ -174,12 +187,12 @@ public class EditManagerServlet extends HttpServlet {
                 // convert it to a string, get just the filename without including the full path
 
                 if (!source.isEmpty()) {
-                    String filename = managerDAO.getManagerId() + ".png";
+                    String filename = managerId + ".png";
                     if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
                         Files.createDirectory(Path.of(realPath));
                     }
                     part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                    editManager.setImage("/images/Manager/" + filename); //Set the path to the image file
+                    editManager.setImage("/images/Manager/" + filename+ "?"+System.currentTimeMillis()); //Set the path to the image file
                 }
             } else {
                 Manager existingManager = managerDAO.getManagerById(Integer.parseInt(managerId));
@@ -195,13 +208,37 @@ public class EditManagerServlet extends HttpServlet {
     }
 
     /**
+     * check value of name need to follow standard
+     *
+     * @param name of name need to check
+     * @return true if name is valid, false otherwise
+     */
+    private boolean isValidName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return false;
+        }
+        for (char c : name.toCharArray()) {
+            if (!Character.isLetter(c) && c != ' ') {
+                return false;
+            }
+        }
+        String[] nameParts = name.split("\\s+");
+        for (String part : nameParts) {
+            if (!Character.isUpperCase(part.charAt(0))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * check email need to follow standard
      *
      * @param email of value need to check
      * @return true if email is valid, false otherwise
      */
     private boolean isValidEmail(String email) {
-        String EMAIL_PATTERN = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        String EMAIL_PATTERN = "^[A-Za-z0-9_]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         return email != null && Pattern.matches(EMAIL_PATTERN, email);
     }
 
