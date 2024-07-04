@@ -138,7 +138,7 @@
                                     </td>
                                     <td>${manager.gender}</td>
                                     <td>${manager.email}</td>
-                                    <td>${manager.salary}</td>
+                                    <td>${manager.salary}$</td>
                                     <td>
                                         <a href="managemanager?managerId=${manager.manager_id}&accountId=${manager.account_id}" class="edit" data-toggle="modal">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
@@ -237,6 +237,11 @@
                         <form action="editmanager" method="post" enctype="multipart/form-data">
                             <div class="modal-header">
                                 <h4 class="modal-title">Edit Manager</h4>
+                                <c:if test="${message != null}">
+                                    <p style="color: #5cb85c;">
+                                        ${message}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="accountId" type="hidden" class="form-control" required value="${manager.account_id}"/>

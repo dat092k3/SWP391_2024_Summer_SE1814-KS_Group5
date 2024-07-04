@@ -15,9 +15,10 @@ import model.Equipment;
 
 @MultipartConfig
 public class EditEquipmentServlet extends HttpServlet {
-    
-    /** 
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -28,13 +29,13 @@ public class EditEquipmentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         EquipmentInterface equipmentDAO = new EquipmentDAO();
-        
+
         String equipmentId = request.getParameter("equipmentId");
         String name = request.getParameter("nameequipment");
         String quantity = request.getParameter("quantity");
-        String image=request.getParameter("img");
+        String image = request.getParameter("img");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
         String typeofequipment = request.getParameter("typeofequipment");
@@ -42,13 +43,19 @@ public class EditEquipmentServlet extends HttpServlet {
 
         if (!isValidName(name)) {
             request.setAttribute("message", "Invalid input. Please check the name format.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
             request.getRequestDispatcher("manageequipment").include(request, response);
             return;
         }
 
         Equipment editEquipment = new Equipment(Integer.parseInt(equipmentId), name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
-        if (equipmentDAO.isEquipmentExistWhenSave(name, Integer.parseInt(typeofequipment), image ,Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description)) {
+        if (equipmentDAO.isEquipmentExistWhenSave(name, Integer.parseInt(typeofequipment), image, Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description)) {
             request.setAttribute("message", "This equipment already exists");
         } else {
             Part part = request.getPart("img");
@@ -56,13 +63,19 @@ public class EditEquipmentServlet extends HttpServlet {
                 String contentType = part.getContentType();
                 if (!isImageFile(contentType)) {
                     request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                    request.setAttribute("nameequipment", name);
+                    request.setAttribute("quantity", quantity);
+                    request.setAttribute("price", price);
+                    request.setAttribute("description", description);
+                    request.setAttribute("selectedType", typeofequipment);
+                    request.setAttribute("selectedSupplier", supplier);
                     request.getRequestDispatcher("manageequipment").include(request, response);
                     return;
                 }
 
                 String realPath = request.getServletContext().getRealPath("/images/Equipment");
                 String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
-                
+
                 if (!source.isEmpty()) {
                     String filename = equipmentId + ".png";
                     if (!Files.exists(Path.of(realPath))) {
@@ -80,14 +93,14 @@ public class EditEquipmentServlet extends HttpServlet {
             request.setAttribute("message", "Update successful!");
             request.setAttribute("showEditDialog", false);
         }
-        
+
         // Forward to manage equipment servlet after processing
         request.getRequestDispatcher("/manageequipment").forward(request, response);
     }
-    
+
     /**
      * check value of name input
-     * 
+     *
      * @param name of equipment to check
      * @return true if name is valid, false otherwise
      */
@@ -95,17 +108,17 @@ public class EditEquipmentServlet extends HttpServlet {
         if (name == null || name.trim().isEmpty()) {
             return false;
         }
-        
+
         String[] nameParts = name.split("\\s+");
         for (String part : nameParts) {
             if (!Character.isUpperCase(part.charAt(0))) {
                 return false;
             }
         }
-        
+
         return true;
     }
-    
+
     /**
      * check file valid
      *
@@ -122,9 +135,9 @@ public class EditEquipmentServlet extends HttpServlet {
         return false;
     }
 
-
-     /** 
+    /**
      * Returns a Edit Equipment Servlet of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

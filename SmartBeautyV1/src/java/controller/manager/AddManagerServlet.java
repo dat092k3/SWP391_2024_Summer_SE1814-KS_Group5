@@ -130,6 +130,21 @@ public class AddManagerServlet extends HttpServlet {
             return;
         }
 
+        if (!isValidName(namemanager)) {
+            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("name", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+
         if (!isValidEmail(email)) {
             request.setAttribute("message", "Please check the email is invalid.");
             request.setAttribute("name", username);
@@ -231,12 +246,36 @@ public class AddManagerServlet extends HttpServlet {
                     Files.createDirectory(Path.of(realPath));
                 }
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                newManager.setImage("/images/Manager/" + filename); //Set the path to the image file
+                newManager.setImage("/images/Manager/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
             }
             managerDAO.addNewManager(newManager);
             request.setAttribute("message", "Create successful");
             request.getRequestDispatcher("managemanager").include(request, response);
         }
+    }
+
+    /**
+     * check value of name need to follow standard
+     *
+     * @param name of name need to check
+     * @return true if name is valid, false otherwise
+     */
+    private boolean isValidName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return false;
+        }
+        for (char c : name.toCharArray()) {
+            if (!Character.isLetter(c) && c != ' ') {
+                return false;
+            }
+        }
+        String[] nameParts = name.split("\\s+");
+        for (String part : nameParts) {
+            if (!Character.isUpperCase(part.charAt(0))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
