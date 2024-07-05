@@ -26,16 +26,18 @@
                 <form action="signup" method="post">
                     <h1>Create Account</h1>
                     <span>or use your email for registration</span>
-                    <input name="username" type="text" placeholder="Username" required=""/>
+                    <input name="username" type="text" placeholder="Username" value="${param.username}" required=""/>
                     <span style="color: red">${err_username}</span>
-                    <input name="password" type="password" placeholder="Password"  required=""/>
-                    <input name="repassword" type="password" placeholder="Confirm Password"  required=""/>
-                    <input name="email" type="text" placeholder="Email" required="" />
+                    <input name="password" type="password" placeholder="Password" value="${param.password}" required=""/>
+                    <span style="color: red">${re_password}</span>
+                    <input name="repassword" type="password" placeholder="Confirm Password" value="${param.repassword}" required=""/>
+                    <span style="color: red">${re_password}</span>
+                    <input name="email" type="text" placeholder="Email" value="${param.email}" required="" />
                     <span style="color: red">${err_email}</span>
-                    <input name="phonenumber" type="text" placeholder="Phone" required="">
+                    <input name="phonenumber" type="text" placeholder="Phone" value="${param.phonenumber}" required="">
                     <span style="color: red">${err_phone}</span>
                     <button>Sign Up</button>
-                    <p style="color:red; font-weight: bold"> ${messen}</p>
+                    <p style="color:red; font-weight: bold">${messen}</p>
                 </form>
             </div>
             <div class="form-container sign-in-container">

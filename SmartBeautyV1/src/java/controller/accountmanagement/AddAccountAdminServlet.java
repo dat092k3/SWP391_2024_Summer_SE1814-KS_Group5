@@ -62,7 +62,6 @@ public class AddAccountAdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
         String re_password = request.getParameter("repassword").trim();
@@ -72,24 +71,19 @@ public class AddAccountAdminServlet extends HttpServlet {
         // Kiểm tra và xử lý lỗi nhập liệu
         if (username.isEmpty() || password.isEmpty() || re_password.isEmpty() || email.isEmpty() || phonenumber.isEmpty()) {
             request.setAttribute("messen", "Input must not be empty!");
-            request.getRequestDispatcher("viewaccount").forward(request, response);
+            request.getRequestDispatcher("viewaccountadmin").forward(request, response);
         } else if (!email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
-            session.setAttribute("email", email);
             request.setAttribute("err_email", "Email is invalid");
-            request.getRequestDispatcher("viewaccount").forward(request, response);
+            request.getRequestDispatcher("viewaccountadmin").forward(request, response);
         } else if (!phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
-            session.setAttribute("phonenumber", phonenumber);
             request.setAttribute("err_phone", "Phone must have 10 digits, must be valid and start with a correct prefix.");
-            request.getRequestDispatcher("viewaccount").forward(request, response);
+            request.getRequestDispatcher("viewaccountadmin").forward(request, response);
         } else if (!username.matches("^[A-Za-z0-9]+[A-Za-z0-9]{3,255}$")) {
-            session.setAttribute("username", username);
             request.setAttribute("err_username", "Username must begin with a letter and no special characters");
-            request.getRequestDispatcher("viewaccount").forward(request, response);
+            request.getRequestDispatcher("viewaccountadmin").forward(request, response);
         } else if (!password.equals(re_password)) {
-            session.setAttribute("password", password);
-            session.setAttribute("repassword", re_password);
             request.setAttribute("re_password", "Passwords do not match.");
-            request.getRequestDispatcher("viewaccount").forward(request, response);
+            request.getRequestDispatcher("viewaccountadmin").forward(request, response);
         } else {
             // Kiểm tra tài khoản đã tồn tại hay chưa 
             AccountInterface accountDAO = new AccountDAO();

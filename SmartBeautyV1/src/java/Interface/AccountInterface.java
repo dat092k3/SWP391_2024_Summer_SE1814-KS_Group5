@@ -46,12 +46,14 @@ public interface AccountInterface {
     public List<Account> SearchAccountByNameOrPhonenumberAdmin(String txtSearch);
 
     public int getNewAccountIdOfEmployee();
-    
+
     public int getNewAccountIdOfEmployeeAdmin();
 
     public int getAccountIdToAddManager();
-    
+
     public void updateInformationIfUpdateManager(Account account);
-    
+
     public void deleteAccountIfDeleteManager(int accountId);
+
+    public void updateProfileAccountPhonenumberAndEmail(String email, String phonenumber, int account_id);
 }

@@ -93,6 +93,30 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
     }
 
     /**
+     * function to do update updateProfileEmployeePhonenumberAndEmail employee
+     *
+     * @param email of employee
+     * @param phonenumber of employee
+     * @param account_id of employee
+     */
+    @Override
+    public void updateProfileEmployeePhonenumberAndEmail(String email, String phonenumber, int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [email] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, phonenumber);
+            st.setInt(3, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
      * function to do insert profile of Employee
      *
      * @param account_id of Employee
@@ -175,8 +199,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         }
         return employees;
     }
-    
-    
+
     @Override
     public List<Employee> getPTByDepartment() {
         String sql = "select e.* from Employee e left join Department d on e.department_id = d.department_id where  department_name = 'PT'";

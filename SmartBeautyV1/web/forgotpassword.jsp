@@ -44,7 +44,7 @@
                     <c:if test="${requestScope.check == null || requestScope.check == 'false'}">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required value="${param.email}">
                         </div>
                     </c:if>
                     <c:if test="${requestScope.check == null || requestScope.check == 'false'}">

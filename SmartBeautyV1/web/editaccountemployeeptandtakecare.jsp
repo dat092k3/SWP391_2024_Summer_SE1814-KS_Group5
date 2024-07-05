@@ -35,23 +35,23 @@
                     </div>
                     <div class="row py-2">
                         <div class="col-md-6">
-                            <label>UserName</label>
+                            <label>UserName<span class="text-danger">*</span></label>
                             <input type="text" class="bg-light form-control"  value="${accountbyid.username}" name="username" minlength="3" maxlength="255"  pattern="^\S.*$"  title="cannot contain any spaces." required="">
                             <span style="color: red">${error1}</span>
                         </div>
                         <div class="col-md-6 pt-md-0 pt-3">
-                            <label>PassWord</label>
+                            <label>PassWord<span class="text-danger">*</span></label>
                             <input type="text" class="bg-light form-control"  value="${accountbyid.password}" name="password" minlength="3" maxlength="50"   pattern="^\S.*$"  title="cannot contain any spaces." required="">
                         </div>
                     </div>
                     <div class="row py-2">
                         <div class="col-md-6">
-                            <label>Email</label>
+                            <label>Email<span class="text-danger">*</span></label>
                             <input type="email" class="bg-light form-control"  value="${accountbyid.email}" name="email" maxlength="255" pattern="^\S.*$"  title="cannot contain any spaces." required="">
                              <span style="color: red">${error2}</span>
                         </div>
                         <div class="col-md-6 pt-md-0 pt-3">
-                            <label>Phone Number</label>
+                            <label>Phone Number<span class="text-danger">*</span></label>
                             <input type="text" class="bg-light form-control"  value="${accountbyid.phoneNumber}" name="phonenumber" pattern="^\S.*$"  title="cannot contain any spaces." required="">
                              <span style="color: red">${error3}</span>
                         </div>
