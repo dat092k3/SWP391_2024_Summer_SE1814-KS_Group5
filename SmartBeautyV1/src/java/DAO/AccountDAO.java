@@ -377,6 +377,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
 
     /**
      * search account
+     *
      * @param txtSearch is search
      * @return list
      */
@@ -408,6 +409,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
 
     /**
      * search account admin
+     *
      * @param txtSearch is search
      * @return list
      */
@@ -475,10 +477,11 @@ public class AccountDAO extends DBContext implements AccountInterface {
         }
         return -1; // Return -1 if no account is found or an error occurs
     }
-    
+
     /**
      * get account_id max in Account table
-     * @return account_id 
+     *
+     * @return account_id
      */
     @Override
     public int getAccountIdToAddManager() {
@@ -494,9 +497,10 @@ public class AccountDAO extends DBContext implements AccountInterface {
         }
         return 0;
     }
-    
+
     /**
      * update information if director update email or phonenumber for manager
+     *
      * @param account is account of manager need to update information
      */
     @Override
@@ -516,9 +520,10 @@ public class AccountDAO extends DBContext implements AccountInterface {
             System.out.println(e);
         }
     }
-    
+
     /**
      * delete account of manager
+     *
      * @param accountId of manager need to delete
      */
     @Override
@@ -527,8 +532,32 @@ public class AccountDAO extends DBContext implements AccountInterface {
                 + "   SET [status] = 0\n"
                 + " WHERE account_id=?";
         try {
-            PreparedStatement st= connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, accountId);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * function to do update updateProfileAccountPhonenumberAndEmail 
+     *
+     * @param email of account
+     * @param phonenumber of account
+     * @param account_id of account
+     */
+    @Override
+    public void updateProfileAccountPhonenumberAndEmail(String email, String phonenumber, int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [email] = ?\n"
+                + "      ,[phonenumber] = ? \n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, email);
+            st.setString(2, phonenumber);
+            st.setInt(3, account_id);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

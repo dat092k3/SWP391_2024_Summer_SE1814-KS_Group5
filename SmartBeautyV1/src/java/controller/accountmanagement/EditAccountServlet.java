@@ -5,7 +5,9 @@
 package controller.accountmanagement;
 
 import DAO.AccountDAO;
+import DAO.EmployeeDAO;
 import Interface.AccountInterface;
+import Interface.EmployeeInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -79,9 +81,11 @@ public class EditAccountServlet extends HttpServlet {
             request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");
             request.getRequestDispatcher("viewdetailaccountptandtakecare?account_id=" + account_id).forward(request, response);
         } else {
+            EmployeeInterface employeeDAO = new EmployeeDAO();
             Account account = accountDAO.checkAccountExists(username, phonenumber);
             if (account == null) {
                 accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
                 request.setAttribute("successemployee", "Update Account Success!");
                 request.getRequestDispatcher("viewaccount").forward(request, response);
             } else {

@@ -76,63 +76,42 @@ public class AddProfileEmployeeEmptyServlet extends HttpServlet {
         String hiredate = request.getParameter("hiredate");
         int department_id = Integer.parseInt(request.getParameter("department"));
         String experience = request.getParameter("experience");
-        // Validate Full Name
+        LocalDate dob = LocalDate.parse(dateofbirth);
+        LocalDate hireDate = LocalDate.parse(hiredate);
+        LocalDate now = LocalDate.now();
+        int age = Period.between(dob, now).getYears();
+        String phonenumberofaccount = accountDAO.getPhoneOfAccount(String.valueOf(account_id));
+        String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
         if (fullname.isEmpty() || !fullname.matches("^[A-ZÀ-Ỵ][a-zà-ỹ]+( [A-ZÀ-Ỵ][a-zà-ỹ]+)+")) {
             request.setAttribute("error1", "Full name must start with a capital letter and contain spaces between names.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        // Validate Phone Number
-        if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
+        } else if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
             request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        // Validate Date of Birth and Age
-        LocalDate dob = LocalDate.parse(dateofbirth);
-        LocalDate now = LocalDate.now();
-        int age = Period.between(dob, now).getYears();
-        if (age < 18 || age > 100) {
+        } else if (age < 18 || age > 100) {
             request.setAttribute("error10", "You must be at least 18-100 years old.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        // Validate Hire Date
-        LocalDate hireDate = LocalDate.parse(hiredate);
-        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
+        } else if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
             request.setAttribute("error10", "Hire date must be at least 18 years after date of birth and not in the future.");
-            request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response); 
-            return;
-        }
-        // Validate Image URL
-        if (image.isEmpty()) {
+            request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
+        } else if (image.isEmpty()) {
             request.setAttribute("error5", "Image URL must not be empty.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        // Validate Email
-        String phonenumberofaccount = accountDAO.getPhoneOfAccount(String.valueOf(account_id));
-        String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
-        if (email.isEmpty() || !email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
+        } else if (email.isEmpty() || !email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
             request.setAttribute("error2", "Email must be valid and contain @ and .com.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        if (!email.equals(emailofaccount)) {
+        } else if (!email.equals(emailofaccount)) {
             request.setAttribute("error8", "Emails do not match with account Signup.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
-        }
-        if (!phonenumber.equals(phonenumberofaccount)) {
+        } else if (!phonenumber.equals(phonenumberofaccount)) {
             request.setAttribute("error9", "Phonenumber do not match with account Signup.");
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
-            return;
+        } else {
+            EmployeeInterface employeeDAO = new EmployeeDAO();
+            employeeDAO.addProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, image, experience, department_id, account_id);
+            request.setAttribute("success", "Insert Profile Of Employee Susscess");
+            request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         }
-        System.out.println("accid" + account_id + "fullname" + fullname + "gender" + gender + "email" + email + "date" + dateofbirth + "phonenumber" + phonenumber + "address" + address + "image" + image + "hiredate" + hiredate + "department" + department_id + "expert" + experience);
-        EmployeeInterface employeeDAO = new EmployeeDAO();
-        employeeDAO.addProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, image, experience, department_id, account_id);
-        request.setAttribute("success", "Insert Profile Of Employee Susscess");
-        request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
     }
 
     /**

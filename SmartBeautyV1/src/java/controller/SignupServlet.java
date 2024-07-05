@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.Account;
 import ultils.MD5;
 
@@ -78,59 +79,33 @@ public class SignupServlet extends HttpServlet {
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
         String re_password = request.getParameter("repassword").trim();
-        String err_email = "", err_phone = "", err_username = "";
         String email = request.getParameter("email").trim();
         String phonenumber = request.getParameter("phonenumber").trim();
-        String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+){1,2}$";
-        String Phone_Regex = "^\\d{10}$";
-        String Username_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]{4,15}$";
-        boolean err = false;
         if (username.isEmpty() || password.isEmpty() || re_password.isEmpty() || email.isEmpty() || phonenumber.isEmpty()) {
-            request.setAttribute("messen", "input not empty!");
+            request.setAttribute("messen", "Input must not be empty!");
             request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
-            return;
-        }
-        if (!email.matches(Email_Regex)) {
-            err_email = "Email is invalid";
-            request.getSession().setAttribute("err_email", err_email);
-            err = true;
-        } else {
-            request.getSession().removeAttribute("err_email");
-        }
-
-        if (!phonenumber.matches(Phone_Regex)) {
-            err_phone = "Phone has 10 digits";
-            request.getSession().setAttribute("err_phone", err_phone);
-            err = true;
-        } else {
-            request.getSession().removeAttribute("err_phone");
-        }
-
-        if (!username.matches(Username_Regex)) {
-            err_username = "Username need to begin a letter and no sepcial character";
-            request.getSession().setAttribute("err_username", err_username);
-            err = true;
-        } else {
-            request.getSession().removeAttribute("err_username");
-        }
-
-        if (!password.equals(re_password)) {
-            request.setAttribute("messen", "Passwords do not match.");
+        } else if (!email.matches("^[A-Za-z0-9_]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$")) {
+            request.setAttribute("err_email", "Email is invalid");
+            request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
+        } else if (!phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
+            request.setAttribute("err_phone", "Phone must have 10 digits, must be valid and start with a correct prefix.");
+            request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
+        } else if (!username.matches("^[A-Za-z0-9]+[A-Za-z0-9]{3,255}$")) {
+            request.setAttribute("err_username", "Username must begin with a letter and no special characters");
+            request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
+        } else if (!password.equals(re_password)) {
+            request.setAttribute("re_password", "Passwords do not match.");
             request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
         } else {
-            if (err) {
-                response.sendRedirect("signup-signin.jsp");
+            AccountInterface accountDAO = new AccountDAO();
+            Account account = accountDAO.checkAccountExists(username, phonenumber);
+            if (account == null) {
+                accountDAO.signup(username, MD5.getMd5(password), email, phonenumber);
+                request.setAttribute("messen1", "Sign Up Success, please log in.");
+                request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
             } else {
-                 AccountInterface accountDAO = new AccountDAO();
-                Account account = accountDAO.checkAccountExists(username, phonenumber);
-                if (account == null) {
-                    accountDAO.signup(username, MD5.getMd5(password), email, phonenumber);
-                    request.setAttribute("messen1", "Sign Up Success, please log in.");
-                    request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
-                } else {
-                    request.setAttribute("messen", "Username, email or phonenumber already exists.");
-                    request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
-                }
+                request.setAttribute("messen", "Username, email or phonenumber already exists.");
+                request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
             }
         }
     }

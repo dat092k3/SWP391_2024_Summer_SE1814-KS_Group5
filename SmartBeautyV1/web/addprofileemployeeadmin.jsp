@@ -36,7 +36,7 @@
                             <div class="card-body text-center">
                                 <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt> 
                                 <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                <button class="btn btn-primary" type="button">Upload new image</button>
+                                <button class="btn btn-primary" type="button">Upload new image<span class="text-danger">*</span></button>
                                 <input class="form-control" placeholder="Enter link image" name="image">
                                 <c:if test="${not empty error5}">
                                     <div class="text-danger">${error5}</div>
@@ -51,8 +51,8 @@
                             <div class="card-body">
                                 <input class="form-control"  type="text" name="account_id" value="${account_id}" hidden="">
                                 <div class="mb-3">
-                                    <label class="small mb-1">Full Name</label>
-                                    <input class="form-control"  type="text" placeholder="Enter Full Name" name="fullname" required="">
+                                    <label class="small mb-1">Full Name<span class="text-danger">*</span></label>
+                                    <input class="form-control"  type="text" placeholder="Enter Full Name" name="fullname"  maxlength="255"  required="">
                                     <c:if test="${not empty error1}">
                                         <div class="text-danger">${error1}</div>
                                     </c:if>
@@ -69,8 +69,8 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="small mb-1">Email</label>
-                                        <input class="form-control" type="email" name="email" placeholder="Enter Email" required="">
+                                        <label class="small mb-1">Email<span class="text-danger">*</span></label>
+                                        <input class="form-control" type="email" name="email" placeholder="Enter Email"  maxlength="255" required="">
                                         <c:if test="${not empty error2}">
                                             <div class="text-danger">${error2}</div>
                                         </c:if>
@@ -83,7 +83,7 @@
                                 <div class="row gx-3 mb-3">
 
                                     <div class="col-md-6">
-                                        <label class="small mb-1">Phone Number</label>
+                                        <label class="small mb-1">Phone Number<span class="text-danger">*</span></label>
                                         <input class="form-control" type="text" placeholder="Enter Phone Number" name="phonenumber" required="">
                                         <c:if test="${not empty error3}">
                                             <div class="text-danger">${error3}</div>
@@ -94,7 +94,7 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <label class="small mb-1" >Date of Birth</label>
+                                        <label class="small mb-1" >Date of Birth<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" placeholder="Enter Date of Birth" name="dateofbirth" required="">
                                         <c:if test="${not empty error4}">
                                             <div class="text-danger">${error4}</div>
@@ -103,7 +103,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <div class="col-md-12"><label class="labels">Address</label>
+                                    <div class="col-md-12"><label class="labels">Address<span class="text-danger">*</span></label>
                                         <div>
                                             <select name="city" id="city">
                                                 <option value="" selected>City</option>           
@@ -122,13 +122,12 @@
                                 <div class="row gx-3 mb-3">
 
                                     <div class="col-md-6">
-                                        <label class="small mb-1" >Hire Date</label>
+                                        <label class="small mb-1" >Hire Date<span class="text-danger">*</span></label>
                                         <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" required="">
                                         <c:if test="${not empty error10}">
                                             <div class="text-danger">${error10}</div>
                                         </c:if>
                                     </div>
-
                                     <div class="col-md-6">
                                         <label class="small mb-1" >Department</label>
                                         <select class="form-control" name="department" required="">

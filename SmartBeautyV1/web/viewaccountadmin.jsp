@@ -162,8 +162,8 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Username</label>
-                                                                <input class="form-control" type="text" name="username" value="" placeholder="username" pattern="^\S.*$"  title="cannot contain any spaces." required="">
+                                                                <label>Username<span class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text" name="username" value="${param.username}" placeholder="username" pattern="^\S.*$"  title="cannot contain any spaces." required="">
                                                                 <span style="color: red">${err_username}</span>
                                                             </div>
                                                         </div>
@@ -171,8 +171,8 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>Email</label>
-                                                                <input class="form-control" type="email" name="email" placeholder="user@example.com"  pattern="^\S.*$"  title="cannot contain any spaces." required="">
+                                                                <label>Email<span class="text-danger">*</span></label>
+                                                                <input class="form-control" type="email" name="email" value="${param.email}"  placeholder="user@example.com"  pattern="^\S.*$"  title="cannot contain any spaces." required="">
                                                                 <span style="color: red">${err_email}</span>
                                                             </div>
                                                         </div>
@@ -180,8 +180,8 @@
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
-                                                                <label>PhoneNumber</label>
-                                                                <input class="form-control" type="text" name="phonenumber" placeholder="0987654321" required pattern="^0\d{9}$" title="Phone number must start with 0 and be 10 digits long.">
+                                                                <label>PhoneNumber<span class="text-danger">*</span></label>
+                                                                <input class="form-control" type="text" name="phonenumber" value="${param.phonenumber}" placeholder="0987654321" required pattern="^0\d{9}$" title="Phone number must start with 0 and be 10 digits long.">
                                                                 <span style="color: red">${err_phone}</span>
                                                             </div>
                                                         </div>
@@ -190,12 +190,12 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-12 col-sm-6 mb-3">
-                                                    <div class="mb-2"><b>Password</b></div>
+                                                    <div class="mb-2"><b>Password<span class="text-danger">*</span></b></div>
                                                     <div class="row">
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Password</label>
-                                                                <input class="form-control" type="password" name="password" placeholder="••••••" pattern="^\S.*$"  title="cannot contain any spaces." required="">
+                                                                <input class="form-control" type="password" name="password" value="${param.password}" placeholder="••••••" pattern="^\S.*$"  title="cannot contain any spaces." required="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -203,7 +203,7 @@
                                                         <div class="col">
                                                             <div class="form-group">
                                                                 <label>Confirm <span class="d-none d-xl-inline">Password Account</span></label>
-                                                                <input class="form-control" type="password" name="repassword" placeholder="••••••" pattern="^\S.*$"  title="cannot contain any spaces." required=""></div>
+                                                                <input class="form-control" type="password" name="repassword" value="${param.repassword}" placeholder="••••••" pattern="^\S.*$"  title="cannot contain any spaces." required=""></div>
                                                         </div>
                                                     </div>
                                                     <span style="color: red">${re_password}</span>
