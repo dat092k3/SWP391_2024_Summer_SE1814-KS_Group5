@@ -69,7 +69,7 @@
 
                     reader.onload = function (e) {
                         $('#image').attr('src', e.target.result);
-                    }
+                    };
                     reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
                 }
             }
@@ -89,6 +89,11 @@
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
                                         ${message}
+                                    </p>
+                                </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
                                     </p>
                                 </c:if>
                             </div>
@@ -202,6 +207,11 @@
                                         ${message}
                                     </p>
                                 </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="supplierId" type="hidden" class="form-control" required value="${supplier.supplier_id}">
@@ -269,8 +279,16 @@
                     });
                 </script>
             </c:if>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const rows = document.querySelectorAll('#content tr');
+                    rows.forEach((row, index) => {
+                        row.querySelector('.serial-number').textContent = index + 1;
+                    });
+                });
+            </script>
+            <script src="js/pagination.js" type="text/javascript"></script>
         </div>
-        <script src="js/pagination.js" type="text/javascript"></script>
         <script src="js/manager.js" type="text/javascript"></script>  
     </body>
 </html>

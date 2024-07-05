@@ -22,8 +22,8 @@ public interface ManagerInterface {
 
     public void addNewManager(Manager manager);
 
-    public boolean isManagerExistWhenSave(String name, String image,String address, String phonenumber, String email, float salary);
-    
+    public boolean isManagerExistWhenSave(String name, String image, String address, String phonenumber, String email, float salary);
+
     public boolean isManagerExist(String name, String address, String phonenumber);
 
     public int getManagerId();
@@ -31,10 +31,10 @@ public interface ManagerInterface {
     public boolean isManagerAccountExist(String username, String email, String phonenumber);
 
     public void addNewAccountManager(Account account);
-    
+
     public void deleteManager(int id);
 
     public void updateManager(Manager manager);
-    
+
     public List<Manager> findManager(String nameSearch);
 }

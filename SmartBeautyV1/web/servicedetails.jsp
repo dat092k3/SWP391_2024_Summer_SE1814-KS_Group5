@@ -36,11 +36,31 @@
                         <p>${service.service_name}</p>
                     <p class="service-description">${service.description}</p>
                     <p class="service-price">Price: ${service.price} VND / Tháng</p>
-                    <p>Sale: ${service.discount}</p>
+                    <p>Sale: ${service.discount}%</p>
                     <div class="buttons">
-                        <button class="register-btn" data-toggle="modal" data-target="#serviceModal">Đăng kí</button>
+
+                        <c:if test="${sessionScope.account != null}">
+                            <button class="register-btn" data-toggle="modal" data-target="#serviceModal">Đăng kí</button>
+                        </c:if>
                         <button class="contact-btn">Liên hệ</button>
                     </div>
+                    <c:if test="${sessionScope.account == null}">
+                        <p style="color: red;">
+                            You must be login to Register Service
+                            <a class="nav-link" href="signup-signin.jsp">Login</a>
+                        </p>
+                            
+                    </c:if>
+                    <c:if test="${mes != null}">
+                        <p style="color: green;">
+                            ${mes}
+                        </p>
+                    </c:if>
+                    <c:if test="${err != null}">
+                        <p style="color: red;">
+                            ${err}
+                        </p>
+                    </c:if>
                 </div>
             </div>
 
@@ -57,8 +77,7 @@
                             <div class="modal-body">
                                 <input type="hidden" name="service_id" value="${service.service_id}">
                                 <input type="hidden" name="customer_id" value="${sessionScope.account.account_id}">
-                                <input type="hidden" name="date" value="<%= new java.util.Date() %>">
-
+                                <input type="hidden" name="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()) %>">
                                 <div class="form-group">
                                     <label for="duration">Duration (months)</label>
                                     <input type="number" class="form-control" id="duration" name="duration" min="1" required onchange="updateForm()">
@@ -123,12 +142,19 @@
                     var startDate = new Date();
                     var endDate = new Date(startDate.setMonth(startDate.getMonth() + parseInt(duration)));
 
-                    var dd = String(endDate.getDate()).padStart(2, '0');
-                    var mm = String(endDate.getMonth() + 1).padStart(2, '0');
                     var yyyy = endDate.getFullYear();
+                    var mm = String(endDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(endDate.getDate()).padStart(2, '0');
+                    var hh = String(endDate.getHours()).padStart(2, '0');
+                    var min = String(endDate.getMinutes()).padStart(2, '0');
+                    var ss = String(endDate.getSeconds()).padStart(2, '0');
 
-                    document.getElementById('end_date').value = yyyy + '-' + mm + '-' + dd;
+                    // Format the end date as yyyy-MM-dd HH:mm:ss
+                    var formattedEndDate = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
+
+                    document.getElementById('end_date').value = formattedEndDate;
                 }
+
 
                 function calculatePT() {
                     var pt = document.getElementById('pt').value.trim();

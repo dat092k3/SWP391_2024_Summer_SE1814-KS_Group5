@@ -158,10 +158,10 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
     public void addCustomerService(CustomerService customerService) {
         String sql = "INSERT INTO CustomerService (service_id, customer_id, date, end_date, employee_id, total_price) VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setInt(1, customerService.getService_id().getService_id()); // Assuming Service class has getService_id method
+            st.setInt(1, customerService.getService_id()); // Assuming Service class has getService_id method
             st.setInt(2, customerService.getCustomer_id());
-            st.setDate(3, new java.sql.Date(customerService.getDate().getTime())); // Convert java.util.Date to java.sql.Date
-            st.setDate(4, new java.sql.Date(customerService.getEnd_date().getTime())); // Convert java.util.Date to java.sql.Date
+            st.setTimestamp(3, customerService.getDate()); // Convert java.util.Date to java.sql.Date
+            st.setTimestamp(4, customerService.getEnd_date()); // Convert java.util.Date to java.sql.Date
             st.setInt(5, customerService.getEmployee_id());
             st.setFloat(6, customerService.getTotal_price());
             st.executeUpdate();
@@ -169,5 +169,38 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
             System.out.println("Error adding customer service: " + e.getMessage());
         }
     }
+    
+    @Override
+    public void addCustomerServiceNotPT(CustomerService customerService) {
+        String sql = "INSERT INTO CustomerService (service_id, customer_id, date, end_date, total_price) VALUES (?, ?, ?, ?, ?);";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, customerService.getService_id()); // Assuming Service class has getService_id method
+            st.setInt(2, customerService.getCustomer_id());
+            st.setTimestamp(3, customerService.getDate()); // Convert java.util.Date to java.sql.Date
+            st.setTimestamp(4, customerService.getEnd_date()); // Convert java.util.Date to java.sql.Date
+            st.setFloat(5, customerService.getTotal_price());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error adding customer service: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public int getCustomerId(int account_Id) {
+        String sql = "SELECT TOP(1) customer_id FROM Customer WHERE account_id = ?";
+        int customerId = -1;
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, account_Id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                customerId = rs.getInt("customer_id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching customer ID: " + e.getMessage());
+        }
+        return customerId;
+    }
+    
+    
 
 }

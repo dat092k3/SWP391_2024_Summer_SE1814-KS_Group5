@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import model.Account;
 
@@ -43,7 +42,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                 String dateofbirth = rs.getString("dateofbirth");
                 String phonenumber = rs.getString("phonenumber");
                 String address = rs.getString("address");
-                Date hiredate = rs.getDate("hiredate");
+                String hiredate = rs.getString("hiredate");
                 float salary = rs.getFloat("salary");
                 String image = rs.getString("image");
                 boolean status = rs.getBoolean("status");
@@ -115,7 +114,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                 String dateofbirth = rs.getString("dateofbirth");
                 String phonenumber = rs.getString("phonenumber");
                 String address = rs.getString("address");
-                Date hiredate = rs.getDate("hiredate");
+                String hiredate = rs.getString("hiredate");
                 float salary = rs.getFloat("salary");
                 String image = rs.getString("image");
                 boolean status = rs.getBoolean("status");
@@ -156,13 +155,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             st.setString(6, manager.getPhoneNumber());
             st.setString(7, manager.getAddress());
 
-            // Convert java.util.Date to java.sql.Date for SQL DATE type
-            java.util.Date hireDate = manager.getHireDate();
-            if (hireDate != null) {
-                st.setDate(8, new java.sql.Date(hireDate.getTime()));
-            } else {
-                st.setDate(8, null); // or handle the case where hireDate is null
-            }
+            st.setString(8, manager.getHireDate());
 
             st.setFloat(9, manager.getSalary());
             st.setString(10, manager.getImage());
@@ -206,12 +199,14 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerAccountExist(String username, String email, String phonenumber) {
         String sql = "select * from Account\n"
-                + "where username =?  and email=? and phonenumber=? and status=1";
+                + "where (username =? and email=? and phonenumber=?) or ((email= ? or phonenumber =?) and status=1)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, email);
             st.setString(3, phonenumber);
+            st.setString(4, email);
+            st.setString(5, phonenumber);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -229,12 +224,14 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerExist(String name, String email, String phonenumber) {
         String sql = "select * from Manager\n"
-                + "where fullname =? and email=? and phonenumber=? and status=1";
+                + "where (fullname =? and email=? and phonenumber=? and status=1) or (phonenumber=? or email=? and status=1)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
             st.setString(2, email);
             st.setString(3, phonenumber);
+            st.setString(4, phonenumber);
+            st.setString(5, email);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -255,7 +252,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerExistWhenSave(String name, String image,String address, String phonenumber, String email, float salary) {
         String sql = "select * from Manager\n"
-                + "where fullname =? and image=? and address=? and phonenumber=? and email=? and salary=? and status=1";
+                + "where (fullname =? and image=? and address=? and phonenumber=? and email=? and salary=? and status=1) or (phonenumber=? or email=? and status=1)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
@@ -264,6 +261,8 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             st.setString(4, phonenumber);
             st.setString(5, email);
             st.setFloat(6, salary);
+            st.setString(7, phonenumber);
+            st.setString(8, email);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -335,13 +334,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             st.setString(6, manager.getPhoneNumber());
             st.setString(7, manager.getAddress());
 
-            // Convert java.util.Date to java.sql.Date for SQL DATE type
-            java.util.Date hireDate = manager.getHireDate();
-            if (hireDate != null) {
-                st.setDate(8, new java.sql.Date(hireDate.getTime()));
-            } else {
-                st.setDate(8, null); // or handle the case where hireDate is null
-            }
+            st.setString(8, manager.getHireDate());
 
             st.setFloat(9, manager.getSalary());
             st.setString(10, manager.getImage());
@@ -383,7 +376,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                     String dateofbirth = rs.getString("dateofbirth");
                     String phonenumber = rs.getString("phonenumber");
                     String address = rs.getString("address");
-                    Date hiredate = rs.getDate("hiredate");
+                    String hiredate = rs.getString("hiredate");
                     float salary = rs.getFloat("salary");
                     String image = rs.getString("image");
                     boolean status = rs.getBoolean("status");

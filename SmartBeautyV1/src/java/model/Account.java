@@ -50,8 +50,9 @@ public class Account {
         this.role = rs.getString("role");
     }
     
-    public Account(String username ,String email, String phoneNumber, String role, boolean status) {
+    public Account(String username,String password ,String email, String phoneNumber, String role, boolean status) {
         this.username=username;
+        this.password=password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;

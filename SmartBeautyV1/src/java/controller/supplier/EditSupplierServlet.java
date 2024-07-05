@@ -39,16 +39,54 @@ public class EditSupplierServlet extends HttpServlet {
         String email = request.getParameter("email");
         String image = request.getParameter("img");
 
-        if (!isValidName(name) || !isValidEmail(email) || !isValidPhoneNumber(phoneNumber) || !isValidAddress(address)) {
-            request.setAttribute("message", "Invalid input. Please check the name, email, address and phone number format.");
+        if (!isValidName(name)) {
+            request.setAttribute("messageerror", "Invalid input. Please check the name, name is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.setAttribute("image", image);
             request.getRequestDispatcher("managesupplier").include(request, response);
             return;
         }
 
-        Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, "", address, phoneNumber, email, true);
+        if (!isValidEmail(email)) {
+            request.setAttribute("messageerror", "Invalid input. Please check the email, email is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.setAttribute("image", image);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+
+        if (!isValidPhoneNumber(phoneNumber)) {
+            request.setAttribute("messageerror", "Invalid input. Please check the phonenumber, phonenumber is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.setAttribute("image", image);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+
+        if (!isValidAddress(address)) {
+            request.setAttribute("messageerror", "Invalid input. Please check the address, address is invalid.");
+            request.setAttribute("name", name);
+            request.setAttribute("address", address);
+            request.setAttribute("phoneNumber", phoneNumber);
+            request.setAttribute("email", email);
+            request.setAttribute("image", image);
+            request.getRequestDispatcher("managesupplier").include(request, response);
+            return;
+        }
+
+        Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
 
         if (supplierDAO.isSupplierExistWhenSave(name, address, image, phoneNumber, email)) {
-            request.setAttribute("message", "This supplier already exists");
+            request.setAttribute("messageerror", "This supplier already exists");
         } else {
             Part part = request.getPart("img");
             if (part != null && part.getSize() > 0) { // Check if part is not null and has content
@@ -60,7 +98,7 @@ public class EditSupplierServlet extends HttpServlet {
                 }
                 String realPath = request.getServletContext().getRealPath("/images/Supplier"); //where the photo is saved
                 String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
-                                                                                                    // convert it to a string, get just the filename without including the full path.
+                // convert it to a string, get just the filename without including the full path.
                 if (!source.isEmpty()) {
                     String filename = supplierId + ".png";
                     if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
@@ -68,23 +106,25 @@ public class EditSupplierServlet extends HttpServlet {
                     }
                     part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
                     editSupplier.setImage("/images/Supplier/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
-                    }
-                } else {
-                    Supplier existingSupplier = supplierDAO.getSupplierById(Integer.parseInt(supplierId));
-                    editSupplier.setImage(existingSupplier.getImage());
                 }
-                supplierDAO.updateSupplier(editSupplier);
-                request.setAttribute("message", "Update successful!");
-                request.setAttribute("showEditDialog", false);
+            } else {
+                Supplier existingSupplier = supplierDAO.getSupplierById(Integer.parseInt(supplierId));
+                editSupplier.setImage(existingSupplier.getImage());
             }
-            request.getRequestDispatcher("managesupplier").include(request, response);
-        }    
-        /**
-         * check value of name need to follow standard
-         *
-         * @param name of value need to check
-         * @return true if name is valid, false otherwise
-         */
+            supplierDAO.updateSupplier(editSupplier);
+            request.setAttribute("message", "Update successful!");
+            request.setAttribute("showEditDialog", false);
+        }
+        request.getRequestDispatcher("managesupplier").include(request, response);
+
+    }
+
+    /**
+     * check value of name need to follow standard
+     *
+     * @param name of value need to check
+     * @return true if name is valid, false otherwise
+     */
     private boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;

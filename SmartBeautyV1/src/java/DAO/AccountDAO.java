@@ -32,9 +32,9 @@ public class AccountDAO extends DBContext implements AccountInterface {
     public Account findAccount(String username, String password) {
         String sql;
         if (username.contains("@")) {
-            sql = "select * from account where status=1 and  email='" + username + "' and password='" + MD5.getMd5(password) + "'";
+            sql = "select * from account where status=1 and  email='" + username + "' and password='" + password + "'";
         } else {
-            sql = "select * from account where status=1 and username='" + username + "' and password='" + MD5.getMd5(password) + "'";
+            sql = "select * from account where status=1 and username='" + username + "' and password='" + password + "'";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -185,7 +185,8 @@ public class AccountDAO extends DBContext implements AccountInterface {
             st.setString(1, password);
             st.setString(2, username);
             st.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 
@@ -214,7 +215,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
     /**
      * function to do get phonenumber of account
      *
-     * @param phonenumber of user
+     * @param account_id of user
      * @return phonenumber of account
      */
     @Override
@@ -506,16 +507,21 @@ public class AccountDAO extends DBContext implements AccountInterface {
     @Override
     public void updateInformationIfUpdateManager(Account account) {
         String sql = "UPDATE [dbo].[Account]\n"
-                + "   SET [email] = ?\n"
+                + "   SET [username] =? \n"
+                + "      ,[password] = ?\n"
+                + "      ,[email] = ?\n"
                 + "      ,[phonenumber] = ?\n"
                 + "      ,[role] = 'Manager'\n"
-                + "      ,[status] =1\n"
+                + "      ,[status] = 1\n"
                 + " WHERE account_id=?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, account.getEmail());
-            st.setString(2, account.getPhoneNumber());
-            st.setInt(3, account.getAccount_id());
+            st.setString(1, account.getUsername());
+            st.setString(2, account.getPassword());
+            st.setString(3, account.getEmail());
+            st.setString(4, account.getPhoneNumber());
+            st.setInt(5, account.getAccount_id());
+            st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }

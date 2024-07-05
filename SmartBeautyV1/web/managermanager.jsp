@@ -1,7 +1,7 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <%-- 
-    Document   : managerEquipment
-    Created on : June 8, 2024, 9:34:21 PM
-    Author     : LENOVO
+<%-- 
+Document   : managerEquipment
+Created on : June 8, 2024, 9:34:21 PM
+Author     : LENOVO
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -95,6 +95,11 @@
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
                                         ${message}
+                                    </p>
+                                </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
                                     </p>
                                 </c:if>
                             </div>
@@ -242,11 +247,24 @@
                                         ${message}
                                     </p>
                                 </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="accountId" type="hidden" class="form-control" required value="${manager.account_id}"/>
                             <input name="managerId" type="hidden" class="form-control" required value="${manager.manager_id}"/>
-                            <div class="modal-body">                               
+                            <div class="modal-body">  
+                                <div class="form-group">
+                                    <label>Username<span class="text-danger">*</span></label>
+                                    <input name="username" type="text" class="form-control" minlength="1" maxlength="255" required value="${account.username}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Password<span class="text-danger">*</span></label>
+                                    <input name="password" type="password" class="form-control" minlength="3" maxlength="50" required value="${account.password}">
+                                </div>
                                 <div class="form-group">
                                     <label>Name<span class="text-danger">*</span></label>
                                     <input value="${manager.fullName}" name="namemanager" type="text" class="form-control" maxlength="255" required>
@@ -325,6 +343,13 @@
             <c:if test="${showEditDialog}">
                 <script>
                     $("#editManagerModal").modal('show');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const rows = document.querySelectorAll('#content tr');
+                        rows.forEach((row, index) => {
+                            row.querySelector('.serial-number').textContent = index + 1;
+                        });
+                    });
                 </script>
             </c:if>
             <script>
@@ -335,8 +360,7 @@
                     });
                 });
             </script>   
-            <<script src="js/pagination.js" type="text/javascript"></script>>
-
+            <script src="js/pagination.js" type="text/javascript"></script>
         </div>
         <script src="js/manager.js" type="text/javascript"></script>        
     </body>

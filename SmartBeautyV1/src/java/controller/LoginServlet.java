@@ -77,13 +77,13 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-         AccountInterface accountDAO = new AccountDAO();
+        AccountInterface accountDAO = new AccountDAO();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String rememmber = request.getParameter("remember");
         Account account = accountDAO.findAccount(username, password);
         Cookie cusername = new Cookie("cusername", username);
-        Cookie cpassword = new Cookie("cpassword", MD5.getMd5(password));
+        Cookie cpassword = new Cookie("cpassword", password);
         if (account == null) {
             session.setAttribute("error_login", "your information is incorrect!");
             response.addCookie(cusername);

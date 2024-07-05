@@ -42,7 +42,7 @@ public class EditEquipmentServlet extends HttpServlet {
         String supplier = request.getParameter("supplier");
 
         if (!isValidName(name)) {
-            request.setAttribute("message", "Invalid input. Please check the name format.");
+            request.setAttribute("messageerror", "Invalid input. Please check the name format.");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);
@@ -56,7 +56,13 @@ public class EditEquipmentServlet extends HttpServlet {
         Equipment editEquipment = new Equipment(Integer.parseInt(equipmentId), name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
         if (equipmentDAO.isEquipmentExistWhenSave(name, Integer.parseInt(typeofequipment), image, Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description)) {
-            request.setAttribute("message", "This equipment already exists");
+            request.setAttribute("messageerror", "This equipment already exists");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
         } else {
             Part part = request.getPart("img");
             if (part != null && part.getSize() > 0) { // Check if part is not null and has content

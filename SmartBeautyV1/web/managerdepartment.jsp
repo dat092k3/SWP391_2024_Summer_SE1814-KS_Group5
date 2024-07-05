@@ -67,6 +67,11 @@
                                         ${message}
                                     </p>
                                 </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
+                                    </p>
+                                </c:if>
                             </div>
                             <div class="col-sm-6">
                                 <a href="#addDepartmentModal"  class="btn btn-success" data-toggle="modal">
@@ -162,6 +167,11 @@
                                         ${message}
                                     </p>
                                 </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="departmentId" type="hidden" class="form-control" required value="${department.department_id}">
@@ -210,6 +220,14 @@
             <c:if test="${showEditDialog}">
                 <script>
                     $("#editDepartmentModal").modal('show');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const rows = document.querySelectorAll('#content tr');
+                        rows.forEach((row, index) => {
+                            row.querySelector('.serial-number').textContent = index + 1;
+                        });
+                    });
+
                 </script>
             </c:if>
             <script>
