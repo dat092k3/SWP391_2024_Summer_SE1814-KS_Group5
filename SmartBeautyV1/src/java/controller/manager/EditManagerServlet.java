@@ -212,7 +212,7 @@ public class EditManagerServlet extends HttpServlet {
 
                 if (!source.isEmpty()) {
                     String filename = managerId + ".png";
-                    if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
+                    if (!Files.exists(Path.of(realPath))) { // check folder /images/Manager is existed
                         Files.createDirectory(Path.of(realPath));
                     }
                     part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.

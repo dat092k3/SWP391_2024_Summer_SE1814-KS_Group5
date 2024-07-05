@@ -230,7 +230,7 @@ public class AddManagerServlet extends HttpServlet {
             // convert it to a string, get just the filename without including the full path.
             if (!source.isEmpty()) {
                 String filename = managerDAO.getManagerId() + ".png";
-                if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
+                if (!Files.exists(Path.of(realPath))) { // check folder /images/Manager is existed
                     Files.createDirectory(Path.of(realPath));
                 }
                 part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
