@@ -81,8 +81,8 @@ public class SignupServlet extends HttpServlet {
         String err_email = "", err_phone = "", err_username = "";
         String email = request.getParameter("email").trim();
         String phonenumber = request.getParameter("phonenumber").trim();
-        String Email_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+){1,2}$";
-        String Phone_Regex = "^\\d{10}$";
+        String Email_Regex = "^[A-Za-z0-9_]+@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        String Phone_Regex = "^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\\\d{7}$";
         String Username_Regex = "^[A-Za-z0-9]+[A-Za-z0-9]{4,15}$";
         boolean err = false;
         if (username.isEmpty() || password.isEmpty() || re_password.isEmpty() || email.isEmpty() || phonenumber.isEmpty()) {
@@ -124,7 +124,7 @@ public class SignupServlet extends HttpServlet {
                  AccountInterface accountDAO = new AccountDAO();
                 Account account = accountDAO.checkAccountExists(username, phonenumber);
                 if (account == null) {
-                    accountDAO.signup(username, MD5.getMd5(password), email, phonenumber);
+                    accountDAO.signup(username, password, email, phonenumber);
                     request.setAttribute("messen1", "Sign Up Success, please log in.");
                     request.getRequestDispatcher("signup-signin.jsp").forward(request, response);
                 } else {

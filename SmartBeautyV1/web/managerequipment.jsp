@@ -73,7 +73,7 @@
 
                     reader.onload = function (e) {
                         $('#image').attr('src', e.target.result);
-                    }
+                    };
                     reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
                 }
             }
@@ -93,6 +93,11 @@
                                 <c:if test="${message != null}">
                                     <p style="color: #5cb85c;">
                                         ${message}
+                                    </p>
+                                </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
                                     </p>
                                 </c:if>
                             </div>
@@ -131,11 +136,11 @@
                                     <td class="serial-number"></td> 
                                     <td>${equipment.equipment_id}</td>
                                     <td>${equipment.equipment_name}</td>
-                                    <td>${equipment.price} $</td>
+                                    <td>${equipment.price} VND</td>
                                     <td>
                                         <img src=".${equipment.image}">
                                     </td>
-                                    <td>${equipment.quantity}</td>
+                                    <td>${equipment.quantity} chiếc</td>
                                     <td>${equipment.description}</td>
                                     <td>
                                         <a href="manageequipment?equipmentId=${equipment.equipment_id}"  class="edit" data-toggle="modal">
@@ -236,37 +241,42 @@
                                         ${message}
                                     </p>
                                 </c:if>
+                                <c:if test="${messageerror != null}">
+                                    <p style="color: red;">
+                                        ${messageerror}
+                                    </p>
+                                </c:if>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <input name="equipmentId" type="hidden" class="form-control" required value="${equipment.equipment_id}"/>
                             <div class="modal-body">	
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Name<span class="text-danger">*</span></label>
                                     <input name="nameequipment" type="text" class="form-control" required="" value="${equipment.equipment_name}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Price</label>
+                                    <label>Price<span class="text-danger">*</span></label>
                                     <input name="price" type="number" min="1" class="form-control" required value="${equipment.price}"/>
                                     <div class="error-message" id="price-error">Price must be at least 1</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Image</label>
+                                    <label>Image<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         <label for="inputGroupFile04"><img src=".${equipment.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${equipment.image}"></label>
                                     </div>
                                 </div> 
                                 <div class="form-group">
-                                    <label>Quantity</label>
+                                    <label>Quantity<span class="text-danger">*</span></label>
                                     <input name="quantity" type="number" min="1" class="form-control" value="${equipment.quantity}" required/>
                                     <div class="error-message" id="quantity-error">Quantity must be at least 1</div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Description</label>
+                                    <label>Description<span class="text-danger">*</span></label>
                                     <textarea name="description" class="form-control" required>${equipment.description}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>Type of Equipment</label>
+                                    <label>Type of Equipment<span class="text-danger">*</span></label>
                                     <select name="typeofequipment" class="form-select form-control" aria-label="Default select example">
                                         <option value="">Choose type</option>
                                         <c:forEach items="${allTypeofEquipment}" var="typeofequipment">
@@ -275,7 +285,7 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Supplier</label>
+                                    <label>Supplier<span class="text-danger">*</span></label>
                                     <select name="supplier" class="form-select form-control" aria-label="Default select example">
                                         <option value="">Choose supplier</option>
                                         <c:forEach items="${listSupplier}" var="supplier">
@@ -314,6 +324,13 @@
             <c:if test="${showEditDialog}">
                 <script>
                     $("#editEmployeeModal").modal('show');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const rows = document.querySelectorAll('#content tr');
+                        rows.forEach((row, index) => {
+                            row.querySelector('.serial-number').textContent = index + 1;
+                        });
+                    });
                 </script>
             </c:if>
             <script>

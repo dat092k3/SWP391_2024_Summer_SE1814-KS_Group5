@@ -18,14 +18,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
 import java.util.regex.Pattern;
 import model.Account;
 import model.Manager;
+import ultils.MD5;
 
 /**
  *
@@ -102,36 +100,26 @@ public class AddManagerServlet extends HttpServlet {
 
         ManagerInterface managerDAO = new ManagerDAO();
         AccountInterface accountDAO = new AccountDAO();
-        // Define the date format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Date hireDate;
-        try {
-            hireDate = dateFormat.parse(hiredate);
-        } catch (ParseException e) {
-            // Handle the error properly, possibly send an error response to the client
-            return;
-        }
 
         LocalDate dob = LocalDate.parse(dateofbirth);
         LocalDate now = LocalDate.now();
-        LocalDate recuitment = LocalDate.parse(hiredate);
         int age = Period.between(dob, now).getYears();
-        int ageRecuitment = Period.between(dob, recuitment).getYears();
-
-        if (ageRecuitment < 18) {
-            request.setAttribute("message", "You must be at least 18 years old.");
-            request.getRequestDispatcher("managemanager").include(request, response);
+        
+        LocalDate hireDate = LocalDate.parse(hiredate);
+        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
+            request.setAttribute("messageerror", "Hire date is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
             return;
         }
 
         if (age < 18) {
-            request.setAttribute("message", "You must be at least 18 years old.");
+            request.setAttribute("messageerror", "You must be at least 18 years old.");
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
 
         if (!isValidName(namemanager)) {
-            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("messageerror", "Please check the name is invalid.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -146,7 +134,7 @@ public class AddManagerServlet extends HttpServlet {
         }
 
         if (!isValidEmail(email)) {
-            request.setAttribute("message", "Please check the email is invalid.");
+            request.setAttribute("messageerror", "Please check the email is invalid.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -160,7 +148,7 @@ public class AddManagerServlet extends HttpServlet {
             return;
         }
         if (!isValidPhoneNumber(phonenumber)) {
-            request.setAttribute("message", "Please check the phonenumber is invalid.");
+            request.setAttribute("messageerror", "Please check the phonenumber is invalid.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -175,7 +163,7 @@ public class AddManagerServlet extends HttpServlet {
         }
 
         if (gender == null || gender.trim().isEmpty()) {
-            request.setAttribute("message", "Please select a gender.");
+            request.setAttribute("messageerror", "Please select a gender.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -190,7 +178,7 @@ public class AddManagerServlet extends HttpServlet {
         }
 
         if (managerDAO.isManagerAccountExist(username, email, phonenumber)) {
-            request.setAttribute("message", "This account is existed");
+            request.setAttribute("messageerror", "This account is existed");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -203,13 +191,13 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         } else {
-            Account newAccount = new Account(username, email, phonenumber, "Manager", true);
+            Account newAccount = new Account(username, password, email, phonenumber, "Manager", true);
             managerDAO.addNewAccountManager(newAccount);
         }
 
-        Manager newManager = new Manager(accountDAO.getAccountIdToAddManager(), username, gender, email, dateofbirth, phonenumber, address, hireDate, Float.parseFloat(salary), "", true);
+        Manager newManager = new Manager(accountDAO.getAccountIdToAddManager(), namemanager, gender, email, dateofbirth, phonenumber, address, hiredate, Float.parseFloat(salary), "", true);
         if (managerDAO.isManagerExist(image, address, phonenumber)) {
-            request.setAttribute("message", "This manager is existed");
+            request.setAttribute("messageerror", "This manager is existed");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -296,7 +284,7 @@ public class AddManagerServlet extends HttpServlet {
      * @return true if phoneNumber is valid, false otherwise
      */
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String PHONE_PATTERN = "^\\d{10}$";
+        String PHONE_PATTERN = "^(03[2-9]|07[0|6-9]|08[1-5]|09[2|7]|086|088|089|05[6|8]|087|059)\\d{7}$";
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
 

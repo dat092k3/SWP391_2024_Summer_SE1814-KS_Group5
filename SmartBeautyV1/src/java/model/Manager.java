@@ -21,7 +21,7 @@ public class Manager {
     private String dateOfBirth;
     private String phoneNumber;
     private String address;
-    private Date hireDate;
+    private String hireDate;
     private float salary;
     private String image;
     private boolean status;
@@ -44,7 +44,7 @@ public class Manager {
      * @param image of manager
      * @param salary of manager
      */
-    public Manager(int manager_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image) {
+    public Manager(int manager_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, String hireDate, float salary, String image) {
         this.manager_id = manager_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -74,7 +74,7 @@ public class Manager {
      * @param salary of manager
      * @param status of manager
      */
-    public Manager(int manager_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, boolean status) {
+    public Manager(int manager_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, String hireDate, float salary, String image, boolean status) {
         this.manager_id = manager_id;
         this.account_id = account_id;
         this.fullName = fullName;
@@ -104,7 +104,7 @@ public class Manager {
      * @param salary of manager
      * @param status of manager
      */
-    public Manager(int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, boolean status) {
+    public Manager(int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, String hireDate, float salary, String image, boolean status) {
         this.account_id = account_id;
         this.fullName = fullName;
         this.gender = gender;
@@ -190,11 +190,11 @@ public class Manager {
         this.address = address;
     }
 
-    public Date getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
+    public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
     public float getSalary() {

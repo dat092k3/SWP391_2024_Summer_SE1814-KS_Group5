@@ -18,9 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.regex.Pattern;
 import model.Account;
 import model.Manager;
@@ -90,6 +89,8 @@ public class EditManagerServlet extends HttpServlet {
         String managerId = request.getParameter("managerId");
         String accountId = request.getParameter("accountId");
         String email = request.getParameter("email");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
         String phonenumber = request.getParameter("phonenumber");
         String namemanager = request.getParameter("namemanager");
         String image = request.getParameter("img");
@@ -101,23 +102,34 @@ public class EditManagerServlet extends HttpServlet {
 
         ManagerInterface managerDAO = new ManagerDAO();
         AccountInterface accountDAO = new AccountDAO();
-        // Define the date format
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        Date hireDate;
-        try {
-            hireDate = dateFormat.parse(hiredate);
-        } catch (ParseException e) {
-            // Handle the error properly, possibly send an error response to the client
+        
+        LocalDate dob = LocalDate.parse(dateofbirth);
+        LocalDate now = LocalDate.now();
+        int age = Period.between(dob, now).getYears();
+
+        LocalDate hireDate = LocalDate.parse(hiredate);
+        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
+            request.setAttribute("messageerror", "Hire date is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
+            return;
+        }
+
+        if (age < 18) {
+            request.setAttribute("message", "You must be at least 18 years old.");
+            request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
 
         if (!isValidName(namemanager)) {
-            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("messageerror", "Please check the name is invalid.");
             request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
+            request.setAttribute("hireDate", hiredate);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
@@ -125,51 +137,63 @@ public class EditManagerServlet extends HttpServlet {
         }
 
         if (!isValidEmail(email)) {
-            request.setAttribute("message", "Please check the email is invalid.");
+            request.setAttribute("messageerror", "Please check the email is invalid.");
             request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
+            request.setAttribute("hireDate", hiredate);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
         if (!isValidPhoneNumber(phonenumber)) {
-            request.setAttribute("message", "Please check the phonenumber is invalid.");
+            request.setAttribute("messageerror", "Please check the phonenumber is invalid.");
             request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
             request.setAttribute("address", address);
+            request.setAttribute("hireDate", hiredate);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
 
         if (gender == null || gender.trim().isEmpty()) {
-            request.setAttribute("message", "Please select a gender.");
+            request.setAttribute("messageerror", "Please select a gender.");
             request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
+            request.setAttribute("hireDate", hiredate);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
-        Account editAccount = new Account(email, phonenumber, "Manager", true);
-        Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hireDate, Float.parseFloat(salary), image, true);
+        Account editAccount = new Account(username, password, email, phonenumber, "Manager", true);
+        Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hiredate, Float.parseFloat(salary), image, true);
         if (managerDAO.isManagerExistWhenSave(namemanager, image, address, phonenumber, email, Float.parseFloat(salary))) {
-            request.setAttribute("message", "This manager is existed");
+            request.setAttribute("messageerror", "This manager is existed");
             request.setAttribute("email", email);
+            request.setAttribute("username", username);
+            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
+            request.setAttribute("hireDate", hiredate);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);

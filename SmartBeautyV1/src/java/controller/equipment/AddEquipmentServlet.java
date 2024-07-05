@@ -40,7 +40,7 @@ public class AddEquipmentServlet extends HttpServlet {
         String supplier = request.getParameter("supplier").trim();
 
         if (typeofequipment == null || typeofequipment.trim().isEmpty()) {
-            request.setAttribute("message", "Please select a type of equipment.");
+            request.setAttribute("messageerror", "Please select a type of equipment.");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);
@@ -52,7 +52,7 @@ public class AddEquipmentServlet extends HttpServlet {
         }
 
         if (supplier == null || supplier.trim().isEmpty()) {
-            request.setAttribute("message", "Please select a supplier.");
+            request.setAttribute("messageerror", "Please select a supplier.");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);
@@ -64,7 +64,7 @@ public class AddEquipmentServlet extends HttpServlet {
         }
 
         if (!isValidName(name)) {
-            request.setAttribute("message", "Invalid input. Please check the name format.");
+            request.setAttribute("messageerror", "Invalid input. Please check the name format.");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);
@@ -78,7 +78,7 @@ public class AddEquipmentServlet extends HttpServlet {
         Equipment newEquipment = new Equipment(name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
         if (equipmentDAO.isEquipmentExist(name)) {
-            request.setAttribute("message", "This Equipment already exists");
+            request.setAttribute("messageerror", "This Equipment already exists");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);

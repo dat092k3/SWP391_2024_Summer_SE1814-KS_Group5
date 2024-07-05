@@ -160,8 +160,8 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface {
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
-            return false;
         }
+        return false;
     }
 
     /**
@@ -192,8 +192,8 @@ public class EquipmentDAO extends DBContext implements EquipmentInterface {
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
-            return false;
-        }
+        }           
+        return false;
     }
 
     /**

@@ -77,7 +77,7 @@ public class EditDepartmentServlet extends HttpServlet {
         String namedepartment=request.getParameter("namedepartment");
         String manager = request.getParameter("manager");
         if(!isValidName(namedepartment)){
-            request.setAttribute("message", "Please select manager for dapartment");
+            request.setAttribute("messageerror", "Please select manager for dapartment");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);
@@ -85,7 +85,7 @@ public class EditDepartmentServlet extends HttpServlet {
         }
         
         if(manager==null || manager.trim().isEmpty()){
-            request.setAttribute("message", "Please select manager for dapartment");
+            request.setAttribute("messageerror", "Please select manager for dapartment");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);
@@ -93,7 +93,7 @@ public class EditDepartmentServlet extends HttpServlet {
         }
         
         if(departmentDAO.isDepartmentExist(namedepartment)){
-            request.setAttribute("message", "This department is existed");
+            request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);  
@@ -101,7 +101,7 @@ public class EditDepartmentServlet extends HttpServlet {
         }   
         
         if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager))){
-            request.setAttribute("message", "This department is existed");
+            request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);

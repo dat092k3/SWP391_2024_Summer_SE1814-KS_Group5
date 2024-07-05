@@ -70,7 +70,7 @@ public class AddSupplierServlet extends HttpServlet {
         String email = request.getParameter("email").trim();
 
         if (!isValidName(name)) {
-            request.setAttribute("message", "Please check the name is invalid.");
+            request.setAttribute("messageerror", "Please check the name is invalid.");
             request.setAttribute("name", name);
             request.setAttribute("address", address);
             request.setAttribute("phonenumber", phoneNumber);
@@ -80,7 +80,7 @@ public class AddSupplierServlet extends HttpServlet {
         }
 
         if (!isValidEmail(email)) {
-            request.setAttribute("message", "Please check the email is invalid.");
+            request.setAttribute("messageerror", "Please check the email is invalid.");
             request.setAttribute("name", name);
             request.setAttribute("address", address);
             request.setAttribute("phonenumber", phoneNumber);
@@ -89,7 +89,7 @@ public class AddSupplierServlet extends HttpServlet {
             return;
         }
         if (!isValidPhoneNumber(phoneNumber)) {
-            request.setAttribute("message", "Please check the phone number is invalid.");
+            request.setAttribute("messageerror", "Please check the phone number is invalid.");
             request.setAttribute("name", name);
             request.setAttribute("address", address);
             request.setAttribute("phonenumber", phoneNumber);
@@ -98,7 +98,7 @@ public class AddSupplierServlet extends HttpServlet {
             return;
         }
         if (!isValidAddress(address)) {
-            request.setAttribute("message", "Please check the address is invalid.");
+            request.setAttribute("messageerror", "Please check the address is invalid.");
             request.setAttribute("name", name);
             request.setAttribute("address", address);
             request.setAttribute("phonenumber", phoneNumber);
@@ -108,8 +108,8 @@ public class AddSupplierServlet extends HttpServlet {
         }
 
         Supplier newSupplier = new Supplier(name, "", address, phoneNumber, email, true);
-        if (supplierDAO.isSupplierExist(name, address)) {
-            request.setAttribute("message", "This supplier already exists");
+        if (supplierDAO.isSupplierExist(name, phoneNumber, email)){
+            request.setAttribute("messageerror", "This supplier already exists");
             request.setAttribute("name", name);
             request.setAttribute("address", address);
             request.setAttribute("phonenumber", phoneNumber);

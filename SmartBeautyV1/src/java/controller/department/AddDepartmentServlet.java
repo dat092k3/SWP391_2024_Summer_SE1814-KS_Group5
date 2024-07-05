@@ -77,7 +77,7 @@ public class AddDepartmentServlet extends HttpServlet {
         
         DepartmentInterface departmentDAO= new DepartmentDAO();
         if(manager==null || manager.trim().isEmpty()){
-            request.setAttribute("message", "Please select manager for dapartment");
+            request.setAttribute("messageerror", "Please select manager for dapartment");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);
@@ -85,7 +85,7 @@ public class AddDepartmentServlet extends HttpServlet {
         }
         
         if(namedepartment==null || !isValidName(namedepartment)  ||namedepartment.trim().isEmpty()){
-            request.setAttribute("message", "Name department is invalid.");
+            request.setAttribute("messageerror", "Name department is invalid.");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);
@@ -93,7 +93,7 @@ public class AddDepartmentServlet extends HttpServlet {
         }
         
         if(departmentDAO.isDepartmentExist(namedepartment)){
-            request.setAttribute("message", "This department is existed");
+            request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);  
@@ -101,7 +101,7 @@ public class AddDepartmentServlet extends HttpServlet {
         }   
         
         if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager))){
-            request.setAttribute("message", "This manager is maning another department");
+            request.setAttribute("messageerror", "This manager is maning another department");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);  

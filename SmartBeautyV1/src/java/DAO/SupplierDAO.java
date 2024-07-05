@@ -137,17 +137,21 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
      * check supplier is existed
      *
      * @param name of supplier need to check
-     * @param address of supplier need to check
-     * @return true false
+     * @param phonenumber of supplier need to check
+     * @param email of supplier need to check
+     * @return true if existed false otherwise
      */
     @Override
-    public boolean isSupplierExist(String name, String address) {
+    public boolean isSupplierExist(String name, String phonenumber, String email) {
         String sql = "select * from Suplier\n"
-                + "where suplier_name =? and address=? and status=1";
+                + "where suplier_name =? and phonenumber=? and email=? status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
-            st.setString(2, address);
+            st.setString(2, phonenumber);
+            st.setString(3, email);
+            st.setString(4, phonenumber);
+            st.setString(5, email);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -164,12 +168,11 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
      * @param image of supplier need to check
      * @param phonenumber of supplier need to check
      * @param email of supplier need to check
-     * @return true false
+     * @return true if existed false otherwise
      */
     @Override
     public boolean isSupplierExistWhenSave(String name, String address, String image, String phonenumber, String email) {
-        String sql = "select * from Suplier\n"
-                + "where suplier_name =? and address=? and image=? and phonenumber=? and email=? and status=1";
+        String sql = "SELECT * FROM Suplier WHERE suplier_name = ? AND address = ? AND image = ? AND phonenumber = ? AND email = ? AND status = 1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
@@ -180,13 +183,14 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
-            System.out.println(e);
+            System.out.println("SQL Exception: " + e.getMessage());
         }
         return false;
     }
     /**
      * add supplier
-     * @param supplier need to add  
+     *
+     * @param supplier need to add
      */
     @Override
     public void addNewSupplier(Supplier supplier) {
@@ -205,7 +209,7 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
                 + "           ,?\n"
                 + "           ,1)";
         try {
-            PreparedStatement st= connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, supplier.getSupplier_name());
             st.setString(2, supplier.getImage());
             st.setString(3, supplier.getAddress());
