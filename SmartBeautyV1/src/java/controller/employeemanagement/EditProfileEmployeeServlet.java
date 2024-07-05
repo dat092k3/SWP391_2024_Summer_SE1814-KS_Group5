@@ -92,11 +92,18 @@ public class EditProfileEmployeeServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(dateofbirth);
         LocalDate now = LocalDate.now();
         int age = Period.between(dob, now).getYears();
-        if (age < 18) {
-            request.setAttribute("error4", "You must be at least 18  years old.");
+        if (age < 18 || age > 100) {
+            request.setAttribute("error4", "You must be at least 18-100  years old.");
             request.getRequestDispatcher("viewdetailprofileptandtakecare?account_id=" + account_id).forward(request, response);
             return;
         }
+        // Validate Hire Date
+        LocalDate hireDate = LocalDate.parse(hiredate);
+        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
+            request.setAttribute("error10", "Hire date must be at least 18 years after date of birth and not in the future.");
+            request.getRequestDispatcher("viewdetailprofileptandtakecare?account_id=" + account_id).forward(request, response);
+            return;
+        } 
         // Validate Image URL
         if (image.isEmpty()) {
             request.setAttribute("error5", "Image URL must not be empty.");

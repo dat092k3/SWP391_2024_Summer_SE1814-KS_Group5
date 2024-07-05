@@ -4,10 +4,28 @@
  */
 package Interface;
 
+import java.util.List;
+import model.Department;
+
 /**
  *
  * @author LENOVO
  */
 public interface DepartmentInterface {
+    public List<Department> getAllDepartment();
     
+    public Department getDepartmentById(int id);
+    
+    public boolean isDepartmentExist(String name);
+    
+    public boolean isManagerManingAnotherDepartment(String name, int manager_id);
+    
+    public void addNewDepartment(Department department);
+    
+    public void updateDepartment(Department department);
+    
+    public void deleteDepartment(int id);
+    
+    public List<Department> findDepartmentByName(String nameSearch);
 }
+

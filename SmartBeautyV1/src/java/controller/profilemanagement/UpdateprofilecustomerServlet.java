@@ -84,8 +84,8 @@ public class UpdateprofilecustomerServlet extends HttpServlet {
         LocalDate now = LocalDate.now();
         int age = Period.between(dob, now).getYears();
 
-        if (age < 15) {
-            request.setAttribute("error", "You must be at least 15 years old.");
+        if (age < 15 || age > 100) {
+            request.setAttribute("error", "You must be at least 15-100 years old.");
             request.getRequestDispatcher("profile?account_id=" + account_id).forward(request, response);
             return;
         }

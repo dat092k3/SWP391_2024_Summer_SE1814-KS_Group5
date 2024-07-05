@@ -12,13 +12,14 @@ import context.DBContext;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import ultils.MD5;
 
 /**
  * access data in database
  *
  * @author LENOVO
  */
-public class AccountDAO  extends DBContext implements AccountInterface {
+public class AccountDAO extends DBContext implements AccountInterface {
 
     /**
      * find account in database to login
@@ -31,9 +32,9 @@ public class AccountDAO  extends DBContext implements AccountInterface {
     public Account findAccount(String username, String password) {
         String sql;
         if (username.contains("@")) {
-            sql = "select * from account where status=1 and  email='" + username + "' and password='" + password + "'";
+            sql = "select * from account where status=1 and  email='" + username + "' and password='" + MD5.getMd5(password) + "'";
         } else {
-            sql = "select * from account where status=1 and username='" + username + "' and password='" + password + "'";
+            sql = "select * from account where status=1 and username='" + username + "' and password='" + MD5.getMd5(password) + "'";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -190,6 +191,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
 
     /**
      * function to do get email of account
+     *
      * @param account_id of user
      * @return email of account
      */
@@ -208,8 +210,10 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return null;
     }
-     /**
+
+    /**
      * function to do get phonenumber of account
+     *
      * @param phonenumber of user
      * @return phonenumber of account
      */
@@ -228,10 +232,11 @@ public class AccountDAO  extends DBContext implements AccountInterface {
         }
         return null;
     }
+
     /**
      *
      * @param username is value of account want to add
-     * @param password is value of account want to add 
+     * @param password is value of account want to add
      * @param email is value of account want to add
      * @param phonenumber is value of account want to add
      * @param role is value of account want to add
@@ -240,7 +245,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
     public void AddAccount(String username, String password, String email, String phonenumber, String role) {
         String sql = "INSERT INTO Account (username, password, email, phonenumber, role, status) VALUES (?, ?, ?, ?, ?, 1)";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);  
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, password);
             st.setString(3, email);
@@ -269,7 +274,33 @@ public class AccountDAO  extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phonenumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
+                accounts.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return accounts;
+    }
+
+    @Override
+    /**
+     * function to get accounts with role 'Admin'
+     *
+     * @return List of Accounts
+     */
+    public List<Account> getAccountEmployeeByRoleAdmin() {
+        String sql = "SELECT * FROM Account WHERE role = 'Admin'";
+        List<Account> accounts = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Account account = new Account(rs.getInt("account_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phonenumber"),
+                        rs.getString("role"),
+                        rs.getBoolean("status"));
                 accounts.add(account);
             }
         } catch (SQLException e) {
@@ -299,7 +330,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phonenumber"),
                         rs.getString("role"),
-                        rs.getString("status")
+                        rs.getBoolean("status")
                 );
                 return account;
             }
@@ -345,7 +376,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
     }
 
     /**
-     *
+     * search account
      * @param txtSearch is search
      * @return list
      */
@@ -366,11 +397,42 @@ public class AccountDAO  extends DBContext implements AccountInterface {
                         rs.getString("email"),
                         rs.getString("phoneNumber"),
                         rs.getString("role"),
-                        rs.getString("status"));
+                        rs.getBoolean("status"));
                 list.add(account);
             }
         } catch (SQLException e) {
-            System.out.println(e); 
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    /**
+     * search account admin
+     * @param txtSearch is search
+     * @return list
+     */
+    @Override
+    public List<Account> SearchAccountByNameOrPhonenumberAdmin(String txtSearch) {
+        List<Account> list = new ArrayList<>();
+        String sql = "Select * from Account where  (username like ? Or phonenumber like ? Or Email like ?) And (role = 'Admin')";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, "%" + txtSearch + "%");
+            st.setString(2, "%" + txtSearch + "%");
+            st.setString(3, "%" + txtSearch + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Account account = new Account(
+                        rs.getInt("account_id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email"),
+                        rs.getString("phoneNumber"),
+                        rs.getString("role"),
+                        rs.getBoolean("status"));
+                list.add(account);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return list;
     }
@@ -379,7 +441,7 @@ public class AccountDAO  extends DBContext implements AccountInterface {
      * Function to get the newest account ID of an employee with role 'PT' or
      * 'Takecare'
      *
-     * @return The highest account_id of an employee with role 'PT' or 
+     * @return The highest account_id of an employee with role 'PT' or
      * 'Takecare', or -1 if no such account exists
      */
     @Override
@@ -393,5 +455,83 @@ public class AccountDAO  extends DBContext implements AccountInterface {
             System.out.println("Database error while retrieving the newest account ID: " + e.getMessage());
         }
         return -1; // Return -1 if no account is found or an error occurs
+    }
+
+    /**
+     * Function to get the newest account ID of an employee with role 'Admin'
+     *
+     * @return The highest account_id of an employee with role 'PT' or
+     * 'Takecare', or -1 if no such account exists
+     */
+    @Override
+    public int getNewAccountIdOfEmployeeAdmin() {
+        String sql = "SELECT MAX(account_id) FROM Account WHERE role = 'Admin'";
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving the newest account ID: " + e.getMessage());
+        }
+        return -1; // Return -1 if no account is found or an error occurs
+    }
+    
+    /**
+     * get account_id max in Account table
+     * @return account_id 
+     */
+    @Override
+    public int getAccountIdToAddManager() {
+        String sql = "SELECT MAX(account_id) FROM Account";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
+    /**
+     * update information if director update email or phonenumber for manager
+     * @param account is account of manager need to update information
+     */
+    @Override
+    public void updateInformationIfUpdateManager(Account account) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [email] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + "      ,[role] = 'Manager'\n"
+                + "      ,[status] =1\n"
+                + " WHERE account_id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, account.getEmail());
+            st.setString(2, account.getPhoneNumber());
+            st.setInt(3, account.getAccount_id());
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+    
+    /**
+     * delete account of manager
+     * @param accountId of manager need to delete
+     */
+    @Override
+    public void deleteAccountIfDeleteManager(int accountId) {
+        String sql = "UPDATE [dbo].[Account]\n"
+                + "   SET [status] = 0\n"
+                + " WHERE account_id=?";
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setInt(1, accountId);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
     }
 }

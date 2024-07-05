@@ -13,15 +13,25 @@ import model.TypeofEquipment;
  * @author LENOVO
  */
 public interface EquipmentInterface {
+
     public List<Equipment> getAllEquipment();
-     public void deleteEquipment(int equipment_id);
-     public void updateEquipment(Equipment equipment);
-     public Equipment getEquipmentById(int id);
-     public boolean isEquipmentExist(String name);
-     public boolean isEquipmentExistWhenSave(String name, String image, String description);
-     public void addNewEquipment(Equipment equipment);
-     public int getEquipmentId();
-     public List<TypeofEquipment> getAllTypeofEquipment();
-     public List<Equipment> findEquipmentByName(String nameSearch);
-     
+
+    public void deleteEquipment(int equipment_id);
+
+    public void updateEquipment(Equipment equipment);
+
+    public Equipment getEquipmentById(int id);
+
+    public boolean isEquipmentExist(String name);
+
+    public boolean isEquipmentExistWhenSave(String name,int type_id, String image,float price, int supplier_id, int quantity ,String description);
+
+    public void addNewEquipment(Equipment equipment);
+
+    public int getEquipmentId();
+
+    public List<TypeofEquipment> getAllTypeofEquipment();
+
+    public List<Equipment> findEquipmentByName(String nameSearch);
+
 }

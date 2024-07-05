@@ -60,21 +60,7 @@ public class SearchSupplierServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setContentType("text/html;charset=UTF-8");
-        String txtSearch= request.getParameter("search");
-        SupplierInterface supplierDAO= new SupplierDAO();
-        
-        
-        List<Supplier> list;
-        if(txtSearch ==null || txtSearch.trim().isEmpty()){
-            list= supplierDAO.getAllSupplier();
-        }else{
-            list=supplierDAO.findSupplierByName(txtSearch);
-        }
-        request.setAttribute("listSupplier", list);
-        request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managersupplier.jsp").include(request, response);
+        processRequest(request, response);
         
     } 
 
@@ -88,7 +74,20 @@ public class SearchSupplierServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        String txtSearch= request.getParameter("search");
+        SupplierInterface supplierDAO= new SupplierDAO();
+               
+        List<Supplier> list;
+        if(txtSearch ==null){
+            list= supplierDAO.getAllSupplier();
+        }else{
+            list=supplierDAO.findSupplierByName(txtSearch);
+        }
+        request.setAttribute("listManager", list);
+        request.setAttribute("searchValue", txtSearch);
+        request.getRequestDispatcher("managersupplier.jsp").include(request, response);
     }
 
     /** 

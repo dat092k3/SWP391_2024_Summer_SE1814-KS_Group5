@@ -35,11 +35,23 @@ public interface AccountInterface {
 
     public List<Account> getAccountEmployeeByRole();
 
+    public List<Account> getAccountEmployeeByRoleAdmin();
+
     public Account getAccountByAccountId(int account_id);
 
     public void EditAccountOfEmployee(int account_id, String username, String password, String email, String phonenumber, String role, String status);
 
     public List<Account> SearchAccountByNameOrPhonenumber(String txtSearch);
 
+    public List<Account> SearchAccountByNameOrPhonenumberAdmin(String txtSearch);
+
     public int getNewAccountIdOfEmployee();
+    
+    public int getNewAccountIdOfEmployeeAdmin();
+
+    public int getAccountIdToAddManager();
+    
+    public void updateInformationIfUpdateManager(Account account);
+    
+    public void deleteAccountIfDeleteManager(int accountId);
 }

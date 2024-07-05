@@ -19,30 +19,62 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <link href="styles/manager.css" rel="stylesheet" type="text/css"/>
-         <style>
+        <style>
             img{
                 width: 150px;
-                height: 120px;
+                height: 130px;
+            }
+            #pagination {
+                margin-top: 20px;
+            }
+            .pagination-btn {
+                margin: 0 2px;
+            }
+            .pagination-btn.active {
+                background-color: #fff;
+                color: black;
+            }
+            .text-danger {
+                color: red;
+                margin-left: 5px; /* Để tạo khoảng cách giữa label và * */
             }
         </style>
         <script type="text/javascript">
+            var supplierIdToDelete;
+
             function doDelete(supplier_id) {
-                if (confirm("Are you sure to delete supplier")) {
-                    window.location = "deletesupplier?supplierId=" + supplier_id;
-                }
+                supplierIdToDelete = supplier_id;
+                $('#deleteConfirmModal').modal('show');
             }
+
+            $(document).ready(function () {
+                $('#confirmDelete').click(function () {
+                    window.location = "deletesupplier?supplierId=" + supplierIdToDelete;
+                });
+            });
 
             function chooseFile(fileInput) {
                 if (fileInput.files && fileInput.files[0]) {
+                    var file = fileInput.files[0];
+                    var fileType = file.type;
+                    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+                    if (!validImageTypes.includes(fileType)) {
+                        alert("Only image files (JPG, PNG, GIF) are allowed.");
+                        fileInput.value = ""; // Clear the input
+                        return;
+                    }
+
                     var reader = new FileReader();
 
-                    reader.onload = function (e) {                //hàm callback
-                        $('#image').attr('src', e.target.result); //đặt thuộc tính src của phần tử có ID image thành URL dữ liệu vừa đọc
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
                     }
-                    reader.readAsDataURL(fileInput.files[0]); // đọc nội dung tệp dưới dạng url
+                    reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
                 }
             }
         </script>
+    </head>
     <body>
         <div class="page-wrapper">
             <div class="container">
@@ -66,7 +98,7 @@
                                     <span>Add New Supplier</span>
                                 </a>
                                 <div class="search-box" style="display: inline-block; float: right;">
-                                    <form action="searchsupplier" method="get">
+                                    <form action="searchsupplier" method="post">
                                         <input id="searchId" type="text" value="${requestScope.searchValue != null ? requestScope.searchValue : ""}" name="search" placeholder="Search supplier" class="form-control" style="width: 200px; display: inline-block;">
                                         <button type="submit" class="btn btn-primary" style="display: inline-block;">
                                             Search
@@ -79,6 +111,7 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th>No</th>
                                 <th>Supplier_ID</th>
                                 <th>Supplier_name</th>
                                 <th>Image</th>
@@ -91,6 +124,7 @@
                         <tbody id="content">
                             <c:forEach items="${listSupplier}" var="supplier">
                                 <tr>
+                                    <td class="serial-number"></td> 
                                     <td>${supplier.supplier_id}</td>
                                     <td>${supplier.supplier_name}</td>
                                     <td>
@@ -107,6 +141,9 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <div id="pagination" class="text-center">
+                        <!-- Pagination controls will be inserted here by JavaScript -->
+                    </div>
                 </div>
             </div>
             <!-- Add Modal HTML -->
@@ -120,12 +157,12 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label>Name</label>
-                                    <input name="name" type="text" class="form-control" required>
+                                    <label>Name<span class="text-danger">*</span></label>
+                                    <input name="name" value="${requestScope.name}" type="text" class="form-control" maxlength="255" minlength="1" required>
                                 </div>
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <label>Image</label>
+                                        <label>Image<span class="text-danger">*</span></label>
                                         <div class="input-group">
                                             <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                             <label for="inputGroupFile04"><img src=".${supplier.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${supplier.image}"></label>
@@ -133,16 +170,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="labels">Address</label>
-                                    <input name="address" type="text" class="form-control" required>
+                                    <label class="labels">Address<span class="text-danger">*</span></label>
+                                    <input name="address" value="${requestScope.address}" type="text" class="form-control" maxlength="255" minlength="1" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Phone number</label>
-                                    <input name="phonenumber" type="text" class="form-control" required />
+                                    <label>Phone number<span class="text-danger">*</span></label>
+                                    <input name="phonenumber" value="${requestScope.phonenumber}" type="text" class="form-control"  required />
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
-                                    <input name="email" type="text" class="form-control" required />
+                                    <label>Email<span class="text-danger">*</span></label>
+                                    <input name="email" type="text" ${requestScope.email} class="form-control" maxlength="255" minlength="1" required />
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -170,26 +207,26 @@
                             <input name="supplierId" type="hidden" class="form-control" required value="${supplier.supplier_id}">
                             <div class="modal-body">	
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Name<span class="text-danger">*</span></label>
                                     <input name="name" type="text" class="form-control" required value="${supplier.supplier_name}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Image</label>
+                                    <label>Image<span class="text-danger">*</span></label>
                                     <div class="input-group">
                                         <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                                         <label for="inputGroupFile04"><img src=".${supplier.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${supplier.image}"></label>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Address</label>
+                                    <label>Address<span class="text-danger">*</span></label>
                                     <input name="address" type="text" class="form-control" required value="${supplier.address}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Phone number</label>
+                                    <label>Phone number<span class="text-danger">*</span></label>
                                     <input name="phonenumber" type="text" class="form-control" required  value="${supplier.phoneNumber}"/>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email</label>
+                                    <label>Email<span class="text-danger">*</span></label>
                                     <input name="email" type="text" class="form-control" required  value="${supplier.email}"/>
                                 </div>
                             </div>
@@ -201,12 +238,39 @@
                     </div>
                 </div>
             </div>
-        <c:if test="${showEditDialog}">
-            <script>
-                $("#editEmployeeModal").modal('show');
-            </script>
-        </c:if>
-    </div>
-    <script src="js/manager.js" type="text/javascript"></script>        
-</body>
+            <!-- Delete Modal HTML -->
+            <div id="deleteConfirmModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Confirm Deletion</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">					
+                            <p>Are you sure you want to remove this provider?</p>
+                            <p class="text-warning"><small>This action cannot be undone.</small></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <c:if test="${showEditDialog}">
+                <script>
+                    $("#editEmployeeModal").modal('show');
+
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const rows = document.querySelectorAll('#content tr');
+                        rows.forEach((row, index) => {
+                            row.querySelector('.serial-number').textContent = index + 1;
+                        });
+                    });
+                </script>
+            </c:if>
+        </div>
+        <script src="js/pagination.js" type="text/javascript"></script>
+        <script src="js/manager.js" type="text/javascript"></script>  
+    </body>
 </html>

@@ -61,9 +61,15 @@ public class DeleteEquipmentServlet extends HttpServlet {
         EquipmentInterface equipmentDAO = new EquipmentDAO();
         
         String equipmentId = request.getParameter("equipmentId");
-        equipmentDAO.deleteEquipment(Integer.parseInt(equipmentId));
-        request.setAttribute("message", "Delete successful!");
-        request.setAttribute("showEditDialog", false);
+        try {
+            if (equipmentId != null && !equipmentId.isEmpty()) {
+                equipmentDAO.deleteEquipment(Integer.parseInt(equipmentId));
+            }
+            request.setAttribute("message", "Delete successful");
+            request.setAttribute("showEditDialog", false);
+        } catch (NumberFormatException e) {
+            request.setAttribute("message", "Delete failed" + e.getMessage());
+        }
 
         request.getRequestDispatcher("manageequipment").forward(request, response);
     } 

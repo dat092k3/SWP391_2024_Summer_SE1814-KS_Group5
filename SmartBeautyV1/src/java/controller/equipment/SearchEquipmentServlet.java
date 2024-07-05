@@ -61,20 +61,7 @@ public class SearchEquipmentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String txtSearch = request.getParameter("search");
-        EquipmentInterface equipmentDAO = new EquipmentDAO();
-
-        List<Equipment> list;
-        if (txtSearch == null || txtSearch.trim().isEmpty()) {
-            list = equipmentDAO.getAllEquipment();
-        } else {
-            list = equipmentDAO.findEquipmentByName(txtSearch);
-        }
-        request.setAttribute("listEquipment", list);
-        request.setAttribute("searchValue", txtSearch);
-        request.getRequestDispatcher("managerequipment.jsp").include(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -88,7 +75,20 @@ public class SearchEquipmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        String txtSearch = request.getParameter("search");
+        EquipmentInterface equipmentDAO = new EquipmentDAO();
+
+        List<Equipment> list;
+        if (txtSearch == null) {
+            list = equipmentDAO.getAllEquipment();
+        } else {
+            list = equipmentDAO.findEquipmentByName(txtSearch);
+        }
+        request.setAttribute("listEquipment", list);
+        request.setAttribute("searchValue", txtSearch);
+        request.getRequestDispatcher("managerequipment.jsp").include(request, response);
     }
 
     /**

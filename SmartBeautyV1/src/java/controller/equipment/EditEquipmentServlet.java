@@ -13,12 +13,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import model.Equipment;
 
-
 @MultipartConfig
 public class EditEquipmentServlet extends HttpServlet {
-    
-    /** 
+
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -29,13 +29,13 @@ public class EditEquipmentServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        
+
         EquipmentInterface equipmentDAO = new EquipmentDAO();
-        
+
         String equipmentId = request.getParameter("equipmentId");
         String name = request.getParameter("nameequipment");
-        String image = request.getParameter("img");
         String quantity = request.getParameter("quantity");
+        String image = request.getParameter("img");
         String price = request.getParameter("price");
         String description = request.getParameter("description");
         String typeofequipment = request.getParameter("typeofequipment");
@@ -43,43 +43,64 @@ public class EditEquipmentServlet extends HttpServlet {
 
         if (!isValidName(name)) {
             request.setAttribute("message", "Invalid input. Please check the name format.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
             request.getRequestDispatcher("manageequipment").include(request, response);
             return;
         }
 
         Equipment editEquipment = new Equipment(Integer.parseInt(equipmentId), name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
-        if (equipmentDAO.isEquipmentExistWhenSave(name, image, description)) {
+        if (equipmentDAO.isEquipmentExistWhenSave(name, Integer.parseInt(typeofequipment), image, Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), description)) {
             request.setAttribute("message", "This equipment already exists");
         } else {
             Part part = request.getPart("img");
-            String realPath = request.getServletContext().getRealPath("/images/Equipment"); // where the photo is saved
-            String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); // get the original filename of the file then
-                                                                                                // convert it to a string, get just the filename without including the full path.
-            if (!source.isEmpty()) {
-                String filename = equipmentId + ".png";
-                if (!Files.exists(Path.of(realPath))) { // check folder /images/Equipment is existed
-                    Files.createDirectory(Path.of(realPath));
+            if (part != null && part.getSize() > 0) { // Check if part is not null and has content
+                String contentType = part.getContentType();
+                if (!isImageFile(contentType)) {
+                    request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
+                    request.setAttribute("nameequipment", name);
+                    request.setAttribute("quantity", quantity);
+                    request.setAttribute("price", price);
+                    request.setAttribute("description", description);
+                    request.setAttribute("selectedType", typeofequipment);
+                    request.setAttribute("selectedSupplier", supplier);
+                    request.getRequestDispatcher("manageequipment").include(request, response);
+                    return;
                 }
-                part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.
-                editEquipment.setImage("/images/Equipment/" + filename + "?" + System.currentTimeMillis()); //Set the path to the image file
+
+                String realPath = request.getServletContext().getRealPath("/images/Equipment");
+                String source = Path.of(part.getSubmittedFileName()).getFileName().toString();
+
+                if (!source.isEmpty()) {
+                    String filename = equipmentId + ".png";
+                    if (!Files.exists(Path.of(realPath))) {
+                        Files.createDirectory(Path.of(realPath));
+                    }
+                    part.write(realPath + "/" + filename);
+                    editEquipment.setImage("/images/Equipment/" + filename + "?" + System.currentTimeMillis());
+                }
             } else {
-                Equipment existingEquipment = equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId)); // check if image don't update
-                editEquipment.setImage(existingEquipment.getImage());                                       // then use old image
+                Equipment existingEquipment = equipmentDAO.getEquipmentById(Integer.parseInt(equipmentId));
+                editEquipment.setImage(existingEquipment.getImage());
             }
 
             equipmentDAO.updateEquipment(editEquipment);
             request.setAttribute("message", "Update successful!");
             request.setAttribute("showEditDialog", false);
         }
-        
+
         // Forward to manage equipment servlet after processing
         request.getRequestDispatcher("/manageequipment").forward(request, response);
     }
-    
+
     /**
      * check value of name input
-     * 
+     *
      * @param name of equipment to check
      * @return true if name is valid, false otherwise
      */
@@ -87,19 +108,36 @@ public class EditEquipmentServlet extends HttpServlet {
         if (name == null || name.trim().isEmpty()) {
             return false;
         }
-        
+
         String[] nameParts = name.split("\\s+");
         for (String part : nameParts) {
             if (!Character.isUpperCase(part.charAt(0))) {
                 return false;
             }
         }
-        
+
         return true;
     }
 
-     /** 
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    private boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Returns a Edit Equipment Servlet of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
