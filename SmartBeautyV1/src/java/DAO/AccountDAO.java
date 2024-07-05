@@ -235,6 +235,28 @@ public class AccountDAO extends DBContext implements AccountInterface {
     }
 
     /**
+     * function to do get username of account
+     *
+     * @param account_id of user
+     * @return username of account
+     */
+    @Override
+    public String getUsernameOfAccount(String account_id) {
+        String sql = "select username  from Account where account_id = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, account_id);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("username");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving phonenumber: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      *
      * @param username is value of account want to add
      * @param password is value of account want to add
@@ -547,7 +569,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
     }
 
     /**
-     * function to do update updateProfileAccountPhonenumberAndEmail 
+     * function to do update updateProfileAccountPhonenumberAndEmail
      *
      * @param email of account
      * @param phonenumber of account

@@ -83,7 +83,15 @@ public class EditAccountServlet extends HttpServlet {
         } else {
             EmployeeInterface employeeDAO = new EmployeeDAO();
             Account account = accountDAO.checkAccountExists(username, phonenumber);
-            if (account == null) {
+            String phonedao = accountDAO.getPhoneOfAccount(String.valueOf(account_id));
+            String emaildao = accountDAO.getEmailOfAccount(String.valueOf(account_id));
+            String usernamedao = accountDAO.getUsernameOfAccount(String.valueOf(account_id));
+            if (email.equals(emaildao) && phonenumber.equals(phonedao) && username.equals(usernamedao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successemployee", "Update Account Success!");
+                request.getRequestDispatcher("viewaccount").forward(request, response);
+            } else if (account == null) {
                 accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
                 employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
                 request.setAttribute("successemployee", "Update Account Success!");

@@ -10,12 +10,32 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
-
         <title>Add Profile Employee</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="styles/addprofileemployee.css" rel="stylesheet">
+        <script>
+            function chooseFile(fileInput) {
+                if (fileInput.files && fileInput.files[0]) {
+                    var file = fileInput.files[0];
+                    var fileType = file.type;
+                    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
+
+                    if (!validImageTypes.includes(fileType)) {
+                        alert("Only image files (JPG, PNG, GIF) are allowed.");
+                        fileInput.value = ""; // Clear the input
+                        return;
+                    }
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#image').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="container-xl px-4 mt-4">
