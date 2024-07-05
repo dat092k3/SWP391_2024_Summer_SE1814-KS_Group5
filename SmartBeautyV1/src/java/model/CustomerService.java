@@ -4,7 +4,7 @@
  */
 package model;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * history of customer register service
@@ -13,10 +13,10 @@ import java.util.Date;
  */
 public class CustomerService {
 
-    private Service service_id;
+    private int service_id;
     private int customer_id;
-    private Date date;
-    private Date end_date;
+    private Timestamp  date;
+    private Timestamp  end_date;
     private int employee_id;
     private float total_price;
 
@@ -35,7 +35,7 @@ public class CustomerService {
      */
     
 
-    public CustomerService(Service service_id, int customer_id, Date date, Date end_date, int employee_id, float total_price) {
+    public CustomerService(int service_id, int customer_id, Timestamp  date, Timestamp  end_date, int employee_id, float total_price) {
         this.service_id = service_id;
         this.customer_id = customer_id;
         this.date = date;
@@ -44,11 +44,11 @@ public class CustomerService {
         this.total_price = total_price;
     }
 
-    public Date getEnd_date() {
+    public Timestamp  getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(Timestamp  end_date) {
         this.end_date = end_date;
     }
 
@@ -69,11 +69,11 @@ public class CustomerService {
     }
 
     
-    public Service getService_id() {
+    public int getService_id() {
         return service_id;
     }
 
-    public void setService_id(Service service_id) {
+    public void setService_id(int service_id) {
         this.service_id = service_id;
     }
 
@@ -85,11 +85,11 @@ public class CustomerService {
         this.customer_id = customer_id;
     }
 
-    public Date getDate() {
+    public Timestamp  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp  date) {
         this.date = date;
     }
 }

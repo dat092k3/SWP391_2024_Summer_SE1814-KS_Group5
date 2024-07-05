@@ -28,4 +28,8 @@ public interface ServiceInterface {
     public boolean deleteService(int service_Id);
     
     public void addCustomerService(CustomerService customerService);
+    
+    public int getCustomerId(int account_Id);
+    
+    public void addCustomerServiceNotPT(CustomerService customerService);
 }

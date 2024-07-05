@@ -179,6 +179,8 @@
     <servlet>
         <servlet-name>AddService</servlet-name>
         <servlet-class>controller.servicemanagement.AddService</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>AddDepartmentServlet</servlet-name>
         <servlet-class>controller.department.AddDepartmentServlet</servlet-class>
     </servlet>
@@ -257,6 +259,10 @@
     <servlet>
         <servlet-name>AddProfileEmployeeEmptyAdminServlet</servlet-name>
         <servlet-class>controller.employeemanagement.AddProfileEmployeeEmptyAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterService</servlet-name>
+        <servlet-class>controller.servicemanagement.RegisterService</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -433,6 +439,8 @@
     <servlet-mapping>
         <servlet-name>AddService</servlet-name>
         <url-pattern>/addservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>AddDepartmentServlet</servlet-name>
         <url-pattern>/adddepartment</url-pattern>
     </servlet-mapping>
@@ -511,5 +519,9 @@
     <servlet-mapping>
         <servlet-name>AddProfileEmployeeEmptyAdminServlet</servlet-name>
         <url-pattern>/addprofileemployeeemptyadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterService</servlet-name>
+        <url-pattern>/registerservice</url-pattern>
     </servlet-mapping>
 </web-app>
