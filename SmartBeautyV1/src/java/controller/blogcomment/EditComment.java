@@ -74,10 +74,10 @@ public class EditComment extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Lấy thông tin từ request
-        int blogId = Integer.parseInt(request.getParameter("blog_id"));
-        int account_Id = Integer.parseInt(request.getParameter("account_id"));
-        int commentId = Integer.parseInt(request.getParameter("edit_comment_id_$"));
-        String content = request.getParameter("comment_content_edit");
+        int blogId = Integer.parseInt(request.getParameter("blog_id").trim());
+        int account_Id = Integer.parseInt(request.getParameter("account_id").trim());
+        int commentId = Integer.parseInt(request.getParameter("edit_comment_id_$").trim());
+        String content = request.getParameter("comment_content_edit").trim();
 
         // Sửa comment trong cơ sở dữ liệu
         BlogDAO blogDAO = new BlogDAO();

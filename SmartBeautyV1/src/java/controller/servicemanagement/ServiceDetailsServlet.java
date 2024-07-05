@@ -13,6 +13,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Service;
+import model.Employee;
+import DAO.EmployeeDAO;
+import Interface.EmployeeInterface;
+import java.util.List;
 
 /**
  *
@@ -60,7 +64,10 @@ public class ServiceDetailsServlet extends HttpServlet {
             throws ServletException, IOException {
         int service_id = Integer.parseInt(request.getParameter("service_id"));
         ServiceInterface serviceDAO = new ServiceDAO();
+        EmployeeInterface employeeDAO = new EmployeeDAO();
         Service service = serviceDAO.getServiceById(service_id);
+        List<Employee> list_pt = employeeDAO.getPTByDepartment();
+        request.setAttribute("list_pt", list_pt);
         request.setAttribute("service", service);
         request.getRequestDispatcher("servicedetails.jsp").forward(request, response);
     }

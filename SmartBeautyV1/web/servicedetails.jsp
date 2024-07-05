@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" href="styles/service_detail.css"/>
     </head>
     <body>
@@ -34,14 +35,160 @@
                     <div class="service-details">
                         <p>${service.service_name}</p>
                     <p class="service-description">${service.description}</p>
-                    <p class="service-price">Price: ${service.price} VND</p>
-                    <p>Sale: ${service.discount}</p>
+                    <p class="service-price">Price: ${service.price} VND / Tháng</p>
+                    <p>Sale: ${service.discount}%</p>
                     <div class="buttons">
-                        <button class="register-btn">Đăng kí</button>
+
+                        <c:if test="${sessionScope.account != null}">
+                            <button class="register-btn" data-toggle="modal" data-target="#serviceModal">Đăng kí</button>
+                        </c:if>
                         <button class="contact-btn">Liên hệ</button>
+                    </div>
+                    <c:if test="${sessionScope.account == null}">
+                        <p style="color: red;">
+                            You must be login to Register Service
+                            <a class="nav-link" href="signup-signin.jsp">Login</a>
+                        </p>
+                            
+                    </c:if>
+                    <c:if test="${mes != null}">
+                        <p style="color: green;">
+                            ${mes}
+                        </p>
+                    </c:if>
+                    <c:if test="${err != null}">
+                        <p style="color: red;">
+                            ${err}
+                        </p>
+                    </c:if>
+                </div>
+            </div>
+
+            <div class="modal fade" id="serviceModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="serviceForm" action="registerservice" method="post" onsubmit="return validateServiceForm()">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Register for Service</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="service_id" value="${service.service_id}">
+                                <input type="hidden" name="customer_id" value="${sessionScope.account.account_id}">
+                                <input type="hidden" name="date" value="<%= new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()) %>">
+                                <div class="form-group">
+                                    <label for="duration">Duration (months)</label>
+                                    <input type="number" class="form-control" id="duration" name="duration" min="1" required onchange="updateForm()">
+                                    <div class="invalid-feedback">Please enter a valid duration.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pt">Personal Trainer: </label>
+                                    <select name="pt" id="pt" onchange="updateForm()">
+                                        <option value="">No Register</option>
+                                        <c:forEach items="${requestScope.list_pt}" var="pt">
+                                            <option value="${pt.employee_id}" data-image="${pt.image}" data-experience="${pt.experience}">
+                                                ${pt.fullName}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="pt_details" style="display: none;">
+                                    <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                                        <div class="pt-image-container">
+                                            <img style="width: 100px" id="pt_image" src="" alt="PT Image" class="service_icon">
+                                        </div>
+                                        <div class="pt-experience-container">
+                                            <div class="experience-title">Experience:</div>
+                                            <div id="pt_experience" class="service_title"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="total_price">Total Price</label>
+                                    <input type="text" class="form-control" id="total_price" name="total_price" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" class="form-control" id="end_date" name="end_date" readonly>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn button-post">Register</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+
+            <script>
+                function calculateTotalPrice() {
+                    var duration = document.getElementById('duration').value;
+                    var price = ${service.price};
+                    var pt_price = ${service.pt_price};
+                    var discount = ${service.discount} / 100;
+
+                    var ptSelected = calculatePT();
+                    var totalPrice = duration * (price + (pt_price * ptSelected)) * (1 - discount);
+
+                    document.getElementById('total_price').value = totalPrice.toFixed(2);
+                }
+
+                function calculateEndDate() {
+                    var duration = document.getElementById('duration').value;
+                    var startDate = new Date();
+                    var endDate = new Date(startDate.setMonth(startDate.getMonth() + parseInt(duration)));
+
+                    var yyyy = endDate.getFullYear();
+                    var mm = String(endDate.getMonth() + 1).padStart(2, '0');
+                    var dd = String(endDate.getDate()).padStart(2, '0');
+                    var hh = String(endDate.getHours()).padStart(2, '0');
+                    var min = String(endDate.getMinutes()).padStart(2, '0');
+                    var ss = String(endDate.getSeconds()).padStart(2, '0');
+
+                    // Format the end date as yyyy-MM-dd HH:mm:ss
+                    var formattedEndDate = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + min + ':' + ss;
+
+                    document.getElementById('end_date').value = formattedEndDate;
+                }
+
+
+                function calculatePT() {
+                    var pt = document.getElementById('pt').value.trim();
+                    return pt === '' ? 0 : 1;
+                }
+
+                function updateForm() {
+                    calculateTotalPrice();
+                    calculateEndDate();
+                    updatePTDetails();
+                }
+
+                function updatePTDetails() {
+                    var ptSelect = document.getElementById('pt');
+                    var selectedOption = ptSelect.options[ptSelect.selectedIndex];
+
+                    var ptImage = selectedOption.getAttribute('data-image');
+                    var ptExperience = selectedOption.getAttribute('data-experience');
+
+                    if (ptImage && ptExperience) {
+                        console.log("PT Image: " + ptImage);  // Debugging line
+                        console.log("PT Experience: " + ptExperience);  // Debugging line
+
+                        document.getElementById('pt_image').src = ptImage;
+                        document.getElementById('pt_experience').innerText = ptExperience;
+                        document.getElementById('pt_details').style.display = 'block';
+                    } else {
+                        document.getElementById('pt_details').style.display = 'none';
+                    }
+                }
+            </script>
+
+
+
 
             <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>

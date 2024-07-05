@@ -55,8 +55,6 @@ public class DeleteComment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         int commentId = Integer.parseInt(request.getParameter("comment_id"));
-        int blogId = Integer.parseInt(request.getParameter("blog_id"));
-
         BlogDAO commentDAO = new BlogDAO(); // Assuming you have a CommentDAO class
         boolean deleteStatus = commentDAO.deleteComment(commentId);
 

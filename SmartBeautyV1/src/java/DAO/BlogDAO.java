@@ -26,12 +26,14 @@ public class BlogDAO extends DBContext implements BlogInterface {
      * @param txtSearch is text of search
      * @return blog
      */
+
     @Override
     public List<Blog> searchBlogByName(String txtSearch) {
         List<Blog> list = new ArrayList<>();
-        String sql = "SELECT * FROM Blog WHERE blog_name LIKE ? order by post_at desc";
+        String sql = "SELECT * FROM Blog WHERE (blog_name LIKE ? Or description like ?) order by post_at desc";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, "%" + txtSearch + "%");
+            st.setString(2, "%" + txtSearch + "%");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Blog blog = new Blog(
