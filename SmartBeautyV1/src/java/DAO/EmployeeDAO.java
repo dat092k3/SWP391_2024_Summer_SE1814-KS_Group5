@@ -175,6 +175,35 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         }
         return employees;
     }
+    
+    
+    @Override
+    public List<Employee> getPTByDepartment() {
+        String sql = "select e.* from Employee e left join Department d on e.department_id = d.department_id where  department_name = 'PT'";
+        List<Employee> employees = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return employees;
+    }
 
     @Override
     /**

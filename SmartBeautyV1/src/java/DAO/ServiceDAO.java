@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import model.CustomerService;
 
 /**
  *
@@ -151,6 +152,22 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public void addCustomerService(CustomerService customerService) {
+        String sql = "INSERT INTO CustomerService (service_id, customer_id, date, end_date, employee_id, total_price) VALUES (?, ?, ?, ?, ?, ?);";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, customerService.getService_id().getService_id()); // Assuming Service class has getService_id method
+            st.setInt(2, customerService.getCustomer_id());
+            st.setDate(3, new java.sql.Date(customerService.getDate().getTime())); // Convert java.util.Date to java.sql.Date
+            st.setDate(4, new java.sql.Date(customerService.getEnd_date().getTime())); // Convert java.util.Date to java.sql.Date
+            st.setInt(5, customerService.getEmployee_id());
+            st.setFloat(6, customerService.getTotal_price());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error adding customer service: " + e.getMessage());
+        }
     }
 
 }

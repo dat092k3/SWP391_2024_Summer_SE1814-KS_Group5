@@ -47,7 +47,7 @@
             <div class="modal fade" id="serviceModal" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form id="serviceForm" action="addservice" method="post" onsubmit="return validateServiceForm()">
+                        <form id="serviceForm" action="registerservice" method="post" onsubmit="return validateServiceForm()">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">Register for Service</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -68,10 +68,23 @@
                                     <label for="pt">Personal Trainer: </label>
                                     <select name="pt" id="pt" onchange="updateForm()">
                                         <option value="">No Register</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="opel">Opel</option>
-                                        <option value="audi">Audi</option>
+                                        <c:forEach items="${requestScope.list_pt}" var="pt">
+                                            <option value="${pt.employee_id}" data-image="${pt.image}" data-experience="${pt.experience}">
+                                                ${pt.fullName}
+                                            </option>
+                                        </c:forEach>
                                     </select>
+                                </div>
+                                <div class="form-group" id="pt_details" style="display: none;">
+                                    <div class="service_title_container d-flex flex-row align-items-center justify-content-start">
+                                        <div class="pt-image-container">
+                                            <img style="width: 100px" id="pt_image" src="" alt="PT Image" class="service_icon">
+                                        </div>
+                                        <div class="pt-experience-container">
+                                            <div class="experience-title">Experience:</div>
+                                            <div id="pt_experience" class="service_title"></div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="total_price">Total Price</label>
@@ -81,6 +94,7 @@
                                     <label for="end_date">End Date</label>
                                     <input type="text" class="form-control" id="end_date" name="end_date" readonly>
                                 </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
@@ -109,8 +123,8 @@
                     var startDate = new Date();
                     var endDate = new Date(startDate.setMonth(startDate.getMonth() + parseInt(duration)));
 
-                    var dd = endDate.getDate();
-                    var mm = endDate.getMonth() + 1;
+                    var dd = String(endDate.getDate()).padStart(2, '0');
+                    var mm = String(endDate.getMonth() + 1).padStart(2, '0');
                     var yyyy = endDate.getFullYear();
 
                     document.getElementById('end_date').value = yyyy + '-' + mm + '-' + dd;
@@ -124,8 +138,30 @@
                 function updateForm() {
                     calculateTotalPrice();
                     calculateEndDate();
+                    updatePTDetails();
+                }
+
+                function updatePTDetails() {
+                    var ptSelect = document.getElementById('pt');
+                    var selectedOption = ptSelect.options[ptSelect.selectedIndex];
+
+                    var ptImage = selectedOption.getAttribute('data-image');
+                    var ptExperience = selectedOption.getAttribute('data-experience');
+
+                    if (ptImage && ptExperience) {
+                        console.log("PT Image: " + ptImage);  // Debugging line
+                        console.log("PT Experience: " + ptExperience);  // Debugging line
+
+                        document.getElementById('pt_image').src = ptImage;
+                        document.getElementById('pt_experience').innerText = ptExperience;
+                        document.getElementById('pt_details').style.display = 'block';
+                    } else {
+                        document.getElementById('pt_details').style.display = 'none';
+                    }
                 }
             </script>
+
+
 
 
             <!-- Footer -->

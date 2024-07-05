@@ -19,12 +19,12 @@ public class EditBlog extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int blogid = Integer.parseInt(request.getParameter("blog_id").trim());
-        String blogname = request.getParameter("blog_name").trim();
-        String blogimage = request.getParameter("image").trim();
-        String blogdescription = request.getParameter("description").trim();
-        String blogcontent = request.getParameter("content").trim();
-        int account_id = Integer.parseInt(request.getParameter("account_id").trim());
+        int blogid = Integer.parseInt(request.getParameter("blog_id"));
+        String blogname = request.getParameter("blog_name");
+        String blogimage = request.getParameter("image");
+        String blogdescription = request.getParameter("description");
+        String blogcontent = request.getParameter("content");
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
         int employee_id = blogDAO.posterId(account_id);
         System.out.println(blogname + " " + blogimage + " " + blogdescription + " " + blogcontent + " " + employee_id);
         

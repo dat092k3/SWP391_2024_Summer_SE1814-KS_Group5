@@ -6,6 +6,7 @@ package Interface;
 
 import java.util.List;
 import model.Comment;
+import model.CustomerService;
 import model.Service;
 
 /**
@@ -25,4 +26,6 @@ public interface ServiceInterface {
     public void editService(Service service);
 
     public boolean deleteService(int service_Id);
+    
+    public void addCustomerService(CustomerService customerService);
 }

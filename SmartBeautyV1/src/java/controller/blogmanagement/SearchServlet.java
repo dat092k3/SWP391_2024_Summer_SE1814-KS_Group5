@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 import model.Blog;
 
@@ -59,15 +60,18 @@ public class SearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         String txtSearch = request.getParameter("txt");
         BlogInterface blogDAO = new BlogDAO();
         List<Blog> list;
         if (txtSearch != null && !txtSearch.trim().isEmpty()) {
             list = blogDAO.searchBlogByName(txtSearch);
+            session.setAttribute("txt", txtSearch);
         } else {
             list = blogDAO.getAllBlog();
         }
         request.setAttribute("list", list);
+        request.setAttribute("txt", txtSearch); // Đặt giá trị txtSearch vào request attribute
         request.getRequestDispatcher("blog.jsp").forward(request, response);
     }
 
