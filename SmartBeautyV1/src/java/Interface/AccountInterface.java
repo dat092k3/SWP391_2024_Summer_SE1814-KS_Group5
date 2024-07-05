@@ -29,7 +29,9 @@ public interface AccountInterface {
 
     public String getEmailOfAccount(String account_id);
 
-    public String getPhoneOfAccount(String phonenumber);
+    public String getPhoneOfAccount(String account_id);
+
+    public String getUsernameOfAccount(String account_id);
 
     public void AddAccount(String username, String password, String email, String phonenumber, String role);
 
