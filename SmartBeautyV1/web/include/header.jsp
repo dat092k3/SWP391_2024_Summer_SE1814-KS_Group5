@@ -37,11 +37,18 @@
                                 <nav class="main_nav">
                                     <ul class="d-flex flex-row align-items-center justify-content-start">
                                         <li><a href="index.jsp">Home</a></li>
-                                        <li class="active"><a href="about.jsp">About us</a></li>
-                                        <li><a href="searchservice">Services</a></li>
-                                            <c:if test="${account.getRole() eq 'Customer' or account.getRole() eq 'Takecare'}">
-                                            <li><a href="schedule.jsp">Schedule</a></li>
-                                            </c:if>
+                                        <li class="active"><a href="about.jsp">About us</a>
+                                        <li class="dropdown" >
+                                            <a href="searchservice">Services</a>
+                                            <div class="dropdown-content">
+                                                <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Takecare'}">
+                                                    <a href="schedule.jsp">Schedule</a>
+                                                </c:if>
+                                                <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Takecare'}">
+                                                    <a href="schedule.jsp">Schedule</a>
+                                                </c:if>
+                                            </div>
+                                        </li>
                                         <li><a href="search">Blog</a></li>
                                         <li><a href="contact.jsp">Contact</a></li>
                                             <c:if test="${account.getRole() eq 'Admin'}">

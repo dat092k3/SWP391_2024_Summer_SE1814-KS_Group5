@@ -38,7 +38,7 @@
 
         </script>
         <script>
-            function deleteComment(commentId, blogId) {
+            function deleteComment(commentId) {
                 if (confirm("Bạn có chắc muốn xóa comment này không?")) {
                     var xhttp = new XMLHttpRequest();
                     xhttp.onreadystatechange = function () {
@@ -54,7 +54,7 @@
                             }
                         }
                     };
-                    xhttp.open("GET", "DeleteComment?comment_id=" + commentId + "&blog_id=" + blogId, true);
+                    xhttp.open("GET", "DeleteComment?comment_id=" + commentId, true);
                     xhttp.send();
                 }
             }
@@ -193,7 +193,7 @@
                                                 <button type="button" class="btn button-post edit-comment-btn" onclick="w3_open('${comment.comment_id}', '${blog.blog_id}')">
                                                     <i class="fa fa-pencil"></i> Edit
                                                 </button>
-                                                <button type="button" class="btn button-post delete-comment-btn" onclick="deleteComment(${comment.comment_id}, ${blog.blog_id})">
+                                                <button type="button" class="btn button-post delete-comment-btn" onclick="deleteComment(${comment.comment_id})">
                                                     <i class="fa fa-trash"></i> Delete
                                                 </button>
                                             </div>

@@ -99,7 +99,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="image">Image URL</label>
-                                    <input type="url" class="form-control" id="image" name="image" required>
+                                    <input type="text" class="form-control" id="image" name="image" required>
                                     <div class="invalid-feedback">Please enter a valid image URL.</div>
                                 </div>
                                 <div class="form-group">

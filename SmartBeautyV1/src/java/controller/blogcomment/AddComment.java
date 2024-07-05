@@ -73,9 +73,9 @@ public class AddComment extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int blogId = Integer.parseInt(request.getParameter("blog_id"));
-        int account_Id = Integer.parseInt(request.getParameter("account_id"));
-        String content = request.getParameter("comment_content_add");
+        int blogId = Integer.parseInt(request.getParameter("blog_id").trim());
+        int account_Id = Integer.parseInt(request.getParameter("account_id").trim());
+        String content = request.getParameter("comment_content_add").trim();
         BlogDAO blogDAO = new BlogDAO();
         Comment comment = new Comment(blogId, blogDAO.commentAuthorId(account_Id), content);
 

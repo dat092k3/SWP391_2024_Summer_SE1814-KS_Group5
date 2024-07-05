@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
         <link href="plugins/colorbox/colorbox.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="styles/blog.css">
         <link rel="stylesheet" href="styles/service_detail.css"/>
     </head>
     <body>
@@ -34,14 +35,98 @@
                     <div class="service-details">
                         <p>${service.service_name}</p>
                     <p class="service-description">${service.description}</p>
-                    <p class="service-price">Price: ${service.price} VND</p>
+                    <p class="service-price">Price: ${service.price} VND / Tháng</p>
                     <p>Sale: ${service.discount}</p>
                     <div class="buttons">
-                        <button class="register-btn">Đăng kí</button>
+                        <button class="register-btn" data-toggle="modal" data-target="#serviceModal">Đăng kí</button>
                         <button class="contact-btn">Liên hệ</button>
                     </div>
                 </div>
             </div>
+
+            <div class="modal fade" id="serviceModal" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form id="serviceForm" action="addservice" method="post" onsubmit="return validateServiceForm()">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Register for Service</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="service_id" value="${service.service_id}">
+                                <input type="hidden" name="customer_id" value="${sessionScope.account.account_id}">
+                                <input type="hidden" name="date" value="<%= new java.util.Date() %>">
+
+                                <div class="form-group">
+                                    <label for="duration">Duration (months)</label>
+                                    <input type="number" class="form-control" id="duration" name="duration" min="1" required onchange="updateForm()">
+                                    <div class="invalid-feedback">Please enter a valid duration.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pt">Personal Trainer: </label>
+                                    <select name="pt" id="pt" onchange="updateForm()">
+                                        <option value="">No Register</option>
+                                        <option value="saab">Saab</option>
+                                        <option value="opel">Opel</option>
+                                        <option value="audi">Audi</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="total_price">Total Price</label>
+                                    <input type="text" class="form-control" id="total_price" name="total_price" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="end_date">End Date</label>
+                                    <input type="text" class="form-control" id="end_date" name="end_date" readonly>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn button-post">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function calculateTotalPrice() {
+                    var duration = document.getElementById('duration').value;
+                    var price = ${service.price};
+                    var pt_price = ${service.pt_price};
+                    var discount = ${service.discount} / 100;
+
+                    var ptSelected = calculatePT();
+                    var totalPrice = duration * (price + (pt_price * ptSelected)) * (1 - discount);
+
+                    document.getElementById('total_price').value = totalPrice.toFixed(2);
+                }
+
+                function calculateEndDate() {
+                    var duration = document.getElementById('duration').value;
+                    var startDate = new Date();
+                    var endDate = new Date(startDate.setMonth(startDate.getMonth() + parseInt(duration)));
+
+                    var dd = endDate.getDate();
+                    var mm = endDate.getMonth() + 1;
+                    var yyyy = endDate.getFullYear();
+
+                    document.getElementById('end_date').value = yyyy + '-' + mm + '-' + dd;
+                }
+
+                function calculatePT() {
+                    var pt = document.getElementById('pt').value.trim();
+                    return pt === '' ? 0 : 1;
+                }
+
+                function updateForm() {
+                    calculateTotalPrice();
+                    calculateEndDate();
+                }
+            </script>
+
 
             <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>

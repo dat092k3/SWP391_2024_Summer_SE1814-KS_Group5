@@ -3,25 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.blogmanagement;
+package controller.servicemanagement;
 
+import DAO.ServiceDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import DAO.BlogDAO;
-import Interface.BlogInterface;
-import java.util.List;
-import model.Blog;
-import model.Comment;
 
 /**
  *
  * @author td532
  */
-public class DetailsServlet extends HttpServlet {
+public class DeleteService extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,10 +34,10 @@ public class DetailsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DetailsServlet</title>");  
+            out.println("<title>Servlet DeleteService</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DetailsServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeleteService at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,24 +54,15 @@ public class DetailsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        int account_Id;
-        String aid = request.getParameter("account_id").trim();
-        if (aid != null && !aid.isEmpty()) {
-            account_Id = Integer.parseInt(aid);
-        } else {
-            account_Id = -1;
-        }
-        
-        int blogId = Integer.parseInt(request.getParameter("id").trim());
-        BlogInterface blogDAO = new BlogDAO();
-        Blog blog = blogDAO.takeBlogById(blogId);
-        List<Comment> comments = blogDAO.BlogComments(blogId);
-        int authorId = blogDAO.commentAuthorId(account_Id);
-        request.setAttribute("blog", blog);
-        request.setAttribute("comments", comments);
-        request.setAttribute("authorId", authorId);
-        request.getRequestDispatcher("blog_details.jsp").forward(request, response);
+        // Get service ID from the request
+        int serviceId = Integer.parseInt(request.getParameter("service_id").trim());
 
+        // Delete service from the database
+        ServiceDAO serviceDAO = new ServiceDAO();
+        boolean result = serviceDAO.deleteService(serviceId);
+
+        // Return the result to the client
+        response.getWriter().write(String.valueOf(result));
     } 
 
     /** 

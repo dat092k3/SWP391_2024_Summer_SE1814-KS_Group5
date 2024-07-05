@@ -38,7 +38,10 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
                         rs.getString("description"),
                         rs.getFloat("price"),
                         rs.getInt("discount"),
-                        rs.getString("service_name")
+                        rs.getString("service_name"),
+                        rs.getString("image"),
+                        rs.getBoolean("status"),
+                        rs.getFloat("pt_price")
                 );
                 list.add(service);
             }
@@ -65,7 +68,10 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
                         rs.getString("description"),
                         rs.getFloat("price"),
                         rs.getInt("discount"),
-                        rs.getString("service_name")
+                        rs.getString("service_name"),
+                        rs.getString("image"),
+                        rs.getBoolean("status"),
+                        rs.getFloat("pt_price")
                 );
                 list.add(service);
             }
@@ -84,11 +90,14 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 service = new Service(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getFloat(3),
-                        rs.getInt(4),
-                        rs.getString(5)
+                        rs.getInt("service_id"),
+                        rs.getString("description"),
+                        rs.getFloat("price"),
+                        rs.getInt("discount"),
+                        rs.getString("service_name"),
+                        rs.getString("image"),
+                        rs.getBoolean("status"),
+                        rs.getFloat("pt_price")
                 );
             }
         } catch (SQLException e) {
@@ -99,12 +108,14 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
 
     @Override
     public void addService(Service service) {
-        String sql = "INSERT INTO [dbo].[Service] (description, price, discount, service_name) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO [dbo].[Service] (description, price, discount, service_name, image, pt_price) VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, service.getDescription());
             st.setFloat(2, service.getPrice());
             st.setInt(3, service.getDiscount());
             st.setString(4, service.getService_name());
+            st.setString(5, service.getImage());
+            st.setFloat(6, service.getPt_price());
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding service: " + e.getMessage());
@@ -113,13 +124,15 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
 
     @Override
     public void editService(Service service) {
-        String sql = "UPDATE [dbo].[Service] SET description = ?, price = ?, discount = ?, service_name = ? WHERE service_id = ?;";
+        String sql = "UPDATE [dbo].[Service] SET description = ?, price = ?, discount = ?, service_name = ?, image = ?, pt_price = ? WHERE service_id = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, service.getDescription());
             st.setFloat(2, service.getPrice());
             st.setInt(3, service.getDiscount());
             st.setString(4, service.getService_name());
-            st.setInt(5, service.getService_id());
+            st.setString(5, service.getImage());
+            st.setFloat(6, service.getPt_price());
+            st.setInt(7, service.getService_id());
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error editing service: " + e.getMessage());
@@ -127,15 +140,17 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
     }
 
     @Override
-    public boolean deleteService(int service_Id) {
-        String sql = "DELETE FROM [dbo].[Service] WHERE service_id = ?;";
+    public boolean deleteService(int serviceId) {
+        String sql = "UPDATE [dbo].[Service] SET status = 0 WHERE service_id = ?;";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
-            st.setInt(1, service_Id);
+            st.setInt(1, serviceId);
             int affectedRows = st.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println("Error deleting service: " + e.getMessage());
+            System.err.println("Error deleting service: " + e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
+
 }

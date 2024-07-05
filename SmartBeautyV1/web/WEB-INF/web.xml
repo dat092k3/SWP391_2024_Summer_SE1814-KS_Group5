@@ -168,6 +168,18 @@
         <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
         <servlet-class>controller.employeemanagement.ViewProfileEmployeePTAndTakecareServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteService</servlet-name>
+        <servlet-class>controller.servicemanagement.DeleteService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditService</servlet-name>
+        <servlet-class>controller.servicemanagement.EditService</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddService</servlet-name>
+        <servlet-class>controller.servicemanagement.AddService</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -331,5 +343,17 @@
     <servlet-mapping>
         <servlet-name>ViewProfileEmployeePTAndTakecareServlet</servlet-name>
         <url-pattern>/viewprofileemployeeptandtakecare</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteService</servlet-name>
+        <url-pattern>/DeleteService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditService</servlet-name>
+        <url-pattern>/editservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddService</servlet-name>
+        <url-pattern>/addservice</url-pattern>
     </servlet-mapping>
 </web-app>
