@@ -76,6 +76,10 @@ public class EditAccountServlet extends HttpServlet {
             request.setAttribute("error2", "Email must be valid and contain @ and .com.");
             request.getRequestDispatcher("viewdetailaccountptandtakecare?account_id=" + account_id).forward(request, response);
         }
+        if (password.isEmpty() || !password.matches("^\\S+$")) {
+            request.setAttribute("error4", "Password not contain empty or Space, must > 3 character");
+            request.getRequestDispatcher("viewdetailaccountptandtakecare?account_id=" + account_id).forward(request, response);
+        }
         // Validate Phone Number
         if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
             request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");

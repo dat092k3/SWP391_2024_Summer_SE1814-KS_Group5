@@ -41,7 +41,8 @@
                         </div>
                         <div class="col-md-6 pt-md-0 pt-3">
                             <label>PassWord<span class="text-danger">*</span></label>
-                            <input type="text" class="bg-light form-control"  value="${accountbyid.password}" name="password" minlength="3" maxlength="50"   pattern="^\S.*$"  title="cannot contain any spaces." required="">
+                            <input type="text" class="bg-light form-control"  value="${accountbyid.password}" name="password" minlength="3" maxlength="50"   pattern="^\S+$"  title="cannot contain any spaces." required="">
+                            <span style="color: red">${error4}</span>
                         </div>
                     </div>
                     <div class="row py-2">

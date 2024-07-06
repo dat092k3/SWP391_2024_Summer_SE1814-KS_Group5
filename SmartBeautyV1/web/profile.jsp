@@ -51,7 +51,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="labels">Fullname</label>
-                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="fullname" placeholder="Full name" required="">
+                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" maxlength="255" name="fullname" placeholder="Full name" required="">
                                                 <c:if test="${not empty error1}">
                                                     <div class="text-danger">${error1}</div>
                                                 </c:if>
@@ -67,7 +67,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="labels">Email</label>
-                                                <input type="email" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="email" placeholder="Enter Email" required="">
+                                                <input type="email" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="email"  maxlength="255" placeholder="Enter Email" required="">
                                                 <c:if test="${not empty error2}">
                                                     <div class="text-danger">${error2}</div>
                                                 </c:if>
@@ -109,7 +109,7 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="labels">Image</label>
-                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" name="image" placeholder="Image" required="">
+                                                <input type="text" pattern="^\S.*$" title="cannot contain any spaces." class="form-control" maxlength="2000" name="image"  placeholder="Image" required="">
                                                 <c:if test="${not empty error5}">
                                                     <div class="text-danger">${error5}</div>
                                                 </c:if>
