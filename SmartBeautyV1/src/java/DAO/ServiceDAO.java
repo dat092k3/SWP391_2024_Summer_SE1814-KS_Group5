@@ -29,9 +29,10 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
     @Override
     public List<Service> searchServiceByName(String txtSearch) {
         List<Service> list = new ArrayList<>();
-        String sql = "SELECT * FROM Service WHERE service_name LIKE ?";
+        String sql = "SELECT * FROM Service WHERE service_name LIKE ? or description LIKE ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, "%" + txtSearch + "%");
+            st.setString(2, "%" + txtSearch + "%");
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 Service service = new Service(
@@ -169,7 +170,7 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
             System.out.println("Error adding customer service: " + e.getMessage());
         }
     }
-    
+
     @Override
     public void addCustomerServiceNotPT(CustomerService customerService) {
         String sql = "INSERT INTO CustomerService (service_id, customer_id, date, end_date, total_price) VALUES (?, ?, ?, ?, ?);";
@@ -200,7 +201,64 @@ public class ServiceDAO extends DBContext implements ServiceInterface {
         }
         return customerId;
     }
-    
-    
+
+    @Override
+    public List<CustomerService> Services_Registered() {
+        List<CustomerService> registeredServices = new ArrayList<>();
+        String sql = "SELECT c.*, s.service_name, s.image, s.description "
+                + "FROM CustomerService c LEFT JOIN Service s ON c.service_id = s.service_id "
+                + "ORDER BY c.date DESC";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                CustomerService customerService = new CustomerService(
+                        rs.getInt("service_id"),
+                        rs.getInt("customer_id"),
+                        rs.getTimestamp("date"),
+                        rs.getTimestamp("end_date"),
+                        rs.getInt("employee_id"),
+                        rs.getFloat("total_price"),
+                        rs.getString("service_name"),
+                        rs.getString("image"),
+                        rs.getString("description")
+                );
+                registeredServices.add(customerService);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching registered services: " + e.getMessage());
+        }
+        return registeredServices;
+    }
+
+    @Override
+    public List<CustomerService> searchServices_Registered(String txtSearch) {
+        List<CustomerService> registeredServices = new ArrayList<>();
+        String sql = "SELECT c.*, s.service_name, s.image, s.description "
+                + "FROM CustomerService c LEFT JOIN Service s ON c.service_id = s.service_id "
+                + "WHERE service_name LIKE ? or description LIKE ?"
+                + "ORDER BY c.date DESC";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setString(1, "%" + txtSearch + "%");
+            st.setString(2, "%" + txtSearch + "%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                CustomerService customerService = new CustomerService(
+                        rs.getInt("service_id"),
+                        rs.getInt("customer_id"),
+                        rs.getTimestamp("date"),
+                        rs.getTimestamp("end_date"),
+                        rs.getInt("employee_id"),
+                        rs.getFloat("total_price"),
+                        rs.getString("service_name"),
+                        rs.getString("image"),
+                        rs.getString("description")
+                );
+                registeredServices.add(customerService);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return registeredServices;
+    }
 
 }

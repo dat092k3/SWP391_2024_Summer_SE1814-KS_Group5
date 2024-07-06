@@ -8,6 +8,7 @@ import java.util.List;
 import model.Comment;
 import model.CustomerService;
 import model.Service;
+import model.CustomerService;
 
 /**
  *
@@ -32,4 +33,9 @@ public interface ServiceInterface {
     public int getCustomerId(int account_Id);
     
     public void addCustomerServiceNotPT(CustomerService customerService);
+    
+    public List<CustomerService> Services_Registered();
+    
+    public List<CustomerService> searchServices_Registered(String txtSearch);
+    
 }
