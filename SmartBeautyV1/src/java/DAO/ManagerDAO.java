@@ -224,7 +224,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerExist(String name, String email, String phonenumber) {
         String sql = "select * from Manager\n"
-                + "where (fullname =? and email=? and phonenumber=? and status=1) or (phonenumber=? or email=? and status=1)";
+                + "where fullname =? and (email=? and phonenumber=? and status=1) or (phonenumber=? or email=? and status=1)";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
@@ -241,6 +241,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     }
     /**
      * check manager when edit
+     * @param managerId of manager need to check
      * @param name of manager need to check
      * @param image of manager need to check
      * @param address of manager need to check
@@ -250,26 +251,27 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
      * @return true if existed, false otherwise
      */
     @Override
-    public boolean isManagerExistWhenSave(String name, String image,String address, String phonenumber, String email, float salary) {
-        String sql = "select * from Manager\n"
-                + "where (fullname =? and image=? and address=? and phonenumber=? and email=? and salary=? and status=1) or (phonenumber=? or email=? and status=1)";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, name);
-            st.setString(2, image);
-            st.setString(3, address);
-            st.setString(4, phonenumber);
-            st.setString(5, email);
-            st.setFloat(6, salary);
-            st.setString(7, phonenumber);
-            st.setString(8, email);
-            ResultSet rs = st.executeQuery();
-            return rs.next();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return false;
+    public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary) {
+    String sql = "SELECT * FROM Manager WHERE (fullname = ? AND image = ? AND address = ? AND phonenumber = ? AND email = ? AND salary = ? AND status = 1) OR ((phonenumber = ? OR email = ?) AND manager_id != ? AND status = 1)";
+    try {
+        PreparedStatement st = connection.prepareStatement(sql);
+        st.setString(1, name);
+        st.setString(2, image);
+        st.setString(3, address);
+        st.setString(4, phonenumber);
+        st.setString(5, email);
+        st.setFloat(6, salary);
+        st.setString(7, phonenumber);
+        st.setString(8, email);
+        st.setInt(9, managerId); // Exclude the current manager by id
+        ResultSet rs = st.executeQuery();
+        return rs.next();
+    } catch (SQLException e) {
+        System.out.println(e);       
     }
+    return false;
+}
+
     /**
      * get id of manager
      * @return id of manager

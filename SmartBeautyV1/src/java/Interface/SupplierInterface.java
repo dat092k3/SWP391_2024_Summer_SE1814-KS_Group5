@@ -26,7 +26,7 @@ public interface SupplierInterface {
 
     public boolean isSupplierExist(String name, String phonenumber, String email);
     
-    public boolean isSupplierExistWhenSave(String name, String address, String image, String phonenumber, String email);
+    public boolean isSupplierExistWhenSave(int supplierId, String phonenumber, String email);
 
     public int getSupplierId();
 

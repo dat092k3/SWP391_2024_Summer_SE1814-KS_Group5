@@ -22,7 +22,7 @@ public interface ManagerInterface {
 
     public void addNewManager(Manager manager);
 
-    public boolean isManagerExistWhenSave(String name, String image, String address, String phonenumber, String email, float salary);
+    public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary);
 
     public boolean isManagerExist(String name, String address, String phonenumber);
 

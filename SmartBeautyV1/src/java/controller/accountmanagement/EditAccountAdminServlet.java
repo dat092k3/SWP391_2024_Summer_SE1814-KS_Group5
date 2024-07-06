@@ -83,10 +83,51 @@ public class EditAccountAdminServlet extends HttpServlet {
         } else {
             EmployeeInterface employeeDAO = new EmployeeDAO();
             Account account = accountDAO.checkAccountExists(username, phonenumber);
-            if (account == null) {
+            Account checkexistemailaccount = accountDAO.checkEmailAccountExists(email);
+            Account checkexistphoneaccount = accountDAO.checkPhoneAccountExists(phonenumber);
+            Account checkexistusernameaccount = accountDAO.checkUsernameAccountExists(username);
+            String phonedao = accountDAO.getPhoneOfAccount(String.valueOf(account_id));
+            String emaildao = accountDAO.getEmailOfAccount(String.valueOf(account_id));
+            String usernamedao = accountDAO.getUsernameOfAccount(String.valueOf(account_id));
+            if (email.equals(emaildao) && phonenumber.equals(phonedao) && username.equals(usernamedao)) {
                 accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
                 employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
-                request.setAttribute("successadmin", "Update Account Success!");
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistemailaccount == null && phonenumber.equals(phonedao) && username.equals(usernamedao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistemailaccount == null && checkexistphoneaccount == null && username.equals(usernamedao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistemailaccount == null && phonenumber.equals(phonedao) && checkexistusernameaccount == null) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistphoneaccount == null && username.equals(usernamedao) && email.equals(emaildao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistphoneaccount == null && checkexistusernameaccount == null && email.equals(emaildao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (checkexistusernameaccount == null && phonenumber.equals(phonedao) && email.equals(emaildao)) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
+                request.getRequestDispatcher("viewaccountadmin").forward(request, response);
+            } else if (account == null) {
+                accountDAO.EditAccountOfEmployee(account_id, username, password, email, phonenumber, role, status);
+                employeeDAO.updateProfileEmployeePhonenumberAndEmail(email, phonenumber, account_id);
+                request.setAttribute("successadmin", "Update Account " + username + " Success!");
                 request.getRequestDispatcher("viewaccountadmin").forward(request, response);
             } else {
                 // Báo lỗi nếu tài khoản đã tồn tại

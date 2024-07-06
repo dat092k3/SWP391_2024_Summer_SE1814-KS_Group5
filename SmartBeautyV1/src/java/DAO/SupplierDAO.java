@@ -144,7 +144,7 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
     @Override
     public boolean isSupplierExist(String name, String phonenumber, String email) {
         String sql = "select * from Suplier\n"
-                + "where suplier_name =? and phonenumber=? and email=? status=1";
+                + "where suplier_name =? and ((phonenumber=? and email=?) OR (phonenumber =? OR email =?)) AND status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, name);
@@ -152,6 +152,8 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
             st.setString(3, email);
             st.setString(4, phonenumber);
             st.setString(5, email);
+            st.setString(6, phonenumber);
+            st.setString(7, email);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
@@ -163,30 +165,27 @@ public class SupplierDAO extends DBContext implements SupplierInterface {
     /**
      * check supplier is existed when save
      *
-     * @param name of supplier need to check
-     * @param address of supplier need to check
-     * @param image of supplier need to check
+     * @param supplierId of supplier need to check
      * @param phonenumber of supplier need to check
      * @param email of supplier need to check
      * @return true if existed false otherwise
      */
     @Override
-    public boolean isSupplierExistWhenSave(String name, String address, String image, String phonenumber, String email) {
-        String sql = "SELECT * FROM Suplier WHERE suplier_name = ? AND address = ? AND image = ? AND phonenumber = ? AND email = ? AND status = 1";
+    public boolean isSupplierExistWhenSave(int supplierId, String phonenumber, String email) {
+        String sql = "SELECT * FROM Suplier WHERE (phonenumber = ? OR email = ?) AND suplier_id != ? AND status = 1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, name);
-            st.setString(2, address);
-            st.setString(3, image);
-            st.setString(4, phonenumber);
-            st.setString(5, email);
+            st.setString(1, phonenumber);
+            st.setString(2, email);
+            st.setInt(3, supplierId);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             System.out.println("SQL Exception: " + e.getMessage());
+            return false;
         }
-        return false;
     }
+
     /**
      * add supplier
      *

@@ -17,6 +17,12 @@ public interface AccountInterface {
 
     public Account checkAccountExists(String username, String phonenumber);
 
+    public Account checkEmailAccountExists(String email);
+
+    public Account checkPhoneAccountExists(String phonenumber);
+
+    public Account checkUsernameAccountExists(String username);
+
     public void signup(String username, String password, String email, String phonenumber);
 
     public String checkEmailExist(String email);
@@ -29,7 +35,9 @@ public interface AccountInterface {
 
     public String getEmailOfAccount(String account_id);
 
-    public String getPhoneOfAccount(String phonenumber);
+    public String getPhoneOfAccount(String account_id);
+
+    public String getUsernameOfAccount(String account_id);
 
     public void AddAccount(String username, String password, String email, String phonenumber, String role);
 

@@ -83,33 +83,33 @@ public class AddProfileEmployeeEmptyServlet extends HttpServlet {
         String phonenumberofaccount = accountDAO.getPhoneOfAccount(String.valueOf(account_id));
         String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
         if (fullname.isEmpty() || !fullname.matches("^[A-ZÀ-Ỵ][a-zà-ỹ]+( [A-ZÀ-Ỵ][a-zà-ỹ]+)+")) {
-            request.setAttribute("error1", "Full name must start with a capital letter and contain spaces between names.");
+            request.setAttribute("error1", "Full name must start with a capital letter and contain spaces between names with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
-            request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");
+            request.setAttribute("error3", "Phone number must be valid and start with a correct prefix with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (age < 18 || age > 100) {
-            request.setAttribute("error10", "You must be at least 18-100 years old.");
+            request.setAttribute("error10", "You must be at least 18-100 years old with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
-            request.setAttribute("error10", "Hire date must be at least 18 years after date of birth and not in the future.");
+            request.setAttribute("error10", "Hire date must be at least 18 years after date of birth and not in the future with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (image.isEmpty()) {
-            request.setAttribute("error5", "Image URL must not be empty.");
+            request.setAttribute("error5", "Image URL must not be empty with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (email.isEmpty() || !email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
-            request.setAttribute("error2", "Email must be valid and contain @ and .com.");
+            request.setAttribute("error2", "Email must be valid and contain @ and .com with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (!email.equals(emailofaccount)) {
-            request.setAttribute("error8", "Emails do not match with account Signup.");
+            request.setAttribute("error8", "Emails do not match with account Signup with account id is"+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else if (!phonenumber.equals(phonenumberofaccount)) {
-            request.setAttribute("error9", "Phonenumber do not match with account Signup.");
+            request.setAttribute("error9", "Phonenumber do not match with account Signup with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         } else {
             EmployeeInterface employeeDAO = new EmployeeDAO();
             employeeDAO.addProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, image, experience, department_id, account_id);
-            request.setAttribute("success", "Insert Profile Of Employee Susscess");
+            request.setAttribute("success", "Insert Profile Of Employee Susscess with account id is "+account_id);
             request.getRequestDispatcher("viewprofileemployeeptandtakecare").forward(request, response);
         }
     }

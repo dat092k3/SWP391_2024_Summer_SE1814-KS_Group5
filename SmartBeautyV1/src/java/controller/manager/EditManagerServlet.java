@@ -184,7 +184,7 @@ public class EditManagerServlet extends HttpServlet {
         }
         Account editAccount = new Account(username, password, email, phonenumber, "Manager", true);
         Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hiredate, Float.parseFloat(salary), image, true);
-        if (managerDAO.isManagerExistWhenSave(namemanager, image, address, phonenumber, email, Float.parseFloat(salary))) {
+        if (managerDAO.isManagerExistWhenSave(Integer.parseInt(managerId), namemanager, image, address, phonenumber, email, Float.parseFloat(salary))) {
             request.setAttribute("messageerror", "This manager is existed");
             request.setAttribute("email", email);
             request.setAttribute("username", username);
@@ -212,7 +212,7 @@ public class EditManagerServlet extends HttpServlet {
 
                 if (!source.isEmpty()) {
                     String filename = managerId + ".png";
-                    if (!Files.exists(Path.of(realPath))) { // check folder /images/Supplier is existed
+                    if (!Files.exists(Path.of(realPath))) { // check folder /images/Manager is existed
                         Files.createDirectory(Path.of(realPath));
                     }
                     part.write(realPath + "/" + filename); //Save the uploaded file to the destination folder with a new filename.

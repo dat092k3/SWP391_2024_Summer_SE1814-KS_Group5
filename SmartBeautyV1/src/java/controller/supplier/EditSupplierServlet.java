@@ -83,10 +83,10 @@ public class EditSupplierServlet extends HttpServlet {
             return;
         }
 
-        Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, image, address, phoneNumber, email, true);
+        Supplier editSupplier = new Supplier(Integer.parseInt(supplierId), name, "", address, phoneNumber, email, true);
 
-        if (supplierDAO.isSupplierExistWhenSave(name, address, image, phoneNumber, email)) {
-            request.setAttribute("messageerror", "This supplier already exists");
+        if (supplierDAO.isSupplierExistWhenSave(Integer.parseInt(supplierId), phoneNumber, email)) {
+            request.setAttribute("messageerror", "This supplier already exists");           
         } else {
             Part part = request.getPart("img");
             if (part != null && part.getSize() > 0) { // Check if part is not null and has content
