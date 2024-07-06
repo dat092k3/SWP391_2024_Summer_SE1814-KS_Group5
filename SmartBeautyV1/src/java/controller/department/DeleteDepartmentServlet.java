@@ -66,6 +66,7 @@ public class DeleteDepartmentServlet extends HttpServlet {
         try {
             if (departmentId != null && !departmentId.isEmpty()) {
                 departmentDAO.deleteDepartment(Integer.parseInt(departmentId));
+                departmentDAO.deleteAllEmployeeeIfDeleteDepartment();
             }
             request.setAttribute("message", "Delete successful");
             request.setAttribute("showEditDialog", false);

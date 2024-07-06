@@ -92,7 +92,7 @@ public class EditDepartmentServlet extends HttpServlet {
             return;
         }
         
-        if(departmentDAO.isDepartmentExist(namedepartment)){
+        if(departmentDAO.isDepartmentExistEdit(namedepartment, Integer.parseInt(departmentId))){
             request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
@@ -100,8 +100,8 @@ public class EditDepartmentServlet extends HttpServlet {
             return;
         }   
         
-        if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager))){
-            request.setAttribute("messageerror", "This department is existed");
+        if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager), Integer.parseInt(departmentId))){
+            request.setAttribute("messageerror", "This manager is maning another department");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);
@@ -109,7 +109,8 @@ public class EditDepartmentServlet extends HttpServlet {
         }else{
             Department editDepartment= new Department(Integer.parseInt(departmentId), namedepartment, Integer.parseInt(manager), true);
             departmentDAO.updateDepartment(editDepartment);
-            request.setAttribute("massage", "Update Success");
+            request.setAttribute("message", "Update Successful");
+            request.setAttribute("showEditDialog", false);
         }
         request.getRequestDispatcher("managedepartment").forward(request, response);       
     }

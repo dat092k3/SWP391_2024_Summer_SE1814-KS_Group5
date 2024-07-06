@@ -11,7 +11,7 @@ import java.util.Date;
  * @author LENOVO
  */
 public class Employee {
-     private int employee_id;
+    private int employee_id;
     private int account_id;
     private String fullName;
     private String gender;

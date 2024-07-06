@@ -160,7 +160,6 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
             st.setString(9, experience);
             st.setInt(10, department_id);
             st.setInt(11, account_id);
-
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);

@@ -12,7 +12,6 @@ import context.DBContext;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
-import ultils.MD5;
 
 /**
  * access data in database
@@ -481,7 +480,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
         }
         return -1; // Return -1 if no account is found or an error occurs
     }
-
+    
     /**
      * Function to get the newest account ID of an employee with role 'Admin'
      *

@@ -72,6 +72,7 @@ public class AddDepartmentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         
+        String departmentId= request.getParameter("departmentId").trim();
         String namedepartment = request.getParameter("namedepartment").trim();
         String manager=request.getParameter("manager").trim();
         
@@ -92,7 +93,7 @@ public class AddDepartmentServlet extends HttpServlet {
             return;
         }
         
-        if(departmentDAO.isDepartmentExist(namedepartment)){
+        if(departmentDAO.isDepartmentExistAdd(namedepartment)){
             request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
@@ -100,7 +101,7 @@ public class AddDepartmentServlet extends HttpServlet {
             return;
         }   
         
-        if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager))){
+        if(departmentDAO.isManagerManingAnotherDepartment(namedepartment, Integer.parseInt(manager), Integer.parseInt(departmentId))){
             request.setAttribute("messageerror", "This manager is maning another department");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
@@ -109,6 +110,9 @@ public class AddDepartmentServlet extends HttpServlet {
         }else{
             Department newDepartment= new Department(namedepartment, Integer.parseInt(manager), true);
             departmentDAO.addNewDepartment(newDepartment);
+            request.removeAttribute(namedepartment);
+            request.removeAttribute("selectedManager");
+            request.removeAttribute("messageerror");
             request.setAttribute("message", "Create successful");
         }
         request.getRequestDispatcher("managedepartment").include(request, response);

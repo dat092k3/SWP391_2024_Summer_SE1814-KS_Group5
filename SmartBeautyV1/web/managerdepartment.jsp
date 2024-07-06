@@ -105,7 +105,7 @@
                                     <td class="serial-number"></td> 
                                     <td>${department.department_id}</td>
                                     <td>${department.department_name}</td>
-                                    <td>${department.manager_id}</td>
+                                    <td>${department.namemanager}</td>
                                     <td>
                                         <a href="managedepartment?departmentId=${department.department_id}"  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                         <a href="###" onclick="doDelete('${department.department_id}')" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
@@ -128,6 +128,7 @@
                                 <h4 class="modal-title">Add Department</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
+                            <input name="departmentId" type="hidden" class="form-control" required value="${department.department_id}">
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>Name<span class="text-danger">*</span></label>

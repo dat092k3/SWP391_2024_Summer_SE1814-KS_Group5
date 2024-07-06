@@ -13,6 +13,7 @@ public class Department {
     private String department_name;
     private int manager_id;
     private boolean status;
+    private String namemanager;
 
     public Department() {
     }
@@ -35,6 +36,23 @@ public class Department {
         this.manager_id = manager_id;
         this.status = status;
     }
+
+    public Department(int department_id, String department_name, int manager_id, boolean status, String namemanager) {
+        this.department_id = department_id;
+        this.department_name = department_name;
+        this.manager_id = manager_id;
+        this.status = status;
+        this.namemanager = namemanager;
+    }
+
+    public String getNamemanager() {
+        return namemanager;
+    }
+
+    public void setNamemanager(String namemanager) {
+        this.namemanager = namemanager;
+    }
+    
 
     public int getDepartment_id() {
         return department_id;

@@ -14,28 +14,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="styles/addprofileemployee.css" rel="stylesheet">
-        <script>
-            function chooseFile(fileInput) {
-                if (fileInput.files && fileInput.files[0]) {
-                    var file = fileInput.files[0];
-                    var fileType = file.type;
-                    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
-
-                    if (!validImageTypes.includes(fileType)) {
-                        alert("Only image files (JPG, PNG, GIF) are allowed.");
-                        fileInput.value = ""; // Clear the input
-                        return;
-                    }
-
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#image').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
-                }
-            }
-        </script>
     </head>
     <body>
         <div class="container-xl px-4 mt-4">
@@ -48,10 +26,9 @@
             </nav>
             <hr class="mt-0 mb-4">
             <span style="color: green">${messen1}</span>
-            <form method="get" action="addprofileemployee">
+            <form method="get" action="addprofileemployee" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-xl-4">
-
                         <div class="card mb-4 mb-xl-0">
                             <div class="card-header">Profile Picture</div>
                             <div class="card-body text-center">

@@ -53,7 +53,7 @@ public class ManageDepartmentServlet extends HttpServlet {
         List<Manager> allManager= managerDAO.getAllManagers();
         request.setAttribute("listManager", allManager);
         
-        request.getRequestDispatcher("./managerdepartment.jsp").include(request, response);
+        request.getRequestDispatcher("./managerdepartment.jsp").forward(request, response);
         
     } 
 

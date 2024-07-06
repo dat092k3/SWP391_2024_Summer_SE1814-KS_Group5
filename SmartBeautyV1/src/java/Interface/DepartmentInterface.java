@@ -16,9 +16,11 @@ public interface DepartmentInterface {
     
     public Department getDepartmentById(int id);
     
-    public boolean isDepartmentExist(String name);
+    public boolean isDepartmentExistEdit(String name, int department_id);
     
-    public boolean isManagerManingAnotherDepartment(String name, int manager_id);
+    public boolean isDepartmentExistAdd(String name);
+    
+    public boolean isManagerManingAnotherDepartment(String name, int manager_id, int department_id);
     
     public void addNewDepartment(Department department);
     
@@ -27,5 +29,7 @@ public interface DepartmentInterface {
     public void deleteDepartment(int id);
     
     public List<Department> findDepartmentByName(String nameSearch);
+    
+    public void deleteAllEmployeeeIfDeleteDepartment();
 }
 

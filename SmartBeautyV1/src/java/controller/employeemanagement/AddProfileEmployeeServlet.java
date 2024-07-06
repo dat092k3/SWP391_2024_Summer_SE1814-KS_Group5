@@ -131,7 +131,7 @@ public class AddProfileEmployeeServlet extends HttpServlet {
         System.out.println("accid" + account_id + "fullname" + fullname + "gender" + gender + "email" + email + "date" + dateofbirth + "phonenumber" + phonenumber + "address" + address + "image" + image + "hiredate" + hiredate + "department" + department_id + "expert" + experience);
         EmployeeInterface employeeDAO = new EmployeeDAO();
         employeeDAO.addProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, image, experience, department_id, account_id);
-        request.setAttribute("success", "Insert Profile Of Employee Susscess");
+            request.setAttribute("success", "Insert Profile Of Employee Susscess");
         request.getRequestDispatcher("viewaccount").forward(request, response);
     }
 
@@ -158,5 +158,20 @@ public class AddProfileEmployeeServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    /**
+     * check file valid
+     *
+     * @param contentType content of file
+     * @return true if file valid, false otherwise
+     */
+    public boolean isImageFile(String contentType) {
+        String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
+        for (String validType : validImageTypes) {
+            if (validType.equals(contentType)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
