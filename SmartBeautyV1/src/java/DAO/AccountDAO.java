@@ -71,7 +71,66 @@ public class AccountDAO extends DBContext implements AccountInterface {
         }
         return null;
     }
-
+ /**
+     * check account exist
+     * @param email of account in database
+     * @return Account
+     */
+    @Override
+    public Account checkEmailAccountExists(String email) {
+        String sql = "SELECT * FROM Account WHERE email = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,email);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Account(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Database error: " + ex.getMessage());
+        }
+        return null;
+    }
+     /**
+     * check account exist
+     * @param phonenumber of account in database
+     * @return Account
+     */
+    @Override
+    public Account checkPhoneAccountExists(String phonenumber) {
+        String sql = "SELECT * FROM Account WHERE phonenumber = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,phonenumber);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Account(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Database error: " + ex.getMessage());
+        }
+        return null;
+    }
+     /**
+     * check account exist
+     * @param username of account in database
+     * @return Account
+     */
+    @Override
+    public Account checkUsernameAccountExists(String username) {
+        String sql = "SELECT * FROM Account WHERE username = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1,username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return new Account(rs);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Database error: " + ex.getMessage());
+        }
+        return null;
+    }
     /**
      * sign up
      *

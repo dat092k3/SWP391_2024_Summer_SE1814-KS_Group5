@@ -52,6 +52,33 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         }
         return null;
     }
+    
+    public Employee getEmployeeByEmployeeId(int employee_id) {
+        String sql = "select * from Employee where employee_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, employee_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                return new Employee(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 
     /**
      * function to do update ìfnomation employee

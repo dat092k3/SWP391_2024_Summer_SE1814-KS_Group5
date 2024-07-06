@@ -19,6 +19,9 @@ public class CustomerService {
     private Timestamp  end_date;
     private int employee_id;
     private float total_price;
+    private String service_name;
+    private String image;
+    private String description;
 
     public CustomerService() {
     }
@@ -42,6 +45,42 @@ public class CustomerService {
         this.end_date = end_date;
         this.employee_id = employee_id;
         this.total_price = total_price;
+    }
+
+    public CustomerService(int service_id, int customer_id, Timestamp date, Timestamp end_date, int employee_id, float total_price, String service_name, String image, String description) {
+        this.service_id = service_id;
+        this.customer_id = customer_id;
+        this.date = date;
+        this.end_date = end_date;
+        this.employee_id = employee_id;
+        this.total_price = total_price;
+        this.service_name = service_name;
+        this.image = image;
+        this.description = description;
+    }
+
+    public String getService_name() {
+        return service_name;
+    }
+
+    public void setService_name(String service_name) {
+        this.service_name = service_name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Timestamp  getEnd_date() {

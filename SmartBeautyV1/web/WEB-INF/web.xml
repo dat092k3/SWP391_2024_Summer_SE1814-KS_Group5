@@ -264,6 +264,14 @@
         <servlet-name>RegisterService</servlet-name>
         <servlet-class>controller.servicemanagement.RegisterService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServicesRegistered</servlet-name>
+        <servlet-class>controller.servicemanagement.ServicesRegistered</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PtDetail</servlet-name>
+        <servlet-class>controller.servicemanagement.PtDetail</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -523,5 +531,13 @@
     <servlet-mapping>
         <servlet-name>RegisterService</servlet-name>
         <url-pattern>/registerservice</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServicesRegistered</servlet-name>
+        <url-pattern>/servicesregistered</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PtDetail</servlet-name>
+        <url-pattern>/ptdetail</url-pattern>
     </servlet-mapping>
 </web-app>

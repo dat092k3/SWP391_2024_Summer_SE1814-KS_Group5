@@ -41,8 +41,8 @@
                                         <li class="dropdown" >
                                             <a href="searchservice">Services</a>
                                             <div class="dropdown-content">
-                                                <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Takecare'}">
-                                                    <a href="schedule.jsp">Schedule</a>
+                                                <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Customer'}">
+                                                    <a href="servicesregistered">Registered Service</a>
                                                 </c:if>
                                                 <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Takecare'}">
                                                     <a href="schedule.jsp">Schedule</a>

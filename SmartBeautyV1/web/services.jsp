@@ -56,8 +56,7 @@
                 <div class="search-form-container">
                     <form action="searchservice" method="get" class="form-inline my-2 my-lg-0">
                         <div class="input-group input-group-sm">
-                            <input value="${txtS}" name="txtservice" type="text" class="form-control" aria-label="Small"
-                               aria-describedby="inputGroup-sizing-sm" placeholder="Search...">
+                            <input class="form-control flatpickr-input" placeholder="search" type="text" value="${txt}" name="txtservice">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-secondary btn-number">
                                 <i class="fa fa-search"></i>
