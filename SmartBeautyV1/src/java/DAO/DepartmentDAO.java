@@ -121,7 +121,7 @@ public class DepartmentDAO extends DBContext implements DepartmentInterface {
      *
      * @param name of manager need to check
      * @param manager_id of manager need to check
-     * @param department_id 
+     * @param department_id
      * @return true if existed, false otherwise
      */
     @Override

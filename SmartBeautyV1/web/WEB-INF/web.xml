@@ -58,19 +58,19 @@
     </servlet>
     <servlet>
         <servlet-name>SearchEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.SearchEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.SearchEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.SearchSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.SearchSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.ManageEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.ManageEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.ManageSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditBlog</servlet-name>
@@ -86,27 +86,27 @@
     </servlet>
     <servlet>
         <servlet-name>AddSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.AddSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.AddSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.EditSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.EditSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.DeleteSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.DeleteSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.AddEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.AddEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.EditEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.EditEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.DeleteEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.DeleteEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchServiceServlet</servlet-name>
@@ -182,35 +182,35 @@
     </servlet>
     <servlet>
         <servlet-name>AddDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.AddDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.AddDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.DeleteDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.DeleteDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.ManageDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.ManageDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.EditDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.EditDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.SearchDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.SearchDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddManagerServlet</servlet-name>
-        <servlet-class>controller.manager.AddManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.AddManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageManagerServlet</servlet-name>
-        <servlet-class>controller.manager.ManageManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.ManageManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditManagerServlet</servlet-name>
-        <servlet-class>controller.manager.EditManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.EditManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddAccountAdminServlet</servlet-name>
@@ -246,11 +246,11 @@
     </servlet>
     <servlet>
         <servlet-name>DeleteManagerServlet</servlet-name>
-        <servlet-class>controller.manager.DeleteManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.DeleteManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchManagerServlet</servlet-name>
-        <servlet-class>controller.manager.SearchManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.SearchManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailAccountPTAndTakecareServlet</servlet-name>
