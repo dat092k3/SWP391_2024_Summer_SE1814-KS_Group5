@@ -147,6 +147,21 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
+        
+        if (!isValidAddress(address)) {
+            request.setAttribute("messageerror", "Please check the address is invalid.");
+            request.setAttribute("name", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
         if (!isValidPhoneNumber(phonenumber)) {
             request.setAttribute("messageerror", "Please check the phonenumber is invalid.");
             request.setAttribute("name", username);
@@ -263,6 +278,33 @@ public class AddManagerServlet extends HttpServlet {
                 return false;
             }
         }
+        return true;
+    }
+    
+    /**
+     * check address need to follow standard
+     *
+     * @param address The address to check
+     * @return true if the address is valid, false otherwise
+     */
+    private boolean isValidAddress(String address) {
+        if (address == null || address.trim().isEmpty()) {
+            return false;
+        }
+
+        String regex = "^[a-zA-Z\\p{L}0-9.,\\s]*$";
+        if (!address.matches(regex)) {
+            return false;
+        }
+
+        // Additional condition: Each word after whitespace must start with an uppercase letter
+        String[] words = address.split("\\s+");
+        for (String word : words) {
+            if (!Character.isUpperCase(word.charAt(0))) {
+                return false;
+            }
+        }
+
         return true;
     }
 
