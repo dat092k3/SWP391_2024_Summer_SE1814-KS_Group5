@@ -25,7 +25,7 @@ public interface ManagerInterface {
     public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary);
 
     public boolean isManagerExist(String name, String address, String phonenumber);
-
+ 
     public int getManagerId();
 
     public boolean isManagerAccountExist(String username, String email, String phonenumber);
@@ -37,4 +37,6 @@ public interface ManagerInterface {
     public void updateManager(Manager manager);
 
     public List<Manager> findManager(String nameSearch);
+
+    public Manager getManagerByAccountId(int account_id);
 }

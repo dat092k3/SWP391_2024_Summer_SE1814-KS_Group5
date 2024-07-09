@@ -125,9 +125,11 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return list;
     }
+
     /**
      * add manager
-     * @param manager is manager need to add 
+     *
+     * @param manager is manager need to add
      */
     @Override
     public void addNewManager(Manager manager) {
@@ -164,8 +166,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
+
     /**
      * add account for manager
+     *
      * @param account is account of manager need to add
      */
     @Override
@@ -189,8 +193,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
+
     /**
      * check account of manager to add
+     *
      * @param username of account of manager to add
      * @param email of account of manager to add
      * @param phonenumber of account of manager to add
@@ -214,8 +220,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return false;
     }
+
     /**
      * check manager is existed
+     *
      * @param name of manager need to check
      * @param email of manager need to check
      * @param phonenumber of manager need to check
@@ -239,8 +247,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return false;
     }
+
     /**
      * check manager when edit
+     *
      * @param managerId of manager need to check
      * @param name of manager need to check
      * @param image of manager need to check
@@ -252,28 +262,29 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
      */
     @Override
     public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary) {
-    String sql = "SELECT * FROM Manager WHERE (fullname = ? AND image = ? AND address = ? AND phonenumber = ? AND email = ? AND salary = ? AND status = 1) OR ((phonenumber = ? OR email = ?) AND manager_id != ? AND status = 1)";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setString(1, name);
-        st.setString(2, image);
-        st.setString(3, address);
-        st.setString(4, phonenumber);
-        st.setString(5, email);
-        st.setFloat(6, salary);
-        st.setString(7, phonenumber);
-        st.setString(8, email);
-        st.setInt(9, managerId); // Exclude the current manager by id
-        ResultSet rs = st.executeQuery();
-        return rs.next();
-    } catch (SQLException e) {
-        System.out.println(e);       
+        String sql = "SELECT * FROM Manager WHERE (fullname = ? AND image = ? AND address = ? AND phonenumber = ? AND email = ? AND salary = ? AND status = 1) OR ((phonenumber = ? OR email = ?) AND manager_id != ? AND status = 1)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, image);
+            st.setString(3, address);
+            st.setString(4, phonenumber);
+            st.setString(5, email);
+            st.setFloat(6, salary);
+            st.setString(7, phonenumber);
+            st.setString(8, email);
+            st.setInt(9, managerId); // Exclude the current manager by id
+            ResultSet rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
-    return false;
-}
 
     /**
      * get id of manager
+     *
      * @return id of manager
      */
     @Override
@@ -290,8 +301,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return -1;
     }
+
     /**
      * delete manager
+     *
      * @param id of manager need to delete
      */
     @Override
@@ -300,16 +313,18 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                 + "   SET [status] = 0\n"
                 + " WHERE manager_id=?";
         try {
-            PreparedStatement st=connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
+
     /**
      * update manager
-     * @param manager is manager need to update information 
+     *
+     * @param manager is manager need to update information
      */
     @Override
     public void updateManager(Manager manager) {
@@ -392,4 +407,36 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
 
     }
 
+    /**
+     * function to do get manager by manager_id
+     *
+     * @param account_id is id of manager
+     * @return account manager
+     */
+    @Override
+    public Manager getManagerByAccountId(int account_id) {
+        String sql = "select * from Manager where account_id = ? and status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int manager_id = rs.getInt("manager_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String email = rs.getString("email");
+                String dateofbirth = rs.getString("dateofbirth");
+                String phonenumber = rs.getString("phonenumber");
+                String address = rs.getString("address");
+                String hiredate = rs.getString("hiredate");
+                float salary = rs.getFloat("salary"); 
+                String image = rs.getString("image");
+                boolean status = rs.getBoolean("status");
+                return new Manager(manager_id, account_id, fullname, gender, email, dateofbirth, phonenumber, address, hiredate, salary, image, status);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
 }
