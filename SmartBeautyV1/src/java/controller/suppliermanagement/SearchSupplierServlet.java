@@ -3,26 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.department;
+package controller.suppliermanagement;
 
-import DAO.DepartmentDAO;
-import DAO.ManagerDAO;
-import Interface.DepartmentInterface;
-import Interface.ManagerInterface;
+import DAO.SupplierDAO;
+import Interface.SupplierInterface;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Department;
-import model.Manager;
+import model.Supplier;
 
 /**
- * Manage all functions related to the department
+ *
  * @author LENOVO
  */
-public class ManageDepartmentServlet extends HttpServlet {
+public class SearchSupplierServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,32 +32,26 @@ public class ManageDepartmentServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
-        DepartmentInterface departmentDAO= new DepartmentDAO();
-        ManagerInterface managerDAO= new ManagerDAO();
-        
-        String departmentId = request.getParameter("departmentId");
-        String message = (String) request.getAttribute("message");
-        Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog");
-        if (departmentId != null && showEditDialog == null) {
-            request.setAttribute("showEditDialog", true);
-            Department department = departmentDAO.getDepartmentById(Integer.parseInt(departmentId));
-            request.setAttribute("department", department);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SearchSupplierServlet</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SearchSupplierServlet at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        request.setAttribute("message", message);
-        List<Department> allDepartment = departmentDAO.getAllDepartment();
-        request.setAttribute("listDepartment", allDepartment);
-        List<Manager> allManager= managerDAO.getAllManagers();
-        request.setAttribute("listManager", allManager);
-        
-        request.getRequestDispatcher("./managerdepartment.jsp").forward(request, response);
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
+     * 
+     * search by name of supplier
+     * 
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -69,6 +61,7 @@ public class ManageDepartmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         processRequest(request, response);
+        
     } 
 
     /** 
@@ -81,7 +74,20 @@ public class ManageDepartmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
+        String txtSearch= request.getParameter("search");
+        SupplierInterface supplierDAO= new SupplierDAO();
+               
+        List<Supplier> list;
+        if(txtSearch ==null){
+            list= supplierDAO.getAllSupplier();
+        }else{
+            list=supplierDAO.findSupplierByName(txtSearch);
+        }
+        request.setAttribute("listManager", list);
+        request.setAttribute("searchValue", txtSearch);
+        request.getRequestDispatcher("managersupplier.jsp").include(request, response);
     }
 
     /** 

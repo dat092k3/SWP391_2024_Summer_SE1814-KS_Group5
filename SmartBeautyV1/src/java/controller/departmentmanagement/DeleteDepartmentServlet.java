@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.supplier;
+package controller.departmentmanagement;
 
-import DAO.SupplierDAO;
-import Interface.SupplierInterface;
+import DAO.DepartmentDAO;
+import Interface.DepartmentInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,11 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * delete supplier
+ * delete department
  *
  * @author LENOVO
  */
-public class DeleteSupplierServlet extends HttpServlet {
+public class DeleteDepartmentServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class DeleteSupplierServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteSupplierServlet</title>");
+            out.println("<title>Servlet DeleteDepartmentServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteSupplierServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteDepartmentServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +60,13 @@ public class DeleteSupplierServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierInterface supplierDAO = new SupplierDAO();
-        String supplierId = request.getParameter("supplierId");
+        DepartmentInterface departmentDAO = new DepartmentDAO();
+        String departmentId = request.getParameter("departmentId");
+
         try {
-            if (supplierId != null && !supplierId.isEmpty()) {
-                supplierDAO.deleteSupplier(Integer.parseInt(supplierId));
+            if (departmentId != null && !departmentId.isEmpty()) {
+                departmentDAO.deleteDepartment(Integer.parseInt(departmentId));
+                departmentDAO.deleteAllEmployeeeIfDeleteDepartment();
             }
             request.setAttribute("message", "Delete successful");
             request.setAttribute("showEditDialog", false);
@@ -72,7 +74,8 @@ public class DeleteSupplierServlet extends HttpServlet {
             request.setAttribute("message", "Delete failed" + e.getMessage());
         }
 
-        request.getRequestDispatcher("managesupplier").forward(request, response);
+        request.getRequestDispatcher("managedepartment").forward(request, response);
+
     }
 
     /**

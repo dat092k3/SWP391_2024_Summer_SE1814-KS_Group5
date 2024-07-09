@@ -3,11 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.manager;
+package controller.managermanagement;
 
-import DAO.AccountDAO;
 import DAO.ManagerDAO;
-import Interface.AccountInterface;
 import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,12 +13,14 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import model.Manager;
 
 /**
  *
  * @author LENOVO
  */
-public class DeleteManagerServlet extends HttpServlet {
+public class SearchManagerServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +37,10 @@ public class DeleteManagerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteManagerServlet</title>");  
+            out.println("<title>Servlet SearchManagerServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteManagerServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SearchManagerServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,28 +57,7 @@ public class DeleteManagerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        
-        ManagerInterface managerDAO = new ManagerDAO();
-        String managerId= request.getParameter("managerId");
-        String accountId = request.getParameter("accountId");
-        try {
-        // Delete manager
-        managerDAO.deleteManager(Integer.parseInt(managerId));
-        AccountInterface accountDAO = new AccountDAO();
-        
-        // Delete account
-        if (accountId != null && !accountId.isEmpty()) {
-            accountDAO.deleteAccountIfDeleteManager(Integer.parseInt(accountId));
-        }      
-        request.setAttribute("message", "Delete successful");
-        request.setAttribute("showEditDialog", false);
-    } catch (NumberFormatException e) {
-        request.setAttribute("message", "Delete failed" + e.getMessage());
-    }
-        
-        request.getRequestDispatcher("managemanager").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -91,7 +70,22 @@ public class DeleteManagerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        
+        String txtSearch=request.getParameter("search");
+        ManagerInterface managerDAO= new ManagerDAO();
+        
+        List<Manager> list;
+        
+        if(txtSearch == null){
+            list= managerDAO.getAllManagers();
+        }else{
+            list=managerDAO.findManager(txtSearch);
+        }
+        request.setAttribute("listManager", list);
+        request.setAttribute("searchValue", txtSearch);
+        request.getRequestDispatcher("managermanager.jsp").forward(request, response);
     }
 
     /** 

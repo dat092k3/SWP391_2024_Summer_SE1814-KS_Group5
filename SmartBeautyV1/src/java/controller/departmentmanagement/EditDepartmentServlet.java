@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controller.department;
+package controller.departmentmanagement;
 
 import DAO.DepartmentDAO;
 import Interface.DepartmentInterface;
@@ -16,10 +16,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import model.Department;
 
 /**
- * Handles the add department function
+ * edit department
  * @author LENOVO
  */
-public class AddDepartmentServlet extends HttpServlet {
+public class EditDepartmentServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +36,10 @@ public class AddDepartmentServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet AddDepartmentServlet</title>");  
+            out.println("<title>Servlet EditDepartmentServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet AddDepartmentServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet EditDepartmentServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -72,11 +72,18 @@ public class AddDepartmentServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         
-        String departmentId= request.getParameter("departmentId").trim();
-        String namedepartment = request.getParameter("namedepartment").trim();
-        String manager=request.getParameter("manager").trim();
-        
         DepartmentInterface departmentDAO= new DepartmentDAO();
+        String departmentId= request.getParameter("departmentId");
+        String namedepartment=request.getParameter("namedepartment");
+        String manager = request.getParameter("manager");
+        if(!isValidName(namedepartment)){
+            request.setAttribute("messageerror", "Please select manager for dapartment");
+            request.setAttribute("namedepartment", namedepartment);
+            request.setAttribute("selectedManager", manager);
+            request.getRequestDispatcher("managedepartment").include(request, response);
+            return;       
+        }
+        
         if(manager==null || manager.trim().isEmpty()){
             request.setAttribute("messageerror", "Please select manager for dapartment");
             request.setAttribute("namedepartment", namedepartment);
@@ -85,15 +92,7 @@ public class AddDepartmentServlet extends HttpServlet {
             return;
         }
         
-        if(namedepartment==null || !isValidName(namedepartment)  ||namedepartment.trim().isEmpty()){
-            request.setAttribute("messageerror", "Name department is invalid.");
-            request.setAttribute("namedepartment", namedepartment);
-            request.setAttribute("selectedManager", manager);
-            request.getRequestDispatcher("managedepartment").include(request, response);
-            return;
-        }
-        
-        if(departmentDAO.isDepartmentExistAdd(namedepartment)){
+        if(departmentDAO.isDepartmentExistEdit(namedepartment, Integer.parseInt(departmentId))){
             request.setAttribute("messageerror", "This department is existed");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
@@ -105,41 +104,38 @@ public class AddDepartmentServlet extends HttpServlet {
             request.setAttribute("messageerror", "This manager is maning another department");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
-            request.getRequestDispatcher("managedepartment").include(request, response);  
+            request.getRequestDispatcher("managedepartment").include(request, response);
             return;
         }else{
-            Department newDepartment= new Department(namedepartment, Integer.parseInt(manager), true);
-            departmentDAO.addNewDepartment(newDepartment);
-            request.removeAttribute(namedepartment);
-            request.removeAttribute("selectedManager");
-            request.removeAttribute("messageerror");
-            request.setAttribute("message", "Create successful");
+            Department editDepartment= new Department(Integer.parseInt(departmentId), namedepartment, Integer.parseInt(manager), true);
+            departmentDAO.updateDepartment(editDepartment);
+            request.setAttribute("message", "Update Successful");
+            request.setAttribute("showEditDialog", false);
         }
-        request.getRequestDispatcher("managedepartment").include(request, response);
-
+        request.getRequestDispatcher("managedepartment").forward(request, response);       
     }
     
     /**
-     * check value of name need to follow standard
-     *
-     * @param name of value need to check
+     * check value of name input
+     * 
+     * @param name of equipment to check
      * @return true if name is valid, false otherwise
      */
     private boolean isValidName(String name) {
         if (name == null || name.trim().isEmpty()) {
             return false;
         }
-
+        
         String[] nameParts = name.split("\\s+");
         for (String part : nameParts) {
             if (!Character.isUpperCase(part.charAt(0))) {
                 return false;
             }
         }
-
+        
         return true;
     }
-
+    
     /** 
      * Returns a short description of the servlet.
      * @return a String containing servlet description

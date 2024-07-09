@@ -1,4 +1,4 @@
-package controller.supplier;
+package controller.suppliermanagement;
 
 import DAO.SupplierDAO;
 import Interface.SupplierInterface;

@@ -1,18 +1,29 @@
-package controller.supplier;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 
-import DAO.SupplierDAO;
-import Interface.SupplierInterface;
+package controller.managermanagement;
+
+import DAO.AccountDAO;
+import DAO.ManagerDAO;
+import Interface.AccountInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
-
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
-import model.Supplier;
+import model.Account;
+import model.Manager;
 
-public class ManageSupplierServlet extends HttpServlet {
-
+/**
+ *
+ * @author LENOVO
+ */
+public class ManageManagerServlet extends HttpServlet {
+   
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
@@ -21,29 +32,32 @@ public class ManageSupplierServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        SupplierInterface supplierDAO = new SupplierDAO();
-
-        String supplier_id = request.getParameter("supplierId");
+        
+        ManagerInterface managerDAO= new ManagerDAO();
+        AccountInterface accountDAO= new AccountDAO();
+        String managerId = request.getParameter("managerId");
+        String accountId= request.getParameter("accountId");
         String message = (String) request.getAttribute("message");
-
-        Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog"); // get to check display form edit
-        if (supplier_id != null && showEditDialog == null) {
+        Boolean showEditDialog = (Boolean) request.getAttribute("showEditDialog");
+        if (managerId != null && showEditDialog == null) {
             request.setAttribute("showEditDialog", true);
-            Supplier supplier = supplierDAO.getSupplierById(Integer.parseInt(supplier_id));
-            request.setAttribute("supplier", supplier);
-        }
-
+            Manager manager = managerDAO.getManagerById(Integer.parseInt(managerId));
+            request.setAttribute("manager", manager);           
+            Account account = accountDAO.getAccountByAccountId(Integer.parseInt(accountId));
+            request.setAttribute("account", account);
+        }       
         request.setAttribute("message", message);
-        List<Supplier> allSupplier = supplierDAO.getAllSupplier();
-        request.setAttribute("listSupplier", allSupplier);
-        request.getRequestDispatcher("./managersupplier.jsp").include(request, response);
-    }
+        List<Manager> listAllManager=managerDAO.getAllManagers();
+        request.setAttribute("listManager", listAllManager);
+        request.getRequestDispatcher("./managermanager.jsp").include(request, response);
+    } 
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
-     * Handles the HTTP <code>POST</code> method.
+     * Handles the HTTP <code>GET</code> method.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -51,10 +65,10 @@ public class ManageSupplierServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
-    
+    } 
+
     /** 
      * Handles the HTTP <code>POST</code> method.
      * @param request servlet request
@@ -64,7 +78,7 @@ public class ManageSupplierServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
@@ -76,6 +90,5 @@ public class ManageSupplierServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
 
-    }
+}

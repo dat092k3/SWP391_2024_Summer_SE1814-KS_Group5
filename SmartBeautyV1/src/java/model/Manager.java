@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
-import java.util.Date;
-
 /**
  * a class have information of manager
  *
@@ -57,6 +54,7 @@ public class Manager {
         this.salary = salary;
         this.image = image;
     }
+    
 
     /**
      * constructor of manager

@@ -1,4 +1,4 @@
-package controller.equipment;
+package controller.equipmentmanagement;
 
 import DAO.EquipmentDAO;
 import Interface.EquipmentInterface;
