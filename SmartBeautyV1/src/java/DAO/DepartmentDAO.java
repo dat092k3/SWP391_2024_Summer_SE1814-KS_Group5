@@ -75,6 +75,29 @@ public class DepartmentDAO extends DBContext implements DepartmentInterface {
     }
 
     /**
+     * get department name by id
+     *
+     * @param department_id of department need to get
+     * @return department
+     */
+    @Override
+    public Department getDepartmentNameByDepartmentId(int department_id) {
+        String sql = "SELECT department_name FROM Department WHERE department_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, department_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                String department_name = rs.getString("department_name");
+                return new Department(department_id, department_name);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving department name: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
      * check department existed or not
      *
      * @param name of department need to check
@@ -121,7 +144,7 @@ public class DepartmentDAO extends DBContext implements DepartmentInterface {
      *
      * @param name of manager need to check
      * @param manager_id of manager need to check
-     * @param department_id 
+     * @param department_id
      * @return true if existed, false otherwise
      */
     @Override
@@ -238,6 +261,9 @@ public class DepartmentDAO extends DBContext implements DepartmentInterface {
 
     }
 
+    /**
+     * function to do delete All Employeee If Delete Department
+     */
     @Override
     public void deleteAllEmployeeeIfDeleteDepartment() {
         String sql = "UPDATE \n"
@@ -258,6 +284,30 @@ public class DepartmentDAO extends DBContext implements DepartmentInterface {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    /**
+     * get department by id
+     *
+     * @param manager_id of department need to get
+     * @return department
+     */
+    @Override
+    public Department getDepartmentByManagerId(int manager_id) {
+        String sql = "select * from Department where manager_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, manager_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int department_id = rs.getInt("department_id");
+                String department_name = rs.getString("department_name");
+                return new Department(department_id, department_name, manager_id);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
     }
 
 }
