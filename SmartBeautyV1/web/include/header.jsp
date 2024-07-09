@@ -56,7 +56,7 @@
                                                 <a href="#" class="dropbtn">Account Management</a>
                                                 <div class="dropdown-content">
                                                     <a href="viewaccount">Manage Account</a>
-                                                     <a href="viewprofileemployeeptandtakecare">Manage Profile PT, Takecare</a> 
+                                                    <a href="viewprofileemployeeptandtakecare">Manage Profile PT, Takecare</a> 
                                                 </div>
                                             </li>
                                         </c:if>
@@ -64,11 +64,15 @@
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Account Management</a>
                                                 <div class="dropdown-content">
-                                                    <a href="viewaccountadmin">Manage Account Admin</a> 
-                                                    <a href="viewprofileemployeeadmin">Manage Profile Admin</a> 
+                                                    <c:if test="${manager != null && department != null && manager.manager_id == department.manager_id}">
+                                                        <a href="viewprofileemployee?department_id=${department.department_id}">
+                                                            Manage ${department.department_name}
+                                                        </a>
+                                                    </c:if>
                                                 </div>
                                             </li>
                                         </c:if>
+
                                         <c:if test="${account.getRole() eq 'Director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
