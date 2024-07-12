@@ -15,21 +15,45 @@
     <body>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> 
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
-        <div class="text-danger">${success}</div>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <div class="container emp-profile">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
                         <img src="${profilebyaccountid.image}" alt=""/>
-                        <div class="file btn btn-lg btn-primary">
-                            Change Photo
-                            <input type="file" name="file"/>
-                        </div>
+                        <!--                        <div class="file btn btn-lg btn-primary">
+                                                    Change Photo
+                                                    <input type="file" name="file"/>
+                                                </div>-->
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="profile-head">
+                        <div style="color: green">${success}</div>
+                        <c:if test="${not empty error5}">
+                            <div class="text-danger">${error5}</div>
+                        </c:if> 
+                        <c:if test="${not empty error1}">
+                            <div class="text-danger">${error1}</div>
+                        </c:if>
+                        <c:if test="${not empty error2}">
+                            <div class="text-danger">${error2}</div>
+                        </c:if>
+                        <c:if test="${not empty error8}">
+                            <div class="text-danger">${error8}</div>
+                        </c:if>
+                        <c:if test="${not empty error3}">
+                            <div class="text-danger">${error3}</div>
+                        </c:if>
+                        <c:if test="${not empty error9}">
+                            <div class="text-danger">${error9}</div>
+                        </c:if>
+                        <c:if test="${not empty error4}">
+                            <div class="text-danger">${error4}</div>
+                        </c:if>
+                        <c:if test="${not empty error10}">
+                            <div class="text-danger">${error10}</div>
+                        </c:if>
                         <h5>
                             ${profilebyaccountid.fullName}  
                         </h5>
@@ -38,7 +62,7 @@
                         </h6>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link"  href="viewprofileemployeeadmin">Back</a>
+                                <a class="nav-link"  href="viewprofileemployee?department_id=3">Back</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -143,7 +167,7 @@
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="get" action="editprofileemployeeadmin">
+                        <form method="get" action="editprofileemployeeofmanager">
                             <div class="row">  
                                 <div class="col-xl-4">
                                     <div class="card mb-4 mb-xl-0">
@@ -219,7 +243,7 @@
                                             <div class="mb-3">
                                                 <div class="col-md-12"><label class="labels">Address<span class="text-danger">*</span></label>
                                                     <div>
-                                                        <select name="city" id="city">
+                                                        <select name="city" id="city" required="">
                                                             <option value="" selected>City</option>           
                                                         </select>
                                                         <select name="district" id="district">

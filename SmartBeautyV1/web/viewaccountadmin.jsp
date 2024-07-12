@@ -33,9 +33,9 @@
                         <hr>
                         <div class="e-navlist e-navlist--active-bg">
                             <ul class="nav">
-                                <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-2" href="viewprofileemployeeadmin" target="__blank"><i class="fa fa-fw fa-th mr-1"></i><span>Profile Employee</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-2" href="#" target="__blank"><i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>
+                                <!--<li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>-->
+                                <li class="nav-item"><a class="nav-link px-2" href="viewprofileemployee?department_id=3" target="__blank"><i class="fa fa-fw fa-th mr-1"></i><span>Profile Employee</span></a></li>
+<!--                                <li class="nav-item"><a class="nav-link px-2" href="#" target="__blank"><i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>-->
                             </ul>
                         </div>
                         <hr>
@@ -99,7 +99,7 @@
                                                             <td class="text-nowrap align-middle">${account.role}</td>
                                                             <td class="text-center align-middle">
                                                                 <div class="btn-group align-top">
-                                                                    <a href="viewdetailaccount?account_id=${account.account_id}">Edit</a>
+                                                                    <a href="viewdetailaccountadmin?account_id=${account.account_id}">Edit</a>
                                                                 </div>                                                            
                                                             </td>
                                                         </tr>
@@ -124,7 +124,7 @@
                                     </div>
                                     <hr class="my-3">
 
-                                    <form action="searchemployeeadmin" method="get">
+                                    <form action="searchaccountadmin" method="get">
                                         <hr class="my-3">
                                         <div>
                                             <div class="form-group">

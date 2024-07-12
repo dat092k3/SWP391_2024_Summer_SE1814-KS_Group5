@@ -22,8 +22,8 @@
             <nav class="nav nav-borders">
                 <a class="nav-link active ms-0" href="" target="__blank">Profile</a> 
                 <a class="nav-link" href="viewaccountadmin" target="__blank">Back</a>
-                <a class="nav-link" href="" target="__blank">#</a>
-                <a class="nav-link" href="" target="__blank">#</a>
+<!--                <a class="nav-link" href="" target="__blank">#</a>
+                <a class="nav-link" href="" target="__blank">#</a>-->
             </nav>
             <hr class="mt-0 mb-4">
             <span style="color: green">${messen1}</span>
@@ -35,8 +35,8 @@
                             <div class="card-header">Profile Picture</div>
                             <div class="card-body text-center">
                                 <img class="img-account-profile rounded-circle mb-2" src="http://bootdey.com/img/Content/avatar/avatar1.png" alt> 
-                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
-                                <button class="btn btn-primary" type="button">Upload new image<span class="text-danger">*</span></button>
+                                <!--<div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>-->
+<!--                                <button class="btn btn-primary" type="button">Upload new image<span class="text-danger">*</span></button>-->
                                 <input class="form-control" placeholder="Enter link image" name="image">
                                 <c:if test="${not empty error5}">
                                     <div class="text-danger">${error5}</div>

@@ -18,7 +18,7 @@ import model.Employee;
  *
  * @author admin
  */
-public class ViewDetailProfileEmployeeAdminServlet extends HttpServlet {
+public class ViewDetailProfileEmployeeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +37,10 @@ public class ViewDetailProfileEmployeeAdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewDetailProfileEmployeeAdminServlet</title>");
+            out.println("<title>Servlet ViewDetailProfileEmployeeServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewDetailProfileEmployeeAdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewDetailProfileEmployeeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,11 +58,14 @@ public class ViewDetailProfileEmployeeAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        EmployeeInterface employeeDAO = new EmployeeDAO();
         int account_id = Integer.parseInt(request.getParameter("account_id"));
-        Employee profilebyaccountid = employeeDAO.getProfileEmployeeByAccountIdAdmin(account_id);
+        System.out.println("acc"+account_id);
+        EmployeeInterface employeeDAO = new EmployeeDAO();
+        Employee profilebyaccountid = employeeDAO.getProfileEmployeeByAccountId(account_id);
         request.setAttribute("profilebyaccountid", profilebyaccountid);
-        request.getRequestDispatcher("viewdetailprofileadmin.jsp").forward(request, response);
+        System.out.println("profile" + profilebyaccountid);
+        request.getRequestDispatcher("viewdetailprofileemployee.jsp").forward(request, response);
+
     }
 
     /**

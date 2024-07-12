@@ -4,7 +4,9 @@
  */
 package controller.employeemanagement;
 
+import DAO.DepartmentDAO;
 import DAO.EmployeeDAO;
+import Interface.DepartmentInterface;
 import Interface.EmployeeInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +15,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Department;
 import model.Employee;
 
 /**
  *
  * @author admin
  */
-public class ViewProfileEmployeeAdminServlet extends HttpServlet {
+public class ViewProfileEmployeeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +41,10 @@ public class ViewProfileEmployeeAdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewProfileEmployeeAdminServlet</title>");
+            out.println("<title>Servlet ViewProfileEmployeeServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewProfileEmployeeAdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewProfileEmployeeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -54,15 +57,21 @@ public class ViewProfileEmployeeAdminServlet extends HttpServlet {
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs 
+     * @throws IOException if an I/O error occurs
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int department_id = Integer.parseInt(request.getParameter("department_id"));
         EmployeeInterface employeeDAO = new EmployeeDAO();
-        List<Employee> listprofileemployeebydepartment = employeeDAO.getProfileEmployeeByDepartmentIdAdmin();
-        request.setAttribute("listadmin", listprofileemployeebydepartment);
-        request.getRequestDispatcher("viewprofileemployeeadmin.jsp").forward(request, response);
+        List<Employee> listprofileemployeebydepartmentid = employeeDAO.getProfileEmployeeByDepartmentId(department_id);
+        DepartmentInterface departmentDAO = new DepartmentDAO();
+        Department department = departmentDAO.getDepartmentNameByDepartmentId(department_id);
+        String department_name = department.getDepartment_name();
+        request.setAttribute("listprofile", listprofileemployeebydepartmentid);
+        request.setAttribute("department_id", department_id);
+        request.setAttribute("department_name", department_name);
+        request.getRequestDispatcher("viewprofileemployee.jsp").forward(request, response);
     }
 
     /**

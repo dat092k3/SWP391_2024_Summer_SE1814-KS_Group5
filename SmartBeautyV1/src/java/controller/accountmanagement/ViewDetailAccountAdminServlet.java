@@ -12,15 +12,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.List;
 import model.Account;
 
 /**
  *
  * @author admin
  */
-public class SearchEmployeeAdminServlet extends HttpServlet {
+public class ViewDetailAccountAdminServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class SearchEmployeeAdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchEmployeeAdminServlet</title>");
+            out.println("<title>Servlet ViewDetailAccountAdminServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchEmployeeAdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewDetailAccountAdminServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,19 +58,11 @@ public class SearchEmployeeAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String txtSearch = request.getParameter("txt");
         AccountInterface accountDAO = new AccountDAO();
-        List<Account> listaccountemployeeadmin;
-        if (txtSearch != null && !txtSearch.trim().isEmpty()) {
-            listaccountemployeeadmin = accountDAO.SearchAccountByNameOrPhonenumberAdmin(txtSearch);
-            session.setAttribute("txt", txtSearch);
-        } else {
-            listaccountemployeeadmin = accountDAO.getAccountEmployeeByRoleAdmin();
-        }
-        request.setAttribute("listaccountemployeeadmin", listaccountemployeeadmin);
-        request.setAttribute("txt", txtSearch); // Đặt giá trị txtSearch vào request attribute
-        request.getRequestDispatcher("viewaccountadmin.jsp").forward(request, response);
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        Account accountbyid = accountDAO.getAccountByAccountId(account_id);
+        request.setAttribute("accountbyid", accountbyid);
+        request.getRequestDispatcher("editaccountadmin.jsp").forward(request, response);
     }
 
     /**

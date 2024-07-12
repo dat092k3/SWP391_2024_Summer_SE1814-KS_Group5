@@ -5,7 +5,11 @@
 package controller;
 
 import DAO.AccountDAO;
+import DAO.DepartmentDAO;
+import DAO.ManagerDAO;
 import Interface.AccountInterface;
+import Interface.DepartmentInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
+import model.Department;
+import model.Manager;
 import ultils.MD5;
 
 /**
@@ -103,6 +109,18 @@ public class LoginServlet extends HttpServlet {
                 cusername.setMaxAge(0);
                 cpassword.setMaxAge(0);
                 response.addCookie(cpassword);
+            }
+            if (account.getRole().equals("Manager")) {
+                ManagerInterface managerDAO = new ManagerDAO();
+                DepartmentInterface departmentDAO = new DepartmentDAO();
+                Manager manager = managerDAO.getManagerByAccountId(account.getAccount_id());
+                Department department = departmentDAO.getDepartmentByManagerId(manager.getManager_id());
+//                request.setAttribute("manager", manager.getManager_id());
+//                request.setAttribute("department", department.getManager_id());
+//                request.setAttribute("departmentname", department.getDepartment_name());
+                session.setAttribute("manager", manager);
+                session.setAttribute("department", department);
+                session.setAttribute("departmentname", department.getDepartment_name());
             }
             response.addCookie(cpassword);
             response.addCookie(cusername);
