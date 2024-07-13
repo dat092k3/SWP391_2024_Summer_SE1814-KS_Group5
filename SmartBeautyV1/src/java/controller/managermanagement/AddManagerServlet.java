@@ -23,7 +23,6 @@ import java.time.Period;
 import java.util.regex.Pattern;
 import model.Account;
 import model.Manager;
-import ultils.MD5;
 
 /**
  *
@@ -86,17 +85,17 @@ public class AddManagerServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String phonenumber = request.getParameter("phonenumber");
-        String namemanager = request.getParameter("namemanager");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
+        String email = request.getParameter("email").trim();
+        String phonenumber = request.getParameter("phonenumber").trim();
+        String namemanager = request.getParameter("namemanager").trim();
         String image = request.getParameter("img");
         String gender = request.getParameter("gender");
         String dateofbirth = request.getParameter("dateofbirth");
-        String address = request.getParameter("address");
+        String address = request.getParameter("address").trim();
         String hiredate = request.getParameter("hiredate");
-        String salary = request.getParameter("salary");
+        String salary = request.getParameter("salary").trim();
 
         ManagerInterface managerDAO = new ManagerDAO();
         AccountInterface accountDAO = new AccountDAO();
@@ -104,22 +103,26 @@ public class AddManagerServlet extends HttpServlet {
         LocalDate dob = LocalDate.parse(dateofbirth);
         LocalDate now = LocalDate.now();
         int age = Period.between(dob, now).getYears();
-        
-        LocalDate hireDate = LocalDate.parse(hiredate);
-        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
-            request.setAttribute("messageerror", "Hire date is invalid.");
-            request.getRequestDispatcher("managemanager").forward(request, response);
-            return;
-        }
 
-        if (age < 18) {
-            request.setAttribute("messageerror", "You must be at least 18 years old.");
+        LocalDate hireDate = LocalDate.parse(hiredate);
+
+        if (!isValidName(namemanager)) {
+            request.setAttribute("messageerror", "Please check the name is invalid.");
+            request.setAttribute("name", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
 
-        if (!isValidName(namemanager)) {
-            request.setAttribute("messageerror", "Please check the name is invalid.");
+        if (gender == null || gender.trim().isEmpty()) {
+            request.setAttribute("messageerror", "Please select a gender.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -147,19 +150,10 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
-        
-        if (!isValidAddress(address)) {
-            request.setAttribute("messageerror", "Please check the address is invalid.");
-            request.setAttribute("name", username);
-            request.setAttribute("password", password);
-            request.setAttribute("email", email);
-            request.setAttribute("phonenumber", phonenumber);
-            request.setAttribute("namemanager", namemanager);
-            request.setAttribute("image", image);
-            request.setAttribute("selectedGender", gender);
-            request.setAttribute("address", address);
-            request.setAttribute("salary", salary);
-            request.getRequestDispatcher("managemanager").include(request, response);
+
+        if (dob.isAfter(now)) {
+            request.setAttribute("messageerror", "Date of birth is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
             return;
         }
         if (!isValidPhoneNumber(phonenumber)) {
@@ -176,9 +170,8 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
-
-        if (gender == null || gender.trim().isEmpty()) {
-            request.setAttribute("messageerror", "Please select a gender.");
+        if (!isValidAddress(address)) {
+            request.setAttribute("messageerror", "Please check the address is invalid.");
             request.setAttribute("name", username);
             request.setAttribute("password", password);
             request.setAttribute("email", email);
@@ -188,6 +181,17 @@ public class AddManagerServlet extends HttpServlet {
             request.setAttribute("selectedGender", gender);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+        if (hireDate.isBefore(dob) || hireDate.isAfter(now)) {
+            request.setAttribute("messageerror", "Hire date is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
+            return;
+        }
+
+        if (age < 18) {
+            request.setAttribute("messageerror", "You must be at least 18 years old.");
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
@@ -280,7 +284,7 @@ public class AddManagerServlet extends HttpServlet {
         }
         return true;
     }
-    
+
     /**
      * check address need to follow standard
      *
@@ -326,7 +330,7 @@ public class AddManagerServlet extends HttpServlet {
      * @return true if phoneNumber is valid, false otherwise
      */
     private boolean isValidPhoneNumber(String phoneNumber) {
-        String PHONE_PATTERN = "^(03[2-9]|07[0|6-9]|08[1-5]|09[2|7]|086|088|089|05[6|8]|087|059)\\d{7}$";
+        String PHONE_PATTERN = "^\\d{10}$";
         return phoneNumber != null && Pattern.matches(PHONE_PATTERN, phoneNumber);
     }
 

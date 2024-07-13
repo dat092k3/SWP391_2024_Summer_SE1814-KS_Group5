@@ -64,7 +64,7 @@ public class AddSupplierServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         SupplierInterface supplierDAO = new SupplierDAO();
 
-        String name = request.getParameter("namemanager").trim();
+        String name = request.getParameter("name").trim();
         String address = request.getParameter("address").trim();
         String phoneNumber = request.getParameter("phonenumber").trim();
         String email = request.getParameter("email").trim();

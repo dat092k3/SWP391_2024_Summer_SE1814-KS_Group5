@@ -52,6 +52,30 @@ public class EditEquipmentServlet extends HttpServlet {
             request.getRequestDispatcher("manageequipment").include(request, response);
             return;
         }
+        
+        if (typeofequipment == null || typeofequipment.trim().isEmpty()) {
+            request.setAttribute("messageerror", "Please select a type of equipment.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
+
+        if (supplier == null || supplier.trim().isEmpty()) {
+            request.setAttribute("messageerror", "Please select a supplier.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
 
         Equipment editEquipment = new Equipment(Integer.parseInt(equipmentId), name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 

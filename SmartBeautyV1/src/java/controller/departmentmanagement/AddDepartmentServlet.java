@@ -74,7 +74,7 @@ public class AddDepartmentServlet extends HttpServlet {
         
         String departmentId= request.getParameter("departmentId").trim();
         String namedepartment = request.getParameter("namedepartment").trim();
-        String manager=request.getParameter("manager").trim();
+        String manager=request.getParameter("manager");
         
         DepartmentInterface departmentDAO= new DepartmentDAO();
         if(manager==null || manager.trim().isEmpty()){
@@ -86,7 +86,7 @@ public class AddDepartmentServlet extends HttpServlet {
         }
         
         if(namedepartment==null || !isValidName(namedepartment)  ||namedepartment.trim().isEmpty()){
-            request.setAttribute("messageerror", "Name department is invalid.");
+            request.setAttribute("messageerror", "Name department is invalid");
             request.setAttribute("namedepartment", namedepartment);
             request.setAttribute("selectedManager", manager);
             request.getRequestDispatcher("managedepartment").include(request, response);

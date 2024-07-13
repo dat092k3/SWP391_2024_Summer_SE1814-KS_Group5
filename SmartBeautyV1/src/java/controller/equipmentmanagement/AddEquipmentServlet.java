@@ -36,9 +36,20 @@ public class AddEquipmentServlet extends HttpServlet {
         String quantity = request.getParameter("quantity").trim();
         String price = request.getParameter("price").trim();
         String description = request.getParameter("description").trim();
-        String typeofequipment = request.getParameter("typeofequipment").trim();
-        String supplier = request.getParameter("supplier").trim();
+        String typeofequipment = request.getParameter("typeofequipment");
+        String supplier = request.getParameter("supplier");
 
+        if (!isValidName(name)) {
+            request.setAttribute("messageerror", "Invalid input. Please check the name format.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
         if (typeofequipment == null || typeofequipment.trim().isEmpty()) {
             request.setAttribute("messageerror", "Please select a type of equipment.");
             request.setAttribute("nameequipment", name);
@@ -53,18 +64,6 @@ public class AddEquipmentServlet extends HttpServlet {
 
         if (supplier == null || supplier.trim().isEmpty()) {
             request.setAttribute("messageerror", "Please select a supplier.");
-            request.setAttribute("nameequipment", name);
-            request.setAttribute("quantity", quantity);
-            request.setAttribute("price", price);
-            request.setAttribute("description", description);
-            request.setAttribute("selectedType", typeofequipment);
-            request.setAttribute("selectedSupplier", supplier);
-            request.getRequestDispatcher("manageequipment").include(request, response);
-            return;
-        }
-
-        if (!isValidName(name)) {
-            request.setAttribute("messageerror", "Invalid input. Please check the name format.");
             request.setAttribute("nameequipment", name);
             request.setAttribute("quantity", quantity);
             request.setAttribute("price", price);

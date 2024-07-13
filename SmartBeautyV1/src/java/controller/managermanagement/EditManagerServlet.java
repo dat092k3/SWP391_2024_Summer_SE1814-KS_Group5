@@ -108,28 +108,30 @@ public class EditManagerServlet extends HttpServlet {
         int age = Period.between(dob, now).getYears();
 
         LocalDate hireDate = LocalDate.parse(hiredate);
-        if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
-            request.setAttribute("messageerror", "Hire date is invalid.");
-            request.getRequestDispatcher("managemanager").forward(request, response);
-            return;
-        }
-
-        if (age < 18) {
-            request.setAttribute("message", "You must be at least 18 years old.");
-            request.getRequestDispatcher("managemanager").include(request, response);
-            return;
-        }
-
         if (!isValidName(namemanager)) {
             request.setAttribute("messageerror", "Please check the name is invalid.");
-            request.setAttribute("email", email);
-            request.setAttribute("username", username);
+            request.setAttribute("name", username);
             request.setAttribute("password", password);
+            request.setAttribute("email", email);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
-            request.setAttribute("hireDate", hiredate);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+
+        if (gender == null || gender.trim().isEmpty()) {
+            request.setAttribute("messageerror", "Please select a gender.");
+            request.setAttribute("name", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
@@ -138,50 +140,64 @@ public class EditManagerServlet extends HttpServlet {
 
         if (!isValidEmail(email)) {
             request.setAttribute("messageerror", "Please check the email is invalid.");
-            request.setAttribute("email", email);
-            request.setAttribute("username", username);
+            request.setAttribute("name", username);
             request.setAttribute("password", password);
-            request.setAttribute("phonenumber", phonenumber);
-            request.setAttribute("namemanager", namemanager);
-            request.setAttribute("image", image);
-            request.setAttribute("selectedGender", gender);
-            request.setAttribute("hireDate", hiredate);
-            request.setAttribute("address", address);
-            request.setAttribute("salary", salary);
-            request.getRequestDispatcher("managemanager").include(request, response);
-            return;
-        }
-        if (!isValidPhoneNumber(phonenumber)) {
-            request.setAttribute("messageerror", "Please check the phonenumber is invalid.");
             request.setAttribute("email", email);
-            request.setAttribute("username", username);
-            request.setAttribute("password", password);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
             request.setAttribute("address", address);
-            request.setAttribute("hireDate", hiredate);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
 
-        if (gender == null || gender.trim().isEmpty()) {
-            request.setAttribute("messageerror", "Please select a gender.");
-            request.setAttribute("email", email);
-            request.setAttribute("username", username);
+        if (dob.isAfter(now)) {
+            request.setAttribute("messageerror", "Date of birth is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
+            return;
+        }
+        if (!isValidPhoneNumber(phonenumber)) {
+            request.setAttribute("messageerror", "Please check the phonenumber is invalid.");
+            request.setAttribute("name", username);
             request.setAttribute("password", password);
+            request.setAttribute("email", email);
             request.setAttribute("phonenumber", phonenumber);
             request.setAttribute("namemanager", namemanager);
             request.setAttribute("image", image);
             request.setAttribute("selectedGender", gender);
-            request.setAttribute("hireDate", hiredate);
             request.setAttribute("address", address);
             request.setAttribute("salary", salary);
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
+        if (!isValidAddress(address)) {
+            request.setAttribute("messageerror", "Please check the address is invalid.");
+            request.setAttribute("name", username);
+            request.setAttribute("password", password);
+            request.setAttribute("email", email);
+            request.setAttribute("phonenumber", phonenumber);
+            request.setAttribute("namemanager", namemanager);
+            request.setAttribute("image", image);
+            request.setAttribute("selectedGender", gender);
+            request.setAttribute("address", address);
+            request.setAttribute("salary", salary);
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+        if (hireDate.isBefore(dob) || hireDate.isAfter(now)) {
+            request.setAttribute("messageerror", "Hire date is invalid.");
+            request.getRequestDispatcher("managemanager").forward(request, response);
+            return;
+        }
+
+        if (age < 18) {
+            request.setAttribute("messageerror", "You must be at least 18 years old.");
+            request.getRequestDispatcher("managemanager").include(request, response);
+            return;
+        }
+        
         Account editAccount = new Account(username, password, email, phonenumber, "Manager", true);
         Manager editManager = new Manager(Integer.parseInt(managerId), Integer.parseInt(accountId), namemanager, gender, email, dateofbirth, phonenumber, address, hiredate, Float.parseFloat(salary), image, true);
         if (managerDAO.isManagerExistWhenSave(Integer.parseInt(managerId), namemanager, image, address, phonenumber, email, Float.parseFloat(salary))) {
@@ -291,6 +307,33 @@ public class EditManagerServlet extends HttpServlet {
             }
         }
         return false;
+    }
+    
+    /**
+     * check address need to follow standard
+     *
+     * @param address The address to check
+     * @return true if the address is valid, false otherwise
+     */
+    private boolean isValidAddress(String address) {
+        if (address == null || address.trim().isEmpty()) {
+            return false;
+        }
+
+        String regex = "^[a-zA-Z\\p{L}0-9.,\\s]*$";
+        if (!address.matches(regex)) {
+            return false;
+        }
+
+        // Additional condition: Each word after whitespace must start with an uppercase letter
+        String[] words = address.split("\\s+");
+        for (String word : words) {
+            if (!Character.isUpperCase(word.charAt(0))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

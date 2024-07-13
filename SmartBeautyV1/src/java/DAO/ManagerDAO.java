@@ -205,20 +205,18 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerAccountExist(String username, String email, String phonenumber) {
         String sql = "select * from Account\n"
-                + "where (username =? and email=? and phonenumber=?) or ((email= ? or phonenumber =?) and status=1)";
+                + "where username =? and (email= ? or phonenumber =?) and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, email);
             st.setString(3, phonenumber);
-            st.setString(4, email);
-            st.setString(5, phonenumber);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
+            return false;
         }
-        return false;
     }
 
     /**
@@ -244,8 +242,9 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
+            return false;
         }
-        return false;
+        
     }
 
     /**
