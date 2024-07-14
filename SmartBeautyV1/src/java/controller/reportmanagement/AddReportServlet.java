@@ -2,32 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.reportmanagement;
 
-import DAO.AccountDAO;
-import DAO.DepartmentDAO;
 import DAO.ManagerDAO;
-import Interface.AccountInterface;
-import Interface.DepartmentInterface;
 import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Account;
-import model.Department;
+import java.util.regex.Pattern;
 import model.Manager;
+import model.Report;
 
 /**
- * login to system
  *
  * @author LENOVO
  */
-public class LoginServlet extends HttpServlet {
+public class AddReportServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +39,10 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");
+            out.println("<title>Servlet AddReportServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddReportServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -81,47 +74,52 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        AccountInterface accountDAO = new AccountDAO();
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String rememmber = request.getParameter("remember");
-        Account account = accountDAO.findAccount(username, password);
-        Cookie cusername = new Cookie("cusername", username);
-        Cookie cpassword = new Cookie("cpassword", password);
-        if (account == null) {
-            session.setAttribute("error_login", "your information is incorrect!");
-            response.addCookie(cusername);
-            response.addCookie(cpassword);
-            response.sendRedirect("signup-signin.jsp");
-        } else {
-            session.removeAttribute("error_login");
-            session.setAttribute("account", account);
-            session.setAttribute("role", account.getRole());
-            session.setAttribute("account_id", account.getAccount_id());
-            session.setMaxInactiveInterval(60 * 60 * 24);
-            if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
-                cusername.setMaxAge(60 * 60);
-                cpassword.setMaxAge(60 * 60);
-                response.addCookie(cpassword);
-            } else {
-                cusername.setMaxAge(0);
-                cpassword.setMaxAge(0);
-                response.addCookie(cpassword);
-            }
-            if (account.getRole().equals("Manager")) {
-                ManagerInterface managerDAO = new ManagerDAO();
-                DepartmentInterface departmentDAO = new DepartmentDAO();
-                Manager manager = managerDAO.getManagerByAccountId(account.getAccount_id());
-                Department department = departmentDAO.getDepartmentByManagerId(manager.getManager_id());
-                session.setAttribute("manager", manager);
-                session.setAttribute("department", department);
-                session.setAttribute("departmentname", department.getDepartment_name());
-            }
-            response.addCookie(cpassword);
-            response.addCookie(cusername);
-            response.sendRedirect("index.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
+        ManagerInterface managerDAO = new ManagerDAO();
+        String report_name = request.getParameter("namereport").trim();
+        String description = request.getParameter("description").trim();
+        String date = request.getParameter("date");
+        String status = request.getParameter("status");
+        String accountId = request.getParameter("accountId");
+
+        if (!isValidFormat(report_name) || !isValidFormat(description)) {
+            request.setAttribute("messageerror", "Please check value input need to follow format");
+            request.setAttribute("namereport", report_name);
+            request.setAttribute("description", description);
+            request.getRequestDispatcher("managereport").include(request, response);
+            return;
         }
+        Manager manager = managerDAO.getManagerByAccountId(Integer.parseInt(accountId));
+        Report report = new Report(report_name, description, date, status, manager.getManager_id());
+        if (managerDAO.checkReportExist(report_name, date)) {
+            request.setAttribute("messageerror", "This report has been reported");
+            request.setAttribute("namereport", report_name);
+            request.setAttribute("description", description);
+            request.getRequestDispatcher("managereport").include(request, response);
+        } else {
+            managerDAO.addReport(report);
+            request.setAttribute("message", "Report Successful");
+            request.setAttribute("showEditDialog", false);
+        }
+        request.getRequestDispatcher("managereport").include(request, response);
+    }
+
+    /**
+     * check value of name need to follow standard
+     *
+     * @param name of name need to check
+     * @return true if name is valid, false otherwise
+     */
+    private boolean isValidFormat(String name) {
+        // Regex pattern to match valid strings where only the first letter is capitalized
+        String regex = "^[A-Z][a-z0-9 ]*$";
+
+        // Create a Pattern object
+        Pattern pattern = Pattern.compile(regex);
+
+        // Check if the input string matches the pattern
+        return pattern.matcher(name).matches();
     }
 
     /**

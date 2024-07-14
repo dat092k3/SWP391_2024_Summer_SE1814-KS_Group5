@@ -72,7 +72,11 @@
                                                 </div>
                                             </li>
                                         </c:if>
-
+                                        <c:if test="${account.getRole() eq 'Manager'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="managereport">Report</a>
+                                            </li> 
+                                        </c:if>  
                                         <c:if test="${account.getRole() eq 'Director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
@@ -83,11 +87,17 @@
                                                     <a href="managedepartment">Manage Department</a>
                                                 </div>
                                             </li>
-                                        </c:if>  
+                                        </c:if>   
+                                            
                                         <c:if test="${account.getRole() eq 'Director'}">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="statistics">Statistics</a>
-                                            </li>  
+                                                <a class="nav-link" href="viewreport">View Report</a>
+                                            </li> 
+                                        </c:if>
+                                        <c:if test="${account.getRole() eq 'Manager'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="viewreportformanager">View Report</a>
+                                            </li> 
                                         </c:if>    
                                         <c:if test="${sessionScope.account != null}">
                                             <li class="nav-item">

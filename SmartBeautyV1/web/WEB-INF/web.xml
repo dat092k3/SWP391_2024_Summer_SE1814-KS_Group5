@@ -280,6 +280,38 @@
         <servlet-name>ViewProfileEmployeeServlet</servlet-name>
         <servlet-class>controller.employeemanagement.ViewProfileEmployeeServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewReportForManagerServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ViewReportForManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ViewReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.AddReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.UpdateReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RefuseServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.RefuseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.SearchReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchReportForManagerServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.SearchReportForManagerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -551,5 +583,37 @@
     <servlet-mapping>
         <servlet-name>ViewProfileEmployeeServlet</servlet-name>
         <url-pattern>/viewprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/managereport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddReportServlet</servlet-name>
+        <url-pattern>/addreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateReportServlet</servlet-name>
+        <url-pattern>/updatereport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RefuseServlet</servlet-name>
+        <url-pattern>/refuse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchReportServlet</servlet-name>
+        <url-pattern>/searchreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReportServlet</servlet-name>
+        <url-pattern>/viewreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReportForManagerServlet</servlet-name>
+        <url-pattern>/viewreportformanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchReportForManagerServlet</servlet-name>
+        <url-pattern>/searchreportformanager</url-pattern>
     </servlet-mapping>
 </web-app>

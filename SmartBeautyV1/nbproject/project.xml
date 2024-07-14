@@ -59,6 +59,7 @@
             <word>HireDate</word>
             <word>phonenumber</word>
             <word>sherah</word>
+            <word>SportFIT</word>
             <word>VND</word>
         </spellchecker-wordlist>
     </configuration>

@@ -7,6 +7,7 @@ package Interface;
 import java.util.List;
 import model.Account;
 import model.Manager;
+import model.Report;
 
 /**
  *
@@ -25,7 +26,7 @@ public interface ManagerInterface {
     public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary);
 
     public boolean isManagerExist(String name, String address, String phonenumber);
- 
+
     public int getManagerId();
 
     public boolean isManagerAccountExist(String username, String email, String phonenumber);
@@ -39,4 +40,25 @@ public interface ManagerInterface {
     public List<Manager> findManager(String nameSearch);
 
     public Manager getManagerByAccountId(int account_id);
+
+    public void addReport(Report report);
+
+    public boolean checkReportExist(String name, String date);
+
+    public List<Report> getReportByDirector();
+
+    public void updateReport(int id);
+
+    public void RefuseReport(int id);
+
+    public List<Report> getListReportForManager(int id);
+
+    public List<Report> findReport(String nameSearch);
+
+    public List<Report> getAllReport();
+
+    public List<Report> getAllReport(int id);
+
+    public List<Report> findReportForManager(String nameSearch, int id);
+
 }
