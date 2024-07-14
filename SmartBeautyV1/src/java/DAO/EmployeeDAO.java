@@ -295,7 +295,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      */
     @Override
     public Employee getProfileEmployeeByAccountId(int account_id) {
-        String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '1' or department_id = '2')";
+        String sql = "SELECT * FROM Employee WHERE account_id = ? ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, account_id);
