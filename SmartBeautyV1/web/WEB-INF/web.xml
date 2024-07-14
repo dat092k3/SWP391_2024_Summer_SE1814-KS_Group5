@@ -312,6 +312,10 @@
         <servlet-name>SearchReportForManagerServlet</servlet-name>
         <servlet-class>controller.reportmanagement.SearchReportForManagerServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControlServlet</servlet-name>
+        <servlet-class>controller.controlmanagement.ControlServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -615,5 +619,9 @@
     <servlet-mapping>
         <servlet-name>SearchReportForManagerServlet</servlet-name>
         <url-pattern>/searchreportformanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlServlet</servlet-name>
+        <url-pattern>/control</url-pattern>
     </servlet-mapping>
 </web-app>

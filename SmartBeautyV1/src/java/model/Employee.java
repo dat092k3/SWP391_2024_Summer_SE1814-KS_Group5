@@ -24,7 +24,8 @@ public class Employee {
     private String image;
     private String experience;
     private int department_id;
-
+    private String department_name;
+    
     public Employee() {
     }
 
@@ -59,6 +60,22 @@ public class Employee {
         this.image = image;
         this.experience = experience;
         this.department_id = department_id;
+    }
+
+    public Employee(int employee_id, String fullName, String phoneNumber, String address,String department_name) {
+        this.employee_id = employee_id;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.department_name = department_name;
+    }
+
+    public String getDepartment_name() {
+        return department_name;
+    }
+
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
     }
 
     public int getEmployee_id() {

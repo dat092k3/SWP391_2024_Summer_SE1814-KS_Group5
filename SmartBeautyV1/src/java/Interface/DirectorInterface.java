@@ -4,7 +4,11 @@
  */
 package Interface;
 
+import java.util.List;
+import model.Department;
 import model.Director;
+import model.Employee;
+import model.Manager;
 
 /**
  *
@@ -15,5 +19,23 @@ public interface DirectorInterface {
     public Director getDirectorById(int account_id);
 
     public void updateProfileDirector(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String image, int account_id);
+    
+    public List<Manager> getAllManager();
 
+    public int countAdmin();
+
+    public int countPT();
+
+    public int countTakeCare();
+
+    public int countManager();
+    
+    public List<Employee> getEmployeeActive();
+    
+    public List<Employee> getEmployeeNonActive();
+    
+    public List<Department> getDepartmentActive();
+    
+    public List<Department> getDepartmentNonActive();
+    
 }

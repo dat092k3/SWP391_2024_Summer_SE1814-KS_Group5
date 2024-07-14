@@ -98,7 +98,13 @@
                                             <li class="nav-item">
                                                 <a class="nav-link" href="viewreportformanager">View Report</a>
                                             </li> 
+                                        </c:if> 
+                                        <c:if test="${account.getRole() eq 'Director'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="control">Control</a>
+                                            </li>  
                                         </c:if>    
+                                            
                                         <c:if test="${sessionScope.account != null}">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="logout">Logout</a>
