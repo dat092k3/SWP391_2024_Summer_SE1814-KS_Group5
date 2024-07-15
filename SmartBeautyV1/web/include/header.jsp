@@ -44,19 +44,24 @@
                                                 <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Customer'}">
                                                     <a href="servicesregistered">Registered Service</a>
                                                 </c:if>
-                                                <c:if test="${account.getRole() == 'Customer' || account.getRole() == 'Takecare'}">
-                                                    <a href="schedule.jsp">Schedule</a>
-                                                </c:if>
+
                                             </div>
                                         </li>
                                         <li><a href="search">Blog</a></li>
-                                        <li><a href="contact.jsp">Contact</a></li>
-                                            <c:if test="${account.getRole() eq 'Admin'}">
+
+                                        <c:if test="${account.getRole() == 'Customer'}">
+                                            <li><a href="contact">Contact</a></li> 
+                                            </c:if>
+                                            <c:if test="${account.getRole() == 'Takecare'}">
+                                            <li><a href="contactlist">Contact</a></li>
+                                            </c:if>
+
+                                        <c:if test="${account.getRole() eq 'Admin'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Account Management</a>
                                                 <div class="dropdown-content">
                                                     <a href="viewaccount">Manage Account</a>
-                                                     <a href="viewprofileemployeeptandtakecare">Manage Profile PT, Takecare</a> 
+                                                    <a href="viewprofileemployeeptandtakecare">Manage Profile PT, Takecare</a> 
                                                 </div>
                                             </li>
                                         </c:if>

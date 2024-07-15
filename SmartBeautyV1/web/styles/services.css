@@ -788,8 +788,8 @@ section
 .timetable_container
 {
     margin-top: 62px;
-    width: calc(100% + 156px);
-    left: -78px;
+    width: calc(100% - 20px);
+    left: 10px;
 }
 .tt_day
 {

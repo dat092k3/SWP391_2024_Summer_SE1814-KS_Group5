@@ -11,32 +11,27 @@ import java.util.Date;
  * @author LENOVO
  */
 public class Contact {
-    private Customer customer_id;
+    private String name;
     private Date date;
-    private String status;
+    private String email;
+    private boolean status;
 
     public Contact() {
     }
-    
-    /**
-     * constructor of contact
-     * 
-     * @param customer_id of customer want to contact
-     * @param date of customer want to contact
-     * @param status of customer want to contact
-     */
-    public Contact(Customer customer_id, Date date, String status) {
-        this.customer_id = customer_id;
+
+    public Contact(String name, Date date, String email, boolean status) {
+        this.name = name;
         this.date = date;
+        this.email = email;
         this.status = status;
     }
 
-    public Customer getCustomer_id() {
-        return customer_id;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomer_id(Customer customer_id) {
-        this.customer_id = customer_id;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getDate() {
@@ -47,13 +42,20 @@ public class Contact {
         this.date = date;
     }
 
-    public String getStatus() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
-    
     
 }

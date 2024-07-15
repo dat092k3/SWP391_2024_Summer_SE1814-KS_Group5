@@ -8,7 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="SportFIT template project">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="styles/bootstrap-4.1.2/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="styles/bootstrap.min.css">
         <link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
         <link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
@@ -44,11 +44,15 @@
                     xhttp.send();
                 }
             }
+
+            function resetRadioGroup(groupName) {
+                document.querySelectorAll("`input[name=\"" + groupName + "\"]`").checked = false;
+            }
         </script>
 
     </head>
-    <body>
-        <div class="super_container">
+    <bo    dy>
+        <div class="super_containe        r">
             <!-- Header -->
             <jsp:include page="include/header.jsp"></jsp:include>
             <jsp:include page="include/home.jsp"></jsp:include>
@@ -103,19 +107,19 @@
                                             </div>
 
                                             <div class="modal fade" id="Edit_${service.service_id}" role="dialog">
-                                                <div class="modal-dialog">
+                                                <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit Service</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
                                                         <form id="editServiceForm" action="editservice" method="get" onsubmit="return validateForm()">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Edit Service</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
                                                             <div class="modal-body">
                                                                 <div class="form-group">
                                                                     <label for="edit_service_name">Service Name</label>
-                                                                    <input type="text" class="form-control" id="edit_service_name" name="service_name" maxlength="255" minlength="1" value="${service.service_name}">
+                                                                    <input type="text" class="form-control" id="edit_service_name" name="service_name" maxlength="50" minlength="1" value="${service.service_name}">
                                                                     <div class="invalid-feedback">Please enter a valid service name.</div>
                                                                 </div>
                                                                 <div class="form-group">
@@ -144,6 +148,7 @@
                                                                     <div class="invalid-feedback">Please enter valid price.</div>
                                                                 </div>
                                                                 <input type="hidden" id="edit_service_id" name="service_id" value="${service.service_id}">
+
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
@@ -187,7 +192,7 @@
             </c:if>
 
             <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form id="serviceForm" action="addservice" method="get" onsubmit="return validateAddServiceForm()">
                             <div class="modal-header">
@@ -199,7 +204,7 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="service_name">Service Name</label>
-                                    <input type="text" class="form-control" id="service_name" name="service_name" maxlength="255" minlength="1">
+                                    <input type="text" class="form-control" id="service_name" name="service_name" maxlength="50" minlength="1">
                                     <div class="invalid-feedback">Please enter a valid service name.</div>
                                 </div>
                                 <div class="form-group">
@@ -218,46 +223,49 @@
                                     <div class="invalid-feedback">Please enter valid price.</div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pt_price">Price</label>
+                                    <label for="pt_price">PT Price</label>
                                     <input type="number" class="form-control" id="pt_price" name="pt_price" step="0.001" min="0">
-                                    <div class="invalid-feedback">Please enter valid price.</div>
+                                    <div class="invalid-feedback">Please enter valid pt price.</div>
                                 </div>
                                 <div class="form-group">
                                     <label for="discount">Discount</label>
                                     <input type="number" class="form-control" id="discount" name="discount" step="0.001" min="0" max="100">
                                     <div class="invalid-feedback">Please enter valid discount.</div>
                                 </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn button-close" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn button-post">Save Service</button>
                             </div>
-                        </form>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Footer -->
-        <jsp:include page="include/footer.jsp"></jsp:include>
-    </body>
+<!-- Footer -->
+<jsp:include page="include/footer.jsp"></jsp:include>
+</body>
 
-    <!-- Scripts -->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="styles/bootstrap-4.1.2/popper.js"></script>
-    <script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
-    <script src="plugins/greensock/TweenMax.min.js"></script>
-    <script src="plugins/greensock/TimelineMax.min.js"></script>
-    <script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
-    <script src="plugins/greensock/animation.gsap.min.js"></script>
-    <script src="plugins/greensock/ScrollToPlugin.min.js"></script>
-    <script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-    <script src="plugins/easing/easing.js"></script>
-    <script src="plugins/progressbar/progressbar.min.js"></script>
-    <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
-    <script src="plugins/parallax-js-master/parallax.min.js"></script>
-    <script src="js/custom.js"></script>
-    <script>
+<!-- Scripts -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="styles/bootstrap-4.1.2/popper.js"></script>
+<script src="styles/bootstrap-4.1.2/bootstrap.min.js"></script>
+<script src="plugins/greensock/TweenMax.min.js"></script>
+<script src="plugins/greensock/TimelineMax.min.js"></script>
+<script src="plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="plugins/greensock/animation.gsap.min.js"></script>
+<script src="plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="plugins/easing/easing.js"></script>
+<script src="plugins/progressbar/progressbar.min.js"></script>
+<script src="plugins/colorbox/jquery.colorbox-min.js"></script>
+<script src="plugins/parallax-js-master/parallax.min.js"></script>
+<script src="js/custom.js"></script>
+<script>
                             function validateForm() {
                                 var serviceName = document.getElementById('edit_service_name').value.trim();
                                 var imageUrl = document.getElementById('edit_image').value.trim();
@@ -265,9 +273,7 @@
                                 var price = document.getElementById('edit_price').value.trim();
                                 var pt_price = document.getElementById('edit_pt_price').value.trim();
                                 var discount = document.getElementById('edit_discount').value.trim();
-
                                 var isValid = true;
-
                                 if (serviceName === '') {
                                     document.getElementById('edit_service_name').classList.add('is-invalid');
                                     isValid = false;
@@ -275,7 +281,7 @@
                                     document.getElementById('edit_service_name').classList.remove('is-invalid');
                                 }
 
-                                if (imageUrl === '' || !isValidImageURL(imageUrl)) {
+                                if (imageUrl === '') {
                                     document.getElementById('edit_image').classList.add('is-invalid');
                                     isValid = false;
                                 } else {
@@ -295,7 +301,7 @@
                                 } else {
                                     document.getElementById('edit_price').classList.remove('is-invalid');
                                 }
-                                
+
                                 if (pt_price === '' || isNaN(pt_price) || parseFloat(pt_price) < 0) {
                                     document.getElementById('edit_pt_price').classList.add('is-invalid');
                                     isValid = false;
@@ -320,9 +326,7 @@
                                 var price = document.getElementById('price').value.trim();
                                 var pt_price = document.getElementById('pt_price').value.trim();
                                 var discount = document.getElementById('discount').value.trim();
-
                                 var isValid = true;
-
                                 if (serviceName === '') {
                                     document.getElementById('service_name').classList.add('is-invalid');
                                     isValid = false;
@@ -330,7 +334,7 @@
                                     document.getElementById('service_name').classList.remove('is-invalid');
                                 }
 
-                                if (imageUrl === '' || !isValidImageURL(imageUrl)) {
+                                if (imageUrl === '') {
                                     document.getElementById('image').classList.add('is-invalid');
                                     isValid = false;
                                 } else {
@@ -350,7 +354,7 @@
                                 } else {
                                     document.getElementById('price').classList.remove('is-invalid');
                                 }
-                                
+
                                 if (pt_price === '' || isNaN(pt_price) || parseFloat(pt_price) < 0) {
                                     document.getElementById('pt_price').classList.add('is-invalid');
                                     isValid = false;
@@ -367,32 +371,5 @@
 
                                 return isValid;
                             }
-
-                            function isValidImageURL(url) {
-                                return new Promise((resolve) => {
-                                    const pattern = /\.(jpeg|jpg|gif|png|webp|svg)$/i; // Added case insensitivity
-
-                                    // Check if the URL has a valid image file extension
-                                    if (!pattern.test(url)) {
-                                        resolve(false);
-                                        return; // Exit the function if the pattern does not match
-                                    }
-
-                                    const img = new Image();
-                                    img.src = url;
-
-                                    // Resolve to true if the image loads successfully
-                                    img.onload = function () {
-                                        resolve(true);
-                                    };
-
-                                    // Resolve to false if the image fails to load
-                                    img.onerror = function () {
-                                        resolve(false);
-                                    };
-                                });
-                            }
-
-
-    </script>
+</script>
 </html>

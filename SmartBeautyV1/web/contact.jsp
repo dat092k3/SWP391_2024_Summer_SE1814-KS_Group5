@@ -61,7 +61,7 @@
                             <div class="col-lg-8 contact_col">
                                 <div class="contact_title">Gettsss in touch</div>
                                 <div class="contact_form_container">
-                                    <form action="#" id="contact_form" class="contact_form">
+                                    <form action="contact" id="contact_form" class="contact_form">
                                         <div class="row">
                                             <div class="col-lg-6">
                                                 <div class="input_item"><input type="text" class="contact_input trans_200" placeholder="Name" required="required"></div>
@@ -71,7 +71,7 @@
                                             </div>
                                         </div>
                                         <div class="input_item"><textarea class="contact_input contact_textarea trans_200" placeholder="Message" required="required"></textarea></div>
-                                        <button class="contact_button button">Send<span></span></button>
+                                        <button type="submit" class="contact_button button">Send<span></span></button>
                                     </form>
                                 </div>
                             </div>
@@ -89,7 +89,9 @@
                                     <div class="map">
                                         <div id="google_map" class="google_map">
                                             <div class="map_container">
-                                                <div id="map"></div>
+                                                <div id="map">
+                                                    <iframe src="https://www.google.com/maps/place/FPT+University/@21.0124167,105.5227143,17z/data=!3m1!4b1!4m6!3m5!1s0x3135abc60e7d3f19:0x2be9d7d0b5abcbf4!8m2!3d21.0124167!4d105.5252892!16s%2Fm%2F02rsytm?entry=ttu" allowfullscreen="" loading="lazy"></iframe>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

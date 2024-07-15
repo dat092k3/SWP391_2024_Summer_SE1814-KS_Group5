@@ -303,24 +303,6 @@
                                     return false;
                                 }
 
-                                function isValidImageURL(url) {
-                                    return new Promise((resolve) => {
-                                        const pattern = /\.(jpeg|jpg|gif|png|webp|svg)$/;
-                                        if (!pattern.test(url)) {
-                                            resolve(false);
-                                        }
-
-                                        var img = new Image();
-                                        img.src = url;
-                                        img.onload = function () {
-                                            resolve(true);
-                                        };
-                                        img.onerror = function () {
-                                            resolve(false);
-                                        };
-                                    });
-                                }
-
                                 function w3_open(commentId, blogId) {
                                     // Hide add comment form and show edit comment form
                                     document.getElementById("addCommentForm").style.display = "none";

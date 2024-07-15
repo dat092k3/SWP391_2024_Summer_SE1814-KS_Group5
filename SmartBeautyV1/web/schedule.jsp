@@ -22,6 +22,32 @@
         <link rel="stylesheet" type="text/css" href="styles/services.css">
         <link rel="stylesheet" type="text/css" href="styles/services_responsive.css">
     </head>
+    <style>
+        .tt_class input[type="radio"] {
+            display: none;
+        }
+        .tt_class input[type="radio"]:checked + label {
+            background-color: #33ff33;
+            color: white;
+        }
+        .tt_class label {
+            display: block;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            margin-bottom: 0;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #FFFFFF;
+        }
+    </style>
     <body>
 
         <div class="super_container">
@@ -58,18 +84,27 @@
                                         <div class="tt_title">monday</div>
                                         <div class="tt_day_content grid">
 
+
                                             <!-- Class -->
                                             <div class="tt_class grid-item weight_loss">
-                                                <div class="tt_class_title">Weight Loss</div>
-                                                <div class="tt_class_instructor">Jessica Smith</div>
-                                                <div class="tt_class_time">9:00</div>
+                                                <input type="radio" id="mon1" name="monday" value="Weight Loss">
+                                                <label for="mon1">
+                                                    <div class="tt_class_title">Weight Loss</div>
+                                                    <div class="tt_class_instructor">Jessica Smith</div>
+                                                    <div class="tt_class_time">9:00</div>
+                                                </label>
                                             </div>
+
+
 
                                             <!-- Class -->
                                             <div class="tt_class grid-item aerobics">
-                                                <div class="tt_class_title">Aerobics</div>
-                                                <div class="tt_class_instructor">Jessica Smith</div>
-                                                <div class="tt_class_time">10:00</div>
+                                                <input type="radio" id="mon2" name="monday" value="Weight Loss">
+                                                <label for="mon2">
+                                                    <div class="tt_class_title">Aerobics</div>
+                                                    <div class="tt_class_instructor">Jessica Smith</div>
+                                                    <div class="tt_class_time">10:00</div>
+                                                </label>
                                             </div>
 
                                             <!-- Class -->
@@ -77,12 +112,16 @@
 
                                             </div>
 
+
                                             <!-- Class -->
                                             <div class="tt_class grid-item aerobics">
-                                                <div class="tt_class_title">Aerobics</div>
-                                                <div class="tt_class_instructor">Jessica Smith</div>
-                                                <div class="tt_class_time">13:00</div>
+                                                <input type="radio" id="mon3" name="monday" value="Weight Loss">
+                                                <label for="mon3">                                                    <div class="tt_class_title">Aerobics</div>
+                                                    <div class="tt_class_instructor">Jessica Smith</div>
+                                                    <div class="tt_class_time">13:00</div>
+                                                </label>
                                             </div>
+
 
                                         </div>
                                     </div>

@@ -108,7 +108,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="content">Content</label>
-                                    <textarea class="form-control" id="content" name="content" required minlength="1"></textarea>
+                                    <textarea class="form-control" id="content" name="content" required></textarea>
                                     <div class="invalid-feedback">Please enter valid content.</div>
                                 </div>
                                 <input class="form-control" name="account_id" type="hidden" value="${sessionScope.account.account_id}" required>
@@ -166,7 +166,7 @@
                                     blogName.classList.remove('is-invalid');
                                 }
 
-                                if (!image.value || !isValidUrl(image.value)) {
+                                if (!image.value) {
                                     image.classList.add('is-invalid');
                                     isValid = false;
                                 } else {
@@ -188,19 +188,6 @@
                                 }
 
                                 return isValid;
-                            }
-
-                            function isValidUrl(string) {
-                                const urlPattern = new RegExp('^(https?:\\/\\/)?' + // validate the protocol
-                                        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|' + // domain name
-                                        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-                                        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-                                        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-                                        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-
-                                const imagePattern = /\.(jpg|jpeg|png|gif)$/i;
-
-                                return urlPattern.test(string) && imagePattern.test(string);
                             }
 
                             document.querySelectorAll('#blogForm .form-control').forEach(input => {

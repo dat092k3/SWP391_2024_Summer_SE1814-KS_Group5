@@ -272,6 +272,14 @@
         <servlet-name>PtDetail</servlet-name>
         <servlet-class>controller.servicemanagement.PtDetail</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Contact</servlet-name>
+        <servlet-class>controller.contact.Contact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactList</servlet-name>
+        <servlet-class>controller.contact.ContactList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -539,5 +547,13 @@
     <servlet-mapping>
         <servlet-name>PtDetail</servlet-name>
         <url-pattern>/ptdetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Contact</servlet-name>
+        <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactList</servlet-name>
+        <url-pattern>/contactlist</url-pattern>
     </servlet-mapping>
 </web-app>
