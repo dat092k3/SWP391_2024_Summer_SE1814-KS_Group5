@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package model;
-
-import java.util.Date;
-
 /**
  * a class have information of manager
  *
@@ -25,6 +22,7 @@ public class Manager {
     private float salary;
     private String image;
     private boolean status;
+    private String department_name;
 
     public Manager() {
     }
@@ -57,6 +55,7 @@ public class Manager {
         this.salary = salary;
         this.image = image;
     }
+    
 
     /**
      * constructor of manager
@@ -118,6 +117,22 @@ public class Manager {
         this.status = status;
     }
 
+    public Manager(int manager_id, String fullName,String phoneNumber, String address, String department_name) {
+        this.manager_id = manager_id;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.department_name = department_name;
+    }
+
+    public String getDepartment_name() {
+        return department_name;
+    }
+
+    public void setDepartment_name(String department_name) {
+        this.department_name = department_name;
+    }
+ 
     public int getManager_id() {
         return manager_id;
     }

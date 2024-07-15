@@ -30,6 +30,30 @@
                 </div>
                 <div class="col-md-6">
                     <div class="profile-head">
+                        <c:if test="${not empty error5}">
+                            <div class="text-danger">${error5}</div>
+                        </c:if> 
+                        <c:if test="${not empty error1}">
+                            <div class="text-danger">${error1}</div>
+                        </c:if>
+                        <c:if test="${not empty error2}">
+                            <div class="text-danger">${error2}</div>
+                        </c:if>
+                        <c:if test="${not empty error8}">
+                            <div class="text-danger">${error8}</div>
+                        </c:if>
+                        <c:if test="${not empty error3}">
+                            <div class="text-danger">${error3}</div>
+                        </c:if>
+                        <c:if test="${not empty error9}">
+                            <div class="text-danger">${error9}</div>
+                        </c:if>
+                        <c:if test="${not empty error4}">
+                            <div class="text-danger">${error4}</div>
+                        </c:if>
+                        <c:if test="${not empty error10}">
+                            <div class="text-danger">${error10}</div>
+                        </c:if>
                         <h5>
                             ${profilebyaccountid.fullName}  
                         </h5>
@@ -47,7 +71,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="button" class="profile-edit-btn" data-toggle="modal" data-target="#editProfileModal" value="Edit Profile"/>
+                    <input type="button" class="profile-edit-btn" data-toggle="modal" data-target="#editProfileModal" value="Edit Profile" Editprofile/>
                 </div>
             </div>
             <div class="row">
@@ -184,7 +208,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1">Email<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="email" name="email" placeholder="Enter Email" value="${profilebyaccountid.email}"  maxlength="255"  required="">
+                                                    <input class="form-control" type="text" name="email" placeholder="Enter Email" value="${profilebyaccountid.email}"  maxlength="255"  required="">
                                                     <c:if test="${not empty error2}">
                                                         <div class="text-danger">${error2}</div>
                                                     </c:if>
@@ -219,7 +243,7 @@
                                             <div class="mb-3">
                                                 <div class="col-md-12"><label class="labels">Address<span class="text-danger">*</span></label>
                                                     <div>
-                                                        <select name="city" id="city">
+                                                        <select name="city" id="city" required="">
                                                             <option value="" selected>City</option>           
                                                         </select>
                                                         <select name="district" id="district">

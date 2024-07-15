@@ -224,7 +224,7 @@ Author     : LENOVO
                                 </div>
                                 <div class="form-group">
                                     <label>Salary<span class="text-danger">*</span></label>
-                                    <input name="salary" value="${requestScope.salary}" type="number" step="0.01" class="form-control" required>
+                                    <input name="salary" value="${requestScope.salary}" type="number" step="0.01" min="1" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">

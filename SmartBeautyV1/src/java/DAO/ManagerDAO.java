@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Report;
 
 /**
  *
@@ -125,9 +126,11 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return list;
     }
+
     /**
      * add manager
-     * @param manager is manager need to add 
+     *
+     * @param manager is manager need to add
      */
     @Override
     public void addNewManager(Manager manager) {
@@ -164,8 +167,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
+
     /**
      * add account for manager
+     *
      * @param account is account of manager need to add
      */
     @Override
@@ -189,8 +194,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
     }
+
     /**
      * check account of manager to add
+     *
      * @param username of account of manager to add
      * @param email of account of manager to add
      * @param phonenumber of account of manager to add
@@ -199,23 +206,23 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     @Override
     public boolean isManagerAccountExist(String username, String email, String phonenumber) {
         String sql = "select * from Account\n"
-                + "where (username =? and email=? and phonenumber=?) or ((email= ? or phonenumber =?) and status=1)";
+                + "where username =? and (email= ? or phonenumber =?) and status=1";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setString(1, username);
             st.setString(2, email);
             st.setString(3, phonenumber);
-            st.setString(4, email);
-            st.setString(5, phonenumber);
             ResultSet rs = st.executeQuery();
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
+            return false;
         }
-        return false;
     }
+
     /**
      * check manager is existed
+     *
      * @param name of manager need to check
      * @param email of manager need to check
      * @param phonenumber of manager need to check
@@ -236,11 +243,14 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             return rs.next();
         } catch (SQLException e) {
             System.out.println(e);
+            return false;
         }
-        return false;
+
     }
+
     /**
      * check manager when edit
+     *
      * @param managerId of manager need to check
      * @param name of manager need to check
      * @param image of manager need to check
@@ -252,28 +262,29 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
      */
     @Override
     public boolean isManagerExistWhenSave(int managerId, String name, String image, String address, String phonenumber, String email, float salary) {
-    String sql = "SELECT * FROM Manager WHERE (fullname = ? AND image = ? AND address = ? AND phonenumber = ? AND email = ? AND salary = ? AND status = 1) OR ((phonenumber = ? OR email = ?) AND manager_id != ? AND status = 1)";
-    try {
-        PreparedStatement st = connection.prepareStatement(sql);
-        st.setString(1, name);
-        st.setString(2, image);
-        st.setString(3, address);
-        st.setString(4, phonenumber);
-        st.setString(5, email);
-        st.setFloat(6, salary);
-        st.setString(7, phonenumber);
-        st.setString(8, email);
-        st.setInt(9, managerId); // Exclude the current manager by id
-        ResultSet rs = st.executeQuery();
-        return rs.next();
-    } catch (SQLException e) {
-        System.out.println(e);       
+        String sql = "SELECT * FROM Manager WHERE (fullname = ? AND image = ? AND address = ? AND phonenumber = ? AND email = ? AND salary = ? AND status = 1) OR ((phonenumber = ? OR email = ?) AND manager_id != ? AND status = 1)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            st.setString(2, image);
+            st.setString(3, address);
+            st.setString(4, phonenumber);
+            st.setString(5, email);
+            st.setFloat(6, salary);
+            st.setString(7, phonenumber);
+            st.setString(8, email);
+            st.setInt(9, managerId); // Exclude the current manager by id
+            ResultSet rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
-    return false;
-}
 
     /**
      * get id of manager
+     *
      * @return id of manager
      */
     @Override
@@ -290,8 +301,10 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return -1;
     }
+
     /**
      * delete manager
+     *
      * @param id of manager need to delete
      */
     @Override
@@ -300,16 +313,18 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                 + "   SET [status] = 0\n"
                 + " WHERE manager_id=?";
         try {
-            PreparedStatement st=connection.prepareStatement(sql);
+            PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, id);
             st.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e);
         }
     }
+
     /**
      * update manager
-     * @param manager is manager need to update information 
+     *
+     * @param manager is manager need to update information
      */
     @Override
     public void updateManager(Manager manager) {
@@ -360,7 +375,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         List<Manager> list = new ArrayList<>();
         String sql = "select * from Manager where status=1";
         if (nameSearch != null && !nameSearch.trim().equals("")) {
-            sql += "and fullname like ? or phonenumber=? or email=?";
+            sql += "and fullname like ? or phonenumber like ? or email like ?";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -392,4 +407,260 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
 
     }
 
+    /**
+     * function to do get manager by manager_id
+     *
+     * @param account_id is id of manager
+     * @return account manager
+     */
+    @Override
+    public Manager getManagerByAccountId(int account_id) {
+        String sql = "select * from Manager where account_id = ? and status = 1";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int manager_id = rs.getInt("manager_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String email = rs.getString("email");
+                String dateofbirth = rs.getString("dateofbirth");
+                String phonenumber = rs.getString("phonenumber");
+                String address = rs.getString("address");
+                String hiredate = rs.getString("hiredate");
+                float salary = rs.getFloat("salary");
+                String image = rs.getString("image");
+                boolean status = rs.getBoolean("status");
+                return new Manager(manager_id, account_id, fullname, gender, email, dateofbirth, phonenumber, address, hiredate, salary, image, status);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    @Override
+    public void addReport(Report report) {
+        String sql = "INSERT INTO [dbo].[Report]\n"
+                + "           ([report_name]\n"
+                + "           ,[description]\n"
+                + "           ,[date]\n"
+                + "           ,[status]\n"
+                + "           ,[manager_id])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, report.getReport_name());
+            st.setString(2, report.getDescription());
+            st.setString(3, report.getDate());
+            st.setString(4, report.getStatus());
+            st.setInt(5, report.getManager_id());
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public List<Report> getReportByDirector() {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status, Manager.fullname from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int report_id = rs.getInt("report_id");
+                String report_name = rs.getString("report_name");
+                String description = rs.getString("description");
+                String date = rs.getString("date");
+                String status = rs.getString("status");
+                String manager_name = rs.getString("fullname");
+                list.add(new Report(report_id, report_name, description, date, status, manager_name));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    @Override
+    public boolean checkReportExist(String name, String date) {
+        String sql = "select * from Report where report_name= ? and date =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    @Override
+    public void updateReport(int id) {
+        String sql = "UPDATE [dbo].[Report]\n"
+                + "   SET [status] = 'Approved'\n"
+                + " WHERE report_id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public void RefuseReport(int id) {
+        String sql = "UPDATE [dbo].[Report]\n"
+                + "   SET [status] = 'Refuse'\n"
+                + " WHERE report_id=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    public List<Report> getListReportForManager(int id) {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status, Manager.fullname from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id\n"
+                + "where Manager.account_id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int report_id = rs.getInt("report_id");
+                String report_name = rs.getString("report_name");
+                String description = rs.getString("description");
+                String date = rs.getString("date");
+                String status = rs.getString("status");
+                String manager_name = rs.getString("fullname");
+                list.add(new Report(report_id, report_name, description, date, status, manager_name));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Report> findReport(String nameSearch) {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status, Manager.fullname from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id";
+        if (nameSearch != null && !nameSearch.trim().equals("")) {
+            sql += " where report_name like ? or date like ? or description like ?";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            if (nameSearch != null && !nameSearch.trim().equals("")) {
+                st.setString(1, "%" + nameSearch + "%");
+                st.setString(2, "%" + nameSearch + "%");
+                st.setString(3, "%" + nameSearch + "%");
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    int report_id = rs.getInt("report_id");
+                    String report_name = rs.getString("report_name");
+                    String description = rs.getString("description");
+                    String date = rs.getString("date");
+                    String status = rs.getString("status");
+                    String manager_name = rs.getString("fullname");
+                    list.add(new Report(report_id, report_name, description, date, status, manager_name));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    @Override
+    public List<Report> findReportForManager(String nameSearch, int id) {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status, Manager.fullname from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id";
+        if (nameSearch != null && !nameSearch.trim().equals("")) {
+            sql += " where Manager.account_id =? and (report_name like ? or date like ? or description like ?)";
+        }
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            if (nameSearch != null && !nameSearch.trim().equals("")) {
+                st.setInt(1,id );
+                st.setString(2, "%" + nameSearch + "%");
+                st.setString(3, "%" + nameSearch + "%");
+                st.setString(4, "%" + nameSearch + "%");
+                ResultSet rs = st.executeQuery();
+                while (rs.next()) {
+                    int report_id = rs.getInt("report_id");
+                    String report_name = rs.getString("report_name");
+                    String description = rs.getString("description");
+                    String date = rs.getString("date");
+                    String status = rs.getString("status");
+                    String manager_name = rs.getString("fullname");
+                    list.add(new Report(report_id, report_name, description, date, status, manager_name));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
+    
+
+    @Override
+    public List<Report> getAllReport() {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status, Manager.fullname from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int report_id = rs.getInt("report_id");
+                String report_name = rs.getString("report_name");
+                String description = rs.getString("description");
+                String date = rs.getString("date");
+                String status = rs.getString("status");
+                String manager_name=rs.getString("fullname");
+                list.add(new Report(report_id, report_name, description, date, status, manager_name));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    @Override
+    public List<Report> getAllReport(int id) {
+        List<Report> list = new ArrayList<>();
+        String sql = "select Report.report_id, Report.report_name, Report.description, Report.date ,Report.status from Manager join Report\n"
+                + "on Manager.manager_id=Report.manager_id\n"
+                + "where Manager.account_id =?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int report_id = rs.getInt("report_id");
+                String report_name = rs.getString("report_name");
+                String description = rs.getString("description");
+                String date = rs.getString("date");
+                String status = rs.getString("status");
+                list.add(new Report(report_id, report_name, description, date, status));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 }

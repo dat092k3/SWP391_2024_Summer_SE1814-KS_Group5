@@ -52,7 +52,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         }
         return null;
     }
-    
+
     public Employee getEmployeeByEmployeeId(int employee_id) {
         String sql = "select * from Employee where employee_id = ?";
         try {
@@ -295,7 +295,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      */
     @Override
     public Employee getProfileEmployeeByAccountId(int account_id) {
-        String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '1' or department_id = '2')";
+        String sql = "SELECT * FROM Employee WHERE account_id = ? ";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             st.setInt(1, account_id);
@@ -330,28 +330,28 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      * @return Account object if found, otherwise null
      */
     @Override
-    public Employee getProfileEmployeeByAccountIdAdmin(int account_id) {
-        String sql = "SELECT * FROM Employee WHERE account_id = ? and (department_id = '3')";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
+    public Employee getProfileEmployeeByAccountIdAndDepartmentId(int account_id, int department_id) {
+        String sql = "SELECT * FROM Employee WHERE account_id = ? and department_id = ?";  
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, account_id);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                Employee employee = new Employee(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getString(7),
-                        rs.getString(8),
-                        rs.getDate(9),
-                        rs.getFloat(10),
-                        rs.getString(11),
-                        rs.getString(12),
-                        rs.getInt(13));
-                return employee;
+            st.setInt(2, department_id);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return new Employee(
+                            rs.getInt(1),
+                            rs.getInt(2),
+                            rs.getString(3),
+                            rs.getString(4),
+                            rs.getString(5),
+                            rs.getString(6),
+                            rs.getString(7),
+                            rs.getString(8),
+                            rs.getDate(9),
+                            rs.getFloat(10),
+                            rs.getString(11),
+                            rs.getString(12),
+                            rs.getInt(13));
+                }
             }
         } catch (SQLException e) {
             System.out.println("Database error while retrieving account: " + e.getMessage());
@@ -417,4 +417,40 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
             System.out.println("Database error while updating department_id: " + e.getMessage());
         }
     }
+
+    /**
+     * function to get Profile Employee By Department Id
+     *
+     * @return List of Employee
+     */
+    @Override
+    public List<Employee> getProfileEmployeeByDepartmentId(int department_id) {
+        String sql = "SELECT * FROM Employee WHERE department_id = ?";
+        List<Employee> employees = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setInt(1, department_id);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Employee employee = new Employee(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getDate(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getString(12),
+                        rs.getInt(13));
+                employees.add(employee);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving employees: " + e.getMessage());
+        }
+        return employees;
+    }
+
 }

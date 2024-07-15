@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
     <head>
         <title>SportFIT</title>
@@ -358,6 +359,49 @@
 
                 <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
+            </div>        
+            <div id="reportModal" class="modal fade">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form action="addreport" method="post">
+                            <div class="modal-header">						
+                                <h4 class="modal-title">Report</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <input name="accountId" value="${sessionScope.account.account_id}" type="hidden" class="form-control"readonly=""/>
+                        <c:if test="${messageerror != null}">
+                            <p style="color: red;">
+                                ${messageerror}
+                            </p>
+                        </c:if>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Report Name <span class="text-danger">*</span></label>
+                                <input name="namereport" value="${requestScope.reportname}" type="text" class="form-control" maxlength="255" required=""/>
+                            </div>
+                            <div class="form-group">
+                                <label>Description <span class="text-danger">*</span></label>
+                                <textarea name="description" class="form-control" required>${requestScope.description}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="labels">Date <span class="text-danger">*</span></label>
+                                <input name="date" value="${requestScope.currentDate}" type="date" class="form-control" readonly=""/>
+                            </div>
+                            <div class="form-group">
+                                <label class="labels">Status <span class="text-danger">*</span></label>
+                                <input name="status" value="${requestScope.status}" type="text" class="form-control"readonly=""/>
+                            </div>
+                            <div class="alert alert-warning mt-3">
+                                <strong>Note:</strong> Please check carefully because you cannot edit the report.
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" name="action" value="Send">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
 
         <script src="js/jquery-3.2.1.min.js"></script>
@@ -374,5 +418,17 @@
         <script src="plugins/parallax-js-master/parallax.min.js"></script>
         <script src="plugins/colorbox/jquery.colorbox-min.js"></script>
         <script src="js/custom.js"></script>
+        <c:if test="${showEditDialog}">
+            <script>
+                $("#reportModal").modal('show');
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    const rows = document.querySelectorAll('#content tr');
+                    rows.forEach((row, index) => {
+                        row.querySelector('.serial-number').textContent = index + 1;
+                    });
+                });
+            </script>
+        </c:if>
     </body>
 </html>

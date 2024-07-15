@@ -6,9 +6,11 @@ package model;
 
 /**
  * a class have information of department
+ *
  * @author LENOVO
  */
 public class Department {
+
     private int department_id;
     private String department_name;
     private int manager_id;
@@ -17,8 +19,10 @@ public class Department {
 
     public Department() {
     }
+
     /**
      * constructor of department
+     *
      * @param department_id of department
      * @param department_name of department
      * @param manager_id of department
@@ -30,7 +34,18 @@ public class Department {
         this.manager_id = manager_id;
         this.status = status;
     }
-      
+
+    public Department(int department_id, String department_name, int manager_id) {
+        this.department_id = department_id;
+        this.department_name = department_name;
+        this.manager_id = manager_id;
+    }
+
+    public Department(int department_id, String department_name) {
+        this.department_id = department_id;
+        this.department_name = department_name;
+    }
+
     public Department(String department_name, int manager_id, boolean status) {
         this.department_name = department_name;
         this.manager_id = manager_id;
@@ -52,7 +67,6 @@ public class Department {
     public void setNamemanager(String namemanager) {
         this.namemanager = namemanager;
     }
-    
 
     public int getDepartment_id() {
         return department_id;
@@ -85,6 +99,5 @@ public class Department {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
+
 }

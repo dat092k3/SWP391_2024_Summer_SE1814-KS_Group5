@@ -5,7 +5,11 @@
 package controller;
 
 import DAO.AccountDAO;
+import DAO.DepartmentDAO;
+import DAO.ManagerDAO;
 import Interface.AccountInterface;
+import Interface.DepartmentInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,7 +19,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Account;
-import ultils.MD5;
+import model.Department;
+import model.Manager;
 
 /**
  * login to system
@@ -94,7 +99,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("account", account);
             session.setAttribute("role", account.getRole());
             session.setAttribute("account_id", account.getAccount_id());
-            session.setMaxInactiveInterval(60 * 60 * 3);
+            session.setMaxInactiveInterval(60 * 60 * 24);
             if (rememmber != null && rememmber.equalsIgnoreCase("1")) {
                 cusername.setMaxAge(60 * 60);
                 cpassword.setMaxAge(60 * 60);
@@ -103,6 +108,15 @@ public class LoginServlet extends HttpServlet {
                 cusername.setMaxAge(0);
                 cpassword.setMaxAge(0);
                 response.addCookie(cpassword);
+            }
+            if (account.getRole().equals("Manager")) {
+                ManagerInterface managerDAO = new ManagerDAO();
+                DepartmentInterface departmentDAO = new DepartmentDAO();
+                Manager manager = managerDAO.getManagerByAccountId(account.getAccount_id());
+                Department department = departmentDAO.getDepartmentByManagerId(manager.getManager_id());
+                session.setAttribute("manager", manager);
+                session.setAttribute("department", department);
+                session.setAttribute("departmentname", department.getDepartment_name());
             }
             response.addCookie(cpassword);
             response.addCookie(cusername);

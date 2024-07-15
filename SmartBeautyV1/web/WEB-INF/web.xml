@@ -58,19 +58,19 @@
     </servlet>
     <servlet>
         <servlet-name>SearchEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.SearchEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.SearchEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.SearchSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.SearchSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.ManageEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.ManageEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.ManageSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.ManageSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditBlog</servlet-name>
@@ -86,27 +86,27 @@
     </servlet>
     <servlet>
         <servlet-name>AddSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.AddSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.AddSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.EditSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.EditSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteSupplierServlet</servlet-name>
-        <servlet-class>controller.supplier.DeleteSupplierServlet</servlet-class>
+        <servlet-class>controller.suppliermanagement.DeleteSupplierServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.AddEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.AddEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.EditEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.EditEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteEquipmentServlet</servlet-name>
-        <servlet-class>controller.equipment.DeleteEquipmentServlet</servlet-class>
+        <servlet-class>controller.equipmentmanagement.DeleteEquipmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchServiceServlet</servlet-name>
@@ -182,75 +182,43 @@
     </servlet>
     <servlet>
         <servlet-name>AddDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.AddDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.AddDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.DeleteDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.DeleteDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.ManageDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.ManageDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.EditDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.EditDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchDepartmentServlet</servlet-name>
-        <servlet-class>controller.department.SearchDepartmentServlet</servlet-class>
+        <servlet-class>controller.departmentmanagement.SearchDepartmentServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddManagerServlet</servlet-name>
-        <servlet-class>controller.manager.AddManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.AddManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ManageManagerServlet</servlet-name>
-        <servlet-class>controller.manager.ManageManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.ManageManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>EditManagerServlet</servlet-name>
-        <servlet-class>controller.manager.EditManagerServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.AddAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.EditAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchEmployeeAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.SearchEmployeeAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.ViewAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.AddProfileEmployeeAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditProfileEmployeeAdminServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.EditProfileEmployeeAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewDetailProfileEmployeeAdminServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.ViewDetailProfileEmployeeAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
-        <servlet-class>controller.employeemanagement.ViewProfileEmployeeAdminServlet</servlet-class>
+        <servlet-class>controller.managermanagement.EditManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteManagerServlet</servlet-name>
-        <servlet-class>controller.manager.DeleteManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.DeleteManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchManagerServlet</servlet-name>
-        <servlet-class>controller.manager.SearchManagerServlet</servlet-class>
+        <servlet-class>controller.managermanagement.SearchManagerServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ViewDetailAccountPTAndTakecareServlet</servlet-name>
@@ -279,6 +247,82 @@
     <servlet>
         <servlet-name>ContactList</servlet-name>
         <servlet-class>controller.contact.ContactList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.AddAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.EditAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.SearchAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.ViewAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailAccountAdminServlet</servlet-name>
+        <servlet-class>controller.accountmanagement.ViewDetailAccountAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.AddProfileEmployeeAdminServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileEmployeeOfManagerEmptyServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.AddProfileEmployeeOfManagerEmptyServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileEmployeeOfManagerServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.EditProfileEmployeeOfManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailProfileEmployeeServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewDetailProfileEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileEmployeeServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewProfileEmployeeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewReportForManagerServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ViewReportForManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.ViewReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.AddReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.UpdateReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RefuseServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.RefuseServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchReportServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.SearchReportServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchReportForManagerServlet</servlet-name>
+        <servlet-class>controller.reportmanagement.SearchReportForManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ControlServlet</servlet-name>
+        <servlet-class>controller.controlmanagement.ControlServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -489,38 +533,6 @@
         <url-pattern>/editmanager</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddAccountAdminServlet</servlet-name>
-        <url-pattern>/addaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditAccountAdminServlet</servlet-name>
-        <url-pattern>/editaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchEmployeeAdminServlet</servlet-name>
-        <url-pattern>/searchemployeeadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewAccountAdminServlet</servlet-name>
-        <url-pattern>/viewaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
-        <url-pattern>/addprofileemployeeadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditProfileEmployeeAdminServlet</servlet-name>
-        <url-pattern>/editprofileemployeeadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewDetailProfileEmployeeAdminServlet</servlet-name>
-        <url-pattern>/viewdetailprofileemployeeadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewProfileEmployeeAdminServlet</servlet-name>
-        <url-pattern>/viewprofileemployeeadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>DeleteManagerServlet</servlet-name>
         <url-pattern>/deletemanager</url-pattern>
     </servlet-mapping>
@@ -531,10 +543,6 @@
     <servlet-mapping>
         <servlet-name>ViewDetailAccountPTAndTakecareServlet</servlet-name>
         <url-pattern>/viewdetailaccountptandtakecare</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddProfileEmployeeEmptyAdminServlet</servlet-name>
-        <url-pattern>/addprofileemployeeemptyadmin</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterService</servlet-name>
@@ -555,5 +563,81 @@
     <servlet-mapping>
         <servlet-name>ContactList</servlet-name>
         <url-pattern>/contactlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAccountAdminServlet</servlet-name>
+        <url-pattern>/addaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountAdminServlet</servlet-name>
+        <url-pattern>/editaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchAccountAdminServlet</servlet-name>
+        <url-pattern>/searchaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAccountAdminServlet</servlet-name>
+        <url-pattern>/viewaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailAccountAdminServlet</servlet-name>
+        <url-pattern>/viewdetailaccountadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
+        <url-pattern>/addprofileemployeeadmin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileEmployeeOfManagerEmptyServlet</servlet-name>
+        <url-pattern>/addprofileemployeeofmanagerempty</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileEmployeeOfManagerServlet</servlet-name>
+        <url-pattern>/editprofileemployeeofmanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailProfileEmployeeServlet</servlet-name>
+        <url-pattern>/viewdetailprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileEmployeeServlet</servlet-name>
+        <url-pattern>/viewprofileemployee</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReportServlet</servlet-name>
+        <url-pattern>/managereport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddReportServlet</servlet-name>
+        <url-pattern>/addreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateReportServlet</servlet-name>
+        <url-pattern>/updatereport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RefuseServlet</servlet-name>
+        <url-pattern>/refuse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchReportServlet</servlet-name>
+        <url-pattern>/searchreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReportServlet</servlet-name>
+        <url-pattern>/viewreport</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewReportForManagerServlet</servlet-name>
+        <url-pattern>/viewreportformanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchReportForManagerServlet</servlet-name>
+        <url-pattern>/searchreportformanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControlServlet</servlet-name>
+        <url-pattern>/control</url-pattern>
     </servlet-mapping>
 </web-app>

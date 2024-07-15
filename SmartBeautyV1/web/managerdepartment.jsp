@@ -95,7 +95,7 @@
                                 <th>No</th>
                                 <th>Department_ID</th>
                                 <th>Department_name</th>
-                                <th>Manager_id</th>
+                                <th>Manager_fullname</th>
                                 <th>Options</th>
                             </tr>
                         </thead>

@@ -69,11 +69,19 @@
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Account Management</a>
                                                 <div class="dropdown-content">
-                                                    <a href="viewaccountadmin">Manage Account Admin</a> 
-                                                    <a href="viewprofileemployeeadmin">Manage Profile Admin</a> 
+                                                    <c:if test="${manager != null && department != null && manager.manager_id == department.manager_id}">
+                                                        <a href="viewprofileemployee?department_id=${department.department_id}">
+                                                            Manage ${department.department_name}
+                                                        </a>
+                                                    </c:if>
                                                 </div>
                                             </li>
                                         </c:if>
+                                        <c:if test="${account.getRole() eq 'Manager'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="managereport">Report</a>
+                                            </li> 
+                                        </c:if>  
                                         <c:if test="${account.getRole() eq 'Director'}">
                                             <li class="dropdown">
                                                 <a href="#" class="dropbtn">Manage</a>
@@ -84,8 +92,24 @@
                                                     <a href="managedepartment">Manage Department</a>
                                                 </div>
                                             </li>
-                                        </c:if>     
-
+                                        </c:if>   
+                                            
+                                        <c:if test="${account.getRole() eq 'Director'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="viewreport">View Report</a>
+                                            </li> 
+                                        </c:if>
+                                        <c:if test="${account.getRole() eq 'Manager'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="viewreportformanager">View Report</a>
+                                            </li> 
+                                        </c:if> 
+                                        <c:if test="${account.getRole() eq 'Director'}">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="control">Control</a>
+                                            </li>  
+                                        </c:if>    
+                                            
                                         <c:if test="${sessionScope.account != null}">
                                             <li class="nav-item">
                                                 <a class="nav-link" href="logout">Logout</a>

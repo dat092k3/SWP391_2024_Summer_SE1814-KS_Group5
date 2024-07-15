@@ -56,8 +56,10 @@
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>chiếc</word>
             <word>fullname</word>
+            <word>HireDate</word>
             <word>phonenumber</word>
             <word>sherah</word>
+            <word>SportFIT</word>
             <word>VND</word>
         </spellchecker-wordlist>
     </configuration>
