@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author td532
  */
-public class Contact extends HttpServlet {
+public class ContactServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
