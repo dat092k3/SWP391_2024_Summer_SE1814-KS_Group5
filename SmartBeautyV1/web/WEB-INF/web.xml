@@ -241,8 +241,8 @@
         <servlet-class>controller.servicemanagement.PtDetail</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ContactServlet</servlet-name>
-        <servlet-class>controller.contact.ContactServlet</servlet-class>
+        <servlet-name>Contact</servlet-name>
+        <servlet-class>controller.contact.Contact</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ContactList</servlet-name>
@@ -557,7 +557,7 @@
         <url-pattern>/ptdetail</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ContactServlet</servlet-name>
+        <servlet-name>Contact</servlet-name>
         <url-pattern>/contact</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
