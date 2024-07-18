@@ -34,7 +34,7 @@
     </head>
     <body>
         <div class="page-wrapper">
-            <div class="container">
+            <div class="container" style="width: 60%; margin: auto; height: 80%">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">

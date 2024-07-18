@@ -39,9 +39,9 @@
                                     <!-- Box -->
                                     <div class="box">
                                         <div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="images/icon_1.png" alt=""></div>
-                                        <div class="box_title">Pilates with trainer</div>
+                                        <div class="box_title">Practice with trainer</div>
                                         <div class="box_text">
-                                            <p>Etiam commodo justo nec aliquam feugiat. Donec a leo eget augue porttitor sollicitudin.</p>
+                                            <p>Be trained and guided by personal trainers with over 3 years of training experience to help you achieve your desired body shape as quickly as possible.</p>
                                         </div>
                                         <div class="box_link_container">
                                             <a href="#"><div class="box_link d-flex flex-column align-items-center justify-content-center trans_200"><div>+</div></div></a>
@@ -50,10 +50,10 @@
 
                                     <!-- Box -->
                                     <div class="box">
-                                        <div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="images/icon_2.png" alt=""></div>
-                                        <div class="box_title">Swimming Pool</div>
+                                        <div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="images/icon_13.png" alt=""></div>
+                                        <div class="box_title">Infrastructure</div>
                                         <div class="box_text">
-                                            <p>Donec a leo eget augue porttitor sollicitudin. Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit.</p>
+                                            <p>Modern facilities, and equipment are always strictly tested for quality and regularly maintained to ensure customer safety and the best experience.</p>
                                         </div>
                                         <div class="box_link_container">
                                             <a href="#"><div class="box_link d-flex flex-column align-items-center justify-content-center trans_200"><div>+</div></div></a>
@@ -63,9 +63,9 @@
                                     <!-- Box -->
                                     <div class="box">
                                         <div class="box_icon d-flex flex-column align-items-center justify-content-center"><img src="images/icon_3.png" alt=""></div>
-                                        <div class="box_title">Healthy diet plan</div>
+                                        <div class="box_title">The blog</div>
                                         <div class="box_text">
-                                            <p>Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit velit, eu fringilla neque.</p>
+                                            <p>Blogs are always updated daily so that customers can have the best healthy lifestyle for their bodies, ensuring their health and shape.</p>
                                         </div>
                                         <div class="box_link_container">
                                             <a href="#"><div class="box_link d-flex flex-column align-items-center justify-content-center trans_200"><div>+</div></div></a>
@@ -89,9 +89,9 @@
                                         <div class="section_subtitle">welcome to sportfit</div>
                                         <div class="section_title">About <span>Sportfit</span></div>
                                     </div>
-                                    <div class="text_highlight">Etiam commodo justo nec aliquam feugiat. Donec a leo eget eget augue porttitor sollicitudin augue porttitor sollicitudin.</div>
+                                    <div class="text_highlight">Your satisfaction is our happiness.</div>
                                     <div class="about_text">
-                                        <p>Morbi sed varius risus, vitae molestie lectus. Donec id hendrerit velit, eu fringilla neque. Etiam id finibus sapien. Donec sollicitudin luctus ex non pharetra. Aenean lobortis ut leo vel porta. Maecenas ac vestibulum lectus. Cras nulla urna, lacinia ut tempor facilisis, congue dignissim tellus. Maecenas ac vestibulum lectus. Cras nulla urna, lacinia ut tempor facilisis, congue dignissim tellus. Phasellus sit amet justo ullamcorper, elementum ipsum nec.</p>
+                                        <p>Our facility provides the best service for you with affordable prices, modern facilities and constantly improving quality, ensuring customers will be satisfied with the amenities you can receive.</p>
                                     </div>
                                     <div class="button about_button"><a href="#">Join Now</a></div>
                                 </div>

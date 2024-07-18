@@ -92,7 +92,7 @@ public class AddReportServlet extends HttpServlet {
         }
         Manager manager = managerDAO.getManagerByAccountId(Integer.parseInt(accountId));
         Report report = new Report(report_name, description, date, status, manager.getManager_id());
-        if (managerDAO.checkReportExist(report_name, date)) {
+        if (managerDAO.checkReportExist(report_name)) {
             request.setAttribute("messageerror", "This report has been reported");
             request.setAttribute("namereport", report_name);
             request.setAttribute("description", description);

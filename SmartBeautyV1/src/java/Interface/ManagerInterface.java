@@ -43,7 +43,7 @@ public interface ManagerInterface {
 
     public void addReport(Report report);
 
-    public boolean checkReportExist(String name, String date);
+    public boolean checkReportExist(String name);
 
     public List<Report> getReportByDirector();
 

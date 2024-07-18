@@ -199,8 +199,11 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      *
      * @return List of Employee
      */
-    public List<Employee> getProfileEmployeeByDepartmentId() {
-        String sql = "select * from Employee where  department_id ='1' or department_id = '2'";
+    public List<Employee> getProfileEmployeeByDepartmentName() {
+        String sql = "select Employee.employee_id,Employee.account_id,Employee.fullname,Employee.gender,Employee.email,Employee.dateofbirth,Employee.phonenumber, Employee.address,Employee.hiredate,Employee.salary,Employee.image,Employee.experience,Department.department_name from Employee\n"
+                + "join Department on Employee.department_id= Department.department_id \n"
+                + "where department_name='PT' or department_name='Takecare'";
+
         List<Employee> employees = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
@@ -331,7 +334,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      */
     @Override
     public Employee getProfileEmployeeByAccountIdAndDepartmentId(int account_id, int department_id) {
-        String sql = "SELECT * FROM Employee WHERE account_id = ? and department_id = ?";  
+        String sql = "SELECT * FROM Employee WHERE account_id = ? and department_id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, account_id);
             st.setInt(2, department_id);

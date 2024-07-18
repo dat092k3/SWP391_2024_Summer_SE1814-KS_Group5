@@ -73,6 +73,19 @@ public class AddEquipmentServlet extends HttpServlet {
             request.getRequestDispatcher("manageequipment").include(request, response);
             return;
         }
+        Part part = request.getPart("img");
+        String contentType = part.getContentType();
+        if (!isImageFile(contentType)) {
+            request.setAttribute("messageerror", "Only image files (JPG, PNG, GIF) are allowed.");
+            request.setAttribute("nameequipment", name);
+            request.setAttribute("quantity", quantity);
+            request.setAttribute("price", price);
+            request.setAttribute("description", description);
+            request.setAttribute("selectedType", typeofequipment);
+            request.setAttribute("selectedSupplier", supplier);
+            request.getRequestDispatcher("manageequipment").include(request, response);
+            return;
+        }
 
         Equipment newEquipment = new Equipment(name, Integer.parseInt(typeofequipment), "", Float.parseFloat(price), Integer.parseInt(supplier), Integer.parseInt(quantity), true, description);
 
@@ -85,19 +98,6 @@ public class AddEquipmentServlet extends HttpServlet {
             request.setAttribute("selectedType", typeofequipment);
             request.setAttribute("selectedSupplier", supplier);
         } else {
-            Part part = request.getPart("img");
-            String contentType = part.getContentType();
-            if (!isImageFile(contentType)) {
-                request.setAttribute("message", "Only image files (JPG, PNG, GIF) are allowed.");
-                request.setAttribute("nameequipment", name);
-                request.setAttribute("quantity", quantity);
-                request.setAttribute("price", price);
-                request.setAttribute("description", description);
-                request.setAttribute("selectedType", typeofequipment);
-                request.setAttribute("selectedSupplier", supplier);
-                request.getRequestDispatcher("manageequipment").include(request, response);
-                return;
-            }
             String realPath = request.getServletContext().getRealPath("/images/Equipment"); //where the photo is saved
             String source = Path.of(part.getSubmittedFileName()).getFileName().toString(); //get the original filename of the file then
             // convert it to a string, get just the filename without including the full path.
@@ -143,7 +143,7 @@ public class AddEquipmentServlet extends HttpServlet {
      * @param contentType content of file
      * @return true if file valid, false otherwise
      */
-    private boolean isImageFile(String contentType) {
+    public boolean isImageFile(String contentType) {
         String[] validImageTypes = {"image/jpeg", "image/png", "image/gif"};
         for (String validType : validImageTypes) {
             if (validType.equals(contentType)) {
