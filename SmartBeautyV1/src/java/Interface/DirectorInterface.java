@@ -38,4 +38,6 @@ public interface DirectorInterface {
     
     public List<Department> getDepartmentNonActive();
     
+    public float updateSalary(int id, float salary);
+    
 }

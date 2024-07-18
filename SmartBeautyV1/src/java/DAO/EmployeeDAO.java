@@ -199,10 +199,10 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      *
      * @return List of Employee
      */
-    public List<Employee> getProfileEmployeeByDepartmentId() {
-        String sql = "select e.*, d.department_name from Employee e\n"
-                + "join Department d on e.department_id = d.department_id\n"
-                + "where d.department_name ='PT' Or d.department_name = 'Takecare'";
+    public List<Employee> getProfileEmployeeByDepartmentName() {
+        String sql = "select Employee.employee_id,Employee.account_id,Employee.fullname,Employee.gender,Employee.email,Employee.dateofbirth,Employee.phonenumber, Employee.address,Employee.hiredate,Employee.salary,Employee.image,Employee.experience,Department.department_name from Employee\n"
+                + "join Department on Employee.department_id= Department.department_id \n"
+                + "where department_name='PT' or department_name='Takecare'";
         List<Employee> employees = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {

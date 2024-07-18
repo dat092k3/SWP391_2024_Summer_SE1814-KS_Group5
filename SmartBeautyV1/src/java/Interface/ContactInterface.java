@@ -13,7 +13,7 @@ public interface ContactInterface {
     
     public boolean AddContact (Contact contact);
     
-    public boolean UpdateStatus(Contact contact);
+    public boolean UpdateStatus(String date, String email);
     
     public List<Contact> ContactList(String search);
     

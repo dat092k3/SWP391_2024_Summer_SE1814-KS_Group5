@@ -60,7 +60,7 @@ public class ViewProfileEmployeePTAndTakecareServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         EmployeeInterface employeeDAO = new EmployeeDAO();
-        List<Employee> listprofileemployeebydepartment = employeeDAO.getProfileEmployeeByDepartmentId();
+        List<Employee> listprofileemployeebydepartment = employeeDAO.getProfileEmployeeByDepartmentName();
         request.setAttribute("list", listprofileemployeebydepartment);
         request.getRequestDispatcher("viewprofileemployeeptandtakecare.jsp").forward(request, response);
     }

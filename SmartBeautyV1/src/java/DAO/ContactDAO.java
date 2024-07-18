@@ -21,11 +21,12 @@ public class ContactDAO extends DBContext implements ContactInterface {
 
     @Override
     public boolean AddContact(Contact contact) {
-        String sql = "INSERT INTO Contact (name, email, date, status) VALUES (?, ?, ?, 0)";
+        String sql = "INSERT INTO Contact (name, email, date, status, message) VALUES (?, ?, ?, 0, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, contact.getName());
             stmt.setString(2, contact.getEmail());
-            stmt.setDate(3, new java.sql.Date(contact.getDate().getTime()));
+            stmt.setString(3, contact.getDate());
+            stmt.setString(4, contact.getMessage());
             return stmt.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println("Error adding contact: " + ex.getMessage());
@@ -34,11 +35,9 @@ public class ContactDAO extends DBContext implements ContactInterface {
     }
 
     @Override
-    public boolean UpdateStatus(Contact contact) {
-        String sql = "UPDATE Contact SET status = 1 WHERE email = ? AND date = ?";
+    public boolean UpdateStatus(String date, String email) {
+        String sql = "UPDATE Contact SET status = 1 WHERE email = '"+email+"' AND date = '"+date+"'";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, contact.getEmail());
-            stmt.setDate(2, new java.sql.Date(contact.getDate().getTime()));
             return stmt.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println("Error updating contact status: " + ex.getMessage());
@@ -49,18 +48,22 @@ public class ContactDAO extends DBContext implements ContactInterface {
     @Override
     public List<Contact> ContactList(String search) {
         List<Contact> contacts = new ArrayList<>();
-        String sql = "SELECT date, status, email, name FROM Contact WHERE name LIKE ? OR email LIKE ?";
+        String sql = "SELECT date, status, email, name, message FROM Contact WHERE name LIKE ? OR email LIKE ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, "%" + search + "%");
             stmt.setString(2, "%" + search + "%");
             ResultSet rs = stmt.executeQuery();
+            int key = 0;
             while (rs.next()) {
                 Contact contact = new Contact();
-                contact.setDate(rs.getDate("date"));
+                contact.setDate(rs.getString("date"));
                 contact.setStatus(rs.getBoolean("status"));
                 contact.setEmail(rs.getString("email"));
                 contact.setName(rs.getString("name"));
+                contact.setMessage(rs.getString("message"));
+                contact.setKey(key);
                 contacts.add(contact);
+                key++;
             }
         } catch (SQLException ex) {
             System.out.println("Error retrieving contact list: " + ex.getMessage());
@@ -71,15 +74,16 @@ public class ContactDAO extends DBContext implements ContactInterface {
     @Override
     public List<Contact> ContactNotRespon() {
         List<Contact> contacts = new ArrayList<>();
-        String sql = "SELECT date, status, email, name FROM Contact WHERE status = 0";
+        String sql = "SELECT * FROM Contact WHERE status = 0";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Contact contact = new Contact();
-                contact.setDate(rs.getDate("date"));
+                contact.setDate(rs.getString("date"));
                 contact.setStatus(rs.getBoolean("status"));
                 contact.setEmail(rs.getString("email"));
                 contact.setName(rs.getString("name"));
+                contact.setMessage(rs.getString("message"));
                 contacts.add(contact);
             }
         } catch (SQLException ex) {

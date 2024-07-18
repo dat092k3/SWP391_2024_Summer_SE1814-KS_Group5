@@ -374,14 +374,13 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         List<Manager> list = new ArrayList<>();
         String sql = "select * from Manager where status=1";
         if (nameSearch != null && !nameSearch.trim().equals("")) {
-            sql += "and fullname like ? or phonenumber like ? or email like ?";
+            sql += "and fullname like ? or phonenumber like ?";
         }
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             if (nameSearch != null && !nameSearch.trim().equals("")) {
                 st.setString(1, "%" + nameSearch + "%");
                 st.setString(2, "%" + nameSearch + "%");
-                st.setString(3, "%" + nameSearch + "%");
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     int manager_id = rs.getInt("manager_id");
@@ -486,8 +485,8 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
     }
 
     @Override
-    public boolean checkReportExist(String name, String date) {
-        String sql = "select * from Report where report_name= ? and date =?";
+    public boolean checkReportExist(String name) {
+        String sql = "select * from Report where report_name= ?";
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();

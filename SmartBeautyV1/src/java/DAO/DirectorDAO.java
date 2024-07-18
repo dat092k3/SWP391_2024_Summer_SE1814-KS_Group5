@@ -265,4 +265,24 @@ public class DirectorDAO extends DBContext implements DirectorInterface {
         }
         return list;
     }
+    
+    @Override
+    public float updateSalary(int id, float salary) {
+        String sql = "UPDATE [dbo].[Manager]\n"
+                + "   SET salary =?\n"
+                + " WHERE manager_id=?";
+        float newsalary = salary;
+        try {
+            PreparedStatement st= connection.prepareStatement(sql);
+            st.setFloat(1, salary);
+            st.setInt(2, id);
+            ResultSet rs=st.executeQuery();
+            if(rs.next()){
+                newsalary=rs.getFloat("salary");
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return newsalary;
+    }
 }

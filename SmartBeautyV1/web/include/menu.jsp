@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -39,6 +40,11 @@
                     <i class="fa fa-phone" aria-hidden="true"></i>
                     <span>652-345 3222 11</span>
                 </div>
+                <c:if test="${message != null}">
+                    <p style="color: #5cb85c;">
+                        ${message}
+                    </p>
+                </c:if>
             </div>
         </div>
         <script src="js/jquery-3.2.1.min.js"></script>

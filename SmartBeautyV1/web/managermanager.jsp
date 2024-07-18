@@ -40,53 +40,16 @@ Author     : LENOVO
             }
             .text-danger {
                 color: red;
-                margin-left: 5px; /* Để tạo khoảng cách giữa label và * */
+                margin-left: 5px; 
             }
         </style>
-        <script type="text/javascript">
-            var managerIdToDelete;
-            var accountIdToDelete;
-
-            function doDelete(manager_id, account_id) {
-                managerIdToDelete = manager_id;
-                accountIdToDelete = account_id;
-                $('#deleteConfirmModal').modal('show');
-            }
-
-            $(document).ready(function () {
-                $('#confirmDelete').click(function () {
-                    window.location = "deletemanager?managerId=" + managerIdToDelete + "&accountId=" + accountIdToDelete;
-                });
-            });
-
-            function chooseFile(fileInput) {
-                if (fileInput.files && fileInput.files[0]) {
-                    var file = fileInput.files[0];
-                    var fileType = file.type;
-                    var validImageTypes = ["image/gif", "image/jpeg", "image/png"];
-
-                    if (!validImageTypes.includes(fileType)) {
-                        alert("Only image files (JPG, PNG, GIF) are allowed.");
-                        fileInput.value = ""; // Clear the input
-                        return;
-                    }
-
-                    var reader = new FileReader();
-
-                    reader.onload = function (e) {
-                        $('#image').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(file); // đọc nội dung tệp dưới dạng url
-                }
-            }
-        </script>
     </head>
     <body>
         <div class="page-wrapper">
-            <div class="container">
+            <div class="container" style="width: 80%; margin: auto; height: 90%">
                 <div class="table-wrapper">
                     <div class="table-title">
-                        <div class="row">
+                        <div class="row" >
                             <div class="col-sm-6">
                                 <a style="margin-right: 35%" href="index.jsp" class="btn btn-primary">
                                     <i class="fa fa-home"></i> Home
@@ -104,12 +67,8 @@ Author     : LENOVO
                                 </c:if>
                             </div>
                             <div class="col-sm-6">
-                                <a href="#addManagerModal" class="btn btn-success" data-toggle="modal">
-                                    <i class="material-icons">&#xE147;</i> 
-                                    <span>Add New Manager</span>
-                                </a>
                                 <div class="search-box" style="display: inline-block; float: right;">
-                                    <form action="searchmanager" method="post">
+                                    <form action="searchmanager">
                                         <input id="searchId" type="text" value="${requestScope.searchValue != null ? requestScope.searchValue : ""}" name="search" placeholder="Search manager" class="form-control" style="width: 200px; display: inline-block;">
                                         <button type="submit" class="btn btn-primary" style="display: inline-block;">
                                             Search
@@ -119,7 +78,7 @@ Author     : LENOVO
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
+                    <table  class="table table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -127,7 +86,6 @@ Author     : LENOVO
                                 <th>Manager_fullname</th>
                                 <th>Image</th>
                                 <th>Gender</th>
-                                <th>Email</th>
                                 <th>Salary</th>
                                 <th>Options</th>
                             </tr>
@@ -142,14 +100,10 @@ Author     : LENOVO
                                         <img src=".${manager.image}">
                                     </td>
                                     <td>${manager.gender}</td>
-                                    <td>${manager.email}</td>
                                     <td>${manager.salary}$</td>
                                     <td>
                                         <a href="managemanager?managerId=${manager.manager_id}&accountId=${manager.account_id}" class="edit" data-toggle="modal">
                                             <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-                                        </a>
-                                        <a href="###" onclick="doDelete('${manager.manager_id}', '${manager.account_id}')" class="delete" data-toggle="modal">
-                                            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
                                         </a>
                                     </td>
                                 </tr>
@@ -158,80 +112,6 @@ Author     : LENOVO
                     </table>
                     <div id="pagination" class="text-center">
                         <!-- Pagination controls will be inserted here by JavaScript -->
-                    </div>
-                </div>
-            </div>
-            <!-- Add Modal HTML -->
-            <div id="addManagerModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="addmanager" method="post" enctype="multipart/form-data">
-                            <div class="modal-header">
-                                <h4 class="modal-title">Add Manager</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label>Username<span class="text-danger">*</span></label>
-                                    <input name="username" type="text" class="form-control" minlength="1" maxlength="255" required value="${requestScope.name}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Password<span class="text-danger">*</span></label>
-                                    <input name="password" type="password" class="form-control" minlength="3" maxlength="50" required value="${requestScope.password}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Name<span class="text-danger">*</span></label>
-                                    <input value="${requestScope.namemanager}" name="namemanager" type="text" class="form-control" maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Image<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                        <label for="inputGroupFile04"><img src=".${manager.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${manager.image}"></label>
-                                    </div>
-                                </div> 
-                                <div class="form-group">
-                                    <label>Gender<span class="text-danger">*</span></label>
-                                    <select name="gender" class="form-select form-control" aria-label="Default select example">
-                                        <option value="">Choose gender</option>
-                                        <option value="Nam" 
-                                                <c:if test="${selectedGender eq 'Nam'}">selected</c:if>
-                                                    >Nam</option>
-                                                <option value="Nữ" 
-                                                <c:if test="${selectedGender eq 'Nữ'}">selected</c:if>
-                                                    >Nữ</option>
-                                        </select>
-                                    </div>  
-                                    <div class="form-group">
-                                        <label>Email<span class="text-danger">*</span></label>
-                                        <input name="email" value="${requestScope.email}"  type="text" class="form-control" maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date of Birth<span class="text-danger">*</span></label>
-                                    <input name="dateofbirth" type="date"  pattern="^\S.*$" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone number<span class="text-danger">*</span></label>
-                                    <input name="phonenumber" value="${requestScope.phonenumber}" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Address<span class="text-danger">*</span></label>
-                                    <input name="address" type="text" class="form-control"  maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Hire Date<span class="text-danger">*</span></label>
-                                    <input name="hiredate" value="${requestScope.hiredate}" type="date" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Salary<span class="text-danger">*</span></label>
-                                    <input name="salary" value="${requestScope.salary}" type="number" step="0.01" min="1" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-info" name="action" value="Create manager">
-                            </div>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -258,59 +138,12 @@ Author     : LENOVO
                             <input name="managerId" type="hidden" class="form-control" required value="${manager.manager_id}"/>
                             <div class="modal-body">  
                                 <div class="form-group">
-                                    <label>Username<span class="text-danger">*</span></label>
-                                    <input name="username" type="text" class="form-control" minlength="1" maxlength="255" required value="${account.username}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Password<span class="text-danger">*</span></label>
-                                    <input name="password" type="password" class="form-control" minlength="3" maxlength="50" required value="${account.password}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Name<span class="text-danger">*</span></label>
-                                    <input value="${manager.fullName}" name="namemanager" type="text" class="form-control" maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Image<span class="text-danger">*</span></label>
-                                    <div class="input-group">
-                                        <input type="file" name="img" class="form-control d-none" id="inputGroupFile04" onchange="chooseFile(this)" accept="image/gif,image/jpeg,image/png" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                        <label for="inputGroupFile04"><img src=".${manager.image}" id="image" class="img-thumbnail rounded-5" width="100%" alt="${manager.image}"></label>
-                                    </div>
-                                </div> 
-                                <div class="form-group">
-                                    <label>Gender<span class="text-danger">*</span></label>
-                                    <select name="gender" class="form-select form-control" aria-label="Default select example">
-                                        <option value="">Choose gender</option>
-                                        <option value="Nam" 
-                                                <c:if test="${manager.gender eq 'Nam'}">selected</c:if>
-                                                    >Nam</option>
-                                                <option value="Nữ" 
-                                                <c:if test="${manager.gender eq 'Nữ'}">selected</c:if>
-                                                    >Nữ</option>
-                                        </select>
-                                    </div>  
-                                    <div class="form-group">
-                                        <label>Email<span class="text-danger">*</span></label>
-                                        <input name="email" value="${manager.email}"  type="text" class="form-control" maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date of Birth<span class="text-danger">*</span></label>
-                                    <input name="dateofbirth" value="${manager.dateOfBirth}"  type="date"  pattern="^\S.*$" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone number<span class="text-danger">*</span></label>
-                                    <input name="phonenumber" value="${manager.phoneNumber}" type="text" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Address<span class="text-danger">*</span></label>
-                                    <input name="address" value="${manager.address}" type="text" class="form-control"  maxlength="255" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Hire Date<span class="text-danger">*</span></label>
-                                    <input name="hiredate" value="${manager.hireDate}" type="date" class="form-control" required>
-                                </div>
-                                <div class="form-group">
                                     <label>Salary<span class="text-danger">*</span></label>
-                                    <input name="salary" value="${manager.salary}" type="number" step="0.01" class="form-control" required>
+                                    <input name="salary" value="${manager.salary}" type="number" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>New Salary<span class="text-danger">*</span></label>
+                                    <input name="newsalary" type="number" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -318,25 +151,6 @@ Author     : LENOVO
                                 <input type="submit" class="btn btn-info" name="action" value="Save">
                             </div>
                         </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Delete Modal HTML -->
-            <div id="deleteConfirmModal" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Confirm Deletion</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">					
-                            <p>Are you sure you want to erase this manager?</p>
-                            <p class="text-warning"><small>This action cannot be undone.</small></p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
-                        </div>
                     </div>
                 </div>
             </div>

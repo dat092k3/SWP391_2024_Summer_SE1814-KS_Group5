@@ -102,8 +102,7 @@ public class AddManagerServlet extends HttpServlet {
 
         LocalDate dob = LocalDate.parse(dateofbirth);
         LocalDate now = LocalDate.now();
-        int age = Period.between(dob, now).getYears();
-
+        
         LocalDate hireDate = LocalDate.parse(hiredate);
 
         if (!isValidName(namemanager)) {
@@ -184,14 +183,17 @@ public class AddManagerServlet extends HttpServlet {
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
+        
         if (hireDate.isBefore(dob) || hireDate.isAfter(now)) {
             request.setAttribute("messageerror", "Hire date is invalid.");
-            request.getRequestDispatcher("managemanager").forward(request, response);
+            request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
+        
+        int age = Period.between(dob, hireDate).getYears();
 
         if (age < 18) {
-            request.setAttribute("messageerror", "You must be at least 18 years old.");
+            request.setAttribute("messageerror", "This manager not enough 18 years old");
             request.getRequestDispatcher("managemanager").include(request, response);
             return;
         }
@@ -241,7 +243,7 @@ public class AddManagerServlet extends HttpServlet {
                 request.setAttribute("selectedGender", gender);
                 request.setAttribute("address", address);
                 request.setAttribute("salary", salary);
-                request.getRequestDispatcher("manageequipment").include(request, response);
+                request.getRequestDispatcher("managemanager").include(request, response);
                 return;
             }
             String realPath = request.getServletContext().getRealPath("/images/Manager"); //where the photo is saved
