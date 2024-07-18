@@ -7326,15 +7326,7 @@ a.text-dark:focus,a.text-dark:hover{
         border-color:#dee2e6
     }
 
-    .status-active {
-        color: green;
-        font-weight: bold;
-    }
-
-    .status-inactive {
-        color: red;
-        font-weight: bold;
-    }
+    
 
 }
 
