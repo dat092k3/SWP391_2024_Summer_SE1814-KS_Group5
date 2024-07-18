@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Account;
+import model.Employee;
 import model.Report;
 
 /**
@@ -350,9 +351,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             st.setString(5, manager.getDateOfBirth());
             st.setString(6, manager.getPhoneNumber());
             st.setString(7, manager.getAddress());
-
             st.setString(8, manager.getHireDate());
-
             st.setFloat(9, manager.getSalary());
             st.setString(10, manager.getImage());
             st.setInt(11, manager.getManager_id());
@@ -582,7 +581,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return list;
     }
-    
+
     @Override
     public List<Report> findReportForManager(String nameSearch, int id) {
         List<Report> list = new ArrayList<>();
@@ -594,7 +593,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             if (nameSearch != null && !nameSearch.trim().equals("")) {
-                st.setInt(1,id );
+                st.setInt(1, id);
                 st.setString(2, "%" + nameSearch + "%");
                 st.setString(3, "%" + nameSearch + "%");
                 st.setString(4, "%" + nameSearch + "%");
@@ -614,8 +613,6 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
         }
         return list;
     }
-    
-    
 
     @Override
     public List<Report> getAllReport() {
@@ -631,7 +628,7 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
                 String description = rs.getString("description");
                 String date = rs.getString("date");
                 String status = rs.getString("status");
-                String manager_name=rs.getString("fullname");
+                String manager_name = rs.getString("fullname");
                 list.add(new Report(report_id, report_name, description, date, status, manager_name));
             }
         } catch (SQLException e) {
@@ -662,5 +659,135 @@ public class ManagerDAO extends DBContext implements ManagerInterface {
             System.out.println(e);
         }
         return list;
+    }
+
+    /**
+     *
+     * @param account_id
+     */
+    @Override
+    public void addAccounIdManager(int account_id) {
+        String sql = "INSERT INTO [dbo].[Manager]\n"
+                + "           ([account_id]\n"
+                + "           ,[status])\n"
+                + "     VALUES(?,1)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * function to do insert profile of Employee
+     *
+     * @param account_id of Employee
+     * @param fullname of Employee
+     * @param gender of Employee
+     * @param email of Employee
+     * @param dateofbirth of Employee
+     * @param phonenumber of Employee
+     * @param address of Employee
+     * @param image of Employee
+     * @param hiredate of Employee
+     */
+    @Override
+    public void addProfileManager(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String hiredate, String image, int account_id) {
+        String sql = "UPDATE [dbo].[Manager]\n"
+                + "   SET [fullname] = ? \n"
+                + "      ,[gender] = ?\n"
+                + "      ,[email] = ?\n"
+                + "      ,[dateofbirth] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + "      ,[address] = ?\n"
+                + "      ,[hiredate] = ?\n"
+                + "      ,[salary] = '0'\n"
+                + "      ,[image] = ?\n"
+                + "      ,[status] = '1'\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, hiredate);
+            st.setString(8, image);
+            st.setInt(9, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Override
+    /**
+     * function to get Profile
+     *
+     * @return List of Manager
+     */
+    public List<Manager> getProfileManager() {
+        String sql = "select * from Manager";
+        List<Manager> managers = new ArrayList<>();
+        try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
+            while (rs.next()) {
+                Manager manager = new Manager(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getBoolean(12));
+                managers.add(manager);
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving accounts: " + e.getMessage());
+        }
+        return managers;
+    }
+
+    /**
+     * Function to retrieve an account by account_id
+     *
+     * @param account_id The ID of the account to retrieve
+     * @return Account object if found, otherwise null
+     */
+    @Override
+    public Manager getProfileManagerByAccountId(int account_id) {
+        String sql = "SELECT * FROM Manager WHERE account_id = ? ";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, account_id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) { 
+                Manager manager = new Manager(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getFloat(10),
+                        rs.getString(11),
+                        rs.getBoolean(12));
+                return manager;
+            }
+        } catch (SQLException e) {
+            System.out.println("Database error while retrieving account: " + e.getMessage());
+        }
+        return null;
     }
 }

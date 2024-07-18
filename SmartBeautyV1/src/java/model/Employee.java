@@ -8,9 +8,11 @@ import java.util.Date;
 
 /**
  * a class have information of employee
+ *
  * @author LENOVO
  */
 public class Employee {
+
     private int employee_id;
     private int account_id;
     private String fullName;
@@ -25,7 +27,7 @@ public class Employee {
     private String experience;
     private int department_id;
     private String department_name;
-    
+
     public Employee() {
     }
 
@@ -62,7 +64,24 @@ public class Employee {
         this.department_id = department_id;
     }
 
-    public Employee(int employee_id, String fullName, String phoneNumber, String address,String department_name) {
+    public Employee(int employee_id, int account_id, String fullName, String gender, String email, String dateOfBirth, String phoneNumber, String address, Date hireDate, float salary, String image, String experience, int department_id, String department_name) {
+        this.employee_id = employee_id;
+        this.account_id = account_id;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.email = email;
+        this.dateOfBirth = dateOfBirth;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.hireDate = hireDate;
+        this.salary = salary;
+        this.image = image;
+        this.experience = experience;
+        this.department_id = department_id;
+        this.department_name = department_name;
+    }
+
+    public Employee(int employee_id, String fullName, String phoneNumber, String address, String department_name) {
         this.employee_id = employee_id;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
@@ -182,7 +201,4 @@ public class Employee {
         this.department_id = department_id;
     }
 
-  
-  
-    
 }

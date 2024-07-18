@@ -2,25 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.accountmanagement;
+package controller.employeemanagement;
 
-import DAO.AccountDAO;
-import Interface.AccountInterface;
+import DAO.ManagerDAO;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Account;
+import model.Manager;
 
 /**
  *
  * @author admin
  */
-public class SearchAccountAdminServlet extends HttpServlet {
+public class ViewProfileManagerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class SearchAccountAdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SearchAccountAdminServlet</title>");
+            out.println("<title>Servlet ViewProfileManagerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SearchAccountAdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewProfileManagerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,19 +59,10 @@ public class SearchAccountAdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String txtSearch = request.getParameter("txt");
-        AccountInterface accountDAO = new AccountDAO();
-        List<Account> listaccountemployeeadmin;
-        if (txtSearch != null && !txtSearch.trim().isEmpty()) {
-            listaccountemployeeadmin = accountDAO.SearchAccountByNameOrPhonenumberAdmin(txtSearch);
-            session.setAttribute("txt", txtSearch);
-        } else {
-            listaccountemployeeadmin = accountDAO.getAccountEmployeeByRoleAdmin();
-        }
-        request.setAttribute("listaccountemployeeadmin", listaccountemployeeadmin);
-        request.setAttribute("txt", txtSearch); // Đặt giá trị txtSearch vào request attribute
-        request.getRequestDispatcher("viewaccountadmin.jsp").forward(request, response);
+        ManagerInterface managerDAO = new ManagerDAO();
+        List<Manager> listprofilemanager = managerDAO.getProfileManager();
+        request.setAttribute("list", listprofilemanager);
+        request.getRequestDispatcher("viewprofilemanager.jsp").forward(request, response);
     }
 
     /**

@@ -6,8 +6,10 @@ package controller.accountmanagement;
 
 import DAO.AccountDAO;
 import DAO.EmployeeDAO;
+import DAO.ManagerDAO;
 import Interface.AccountInterface;
 import Interface.EmployeeInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -93,13 +95,23 @@ public class AddAccountServlet extends HttpServlet {
                 accountDAO.AddAccount(username, password, email, phonenumber, role);
                 int account_id = accountDAO.getNewAccountIdOfEmployee();
                 //
-                EmployeeInterface employeeDAO = new EmployeeDAO();
-                employeeDAO.addAccounIdEmployee(account_id);
-                employeeDAO.addDepartmentIdByAccountId(account_id);
-                request.setAttribute("account_id", account_id);
+
+                if (role.equals("Manager")) {
+                    ManagerInterface managerDAO = new ManagerDAO();
+                    managerDAO.addAccounIdManager(account_id);
+                    request.setAttribute("account_id", account_id);
+                    request.setAttribute("messen1", "Create Account Success, please insert profile!");
+                    request.getRequestDispatcher("addprofilemanager.jsp").forward(request, response);
+                } else {
+                    EmployeeInterface employeeDAO = new EmployeeDAO();
+                    employeeDAO.addAccounIdEmployee(account_id);
+                    employeeDAO.addDepartmentIdByAccountId(account_id);
+                    request.setAttribute("account_id", account_id);
+                    request.setAttribute("messen1", "Create Account Success, please insert profile!");
+                    request.getRequestDispatcher("addprofileemployee.jsp").forward(request, response);
+                }
                 //
-                request.setAttribute("messen1", "Create Account Success, please insert profile!");
-                request.getRequestDispatcher("addprofileemployee.jsp").forward(request, response);
+
             } else {
                 // Báo lỗi nếu tài khoản đã tồn tại
                 request.setAttribute("messen", "Username, email or phone number already exists.");

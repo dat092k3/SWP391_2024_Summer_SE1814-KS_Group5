@@ -6,6 +6,7 @@ package Interface;
 
 import java.util.List;
 import model.Account;
+import model.Employee;
 import model.Manager;
 import model.Report;
 
@@ -61,4 +62,11 @@ public interface ManagerInterface {
 
     public List<Report> findReportForManager(String nameSearch, int id);
 
+    public void addAccounIdManager(int account_id);
+
+    public void addProfileManager(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String hiredate, String image, int account_id);
+
+    public List<Manager> getProfileManager();
+
+    public Manager getProfileManagerByAccountId(int account_id);
 }

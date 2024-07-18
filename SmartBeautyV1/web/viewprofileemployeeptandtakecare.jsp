@@ -27,8 +27,11 @@
                                     <button class="btn btn-primary"><a href="index.jsp" style="color: white">Home</a></button>
                                 </div>
                                 <div class="text-center">
-                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Account PT, Takecare</a></button>
+                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Manage Account</a></button>
                                 </div>    
+                                <div class="text-center">
+                                    <button class="btn btn-primary"><a href="viewprofilemanager" style="color: white">Profile Manager</a></button>
+                                </div>  
                             </div>
                         </div>
                     </div>

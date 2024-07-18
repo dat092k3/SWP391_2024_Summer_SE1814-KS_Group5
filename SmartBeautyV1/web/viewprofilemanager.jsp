@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewprofileemployee
-    Created on : Jul 7, 2024, 11:52:01 PM
+    Document   : viewprofilemanager
+    Created on : Jul 18, 2024, 1:44:47 PM
     Author     : admin
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,179 +9,100 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Profile Header Card</title>
+        <title>View Profile Employee Pt, Takecare</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
-        <style type="text/css">
-            body {
-                margin-top: 20px;
-                background: #f4f7f6;
-                font-family: 'Arial', sans-serif;
-            }
-            .header {
-                background-color: #333;
-                color: white;
-                padding: 10px 0;
-                text-align: center;
-                font-size: 24px;
-                position: fixed;
-                width: 100%;
-                z-index: 1000;
-                top: 0;
-                left: 0;
-            }
-            .sidebar {
-                height: 100%;
-                width: 250px;
-                position: fixed;
-                z-index: 1;
-                top: 50px; /* Adjusted for header height */
-                left: 0;
-                background-color: #333;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
-            .sidebar a {
-                padding: 15px 20px;
-                text-decoration: none;
-                font-size: 18px;
-                color: #ddd;
-                display: block;
-                transition: 0.3s;
-            }
-            .sidebar a:hover {
-                background-color: #575757;
-                color: white;
-            }
-            .main-content {
-                margin-left: 250px;
-                padding: 70px 20px 20px; /* Adjusted for header height */
-            }
-            .card {
-                background: #fff;
-                margin-bottom: 30px;
-                transition: .5s;
-                border: 0;
-                border-radius: .375rem;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            }
-            .card .body {
-                font-size: 14px;
-                color: #424242;
-                padding: 20px;
-                font-weight: 400;
-            }
-            .profile-page .profile-header {
-                position: relative;
-                background: linear-gradient(135deg, #72edf2 10%, #5151e5 100%);
-                color: white;
-                border-radius: .375rem;
-            }
-            .profile-page .profile-header .profile-image img {
-                border-radius: 50%;
-                width: 140px;
-                border: 3px solid #fff;
-                box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-            }
-            .profile-page .profile-header .profile-image {
-                text-align: center;
-                margin-top: 20px;
-            }
-            .profile-page .profile-header h4 {
-                font-weight: bold;
-            }
-            .profile-page .profile-header .job_post {
-                font-size: 16px;
-                color: #e0e0e0;
-            }
-            .profile-page .profile-header p {
-                margin: 0;
-            }
-            .btn-custom {
-                background-color: #007bff;
-                color: white;
-                border-radius: 25px;
-                padding: 10px 20px;
-                transition: background-color 0.3s ease;
-            }
-            .btn-custom:hover {
-                background-color: #0056b3;
-                color: white;
-            }
-            .pagination .page-item.active .page-link {
-                background-color: #007bff;
-                border-color: #007bff;
-                color: white;
-            }
-        </style>
+        <link href="styles/viewprofileemployeeptandtakecare.css" rel="stylesheet">
     </head>
     <body>
-        <div class="header">
-            Employee Profile
-        </div>
-        <div class="sidebar">
-            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
-        </div>
-        <div class="main-content">
-            <div class="container profile-page">
-                <div class="row" id="profile-container">
-                    <span style="color: green">${success}</span>
-                    <span style="color: red">${error1}</span>
-                    <span style="color: red">${error2}</span>
-                    <span style="color: red">${error3}</span>
-                    <span style="color: red">${error4}</span>
-                    <span style="color: red">${error5}</span>
-                    <span style="color: red">${error6}</span>
-                    <span style="color: red">${error7}</span>
-                    <span style="color: red">${error8}</span>
-                    <span style="color: red">${error9}</span>
-                    <span style="color: red">${error10}</span>
-                    <c:forEach var="profile" items="${listprofile}">
-                        <div class="col-xl-6 col-lg-7 col-md-12 profile-item">
-                            <div class="card profile-header">
-                                <div class="body">
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4 col-12">
-                                            <div class="profile-image"> <img src="${profile.image}" alt> </div>
-                                        </div>
-                                        <div class="col-lg-8 col-md-8 col-12">
-                                            <h4 class="m-t-0 m-b-0"><strong>${profile.fullName}</strong> ${profile.account_id}</h4>
-                                            <span class="job_post">${department_name}</span>
-                                            <p>${profile.address}</p>
-                                            <div>
-                                                <c:choose>
-                                                    <c:when test="${profile.fullName == null || profile.fullName.isEmpty()}">
-                                                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addProfileModal" data-account-id="${profile.account_id}">Empty Profile</button>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <li class="position-relative" style="margin-right: 30px">
-                                                            <button class="btn btn-primary btn-custom"><a href="viewdetailprofileemployee?account_id=${profile.account_id}" style="color: white; text-decoration: none;">View Detail</a></button>
-                                                        </li>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </div>
-                                        </div>
-                                    </div>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <div class="container">
+            <div class="card overflow-hidden">
+                <div class="card-body p-0">
+                    <img src="https://lh3.googleusercontent.com/amzunT_MGmwm4cV2zJnrY2G9d1H7pnEDB0fPWn4SGJMEGW9ePVlsSMmSuW2wHgmXMfRekEl416AZBwzrImEVF3ARfntHX2UX9TIeoRD_LI23nNGIFW-X6fDtql6YUdYVDPf78Ml48ToRTzlfknCNHY-L-xWiRMYMVrw4uRFCxDWnNvZgwLGhSt-gkP647buLqntbnII4F-FlnNhn62lnIl4Kvc63-3plqCIvfeCrz00uecDQPQM_X-bTPIM9uE0vGIl_eWzF8_TI3faQ9PcZTIcvV3ZKobMeK_8F1kyPv4tZmRrUSzzlWOH6HWuu-JrXvm5TIixdM9_F6Z4Vh8foudgfGwVAgCchBJmj8u6GrzVAGp2kNkR6JXL4nTrHq6lnazqbseVkcuRFxMHWoYEm8hFjr6cwL55QBcdpcaU6qpZLc9sK9fr1cC7ia2WxWjt0Z73oJ6Af4Lv1dXyajOvXU9v9fEJFz4mUKw6341kcDvDAajJp3k3Qf7BSjUYPQd7pf_O4lpqcJEjsWJj8jjDvQE50LM8p4xtsvpb9XGuzepvTvFZHFuPuIDojYKTPdQb390ju8tFiZY7_UuM_MIvfRPhieHWL7-3ogqG5adTTjGQ55nvz4Fr3QClabPAaFPiXkfjKX6R18nrFJ_fJCz9iv5a7b7vjqOSd-7uhwT48Z6Jaoz6hJMZScwAvnEi_LMnnYyMNnElQmqhlMVcuCwH0opdlLf-nx3VRFEa8cm1vCTghJyYiWHF-Gg=w1219-h657-no" alt class="img-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-lg-4 order-lg-1 order-2">
+                            <div class="d-flex align-items-center justify-content-around m-4">
+                                <div class="text-center">
+                                    <button class="btn btn-primary"><a href="index.jsp" style="color: white">Home</a></button>
                                 </div>
+                                <div class="text-center">
+                                    <button class="btn btn-primary"><a href="viewaccount" style="color: white">Manage Account</a></button>
+                                </div>    
+                                <div class="text-center">
+                                    <button class="btn btn-primary"><a href="viewprofileemployeeptandtakecare" style="color: white">Profile Employee</a></button>
+                                </div>    
                             </div>
                         </div>
-                    </c:forEach>
+                    </div>
+                </div> 
+            </div>
+            <div class="tab-content" id="pills-tabContent"> 
+                <div class="tab-pane fade show active" id="pills-friends" role="tabpanel" aria-labelledby="pills-friends-tab" tabindex="0">
+                    <div class="d-sm-flex align-items-center justify-content-between mt-3 mb-4">
+                        <h3 class="mb-3 mb-sm-0 fw-semibold d-flex align-items-center">Profile Employee</h3>
+                        <span style="color: green">${success}</span>
+                        <span style="color: red">${error1}</span>
+                        <span style="color: red">${error2}</span>
+                        <span style="color: red">${error3}</span>
+                        <span style="color: red">${error4}</span>
+                        <span style="color: red">${error5}</span>
+                        <span style="color: red">${error6}</span>
+                        <span style="color: red">${error7}</span>
+                        <span style="color: red">${error8}</span>
+                        <span style="color: red">${error9}</span>
+                        <span style="color: red">${error10}</span>
+                        <form class="position-relative">
+                            <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Friends">
+                            <i class="ti ti-search position-absolute top-50 start-0 translate-middle-y text-dark ms-3"></i>
+                        </form>
+                    </div>
+                    <div class="row" id="profile-container">
+                        <c:forEach var="profile" items="${list}"> 
+                            <div class="col-sm-6 col-lg-4 profile-item">
+                                <div class="card hover-img">
+                                    <div class="card-body p-4 text-center border-bottom">
+                                        <img src="${profile.image}" alt class="rounded-circle mb-3" width="80" height="80">
+                                        <h5 class="fw-semibold mb-0">${profile.fullName}</h5>
+                                        <span class="text-dark fs-2">${profile.account_id}</span>
+                                    </div>
+                                    <ul class="px-2 py-2 bg-light list-unstyled d-flex align-items-center justify-content-center mb-0">
+                                        <li class="position-relative">
+                                            <c:choose>
+                                                <c:when test="${profile.fullName == null || profile.fullName.isEmpty()}">
+                                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#addProfileModal" data-account-id="${profile.account_id}">Empty Profile</button>
+                                                </c:when>
+                                                <c:otherwise>
+                                                <li class="position-relative" style="margin-right: 30px">
+                                                    <button class="btn btn-primary"><a href="viewdetailprofilemanager?account_id=${profile.account_id}" style="color: white">View Detail</a></button>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination mt-3 mb-0" id="pagination">
+                            <!-- Pagination will be inserted here -->
+                        </ul>
+                    </div>
                 </div>
-                <ul id="pagination" class="pagination justify-content-center"></ul>
             </div>
         </div>
+
         <!-- Modal -->
         <div class="modal fade" id="addProfileModal" tabindex="-1" aria-labelledby="addProfileModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addProfileModalLabel">Add Profile</h5>
+                        <h5 class="modal-title" id="addProfileModalLabel">Add Profile Empty</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="get" action="addprofileemployeeofmanagerempty">
+                        <form method="get" action="addprofilemanagerempty">
                             <div class="row">
                                 <div class="col-xl-4">
                                     <div class="card mb-4 mb-xl-0">
@@ -270,20 +191,8 @@
                                                         <div class="text-danger">${error10}</div>
                                                     </c:if>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1" >Department</label>
-                                                    <select class="form-control" name="department_id" required="">
-                                                        <option value="${department_id}">${department_name}</option>
-                                                    </select>
-                                                </div>
                                             </div>
                                             <hr>
-                                            <div class="row gx-3 mb-3">
-                                                <div class="col-md-12">
-                                                    <label class="labels">Experience Knowledge</label>
-                                                    <input type="text" name="experience" class="form-control" placeholder="experience" value="${param.experience}">
-                                                </div>
-                                            </div>
                                             <button class="btn btn-primary" type="submit">Save changes</button>
                                         </div>
                                     </div>
@@ -297,9 +206,9 @@
         <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
         <script src="js/address.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
         <script type="text/javascript">
             // Script để khởi động modal và điền giá trị account_id vào form
             $('#addProfileModal').on('show.bs.modal', function (event) {
@@ -310,7 +219,7 @@
             });
 
             document.addEventListener("DOMContentLoaded", function () {
-                const rowsPerPage = 10;
+                const rowsPerPage = 9;
                 const container = document.getElementById("profile-container");
                 const profiles = container.getElementsByClassName("profile-item");
                 const pagination = document.getElementById("pagination");
@@ -355,3 +264,4 @@
         </script>
     </body>
 </html>
+

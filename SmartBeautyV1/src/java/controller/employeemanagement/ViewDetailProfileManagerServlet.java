@@ -2,24 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.accountmanagement;
+package controller.employeemanagement;
 
-import DAO.AccountDAO;
-import Interface.AccountInterface;
+import DAO.ManagerDAO;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.List;
-import model.Account;
+import model.Manager;
 
 /**
+ * viewdetailprofilemanager
  *
  * @author admin
  */
-public class ViewAccountAdminServlet extends HttpServlet {
+public class ViewDetailProfileManagerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +38,10 @@ public class ViewAccountAdminServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ViewAccountAdminServlet</title>");
+            out.println("<title>Servlet ViewDetailProfileManagerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ViewAccountAdminServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewDetailProfileManagerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,13 +56,14 @@ public class ViewAccountAdminServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
+    @Override 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountInterface accountDAO = new AccountDAO();
-        List<Account> listaccountemployeeadmin = accountDAO.getAccountEmployeeByRoleAdmin();
-        request.setAttribute("listaccountemployeeadmin", listaccountemployeeadmin);
-        request.getRequestDispatcher("viewaccountadmin.jsp").forward(request, response);
+        ManagerInterface managerDAO = new ManagerDAO();
+        int account_id = Integer.parseInt(request.getParameter("account_id"));
+        Manager profilebyaccountid = managerDAO.getManagerByAccountId(account_id);
+        request.setAttribute("profilebyaccountid", profilebyaccountid);
+        request.getRequestDispatcher("viewdetailprofilemanager.jsp").forward(request, response);
     }
 
     /**

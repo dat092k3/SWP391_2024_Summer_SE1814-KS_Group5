@@ -1,6 +1,6 @@
 <%-- 
-    Document   : viewdetailprofileptandtakecare
-    Created on : Jul 2, 2024, 10:02:00 AM
+    Document   : viewdetailprofilemanager
+    Created on : Jul 18, 2024, 2:01:40 PM
     Author     : admin
 --%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -22,6 +22,10 @@
                 <div class="col-md-4">
                     <div class="profile-img">
                         <img src="${profilebyaccountid.image}" alt=""/>
+                        <div class="file btn btn-lg btn-primary">
+                            Change Photo
+                            <input type="file" name="file"/>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -53,12 +57,10 @@
                         <h5>
                             ${profilebyaccountid.fullName}  
                         </h5>
-                        <h6>
-                            ${profilebyaccountid.department_id}  
-                        </h6>
+ 
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link"  href="viewprofileemployeeptandtakecare">Back</a>
+                                <a class="nav-link"  href="viewprofilemanager">Back</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -97,7 +99,7 @@
                                     <label>Employee Id</label>
                                 </div>
                                 <div class="col-md-6">
-                                    <p>${profilebyaccountid.employee_id}</p>
+                                    <p>${profilebyaccountid.manager_id}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -140,14 +142,6 @@
                                     <p>${profilebyaccountid.address}</p>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label>Experience</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <textarea>${profilebyaccountid.experience}</textarea>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -163,7 +157,7 @@
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="get" action="editprofileemployee">
+                        <form method="get" action="editprofilemanager">
                             <div class="row">  
                                 <div class="col-xl-4">
                                     <div class="card mb-4 mb-xl-0">
@@ -263,21 +257,8 @@
                                                     </c:if>
                                                 </div>
 
-                                                <div class="col-md-6">
-                                                    <label class="small mb-1" >Department<span class="text-danger">*</span></label>
-                                                    <select class="form-control" name="department" required="">
-                                                        <option value="1" ${profilebyaccountid.department_id == '1' ? 'selected' : ''}>Takecare</option>
-                                                        <option value="2" ${profilebyaccountid.department_id == '2' ? 'selected' : ''}>PT</option>
-                                                    </select>
-                                                </div>
                                             </div>
                                             <hr>
-                                            <div class="row gx-3 mb-3">
-                                                <div class="col-md-12">
-                                                    <label class="labels">Experience Knowledge</label>
-                                                    <textarea class="form-control" name="experience" placeholder="Experience">${profilebyaccountid.experience}</textarea>
-                                                </div>
-                                            </div>
                                             <button class="btn btn-primary" type="submit">Save changes</button>
 
                                         </div>

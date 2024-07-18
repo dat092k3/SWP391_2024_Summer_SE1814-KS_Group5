@@ -27,9 +27,9 @@ public interface EmployeeInterface {
 
     public List<Employee> getProfileEmployeeByDepartmentIdAdmin();
 
-    public Employee getProfileEmployeeByAccountId(int account_id);
+    public Employee getProfileEmployeeByAccountId(int account_id); 
 
-    public Employee getProfileEmployeeByAccountIdAndDepartmentId(int account_id, int department_id); 
+    public Employee getProfileEmployeeByAccountIdAndDepartmentId(int account_id, int department_id);
 
     public void addAccounIdEmployee(int account_id);
 
@@ -38,4 +38,6 @@ public interface EmployeeInterface {
     public void addDepartmentIdByAccountIdAdmin(int account_id);
 
     public List<Employee> getProfileEmployeeByDepartmentId(int department_id);
+
+    public void addSalaryProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String hiredate, float salary, String image, String experience, int department_id, int account_id);
 }

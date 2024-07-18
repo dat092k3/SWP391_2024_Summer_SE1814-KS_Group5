@@ -200,7 +200,9 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      * @return List of Employee
      */
     public List<Employee> getProfileEmployeeByDepartmentId() {
-        String sql = "select * from Employee where  department_id ='1' or department_id = '2'";
+        String sql = "select e.*, d.department_name from Employee e\n"
+                + "join Department d on e.department_id = d.department_id\n"
+                + "where d.department_name ='PT' Or d.department_name = 'Takecare'";
         List<Employee> employees = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
@@ -217,7 +219,9 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
                         rs.getFloat(10),
                         rs.getString(11),
                         rs.getString(12),
-                        rs.getInt(13));
+                        rs.getInt(13),
+                        rs.getString(14)
+                );
                 employees.add(employee);
             }
         } catch (SQLException e) {
@@ -331,7 +335,7 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
      */
     @Override
     public Employee getProfileEmployeeByAccountIdAndDepartmentId(int account_id, int department_id) {
-        String sql = "SELECT * FROM Employee WHERE account_id = ? and department_id = ?";  
+        String sql = "SELECT * FROM Employee WHERE account_id = ? and department_id = ?";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setInt(1, account_id);
             st.setInt(2, department_id);
@@ -453,4 +457,55 @@ public class EmployeeDAO extends DBContext implements EmployeeInterface {
         return employees;
     }
 
+    /**
+     * function to do insert profile of Employee
+     *
+     * @param account_id of Employee
+     * @param fullname of Employee
+     * @param gender of Employee
+     * @param email of Employee
+     * @param dateofbirth of Employee
+     * @param phonenumber of Employee
+     * @param address of Employee
+     * @param salary of Employee
+     * @param image of Employee
+     * @param hiredate of Employee
+     * @param department_id
+     * @param experience of Employee
+     */
+    @Override
+    public void addSalaryProfileEmployee(String fullname, String gender, String email, String dateofbirth, String phonenumber, String address, String hiredate, float salary, String image, String experience, int department_id, int account_id) {
+        String sql = "UPDATE [dbo].[Employee]\n"
+                + "   SET [fullname] = ? \n"
+                + "      ,[gender] = ?\n"
+                + "      ,[email] = ?\n"
+                + "      ,[dateofbirth] = ?\n"
+                + "      ,[phonenumber] = ?\n"
+                + "      ,[address] = ?\n"
+                + "      ,[hiredate] = ?\n"
+                + "      ,[salary] = ?\n"
+                + "      ,[image] = ?\n"
+                + "      ,[experience] = ?\n"
+                + "      ,[status] = '1'\n"
+                + "      ,[department_id] = ?\n"
+                + " WHERE account_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, fullname);
+            st.setString(2, gender);
+            st.setString(3, email);
+            st.setString(4, dateofbirth);
+            st.setString(5, phonenumber);
+            st.setString(6, address);
+            st.setString(7, hiredate);
+            st.setFloat(8, salary);
+            st.setString(9, image);
+            st.setString(10, experience);
+            st.setInt(11, department_id);
+            st.setInt(12, account_id);
+            st.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+    }
 }

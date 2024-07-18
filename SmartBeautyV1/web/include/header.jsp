@@ -61,7 +61,7 @@
                                                 <a href="#" class="dropbtn">Account Management</a>
                                                 <div class="dropdown-content">
                                                     <a href="viewaccount">Manage Account</a>
-                                                    <a href="viewprofileemployeeptandtakecare">Manage Profile PT, Takecare</a> 
+                                                    <a href="viewprofileemployeeptandtakecare">Manage Profile</a> 
                                                 </div>
                                             </li>
                                         </c:if>

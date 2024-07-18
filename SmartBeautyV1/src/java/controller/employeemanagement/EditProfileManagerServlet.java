@@ -6,8 +6,10 @@ package controller.employeemanagement;
 
 import DAO.AccountDAO;
 import DAO.EmployeeDAO;
+import DAO.ManagerDAO;
 import Interface.AccountInterface;
 import Interface.EmployeeInterface;
+import Interface.ManagerInterface;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,7 +23,7 @@ import java.time.Period;
  *
  * @author admin
  */
-public class EditProfileEmployeeOfManagerServlet extends HttpServlet {
+public class EditProfileManagerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +42,10 @@ public class EditProfileEmployeeOfManagerServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfileEmployeeOfManagerServlet</title>");
+            out.println("<title>Servlet EditProfileManagerServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfileEmployeeOfManagerServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet EditProfileManagerServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,26 +70,22 @@ public class EditProfileEmployeeOfManagerServlet extends HttpServlet {
         String email = request.getParameter("email");
         String dateofbirth = request.getParameter("dateofbirth");
         String phonenumber = request.getParameter("phonenumber");
-//        String city = request.getParameter("city");
-//        String district = request.getParameter("district");
-//        String ward = request.getParameter("ward");
-//        String address = city + " " + district + " " + ward;
-        String address = request.getParameter("address");
+        String city = request.getParameter("city");
+        String district = request.getParameter("district");
+        String ward = request.getParameter("ward");
+        String address = city + " " + district + " " + ward;
         String image = request.getParameter("image");
         String hiredate = request.getParameter("hiredate");
-        int department_id = Integer.parseInt(request.getParameter("department"));
-        String experience = request.getParameter("experience");
-        String salaryStr = request.getParameter("salary");
         // Validate Full Name
         if (fullname.isEmpty() || !fullname.matches("^[A-ZÀ-Ỵ][a-zà-ỹ]+( [A-ZÀ-Ỵ][a-zà-ỹ]+)+")) {
             request.setAttribute("error1", "Full name must start with a capital letter and contain spaces between names.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         // Validate Phone Number
         if (phonenumber.isEmpty() || !phonenumber.matches("^(03[2-9]|07[0|6-9]|08[1-5]|09[2|6]|086|088|089|05[6|8]|087|059)\\d{7}$")) {
             request.setAttribute("error3", "Phone number must be valid and start with a correct prefix.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         // Validate Date of Birth and Age
@@ -96,20 +94,20 @@ public class EditProfileEmployeeOfManagerServlet extends HttpServlet {
         int age = Period.between(dob, now).getYears();
         if (age < 18 || age > 100) {
             request.setAttribute("error4", "You must be at least 18-100  years old.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         // Validate Hire Date
         LocalDate hireDate = LocalDate.parse(hiredate);
         if (!hireDate.isAfter(dob.plusYears(18)) || hireDate.isAfter(now)) {
             request.setAttribute("error10", "Hire date must be at least 18 years after date of birth and not in the future.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         // Validate Image URL
         if (image.isEmpty()) {
             request.setAttribute("error5", "Image URL must not be empty.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         // Validate Email
@@ -117,38 +115,23 @@ public class EditProfileEmployeeOfManagerServlet extends HttpServlet {
         String emailofaccount = accountDAO.getEmailOfAccount(String.valueOf(account_id));
         if (email.isEmpty() || !email.matches("^[^\\s@]+@[^\\s@]+\\.com$")) {
             request.setAttribute("error2", "Email must be valid and contain @ and .com.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         if (!email.equals(emailofaccount)) {
             request.setAttribute("error8", "Emails do not match with account Signup.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
         if (!phonenumber.equals(phonenumberofaccount)) {
             request.setAttribute("error9", "Phonenumber do not match with account Signup.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
+            request.getRequestDispatcher("viewdetailprofilemanager?account_id=" + account_id).forward(request, response);
             return;
         }
-        // Validate Salary
-        float salary = Float.parseFloat(salaryStr);
-        try {
-
-            if (salary <= 0) {
-                request.setAttribute("error6", "Salary must be a positive number.");
-                request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
-                return;
-            }
-        } catch (NumberFormatException e) {
-            request.setAttribute("error6", "Salary must be a valid number.");
-            request.getRequestDispatcher("viewdetailprofileemployee?account_id=" + account_id).forward(request, response);
-            return;
-        }
-        System.out.println("accid" + account_id + "fullname" + fullname + "gender" + gender + "email" + email + "date" + dateofbirth + "phonenumber" + phonenumber + "address" + address + "image" + image + "hiredate" + hiredate + "department" + department_id + "expert" + experience);
-        EmployeeInterface employeeDAO = new EmployeeDAO();
-        employeeDAO.addSalaryProfileEmployee(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, salary, image, experience, department_id, account_id);
-        request.setAttribute("success", "Edit Profile Of Employee Susscess " + account_id);
-        request.getRequestDispatcher("viewdetailprofileemployee").forward(request, response);
+        ManagerInterface managerDAO = new ManagerDAO();
+        managerDAO.addProfileManager(fullname, gender, email, dateofbirth, phonenumber, address, hiredate, image, account_id);
+        request.setAttribute("success", "Insert Profile Of Employee Susscess");
+        request.getRequestDispatcher("viewprofilemanager").forward(request, response);
     }
 
     /**

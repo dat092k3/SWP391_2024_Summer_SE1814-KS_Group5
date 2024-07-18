@@ -54,6 +54,9 @@
                         <c:if test="${not empty error10}">
                             <div class="text-danger">${error10}</div>
                         </c:if>
+                        <c:if test="${not empty error6}">
+                            <div class="text-danger">${error6}</div>
+                        </c:if>
                         <h5>
                             ${profilebyaccountid.fullName}  
                         </h5>
@@ -62,7 +65,7 @@
                         </h6>
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link"  href="viewprofileemployee?department_id=3">Back</a>
+                                <a class="nav-link"  href="viewprofileemployee?department_id=${profilebyaccountid.department_id} ">Back</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
@@ -176,7 +179,7 @@
                                             <img class="img-account-profile rounded-circle mb-2" style="width: 100px; height: 100px" src="${profilebyaccountid.image}" > 
                                             <div class="small font-italic text-muted mb-4" >JPG or PNG no larger than 5 MB</div>
                                             <button class="btn btn-primary" type="button">Upload new image<span class="text-danger">*</span></button>
-                                            <input class="form-control" placeholder="Enter link image" name="image" value="${profilebyaccountid.image}" >
+                                            <input class="form-control" placeholder="Enter link image" name="image" value="${profilebyaccountid.image}" readonly="">
                                             <c:if test="${not empty error5}">
                                                 <div class="text-danger">${error5}</div>
                                             </c:if> 
@@ -190,7 +193,7 @@
                                             <input class="form-control"  type="text" name="account_id" value="${profilebyaccountid.account_id}" hidden="">
                                             <div class="mb-3">
                                                 <label class="small mb-1">Full Name<span class="text-danger">*</span></label>
-                                                <input class="form-control"  type="text" placeholder="Enter Full Name" name="fullname" value="${profilebyaccountid.fullName}"  maxlength="255"  required="">
+                                                <input class="form-control"  type="text" placeholder="Enter Full Name" name="fullname" value="${profilebyaccountid.fullName}"  maxlength="255"  readonly="">
                                                 <c:if test="${not empty error1}">
                                                     <div class="text-danger">${error1}</div>
                                                 </c:if>
@@ -200,7 +203,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1">Gender</label>
-                                                    <select class="form-control" name="gender" required>
+                                                    <select class="form-control" name="gender" readonly>
                                                         <option value="Nam" ${profilebyaccountid.gender == 'Nam' ? 'selected' : ''}>Nam</option>
                                                         <option value="Nữ" ${profilebyaccountid.gender == 'Nữ' ? 'selected' : ''}>Nữ</option>
                                                     </select>
@@ -208,7 +211,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1">Email<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="email" name="email" placeholder="Enter Email" value="${profilebyaccountid.email}"  maxlength="255"  required="">
+                                                    <input class="form-control" type="email" name="email" placeholder="Enter Email" value="${profilebyaccountid.email}" readonly="" maxlength="255"  required="">
                                                     <c:if test="${not empty error2}">
                                                         <div class="text-danger">${error2}</div>
                                                     </c:if>
@@ -222,7 +225,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1">Phone Number<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="text" placeholder="Enter Phone Number" name="phonenumber" value="${profilebyaccountid.phoneNumber}" required="">
+                                                    <input class="form-control" type="text" placeholder="Enter Phone Number" readonly="" name="phonenumber" value="${profilebyaccountid.phoneNumber}" required="">
                                                     <c:if test="${not empty error3}">
                                                         <div class="text-danger">${error3}</div>
                                                     </c:if>
@@ -233,7 +236,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Date of Birth<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="date" placeholder="Enter Date of Birth" name="dateofbirth" value="${profilebyaccountid.dateOfBirth}" required="">
+                                                    <input class="form-control" type="date" placeholder="Enter Date of Birth" readonly="" name="dateofbirth" value="${profilebyaccountid.dateOfBirth}" required="">
                                                     <c:if test="${not empty error4}">
                                                         <div class="text-danger">${error4}</div>
                                                     </c:if>
@@ -242,18 +245,18 @@
 
                                             <div class="mb-3">
                                                 <div class="col-md-12"><label class="labels">Address<span class="text-danger">*</span></label>
-                                                    <div>
-                                                        <select name="city" id="city" required="">
-                                                            <option value="" selected>City</option>           
-                                                        </select>
-                                                        <select name="district" id="district">
-                                                            <option value="" selected>District</option>
-                                                        </select> 
-                                                        <select name="ward" id="ward">
-                                                            <option value="" selected>Ward</option> 
-                                                        </select>
-                                                    </div>
-                                                    <input type="text" pattern="^\S.*$" class="form-control" value="${profilebyaccountid.address}" readonly="" placeholder="detail address" >
+                                                    <!--                                                    <div>
+                                                                                                            <select name="city" id="city" readonly="">
+                                                                                                                <option value="" selected>City</option>           
+                                                                                                            </select>
+                                                                                                            <select name="district" id="district">
+                                                                                                                <option value="" selected>District</option>
+                                                                                                            </select> 
+                                                                                                            <select name="ward" id="ward">
+                                                                                                                <option value="" selected>Ward</option> 
+                                                                                                            </select>
+                                                                                                        </div>-->
+                                                    <input type="text" pattern="^\S.*$" class="form-control" value="${profilebyaccountid.address}" readonly="" name="address" placeholder="detail address" >
                                                 </div>
                                             </div>
 
@@ -261,7 +264,7 @@
 
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Hire Date<span class="text-danger">*</span></label>
-                                                    <input class="form-control" type="date" placeholder="Enter Hire Date" name="hiredate" value="${profilebyaccountid.hireDate}" required="">
+                                                    <input class="form-control" type="date" readonly="" placeholder="Enter Hire Date" name="hiredate" value="${profilebyaccountid.hireDate}" required="">
                                                     <c:if test="${not empty error10}">
                                                         <div class="text-danger">${error10}</div>
                                                     </c:if>
@@ -270,7 +273,7 @@
                                                 <div class="col-md-6">
                                                     <label class="small mb-1" >Department</label>
                                                     <select class="form-control" name="department" required="">
-                                                        <option value="3" ${profilebyaccountid.department_id == '3' ? 'selected' : ''}>Admin</option>
+                                                        <option>${profilebyaccountid.department_id}</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -278,7 +281,16 @@
                                             <div class="row gx-3 mb-3">
                                                 <div class="col-md-12">
                                                     <label class="labels">Experience Knowledge</label>
-                                                    <textarea class="form-control" name="experience" placeholder="Experience">${profilebyaccountid.experience}</textarea>
+                                                    <textarea class="form-control" name="experience" placeholder="Experience" readonly="">${profilebyaccountid.experience}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row gx-3 mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="labels">Salary ($)<span class="text-danger">*</span></label>
+                                                    <input class="form-control" type="number" name="salary" value="${profilebyaccountid.salary}"  placeholder="Salary">
+                                                    <c:if test="${not empty error6}">
+                                                        <div class="text-danger">${error6}</div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <button class="btn btn-primary" type="submit">Save changes</button>

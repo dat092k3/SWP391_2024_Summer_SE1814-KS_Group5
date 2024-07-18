@@ -249,26 +249,6 @@
         <servlet-class>controller.contact.ContactList</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AddAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.AddAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>EditAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.EditAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.SearchAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.ViewAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewDetailAccountAdminServlet</servlet-name>
-        <servlet-class>controller.accountmanagement.ViewDetailAccountAdminServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
         <servlet-class>controller.employeemanagement.AddProfileEmployeeAdminServlet</servlet-class>
     </servlet>
@@ -323,6 +303,26 @@
     <servlet>
         <servlet-name>ControlServlet</servlet-name>
         <servlet-class>controller.controlmanagement.ControlServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileManagerServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.AddProfileManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewProfileManagerServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewProfileManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewDetailProfileManagerServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.ViewDetailProfileManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfileManagerServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.EditProfileManagerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProfileManagerEmptyServlet</servlet-name>
+        <servlet-class>controller.employeemanagement.AddProfileManagerEmptyServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
@@ -565,26 +565,6 @@
         <url-pattern>/contactlist</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AddAccountAdminServlet</servlet-name>
-        <url-pattern>/addaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EditAccountAdminServlet</servlet-name>
-        <url-pattern>/editaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchAccountAdminServlet</servlet-name>
-        <url-pattern>/searchaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewAccountAdminServlet</servlet-name>
-        <url-pattern>/viewaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ViewDetailAccountAdminServlet</servlet-name>
-        <url-pattern>/viewdetailaccountadmin</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>AddProfileEmployeeAdminServlet</servlet-name>
         <url-pattern>/addprofileemployeeadmin</url-pattern>
     </servlet-mapping>
@@ -639,5 +619,25 @@
     <servlet-mapping>
         <servlet-name>ControlServlet</servlet-name>
         <url-pattern>/control</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileManagerServlet</servlet-name>
+        <url-pattern>/addprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewProfileManagerServlet</servlet-name>
+        <url-pattern>/viewprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewDetailProfileManagerServlet</servlet-name>
+        <url-pattern>/viewdetailprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfileManagerServlet</servlet-name>
+        <url-pattern>/editprofilemanager</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProfileManagerEmptyServlet</servlet-name>
+        <url-pattern>/addprofilemanagerempty</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -21,8 +21,6 @@
             <nav class="nav nav-borders">
                 <a class="nav-link active ms-0" href="" target="__blank">Profile</a> 
                 <a class="nav-link" href="viewaccount" target="__blank">Back</a>
-                <a class="nav-link" href="" target="__blank">#</a>
-                <a class="nav-link" href="" target="__blank">#</a>
             </nav>
             <hr class="mt-0 mb-4">
             <span style="color: green">${messen1}</span>
@@ -158,4 +156,4 @@
         <script src="js/address.js"></script>
 
     </body>
-</html>
+</html> 

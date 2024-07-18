@@ -345,7 +345,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
      * @return List of Accounts
      */
     public List<Account> getAccountEmployeeByRole() {
-        String sql = "SELECT * FROM Account WHERE role = 'PT' OR role = 'Takecare'";
+        String sql = "SELECT * FROM Account WHERE role = 'PT' OR role = 'Takecare' OR role = 'Manager'";
         List<Account> accounts = new ArrayList<>();
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
@@ -465,7 +465,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
     @Override
     public List<Account> SearchAccountByNameOrPhonenumber(String txtSearch) {
         List<Account> list = new ArrayList<>();
-        String sql = "Select * from Account where  (username like ? Or phonenumber like ? Or Email like ?) And (role = 'PT' Or  role = 'Takecare')";
+        String sql = "Select * from Account where  (username like ? Or phonenumber like ? Or Email like ?) And (role = 'PT' Or  role = 'Takecare' Or  role = 'Manager')";
         try (PreparedStatement st = connection.prepareStatement(sql)) {
             st.setString(1, "%" + txtSearch + "%");
             st.setString(2, "%" + txtSearch + "%");
@@ -519,7 +519,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
         }
         return list;
     }
-
+ 
     /**
      * Function to get the newest account ID of an employee with role 'PT' or
      * 'Takecare'
@@ -529,7 +529,7 @@ public class AccountDAO extends DBContext implements AccountInterface {
      */
     @Override
     public int getNewAccountIdOfEmployee() {
-        String sql = "SELECT MAX(account_id) FROM Account WHERE role = 'PT' OR role = 'Takecare'";
+        String sql = "SELECT MAX(account_id) FROM Account WHERE role = 'PT' OR role = 'Takecare' OR role = 'Manager'";
         try (PreparedStatement st = connection.prepareStatement(sql); ResultSet rs = st.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);

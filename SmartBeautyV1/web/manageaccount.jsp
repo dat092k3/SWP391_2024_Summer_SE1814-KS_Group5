@@ -12,10 +12,60 @@
         <title>Manager Account</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <style type="text/css">
             body{
                 margin-top:20px;
                 background:#f8f8f8
+            }
+
+            .e-navlist {
+                background-color: #f8f9fa;
+            }
+            .nav {
+                list-style-type: none;
+                padding: 0;
+            }
+            .nav-item {
+                display: inline-block;
+                position: relative;
+            }
+            .nav-link {
+                text-decoration: none;
+                padding: 10px 20px;
+                display: block;
+            }
+            .dropdown {
+                display: inline-block;
+            }
+            .dropbtn {
+                padding: 10px 20px;
+                background-color: #f8f9fa;
+                border: none;
+                cursor: pointer;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            .dropdown:hover .dropbtn {
+                background-color: #e9ecef;
             }
         </style>
     </head>
@@ -27,15 +77,30 @@
                     <div class="card p-3">
                         <div class="e-navlist e-navlist--active-bg">
                             <button class="btn btn-primary" style="margin-left:15px"><a style="color: white" href="index.jsp">Home</a></button>
-
                         </div>
+                        <hr>
                         <div class="e-navlist e-navlist--active-bg">
                             <ul class="nav">
-                                <li class="nav-item"><a class="nav-link px-2 active" href="#"><i class="fa fa-fw fa-bar-chart mr-1"></i><span>Overview</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-2" href="viewprofileemployeeptandtakecare" target="__blank"><i class="fa fa-fw fa-th mr-1"></i><span>Profile Employee</span></a></li>
-                                <li class="nav-item"><a class="nav-link px-2" href="#" target="__blank"><i class="fa fa-fw fa-cog mr-1"></i><span>Settings</span></a></li>
+                                <li class="dropdown">
+                                    <i class="fa fa-fw fa-cog mr-1"></i>
+                                    <a href="#" class="dropbtn">Profile</a>
+                                    <div class="dropdown-content">
+                                        <a href="viewprofilemanager">Profile Manager</a>
+                                        <a href="viewprofileemployeeptandtakecare">Profile Employee</a>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
+                        <hr>
+<!--                        <div class="card bg-light mb-3">
+                            <div class="card-header bg-success text-white text-uppercase">Account NEW</div>
+                            <div class="card-body">
+                                <img class="img-fluid" src="${p.image}" ></a>
+                                <h5 class="card-title">${p.name}</h5>
+                                <p class="card-text">${p.title}</p>
+                                <p class="bloc_left_price">${p.price} $</p>
+                            </div>
+                        </div>-->
                     </div>
                 </div>
                 <div class="col">
@@ -214,6 +279,7 @@
                                                             <select class="form-control" name="role" required=""> 
                                                                 <option value="PT">PT</option>
                                                                 <option value="Takecare">Takecare</option>
+                                                                <option value="Manager">Manager</option>
                                                             </select>
                                                         </div>
                                                     </div>
