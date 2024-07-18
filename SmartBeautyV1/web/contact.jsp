@@ -61,49 +61,67 @@
                             <div class="col-lg-8 contact_col">
                                 <div class="contact_title">Gettsss in touch</div>
                                 <div class="contact_form_container">
-                                    <form action="contact" id="contact_form" class="contact_form">
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="input_item"><input type="text" class="contact_input trans_200" placeholder="Name" required="required"></div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="input_item"><input type="email" class="contact_input trans_200" placeholder="E-mail" required="required"></div>
+                                    <c:if test="${not empty successMessage}">
+                                    <div class="text-success">${successMessage}</div>
+                                </c:if>
+                                <c:if test="${not empty errorMessage}">
+                                    <div class="text-danger">${errorMessage}</div>
+                                </c:if>
+                                <br>
+                                <form action="contact" method="get" id="contact_form" class="contact_form">
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="input_item"><input type="text" name="name" value="${name}" class="contact_input trans_200" placeholder="Name" required="required">
+                                                <c:if test="${not empty error1}">
+                                                    <div class="text-danger">${error1}</div>
+                                                </c:if>
                                             </div>
                                         </div>
-                                        <div class="input_item"><textarea class="contact_input contact_textarea trans_200" placeholder="Message" required="required"></textarea></div>
-                                        <button type="submit" class="contact_button button">Send<span></span></button>
-                                    </form>
-                                </div>
+                                        <div class="col-lg-6">
+                                            <div class="input_item"><input type="email" name="email" value="${email}" class="contact_input trans_200" placeholder="E-mail" required="required">
+                                                <c:if test="${not empty error2}">
+                                                    <div class="text-danger">${error2}</div>
+                                                </c:if></div>
+                                        </div>
+                                    </div>
+                                    <div class="input_item"><textarea class="contact_input contact_textarea trans_200" name="message" placeholder="Message" required="required">${message}</textarea>
+                                        <c:if test="${not empty error3}">
+                                            <div class="text-danger">${error3}</div>
+                                        </c:if></div>
+                                    <button type="submit" class="contact_button button">Send<span></span></button>
+                                </form>
                             </div>
-
                         </div>
-                        <div class="row google_map_row">
-                            <div class="col">
 
-                                <!-- Contact Map -->
 
-                                <div class="contact_map">
+                    </div>
+                    <div class="row google_map_row">
+                        <div class="col">
 
-                                    <!-- Google Map -->
+                            <!-- Contact Map -->
 
-                                    <div class="map">
-                                        <div id="google_map" class="google_map">
-                                            <div class="map_container">
-                                                <div id="map">
-                                                    <iframe src="https://www.google.com/maps/place/FPT+University/@21.0124167,105.5227143,17z/data=!3m1!4b1!4m6!3m5!1s0x3135abc60e7d3f19:0x2be9d7d0b5abcbf4!8m2!3d21.0124167!4d105.5252892!16s%2Fm%2F02rsytm?entry=ttu" allowfullscreen="" loading="lazy"></iframe>
-                                                </div>
+                            <div class="contact_map">
+
+                                <!-- Google Map -->
+
+                                <div class="map">
+                                    <div id="google_map" class="google_map">
+                                        <div class="map_container">
+                                            <div id="map">
+                                                <iframe src="https://www.google.com/maps/place/FPT+University/@21.0124167,105.5227143,17z/data=!3m1!4b1!4m6!3m5!1s0x3135abc60e7d3f19:0x2be9d7d0b5abcbf4!8m2!3d21.0124167!4d105.5252892!16s%2Fm%2F02rsytm?entry=ttu" allowfullscreen="" loading="lazy"></iframe>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
 
                             </div>
+
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Footer -->
+            <!-- Footer -->
             <jsp:include page="include/footer.jsp"></jsp:include>
         </div>
 

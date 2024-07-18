@@ -4,7 +4,6 @@
  */
 package model;
 
-import java.util.Date;
 
 /**
  * a class have information of customer want to contact
@@ -12,17 +11,34 @@ import java.util.Date;
  */
 public class Contact {
     private String name;
-    private Date date;
+    private String date;
     private String email;
+    private String message;
     private boolean status;
+    private int key;
 
     public Contact() {
     }
 
-    public Contact(String name, Date date, String email, boolean status) {
+    public Contact(String name, String date) {
+        this.name = name;
+        this.date = date;
+    }
+
+    public Contact(String name, String date, String email, String message, boolean status, int key) {
         this.name = name;
         this.date = date;
         this.email = email;
+        this.message = message;
+        this.status = status;
+        this.key = key;
+    }
+
+    public Contact(String name, String date, String email, String message, boolean status) {
+        this.name = name;
+        this.date = date;
+        this.email = email;
+        this.message = message;
         this.status = status;
     }
 
@@ -34,11 +50,11 @@ public class Contact {
         this.name = name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -50,6 +66,14 @@ public class Contact {
         this.email = email;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -57,5 +81,16 @@ public class Contact {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    
+
     
 }

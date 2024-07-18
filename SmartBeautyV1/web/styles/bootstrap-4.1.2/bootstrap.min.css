@@ -7325,5 +7325,17 @@ a.text-dark:focus,a.text-dark:hover{
         color:inherit;
         border-color:#dee2e6
     }
+
+    .status-active {
+        color: green;
+        font-weight: bold;
+    }
+
+    .status-inactive {
+        color: red;
+        font-weight: bold;
+    }
+
 }
+
 /*# sourceMappingURL=bootstrap.min.css.map */

@@ -50,7 +50,7 @@
                                         <li><a href="search">Blog</a></li>
 
                                         <c:if test="${account.getRole() == 'Customer'}">
-                                            <li><a href="contact">Contact</a></li> 
+                                            <li><a href="contact.jsp">Contact</a></li> 
                                             </c:if>
                                             <c:if test="${account.getRole() == 'Takecare'}">
                                             <li><a href="contactlist">Contact</a></li>
